@@ -4,7 +4,7 @@ public class DetectWeightItem : MonoBehaviour
 {
     [Header("ShipInformation")]
     [SerializeField] private Ship shipWeigth;
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         //Aqui comparar si tiene peso el objeto, si tiene sumarle el peso al barco
     }

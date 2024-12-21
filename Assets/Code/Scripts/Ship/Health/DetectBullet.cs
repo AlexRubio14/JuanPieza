@@ -12,9 +12,10 @@ public class DetectBullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (collision.gameObject.CompareTag("Bullet") && !collision.gameObject.GetComponent<Bullet>().GetDamageDone())
         {
             bullet = collision.gameObject.GetComponent<Bullet>();
+            bullet.SetDamageDone(true);
             shipHealth.SetCurrentHealth(-bullet.GetDamage());
             CreateHole(collision.contacts[0].point);
             Destroy(collision.gameObject);
