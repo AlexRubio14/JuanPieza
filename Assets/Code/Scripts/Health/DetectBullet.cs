@@ -8,11 +8,14 @@ public class DetectBullet : MonoBehaviour
     [Header("Hole")]
     [SerializeField] private GameObject hole;
 
+    private Bullet bullet;
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            shipHealth.SetCurrentHealth(-collision.gameObject.GetComponent<Bullet>().GetDamage());
+            bullet = collision.gameObject.GetComponent<Bullet>();
+            shipHealth.SetCurrentHealth(-bullet.GetDamage());
             CreateHole(collision.contacts[0].point);
             Destroy(collision.gameObject);
         }
@@ -22,6 +25,7 @@ public class DetectBullet : MonoBehaviour
     {
         GameObject _hole = Instantiate(hole);
         _hole.transform.position = position;
+        _hole.GetComponent<Hole>().SetShipInformation(bullet.GetDamage(), shipHealth);
         _hole.transform.SetParent(this.transform, true);
     }
 }
