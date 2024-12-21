@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipHealth: {fileID: 806974190}
+  shipHealth: {fileID: 806974189}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
 --- !u!54 &413151500
 Rigidbody:
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791ae8df0afbe3e47a996b6310e99962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipWeigth: {fileID: 806974192}
+  shipWeigth: {fileID: 806974189}
 --- !u!1 &570447499
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,7 +593,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &806974190
+--- !u!114 &806974189
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -602,26 +602,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 806974187}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea8e418e7ce765d47a67a1a2d88db38e, type: 3}
+  m_Script: {fileID: 11500000, guid: 3354d4e17ee817c45b52f569b132dcf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
   heightChangeSpeed: 1
   lowerY: -2
---- !u!114 &806974192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806974187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88497aad5823f3d4681552ac1bf5e7b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   maxWeigth: 200
-  health: {fileID: 806974190}
   weigthDamage: 1
   damageTime: 0.5
 --- !u!1 &814396276 stripped
@@ -662,7 +649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipHealth: {fileID: 806974190}
+  shipHealth: {fileID: 806974189}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
 --- !u!54 &814396282
 Rigidbody:
@@ -703,7 +690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791ae8df0afbe3e47a996b6310e99962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipWeigth: {fileID: 806974192}
+  shipWeigth: {fileID: 806974189}
 --- !u!1 &827216409
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,10 +953,7 @@ PrefabInstance:
       addedObject: {fileID: 806974188}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4f1ad1e05daabf04aa5f193cd271710d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 806974192}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4f1ad1e05daabf04aa5f193cd271710d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 806974190}
+      addedObject: {fileID: 806974189}
     - targetCorrespondingSourceObject: {fileID: -9146668286970382046, guid: 4f1ad1e05daabf04aa5f193cd271710d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 413151499}
