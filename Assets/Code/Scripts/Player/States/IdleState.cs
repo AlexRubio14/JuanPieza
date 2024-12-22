@@ -1,0 +1,33 @@
+using UnityEngine;
+
+public class IdleState : PlayerState
+{
+
+    public override void EnterState()
+    {
+    }
+
+    public override void UpdateState()
+    {
+        if (controller.movementInput != Vector2.zero)
+            stateMachine.ChangeState(stateMachine.moveState);
+    }
+    public override void FixedUpdateState()
+    {
+        
+    }
+    public override void ExitState()
+    {
+    }
+
+    public override void RollAction()
+    {
+        stateMachine.ChangeState(stateMachine.rollState);
+    }
+
+    public override void OnCollisionEnter(Collision collision)
+    {
+        
+    }
+
+}
