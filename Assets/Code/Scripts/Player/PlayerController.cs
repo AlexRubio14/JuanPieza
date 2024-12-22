@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private InputActionReference moveInputAction;
     [SerializeField]
     private InputActionReference rollInputAction;
+    [SerializeField]
+    private InputActionReference pushInputAction;
 
     [field: Space, Header("Movement"), SerializeField]
     public float baseMovementSpeed {  get; private set; }
@@ -25,6 +27,10 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField]
     public Vector2 bounceForce {  get; private set; }
 
+    [field: Space, Header("Push"), SerializeField]
+    public float pushSpeed { get; private set; }
+    [field: SerializeField]
+    public Vector2 pushForce {  get; private set; }
 
     private Rigidbody rb;
 
@@ -48,7 +54,6 @@ public class PlayerController : MonoBehaviour
         moveInputAction.action.canceled += MovementAction;
 
         rollInputAction.action.started += RollAction;
-
     }
     private void OnDisable()
     {
@@ -57,7 +62,6 @@ public class PlayerController : MonoBehaviour
         moveInputAction.action.canceled -= MovementAction;
 
         rollInputAction.action.started -= RollAction;
-
     }
 
     #region Input Actions 
