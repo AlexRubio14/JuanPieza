@@ -15,6 +15,7 @@ public class CameraController : MonoBehaviour
     [Header("Players Variables"), SerializeField]
     private float minYDistance;
     [SerializeField]
+    private float maxZDistance;
     private float zOffset;
     private float playersY;
 
@@ -112,7 +113,7 @@ public class CameraController : MonoBehaviour
             (
             middlePos.x - transform.position.x,
             0,
-            (middlePos.z + zOffset) - transform.position.z
+            (middlePos.z + zOffset / 2) - transform.position.z
             );
         destinyPos += XZDir * XZSpeed;
 
@@ -131,7 +132,7 @@ public class CameraController : MonoBehaviour
                     break;
             }
             destinyPos += -transform.forward * zoomSpeed;
-            zOffset -= zoomSpeed * Time.fixedDeltaTime;
+            zOffset = Mathf.Clamp(zOffset - zoomSpeed * Time.fixedDeltaTime, -maxZDistance, maxZDistance);
         }
 
         Vector3 finalPos = Vector3.Lerp
