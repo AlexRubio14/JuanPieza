@@ -7,6 +7,7 @@ public class DetectBullet : MonoBehaviour
 
     [Header("Hole")]
     [SerializeField] private GameObject hole;
+    [SerializeField] private bool ignoreHole;
 
     private Bullet bullet;
 
@@ -17,7 +18,8 @@ public class DetectBullet : MonoBehaviour
             bullet = collision.gameObject.GetComponent<Bullet>();
             bullet.SetDamageDone(true);
             shipHealth.SetCurrentHealth(-bullet.GetDamage());
-            CreateHole(collision.contacts[0].point);
+            if(!ignoreHole)
+                CreateHole(collision.contacts[0].point);
             Destroy(collision.gameObject);
         }
     }
