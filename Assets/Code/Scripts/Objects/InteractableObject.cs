@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public abstract class Object : iInteractable
+public abstract class InteractableObject : iInteractable
 {
 
     [SerializeField] protected string objectName;
-    [SerializeField] protected float weight { get; private set; }
+    [SerializeField] public float weight { get; private set; }
     SelectedVisual selectedVisual;
 
     public enum ObjectType { WEAPON, TOOL, DECORATION, RESOURCE };
