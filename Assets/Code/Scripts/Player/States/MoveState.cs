@@ -13,7 +13,10 @@ public class MoveState : PlayerState
     }
     public override void FixedUpdateState()
     {
+        controller.Rotate(controller.movementDirection, controller.rotationSpeed);
+        controller.CheckSlope();
         controller.Movement(controller.movementDirection, controller.baseMovementSpeed);
+        
     }
     public override void ExitState()
     {
