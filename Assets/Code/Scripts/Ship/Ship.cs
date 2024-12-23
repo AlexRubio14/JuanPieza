@@ -1,3 +1,6 @@
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Ship : MonoBehaviour
@@ -15,6 +18,7 @@ public class Ship : MonoBehaviour
 
     [Header("Weigth")]
     [SerializeField] private float maxWeigth;
+    private Dictionary<InteractableObject, int> objects;
     private float currentWeight;
 
     [Header("WeigthDamage")]
@@ -23,6 +27,8 @@ public class Ship : MonoBehaviour
     [Header("Timer")]
     [SerializeField] private float damageTime;
     private float currentTime;
+
+
 
     private void Start()
     {
@@ -33,22 +39,12 @@ public class Ship : MonoBehaviour
 
         currentWeight = 0f;
         currentTime = 0;
+
+        objects = new Dictionary<InteractableObject, int>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            SetCurrentHealth(-10f);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            SetCurrentHealth(10f);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SetCurrentWeigth(100f);
-        }
         FlotationLerp();
         WeightControl();
     }
@@ -78,6 +74,12 @@ public class Ship : MonoBehaviour
     public void SetCurrentHealth(float amount)
     {
         currentHealth += amount;
+        ChechHealth();
+        targetHeight = Mathf.Lerp(lowerY, initY, currentHealth / maxHealth);
+    }
+
+    private void ChechHealth()
+    {
         if (currentHealth < 0)
         {
             currentHealth = 0;
@@ -87,11 +89,34 @@ public class Ship : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-        float healthFraction = currentHealth / maxHealth;
-        targetHeight = Mathf.Lerp(lowerY, initY, healthFraction);
     }
-    public void SetCurrentWeigth(float amount)
+
+    public void AddInteractuableObject(InteractableObject interactableObject)
     {
-        currentWeight += amount;
+        if (objects.ContainsKey(interactableObject))
+        {
+            objects[interactableObject]++;
+        }
+        else
+        {
+            objects[interactableObject] = 1;
+        }
+        currentWeight += interactableObject.weight;
+    }
+
+    public void RemoveInteractuableObject(InteractableObject interactableObject)
+    {
+        if (objects.ContainsKey(interactableObject))
+        {
+            if (objects[interactableObject] > 1)
+            {
+                objects[interactableObject]--;
+            }
+            else
+            {
+                objects.Remove(interactableObject);
+            }
+            currentWeight -= interactableObject.weight;
+        }
     }
 }
