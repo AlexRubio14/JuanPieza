@@ -11,7 +11,6 @@ public class RollState : PlayerState
             controller.AddImpulse(controller.movementDirection, controller.rollSpeed);
         else
             controller.AddImpulse(controller.transform.forward, controller.rollSpeed);
-
     }
     public override void UpdateState()
     {
@@ -34,6 +33,11 @@ public class RollState : PlayerState
     public override void RollAction()
     {
         //No puedes volver a rodar
+    }
+
+    public override void PushAction()
+    {
+        //No puedes empujar
     }
 
     public override void OnCollisionEnter(Collision collision)

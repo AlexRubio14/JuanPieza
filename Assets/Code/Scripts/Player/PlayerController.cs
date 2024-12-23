@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,12 +26,16 @@ public class PlayerController : MonoBehaviour
     private float rollCD;
     private bool canRoll;
     [field: SerializeField]
-    public Vector2 bounceForce {  get; private set; }
+    public Vector2 bounceForce { get; private set; }
 
     [field: Space, Header("Push"), SerializeField]
-    public float pushSpeed { get; private set; }
+    public float pushRadius { get; private set; }
     [field: SerializeField]
-    public Vector2 pushForce {  get; private set; }
+    public float pushOffset { get; private set; }
+    [field: SerializeField]
+    public LayerMask pushLayers { get; private set; }
+    [field: SerializeField]
+    public Vector2 pushForce { get; private set; }
 
     private Rigidbody rb;
 
@@ -54,6 +59,7 @@ public class PlayerController : MonoBehaviour
         moveInputAction.action.canceled += MovementAction;
 
         rollInputAction.action.started += RollAction;
+        pushInputAction.action.started += PushAction;
     }
     private void OnDisable()
     {
@@ -62,6 +68,7 @@ public class PlayerController : MonoBehaviour
         moveInputAction.action.canceled -= MovementAction;
 
         rollInputAction.action.started -= RollAction;
+        pushInputAction.action.started -= PushAction;
     }
 
     #region Input Actions 
@@ -78,6 +85,11 @@ public class PlayerController : MonoBehaviour
             stateMachine.currentState.RollAction();
             Invoke("WaitRollCD", rollCD);
         }
+    }
+
+    private void PushAction(InputAction.CallbackContext obj)
+    {
+        stateMachine.currentState.PushAction();
     }
     #endregion
 
@@ -96,6 +108,10 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position + transform.forward * pushOffset, pushRadius);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {

@@ -9,6 +9,7 @@ public class PlayerStateMachine : MonoBehaviour
     public IdleState idleState {  get; private set; }
     public MoveState moveState { get; private set; }
     public RollState rollState { get; private set; }
+    public PushState pushState { get; private set; }
 
     public void InitializeStates(PlayerController _controller)
     {
@@ -18,6 +19,8 @@ public class PlayerStateMachine : MonoBehaviour
         moveState.InitializeState(_controller, this);
         rollState = new RollState();
         rollState.InitializeState(_controller, this);
+        pushState = new PushState();
+        pushState.InitializeState(_controller, this);
 
         ChangeState(idleState);
     }

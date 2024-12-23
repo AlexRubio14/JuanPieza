@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5684558101544342922}
   - component: {fileID: 7795250849100189471}
   - component: {fileID: 8198715438506072375}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,8 +191,12 @@ MonoBehaviour:
   <rollDuration>k__BackingField: 0.15
   rollCD: 2
   <bounceForce>k__BackingField: {x: 1.3, y: 0.4}
-  <pushSpeed>k__BackingField: 0
-  <pushForce>k__BackingField: {x: 0, y: 0}
+  <pushRadius>k__BackingField: 0.5
+  <pushOffset>k__BackingField: 1
+  <pushLayers>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 64
+  <pushForce>k__BackingField: {x: 1200, y: 500}
 --- !u!114 &8198715438506072375
 MonoBehaviour:
   m_ObjectHideFlags: 0
