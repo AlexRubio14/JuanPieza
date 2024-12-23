@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &300908114175256851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 930236819224305488}
+  m_Layer: 0
+  m_Name: SlopeCheckPosition (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &930236819224305488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300908114175256851}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.258819, z: -0, w: 0.9659259}
+  m_LocalPosition: {x: 0, y: -0.95, z: 0.24}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8043577788772384495}
+  m_LocalEulerAnglesHint: {x: 0, y: -30, z: 0}
+--- !u!1 &2153772456121318728
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2088938688770358206}
+  m_Layer: 0
+  m_Name: SlopeCheckPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2088938688770358206
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2153772456121318728}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.95, z: 0.24}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8043577788772384495}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3993809340238756677
 GameObject:
   m_ObjectHideFlags: 0
@@ -35,7 +97,10 @@ Transform:
   m_LocalPosition: {x: 0.27, y: 1, z: -11.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2088938688770358206}
+  - {fileID: 3565532938692520715}
+  - {fileID: 930236819224305488}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &513920511012554505
@@ -187,6 +252,17 @@ MonoBehaviour:
   rollInputAction: {fileID: 5631026612985620611, guid: ffc93929504862445aea007ebffd2001, type: 3}
   pushInputAction: {fileID: -74666289419363491, guid: ffc93929504862445aea007ebffd2001, type: 3}
   <baseMovementSpeed>k__BackingField: 1500
+  <rotationSpeed>k__BackingField: 20
+  slopePositions:
+  - {fileID: 2088938688770358206}
+  - {fileID: 3565532938692520715}
+  - {fileID: 930236819224305488}
+  maxSlopeHeight: 0.6
+  slopeCheckDistance: 0.4
+  slopeOffset: 0.1
+  slopeCheckLayer:
+    serializedVersion: 2
+    m_Bits: 256
   <rollSpeed>k__BackingField: 750
   <rollDuration>k__BackingField: 0.15
   rollCD: 2
@@ -209,3 +285,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63f903cc44a640745ab6076221ebf2ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8483821885623414540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3565532938692520715}
+  m_Layer: 0
+  m_Name: SlopeCheckPosition (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3565532938692520715
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8483821885623414540}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.2588191, z: -0, w: 0.9659258}
+  m_LocalPosition: {x: 0, y: -0.95, z: 0.24}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8043577788772384495}
+  m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
