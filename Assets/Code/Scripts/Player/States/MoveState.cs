@@ -25,6 +25,11 @@ public class MoveState : PlayerState
         stateMachine.ChangeState(stateMachine.rollState);
     }
 
+    public override void PushAction()
+    {
+        stateMachine.ChangeState(stateMachine.pushState);
+    }
+
     public override void OnCollisionEnter(Collision collision)
     {
 
