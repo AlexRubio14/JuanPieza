@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -57,6 +59,9 @@ public class PlayerController : MonoBehaviour
     public Vector2 pushForce { get; private set; }
 
     private Rigidbody rb;
+
+    [SerializeField] private LayerMask interactableLayer;
+
 
     private void Awake()
     {
@@ -181,8 +186,8 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log("Colisiona contra " + collision.contacts[0].otherCollider.gameObject.name + " | El estado es " + stateMachine.currentState.ToString());
         stateMachine.currentState.OnCollisionEnter(collision);
-    }
 
+    }
 
     private void OnDrawGizmos()
     {
@@ -217,6 +222,23 @@ public class PlayerController : MonoBehaviour
             startPos = slopePosition.position + new Vector3(0, maxSlopeHeight, 0);
             endPos = startPos + slopePosition.forward * slopeCheckDistance;
             Gizmos.DrawLine(startPos, endPos);
+        }
+
+        Vector3 sphereCenter = transform.position + transform.forward * 1.29f;
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(sphereCenter, 1.5f);
+
+        Collider[] hitColliders = Physics.OverlapSphere(sphereCenter, 1.5f, interactableLayer);
+
+        if (hitColliders.Length > 0)
+        {
+            foreach (var objCollide in hitColliders)
+            {
+                Gizmos.color = Color.red;
+
+                Gizmos.DrawWireCube(objCollide.bounds.center, objCollide.bounds.size);
+            }
         }
     }
 }
