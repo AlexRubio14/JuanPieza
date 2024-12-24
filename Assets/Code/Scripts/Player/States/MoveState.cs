@@ -33,6 +33,16 @@ public class MoveState : PlayerState
         stateMachine.ChangeState(stateMachine.pushState);
     }
 
+    public override void InteractAction()
+    {
+        stateMachine.ChangeState(stateMachine.interactState);
+    }
+
+    public override void UseAction()
+    {
+        stateMachine.ChangeState(stateMachine.useState);
+    }
+
     public override void OnCollisionEnter(Collision collision)
     {
 

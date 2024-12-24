@@ -1,7 +1,6 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,6 +12,10 @@ public class PlayerController : MonoBehaviour
     private InputActionReference rollInputAction;
     [SerializeField]
     private InputActionReference pushInputAction;
+    [SerializeField]
+    private InputActionReference interactInputAction;
+    [SerializeField]
+    private InputActionReference useInputAction;
 
     [field: Space, Header("Movement"), SerializeField]
     public float baseMovementSpeed {  get; private set; }
@@ -76,6 +79,8 @@ public class PlayerController : MonoBehaviour
 
         rollInputAction.action.started += RollAction;
         pushInputAction.action.started += PushAction;
+        interactInputAction.action.started += InteractAction;
+        useInputAction.action.started += UseAction;
     }
     private void OnDisable()
     {
@@ -85,6 +90,8 @@ public class PlayerController : MonoBehaviour
 
         rollInputAction.action.started -= RollAction;
         pushInputAction.action.started -= PushAction;
+        interactInputAction.action.started -= InteractAction;
+        useInputAction.action.started -= UseAction;
     }
 
     #region Input Actions 
@@ -106,6 +113,16 @@ public class PlayerController : MonoBehaviour
     private void PushAction(InputAction.CallbackContext obj)
     {
         stateMachine.currentState.PushAction();
+    }
+
+    private void InteractAction(InputAction.CallbackContext obj)
+    {
+        stateMachine.currentState.InteractAction();
+    }
+
+    private void UseAction(InputAction.CallbackContext obj)
+    {
+        stateMachine.currentState.UseAction();
     }
     #endregion
 
