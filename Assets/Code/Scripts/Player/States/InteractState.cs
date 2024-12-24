@@ -1,49 +1,46 @@
 using UnityEngine;
 
-public class IdleState : PlayerState
+public class InteractState : PlayerState
 {
-
     public override void EnterState()
     {
+        //dentro de un cono hacia donde mires mirar cual es el objeto mas cercano, si hay alguno
+        //coger el objeto y activar un bool en player de que llevas un objeto encima
     }
-
     public override void UpdateState()
-    {
-        if (controller.movementInput != Vector2.zero)
-            stateMachine.ChangeState(stateMachine.moveState);
-    }
-    public override void FixedUpdateState()
     {
         
     }
+    public override void FixedUpdateState()
+    {
+    }
     public override void ExitState()
     {
+
     }
 
     public override void RollAction()
     {
-        stateMachine.ChangeState(stateMachine.rollState);
+        //No puedes rodar
     }
 
     public override void PushAction()
     {
-        stateMachine.ChangeState(stateMachine.pushState);
+        //nada
     }
-
 
     public override void InteractAction()
     {
-        stateMachine.ChangeState(stateMachine.interactState);
+        //nada
     }
 
     public override void UseAction()
     {
-        stateMachine.ChangeState(stateMachine.useState);
+        //nada
     }
 
     public override void OnCollisionEnter(Collision collision)
     {
-        
-    }
 
+    }
 }

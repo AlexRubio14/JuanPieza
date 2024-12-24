@@ -13,7 +13,10 @@ public class MoveState : PlayerState
     }
     public override void FixedUpdateState()
     {
+        controller.Rotate(controller.movementDirection, controller.rotationSpeed);
+        controller.CheckSlope();
         controller.Movement(controller.movementDirection, controller.baseMovementSpeed);
+        
     }
     public override void ExitState()
     {
@@ -28,6 +31,16 @@ public class MoveState : PlayerState
     public override void PushAction()
     {
         stateMachine.ChangeState(stateMachine.pushState);
+    }
+
+    public override void InteractAction()
+    {
+        stateMachine.ChangeState(stateMachine.interactState);
+    }
+
+    public override void UseAction()
+    {
+        stateMachine.ChangeState(stateMachine.useState);
     }
 
     public override void OnCollisionEnter(Collision collision)

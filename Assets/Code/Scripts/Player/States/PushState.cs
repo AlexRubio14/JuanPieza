@@ -49,6 +49,16 @@ public class PushState : PlayerState
         
     }
 
+    public override void InteractAction()
+    {
+
+    }
+
+    public override void UseAction()
+    {
+
+    }
+
     public override void OnCollisionEnter(Collision collision)
     {
 
