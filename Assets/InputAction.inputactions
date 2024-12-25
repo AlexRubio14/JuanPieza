@@ -2,7 +2,7 @@
     "name": "InputAction",
     "maps": [
         {
-            "name": "Player",
+            "name": "Gameplay",
             "id": "c9d67475-fb63-4b58-8d76-3faf3d1a267e",
             "actions": [
                 {
@@ -18,15 +18,6 @@
                     "name": "Roll",
                     "type": "Button",
                     "id": "51695a71-3797-40ab-b9fa-7931aa3fdb32",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Push",
-                    "type": "Button",
-                    "id": "ebc78633-e69d-4efa-ab57-8f4aaedd6140",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -142,28 +133,6 @@
                 },
                 {
                     "name": "",
-                    "id": "9fc25db6-0154-4f58-92c2-41c19df89eda",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Push",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "99106705-9dc3-4406-af90-16e763d836fe",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Push",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4785a0aa-bd76-4d9f-8770-584b2b5bc4e2",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -203,6 +172,107 @@
                     "processors": "",
                     "groups": "",
                     "action": "Use",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "PlayerSelectMenu",
+            "id": "cbed0623-9eb3-41ce-af51-0ff00344eff5",
+            "actions": [
+                {
+                    "name": "StartGame",
+                    "type": "Button",
+                    "id": "d043b1b5-98e9-4ab8-877a-ba8908257900",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Join",
+                    "type": "Button",
+                    "id": "55b6a400-3957-4fb8-840a-119eb9494150",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Exit",
+                    "type": "Button",
+                    "id": "5032e0d6-de67-477c-a898-e4ef9b8c6598",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9beed738-60e6-41c3-a864-d35d197872a7",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StartGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ceb44866-439a-4812-96e9-cd6200578cac",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StartGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd66f943-34cc-44aa-8e5c-ed1e8a4dcd86",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Join",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "edab3960-28bc-4c45-bf37-7cba3497b14b",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Join",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2e783c9e-c09d-4f51-a39b-a83f7c5e7833",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "002abe64-6814-46ab-a36b-9d30041f3a98",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

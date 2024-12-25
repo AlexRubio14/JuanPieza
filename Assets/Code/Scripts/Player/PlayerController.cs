@@ -6,16 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     private PlayerStateMachine stateMachine;
 
-    [Header("Inputs"), SerializeField]
-    private InputActionReference moveInputAction;
-    [SerializeField]
-    private InputActionReference rollInputAction;
-    [SerializeField]
-    private InputActionReference pushInputAction;
-    [SerializeField]
-    private InputActionReference interactInputAction;
-    [SerializeField]
-    private InputActionReference useInputAction;
+    [HideInInspector]
+    public GameInput playerInput;
 
     [field: Space, Header("Movement"), SerializeField]
     public float baseMovementSpeed {  get; private set; }
@@ -68,40 +60,48 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        SuscribeActions();
         canRoll = true;
     }
 
     private void OnEnable()
     {
-        moveInputAction.action.started += MovementAction;
-        moveInputAction.action.performed += MovementAction;
-        moveInputAction.action.canceled += MovementAction;
-
-        rollInputAction.action.started += RollAction;
-        pushInputAction.action.started += PushAction;
-        interactInputAction.action.started += InteractAction;
-        useInputAction.action.started += UseAction;
+        SuscribeActions();
     }
+    private void SuscribeActions()
+    {
+        if (!playerInput)
+            return;
+
+        playerInput.OnMoveAction += MovementAction;
+
+        playerInput.OnRollAction += RollAction;
+
+        playerInput.OnInteractAction += InteractAction;
+
+        playerInput.OnUseAction += UseAction;
+    }
+
     private void OnDisable()
     {
-        moveInputAction.action.started -= MovementAction;
-        moveInputAction.action.performed -= MovementAction;
-        moveInputAction.action.canceled -= MovementAction;
+        playerInput.OnMoveAction -= MovementAction;
 
-        rollInputAction.action.started -= RollAction;
-        pushInputAction.action.started -= PushAction;
-        interactInputAction.action.started -= InteractAction;
-        useInputAction.action.started -= UseAction;
+        playerInput.OnRollAction -= RollAction;
+
+        playerInput.OnInteractAction -= InteractAction;
+
+        playerInput.OnUseAction -= UseAction;
     }
 
+
     #region Input Actions 
-    private void MovementAction(InputAction.CallbackContext obj)
+    private void MovementAction(Vector2 _movementInput)
     {
-        movementInput = obj.ReadValue<Vector2>();
+        movementInput = _movementInput;
         movementDirection = new Vector3(movementInput.x, 0, movementInput.y);
 
     }
-    private void RollAction(InputAction.CallbackContext obj)
+    private void RollAction()
     {
         if (canRoll)
         {
@@ -110,17 +110,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void PushAction(InputAction.CallbackContext obj)
-    {
-        stateMachine.currentState.PushAction();
-    }
-
-    private void InteractAction(InputAction.CallbackContext obj)
+    private void InteractAction()
     {
         stateMachine.currentState.InteractAction();
     }
 
-    private void UseAction(InputAction.CallbackContext obj)
+    private void UseAction()
     {
         stateMachine.currentState.UseAction();
     }
@@ -182,7 +177,6 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Colisiona contra " + collision.contacts[0].otherCollider.gameObject.name + " | El estado es " + stateMachine.currentState.ToString());
         stateMachine.currentState.OnCollisionEnter(collision);
     }
-
 
     private void OnDrawGizmos()
     {

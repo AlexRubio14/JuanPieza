@@ -24,11 +24,6 @@ public class InteractState : PlayerState
         //No puedes rodar
     }
 
-    public override void PushAction()
-    {
-        //nada
-    }
-
     public override void InteractAction()
     {
         //nada
