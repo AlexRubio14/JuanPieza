@@ -35,11 +35,6 @@ public class RollState : PlayerState
         //No puedes volver a rodar
     }
 
-    public override void PushAction()
-    {
-        //No puedes empujar
-    }
-
     public override void InteractAction()
     {
 

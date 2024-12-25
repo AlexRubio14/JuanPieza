@@ -43,12 +43,6 @@ public class PushState : PlayerState
     {
         //No puedes rodar
     }
-
-    public override void PushAction()
-    {
-        
-    }
-
     public override void InteractAction()
     {
 

@@ -7,8 +7,7 @@ public class PlayersManager : MonoBehaviour
     public static PlayersManager instance;
 
     [field: SerializeField]
-    public float respawnTime {  get; private set; }
-    public List<PlayerInput> players {  get; private set; }
+    public List<(PlayerInput, SinglePlayerController)> players {  get; private set; }
 
     private void Awake()
     {
@@ -16,8 +15,10 @@ public class PlayersManager : MonoBehaviour
             Destroy(gameObject);
 
         instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        players = new List<(PlayerInput, SinglePlayerController)>();
 
 
-        players = new List<PlayerInput>();
     }
 }

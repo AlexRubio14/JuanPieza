@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SinglePlayerManager : MonoBehaviour
+public class SinglePlayerController : MonoBehaviour
 {
     /* Este Script tiene que hacer lo siguiente
      * Tiene que ser don't destroy on load
@@ -9,14 +9,11 @@ public class SinglePlayerManager : MonoBehaviour
      * Al entrar estar en una escena 
      */
 
-    void Start()
-    {
-        
-    }
+    [field: SerializeField]
+    public GameObject currentPlayerSelectorObject {  get; private set; }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        DontDestroyOnLoad(gameObject);
     }
 }

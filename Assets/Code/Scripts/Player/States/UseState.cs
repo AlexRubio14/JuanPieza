@@ -4,7 +4,6 @@ public class UseState : PlayerState
 {
     public override void EnterState()
     {
-        //comprobar si tienes un objeto en mano
         //usar el objeto
     }
     public override void UpdateState()
@@ -22,11 +21,6 @@ public class UseState : PlayerState
     public override void RollAction()
     {
         //No puedes rodar
-    }
-
-    public override void PushAction()
-    {
-        //nada
     }
 
     public override void InteractAction()

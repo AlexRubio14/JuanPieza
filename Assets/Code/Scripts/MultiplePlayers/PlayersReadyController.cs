@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 
 public class PlayersReadyController : MonoBehaviour
@@ -7,9 +8,10 @@ public class PlayersReadyController : MonoBehaviour
     const int MIN_PLAYERS = 1;
 
     [SerializeField]
-    private MultiplePlayerController multiplayerController;
+    private string sceneToLoad;
+
     [SerializeField]
-    private CameraController cameraController;
+    private MultiplePlayerController multiplayerController;
 
     [Space,SerializeField]
     private GameObject[] joinGameButtonsUI;
@@ -19,44 +21,23 @@ public class PlayersReadyController : MonoBehaviour
     [Space, SerializeField]
     private GameObject[] playerUIPos;
 
-    [Space, SerializeField]
-    private Transform[] playersStartPos;
-
-    private Vector3 camStarterPos;
-
-    [Space, SerializeField]
-    private Material[] characterMat;
 
     // Start is called before the first frame update
     void Start()
     {
-        camStarterPos = cameraController.transform.position;
-        cameraController.transform.position = new Vector3(0,10000,0);
         DisplayStartGameButton();
     }
 
 
     public void AddPlayer(PlayerInput _newPlayer)
     {
-        PlayersManager.instance.players.Add(_newPlayer);
-        int playerIndex = PlayersManager.instance.players.IndexOf(_newPlayer);
+        (PlayerInput, SinglePlayerController) newPlayer = (_newPlayer, _newPlayer.GetComponent<SinglePlayerController>());
+        PlayersManager.instance.players.Add(newPlayer);
+        int playerIndex = PlayersManager.instance.players.IndexOf(newPlayer);
         PlacePlayerOnMenu(playerIndex);
         //_newPlayer.GetComponent<PlayerController>().spawnPos = playersStartPos[playerIndex];
         SetPlayerInputEvents(_newPlayer);
         DisplayStartGameButton();
-
-
-        
-
-        SkinnedMeshRenderer[] renderers = _newPlayer.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
-
-        foreach (SkinnedMeshRenderer renderer in renderers)
-        {
-            renderer.material = characterMat[_newPlayer.playerIndex];
-        }
-
-        MeshRenderer hatRenderer = _newPlayer.gameObject.GetComponentInChildren<MeshRenderer>();
-        hatRenderer.material = characterMat[_newPlayer.playerIndex];
     }   
 
     private void PlacePlayerOnMenu(int _playerIndex)
@@ -64,21 +45,25 @@ public class PlayersReadyController : MonoBehaviour
         //Ocultar los botones de unirse en el lado que se 
         joinGameButtonsUI[_playerIndex].SetActive(false);
         //mover el player al punto exacto del menu
-        PlayersManager.instance.players[_playerIndex].transform.position = playerUIPos[_playerIndex].transform.position;
-        PlayersManager.instance.players[_playerIndex].transform.forward = -playerUIPos[_playerIndex].transform.forward;
+        PlayersManager.instance.players[_playerIndex].Item1.transform.position = playerUIPos[_playerIndex].transform.position;
+        PlayersManager.instance.players[_playerIndex].Item1.transform.forward = -playerUIPos[_playerIndex].transform.forward;
 
     }
     private void SetPlayerInputEvents(PlayerInput _playerInput)
     {
         _playerInput.currentActionMap.FindAction("StartGame").performed += StartGameEvent;
-        _playerInput.currentActionMap.FindAction("GoBack").performed += RemovePlayerEvent;
+        _playerInput.currentActionMap.FindAction("Exit").performed += RemovePlayerEvent;
     }
 
     public void RemovePlayerEvent(InputAction.CallbackContext obj)
     {
         //Destruimos el ultimo player
         int playerToDestroyID = PlayersManager.instance.players.Count - 1;
-        Destroy(PlayersManager.instance.players[playerToDestroyID].gameObject);
+
+        PlayersManager.instance.players[playerToDestroyID].Item1.currentActionMap.FindAction("StartGame").performed -= StartGameEvent;
+        PlayersManager.instance.players[playerToDestroyID].Item1.currentActionMap.FindAction("Exit").performed -= RemovePlayerEvent;
+
+        Destroy(PlayersManager.instance.players[playerToDestroyID].Item1.gameObject);
         //Lo quitamos de las listas
         PlayersManager.instance.players.RemoveAt(playerToDestroyID);
         //Hacemos aparecer de nuevo la UI
@@ -97,20 +82,22 @@ public class PlayersReadyController : MonoBehaviour
 
     private void StartGame()
     {
-        cameraController.transform.position = camStarterPos;
-        cameraController.enabled = true;
         for (int i = 0; i < PlayersManager.instance.players.Count; i++)
         {
-            PlayersManager.instance.players[i].currentActionMap.FindAction("StartGame").performed -= StartGameEvent;
-            PlayersManager.instance.players[i].currentActionMap.FindAction("GoBack").performed -= RemovePlayerEvent;
-            PlayersManager.instance.players[i].transform.position = playersStartPos[i].position;
-            PlayersManager.instance.players[i].actions.FindActionMap("PlayerSelectMenu").Disable();
-            PlayersManager.instance.players[i].actions.FindActionMap("Gameplay").Enable();
-            PlayersManager.instance.players[i].GetComponent<Rigidbody>().isKinematic = false;
+            PlayersManager.instance.players[i].Item1.currentActionMap.FindAction("StartGame").performed -= StartGameEvent;
+            PlayersManager.instance.players[i].Item1.currentActionMap.FindAction("Exit").performed -= RemovePlayerEvent;
+            PlayersManager.instance.players[i].Item2.currentPlayerSelectorObject.SetActive(false);
         }
 
 
-        gameObject.SetActive(false);
+        //Cambiar esto por simplemente un cambio de escena a la que toque
+        SceneManager.LoadScene(sceneToLoad);
+
+
+
+
+
+       
     }
 
 }

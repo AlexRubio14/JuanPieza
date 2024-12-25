@@ -28,11 +28,6 @@ public class MoveState : PlayerState
         stateMachine.ChangeState(stateMachine.rollState);
     }
 
-    public override void PushAction()
-    {
-        stateMachine.ChangeState(stateMachine.pushState);
-    }
-
     public override void InteractAction()
     {
         stateMachine.ChangeState(stateMachine.interactState);
@@ -40,7 +35,11 @@ public class MoveState : PlayerState
 
     public override void UseAction()
     {
-        stateMachine.ChangeState(stateMachine.useState);
+        //comprobar si tienes un objeto en mano
+        //Si no tiene objeto
+        stateMachine.ChangeState(stateMachine.pushState);
+        //Si tiene objeto
+        //stateMachine.ChangeState(stateMachine.useState);
     }
 
     public override void OnCollisionEnter(Collision collision)
