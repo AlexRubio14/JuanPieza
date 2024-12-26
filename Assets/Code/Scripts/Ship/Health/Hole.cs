@@ -15,9 +15,6 @@ public class Hole : MonoBehaviour
     private float currentTime;
     private int currentTimeLosingHealth;
 
-    [SerializeField] private InteractableObject wood;
-
-
     [Header("Ship")]
     private Ship ship;
 
@@ -49,14 +46,6 @@ public class Hole : MonoBehaviour
         {
             waterParticles.Stop();
         }
-    }
-
-    public void InteractHole(PlayerController player)
-    {
-        //Hacer el if si el objeto que tiene en las manos es wood
-
-        //Poner temporizador
-        //No se mueve el player
     }
 
     public void SetShipInformation(float amount, Ship _ship)
