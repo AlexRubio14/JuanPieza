@@ -5,13 +5,8 @@ using UnityEngine;
 
 public class SelectedVisual : MonoBehaviour
 {
-    [Header("For Objects With Outline")]
     [SerializeField] private Outline[] outlineArray;
 
-    [Header("For Objects With Selected Visual")] 
-    [SerializeField] private GameObject[] visualArray;
-
-    private bool canSeeVisuals = true;
     private void Awake()
     {
         Hide();
@@ -19,16 +14,10 @@ public class SelectedVisual : MonoBehaviour
 
     public void Show()
     {
-        if (canSeeVisuals)
+        foreach (Outline outline in outlineArray)
         {
-            foreach (Outline outline in outlineArray)
-            {
-                outline.enabled = true;
-            }
-            foreach (GameObject visual in visualArray)
-            {
-                visual.SetActive(true);
-            }
+
+            outline.enabled = true;
         }
     }
 
@@ -38,14 +27,5 @@ public class SelectedVisual : MonoBehaviour
         {
             outline.enabled = false;
         }
-        foreach (GameObject visual in visualArray)
-        {
-            visual.SetActive(false);
-        }
-    }
-
-    public void SetCanSeeVisuals(bool visuals)
-    {
-        canSeeVisuals = visuals;
     }
 }
