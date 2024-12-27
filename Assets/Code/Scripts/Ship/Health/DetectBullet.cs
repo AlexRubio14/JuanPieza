@@ -1,34 +1,26 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DetectBullet : MonoBehaviour
 {
     [Header("ShipInformation")]
-    [SerializeField] private Ship shipHealth;
+    [SerializeField] protected Ship ship;
 
-    [Header("Hole")]
-    [SerializeField] private GameObject hole;
-    [SerializeField] private bool ignoreHole;
-
-    private Bullet bullet;
-
+    protected Bullet bullet { get; private set; }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet") && !collision.gameObject.GetComponent<Bullet>().GetDamageDone())
         {
-            bullet = collision.gameObject.GetComponent<Bullet>();
-            bullet.SetDamageDone(true);
-            shipHealth.SetCurrentHealth(-bullet.GetDamage());
-            if(!ignoreHole)
-                CreateHole(collision.contacts[0].point);
-            Destroy(collision.gameObject);
+            DetectCollision(collision);
         }
     }
 
-    private void CreateHole(Vector3 position)
+    protected virtual void DetectCollision(Collision collision)
     {
-        GameObject _hole = Instantiate(hole);
-        _hole.transform.position = position;
-        _hole.GetComponent<Hole>().SetShipInformation(bullet.GetDamage(), shipHealth);
-        _hole.transform.SetParent(this.transform, true);
+        bullet = collision.gameObject.GetComponent<Bullet>();
+        bullet.SetDamageDone(true);
+        ship.SetCurrentHealth(-bullet.GetDamage());
+        Destroy(collision.gameObject);
     }
+
 }

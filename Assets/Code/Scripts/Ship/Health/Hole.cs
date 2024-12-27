@@ -7,7 +7,6 @@ public class Hole : MonoBehaviour
 
     [Header("Damage")]
     [SerializeField] private float holeDamage;
-    private float damageDeal;
 
     [Header("Time")]
     [SerializeField] private float maxDamageTime;
@@ -17,13 +16,6 @@ public class Hole : MonoBehaviour
 
     [Header("Ship")]
     private Ship ship;
-
-    void Start()
-    {
-        currentTime = 0;
-        currentTimeLosingHealth = 0;
-    }
-
 
     void Update()
     {
@@ -48,9 +40,8 @@ public class Hole : MonoBehaviour
         }
     }
 
-    public void SetShipInformation(float amount, Ship _ship)
+    public void SetShipInformation(Ship _ship)
     {
-        damageDeal = amount;
         ship = _ship;
     }
 }

@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 6105711247557071544}
   - component: {fileID: 9109425130155819080}
   - component: {fileID: 6090503255239697035}
-  - component: {fileID: 3517075600311704014}
+  - component: {fileID: 8123045592132279223}
   m_Layer: 0
   m_Name: Collider5
   m_TagString: Untagged
@@ -168,7 +168,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3517075600311704014
+--- !u!114 &8123045592132279223
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,9 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipHealth: {fileID: 7095608211176510}
-  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  ignoreHole: 1
+  ship: {fileID: 7095608211176510}
 --- !u!1 &657160143152490785
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +192,7 @@ GameObject:
   - component: {fileID: 3083477343693661207}
   - component: {fileID: 7182150334979988952}
   - component: {fileID: 3488295943179064171}
-  - component: {fileID: 4021119779677497758}
+  - component: {fileID: 6601207492090614285}
   m_Layer: 0
   m_Name: Collider3
   m_TagString: Untagged
@@ -265,7 +263,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4021119779677497758
+--- !u!114 &6601207492090614285
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -277,9 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipHealth: {fileID: 7095608211176510}
-  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  ignoreHole: 1
+  ship: {fileID: 7095608211176510}
 --- !u!1 &761114766980030170
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +373,7 @@ GameObject:
   - component: {fileID: 2661153817150141159}
   - component: {fileID: 4914104170049158499}
   - component: {fileID: 3727279269640406949}
-  - component: {fileID: 4233597390966784251}
+  - component: {fileID: 4312765918870536421}
   m_Layer: 0
   m_Name: Collider9
   m_TagString: Untagged
@@ -448,7 +444,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4233597390966784251
+--- !u!114 &4312765918870536421
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -460,9 +456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipHealth: {fileID: 7095608211176510}
-  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  ignoreHole: 1
+  ship: {fileID: 7095608211176510}
 --- !u!1 &1918941708842970613
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,7 +792,7 @@ GameObject:
   - component: {fileID: 719801959004304201}
   - component: {fileID: 1235343311761930125}
   - component: {fileID: 767669620166720469}
-  - component: {fileID: 8171663297695715527}
+  - component: {fileID: 3050516205468165773}
   m_Layer: 0
   m_Name: Collider6
   m_TagString: Untagged
@@ -869,7 +863,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8171663297695715527
+--- !u!114 &3050516205468165773
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -881,9 +875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipHealth: {fileID: 7095608211176510}
-  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  ignoreHole: 1
+  ship: {fileID: 7095608211176510}
 --- !u!1 &4321918143244878519
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,8 +887,8 @@ GameObject:
   - component: {fileID: 3941693521430850190}
   - component: {fileID: 4719835441208927022}
   - component: {fileID: 2070778203359650958}
+  - component: {fileID: 2931954965439676320}
   - component: {fileID: 3698951763504665488}
-  - component: {fileID: 777212834516568311}
   - component: {fileID: 2123636473115025586}
   m_Layer: 0
   m_Name: FloorLower
@@ -973,6 +965,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2931954965439676320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4321918143244878519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6140746f33cef5749a6fef9a7f119698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ship: {fileID: 7095608211176510}
+  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
 --- !u!64 &3698951763504665488
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -995,21 +1001,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 5289776785035199706, guid: 153ff95e276518c4598625b230a3f4e7, type: 3}
---- !u!114 &777212834516568311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4321918143244878519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipHealth: {fileID: 7095608211176510}
-  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  ignoreHole: 0
 --- !u!54 &2123636473115025586
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1143,7 +1134,7 @@ GameObject:
   - component: {fileID: 7385060311074328753}
   - component: {fileID: 173584434425990208}
   - component: {fileID: 1586712649298839190}
-  - component: {fileID: 2966808934433013224}
+  - component: {fileID: 8920831617758585436}
   m_Layer: 0
   m_Name: Collider1
   m_TagString: Untagged
@@ -1214,7 +1205,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2966808934433013224
+--- !u!114 &8920831617758585436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1226,9 +1217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipHealth: {fileID: 7095608211176510}
-  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  ignoreHole: 1
+  ship: {fileID: 7095608211176510}
 --- !u!1 &6004876236678660489
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,7 +1405,7 @@ GameObject:
   - component: {fileID: 4860365389653514771}
   - component: {fileID: 1423688669533377400}
   - component: {fileID: 1298832537528059678}
-  - component: {fileID: 3054468645099123691}
+  - component: {fileID: 4524827635790748623}
   m_Layer: 0
   m_Name: Collider2
   m_TagString: Untagged
@@ -1487,7 +1476,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3054468645099123691
+--- !u!114 &4524827635790748623
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1499,9 +1488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipHealth: {fileID: 7095608211176510}
-  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  ignoreHole: 1
+  ship: {fileID: 7095608211176510}
 --- !u!1 &7216669543086053248
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,7 +1586,7 @@ GameObject:
   - component: {fileID: 5189190126346566392}
   - component: {fileID: 716954778066297797}
   - component: {fileID: 2835110118640674184}
-  - component: {fileID: 5784355571868798584}
+  - component: {fileID: 3649941853979874415}
   m_Layer: 0
   m_Name: Collider8
   m_TagString: Untagged
@@ -1670,7 +1657,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5784355571868798584
+--- !u!114 &3649941853979874415
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1682,9 +1669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipHealth: {fileID: 7095608211176510}
-  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  ignoreHole: 1
+  ship: {fileID: 7095608211176510}
 --- !u!1 &8445312452819503016
 GameObject:
   m_ObjectHideFlags: 0
@@ -1696,7 +1681,7 @@ GameObject:
   - component: {fileID: 7453852755146135423}
   - component: {fileID: 4999823478119448565}
   - component: {fileID: 8995438509945041376}
-  - component: {fileID: 7679503033708184034}
+  - component: {fileID: 2579926394763983158}
   m_Layer: 0
   m_Name: Collider7
   m_TagString: Untagged
@@ -1767,7 +1752,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7679503033708184034
+--- !u!114 &2579926394763983158
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1779,9 +1764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipHealth: {fileID: 7095608211176510}
-  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  ignoreHole: 1
+  ship: {fileID: 7095608211176510}
 --- !u!1 &8550290512843349330
 GameObject:
   m_ObjectHideFlags: 0
@@ -1793,8 +1776,8 @@ GameObject:
   - component: {fileID: 4537873558667322316}
   - component: {fileID: 5711822463467388403}
   - component: {fileID: 7712241803245843232}
+  - component: {fileID: 761641503087438468}
   - component: {fileID: 8973474142491949879}
-  - component: {fileID: 4048087556079861241}
   - component: {fileID: 152529323211578603}
   m_Layer: 0
   m_Name: LowerFloor
@@ -1871,6 +1854,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &761641503087438468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8550290512843349330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6140746f33cef5749a6fef9a7f119698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ship: {fileID: 7095608211176510}
+  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
 --- !u!64 &8973474142491949879
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1893,21 +1890,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6745816700161996667, guid: 153ff95e276518c4598625b230a3f4e7, type: 3}
---- !u!114 &4048087556079861241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8550290512843349330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipHealth: {fileID: 7095608211176510}
-  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  ignoreHole: 0
 --- !u!54 &152529323211578603
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2032,7 +2014,7 @@ GameObject:
   - component: {fileID: 8043190064127605999}
   - component: {fileID: 1406470553502311519}
   - component: {fileID: 6210771954619529090}
-  - component: {fileID: 9075615192556446611}
+  - component: {fileID: 6488175363865520220}
   m_Layer: 0
   m_Name: Collider4
   m_TagString: Untagged
@@ -2103,7 +2085,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &9075615192556446611
+--- !u!114 &6488175363865520220
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2115,9 +2097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipHealth: {fileID: 7095608211176510}
-  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  ignoreHole: 1
+  ship: {fileID: 7095608211176510}
 --- !u!1001 &372687035947597832
 PrefabInstance:
   m_ObjectHideFlags: 0
