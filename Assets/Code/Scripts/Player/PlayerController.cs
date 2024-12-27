@@ -50,6 +50,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
 
+    public InteractableObject item { get; private set; }
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -212,5 +214,10 @@ public class PlayerController : MonoBehaviour
             endPos = startPos + slopePosition.forward * slopeCheckDistance;
             Gizmos.DrawLine(startPos, endPos);
         }
+    }
+
+    public void SetItem(InteractableObject _item)
+    {
+        item = _item;
     }
 }

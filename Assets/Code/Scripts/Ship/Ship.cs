@@ -37,9 +37,6 @@ public class Ship : MonoBehaviour
         targetHeight = initY;
         currentHeight = transform.position.y;
 
-        currentWeight = 0f;
-        currentTime = 0;
-
         objects = new Dictionary<InteractableObject, int>();
     }
 
@@ -119,4 +116,5 @@ public class Ship : MonoBehaviour
             currentWeight -= interactableObject.weight;
         }
     }
+
 }

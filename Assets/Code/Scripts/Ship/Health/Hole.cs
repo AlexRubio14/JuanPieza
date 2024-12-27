@@ -7,7 +7,6 @@ public class Hole : MonoBehaviour
 
     [Header("Damage")]
     [SerializeField] private float holeDamage;
-    private float damageDeal;
 
     [Header("Time")]
     [SerializeField] private float maxDamageTime;
@@ -15,18 +14,8 @@ public class Hole : MonoBehaviour
     private float currentTime;
     private int currentTimeLosingHealth;
 
-    [SerializeField] private InteractableObject wood;
-
-
     [Header("Ship")]
     private Ship ship;
-
-    void Start()
-    {
-        currentTime = 0;
-        currentTimeLosingHealth = 0;
-    }
-
 
     void Update()
     {
@@ -51,17 +40,8 @@ public class Hole : MonoBehaviour
         }
     }
 
-    public void InteractHole(PlayerController player)
+    public void SetShipInformation(Ship _ship)
     {
-        //Hacer el if si el objeto que tiene en las manos es wood
-
-        //Poner temporizador
-        //No se mueve el player
-    }
-
-    public void SetShipInformation(float amount, Ship _ship)
-    {
-        damageDeal = amount;
         ship = _ship;
     }
 }
