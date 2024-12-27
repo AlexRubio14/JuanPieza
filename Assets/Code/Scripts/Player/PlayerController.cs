@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -27,7 +29,6 @@ public class PlayerController : MonoBehaviour
     private float slopeOffset;
     [SerializeField]
     private LayerMask slopeCheckLayer;
-    
 
     [field: Space, Header("Roll"), SerializeField]
     public float rollSpeed { get; private set; }
@@ -50,6 +51,10 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
 
+    [SerializeField] private LayerMask interactableLayer;
+    [SerializeField] public ObjectHolder objectHolder;
+
+
     public InteractableObject item { get; private set; }
 
     private void Awake()
@@ -64,6 +69,7 @@ public class PlayerController : MonoBehaviour
     {
         SuscribeActions();
         canRoll = true;
+        objectHolder = GetComponentInChildren<ObjectHolder>();
     }
 
     private void OnEnable()
@@ -178,6 +184,7 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log("Colisiona contra " + collision.contacts[0].otherCollider.gameObject.name + " | El estado es " + stateMachine.currentState.ToString());
         stateMachine.currentState.OnCollisionEnter(collision);
+
     }
 
     private void OnDrawGizmos()
@@ -213,6 +220,23 @@ public class PlayerController : MonoBehaviour
             startPos = slopePosition.position + new Vector3(0, maxSlopeHeight, 0);
             endPos = startPos + slopePosition.forward * slopeCheckDistance;
             Gizmos.DrawLine(startPos, endPos);
+        }
+
+        Vector3 sphereCenter = transform.position + transform.forward * 1.29f;
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(sphereCenter, 1.5f);
+
+        Collider[] hitColliders = Physics.OverlapSphere(sphereCenter, 1.5f, interactableLayer);
+
+        if (hitColliders.Length > 0)
+        {
+            foreach (var objCollide in hitColliders)
+            {
+                Gizmos.color = Color.red;
+
+                Gizmos.DrawWireCube(objCollide.bounds.center, objCollide.bounds.size);
+            }
         }
     }
 

@@ -1,11 +1,18 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InteractState : PlayerState
 {
+
     public override void EnterState()
     {
         //dentro de un cono hacia donde mires mirar cual es el objeto mas cercano, si hay alguno
         //coger el objeto y activar un bool en player de que llevas un objeto encima
+        if (controller.objectHolder.GetInteractableObject() == null)
+            return;
+
+        controller.objectHolder.GetInteractableObject().Interact(controller.objectHolder);
+        stateMachine.ChangeState(stateMachine.idleState);
     }
     public override void UpdateState()
     {

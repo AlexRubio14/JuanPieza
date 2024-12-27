@@ -98,7 +98,7 @@ public class Ship : MonoBehaviour
         {
             objects[interactableObject] = 1;
         }
-        currentWeight += interactableObject.weight;
+        currentWeight += interactableObject.GetWeight();
     }
 
     public void RemoveInteractuableObject(InteractableObject interactableObject)
@@ -113,7 +113,7 @@ public class Ship : MonoBehaviour
             {
                 objects.Remove(interactableObject);
             }
-            currentWeight -= interactableObject.weight;
+            currentWeight -= interactableObject.GetWeight();
         }
     }
 
