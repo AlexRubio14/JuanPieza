@@ -5,7 +5,7 @@ using static UnityEditor.Progress;
 public class Repair : MonoBehaviour
 {
     [Header("Item")]
-    [SerializeField] private GameObject itemNeeded;
+    [SerializeField] private InteractableObject itemNeeded;
 
     [Header("Time")]
     [SerializeField] private float repairDuration;
@@ -16,7 +16,7 @@ public class Repair : MonoBehaviour
     private List<PlayerController> players;
 
     [Header("Ship")]
-    private Ship ship;
+    protected Ship ship;
     private float damageDeal;
 
     private void Start()

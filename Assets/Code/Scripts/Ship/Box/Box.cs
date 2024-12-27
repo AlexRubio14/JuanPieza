@@ -1,16 +1,34 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Box : MonoBehaviour
 {
     [Header("Item")]
-    [SerializeField] private GameObject itemDropped;
+    [SerializeField] private InteractableObject itemDropped;
+    private int itemsInBox;
 
     public void DropItem(PlayerController player)
     {
-        if(player.item == null)
+        if(player.item == null && HasItem())
         {
-            GameObject item = Instantiate(itemDropped);
-            player.SetItem(item);
+            Instantiate(itemDropped.gameObject);
+            player.SetItem(itemDropped);
+            RemoveItemInBox();
         }
+    }
+
+    public void AddItemInBox()
+    {
+        itemsInBox++;
+    }
+
+    public void RemoveItemInBox()
+    {
+        itemsInBox--;
+    }
+
+    public bool HasItem()
+    {
+        return itemsInBox > 0;
     }
 }

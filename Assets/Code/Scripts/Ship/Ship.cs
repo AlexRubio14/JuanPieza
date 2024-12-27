@@ -116,4 +116,5 @@ public class Ship : MonoBehaviour
             currentWeight -= interactableObject.weight;
         }
     }
+
 }

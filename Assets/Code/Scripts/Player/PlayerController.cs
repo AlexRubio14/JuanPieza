@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
 
-    public GameObject item { get; private set; }
+    public InteractableObject item { get; private set; }
 
     private void Awake()
     {
@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetItem(GameObject _item)
+    public void SetItem(InteractableObject _item)
     {
         item = _item;
     }
