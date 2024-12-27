@@ -3,10 +3,15 @@ using UnityEngine;
 public class FishingRod : Tool
 {
 
-    protected override void Interact()
+    protected void Interact()
     {
         //Comprobar si esta en un sitio que pueda pescar
         
         //
+    }
+
+    protected override void UseItem()
+    {
+        throw new System.NotImplementedException();
     }
 }
