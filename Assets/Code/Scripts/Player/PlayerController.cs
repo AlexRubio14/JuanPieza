@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour
     private float slopeOffset;
     [SerializeField]
     private LayerMask slopeCheckLayer;
-    
 
     [field: Space, Header("Roll"), SerializeField]
     public float rollSpeed { get; private set; }
@@ -53,6 +52,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
 
     [SerializeField] private LayerMask interactableLayer;
+    [SerializeField] public ObjectHolder objectHolder;
 
 
     private void Awake()
@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
     {
         SuscribeActions();
         canRoll = true;
+        objectHolder = GetComponentInChildren<ObjectHolder>();
     }
 
     private void OnEnable()

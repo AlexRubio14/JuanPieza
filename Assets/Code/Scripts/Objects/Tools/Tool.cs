@@ -13,4 +13,24 @@ public abstract class Tool : InteractableObject
     {
         
     }
+
+    public override void Interact(ObjectHolder _objectHolder)
+    {
+        if(isBeingUsed)
+        {
+            return;
+        }
+
+        if(_objectHolder.GetObjectPicked() == null) 
+        {
+            _objectHolder.PickObject();
+        }
+        else
+        {
+            UseItem();
+        }
+        
+    }
+
+    protected abstract void UseItem();
 }
