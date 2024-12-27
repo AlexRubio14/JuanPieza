@@ -9,12 +9,7 @@ public class Box : MonoBehaviour
     {
         if(player.item == null)
         {
-            //Change stata
             GameObject item = Instantiate(itemDropped);
-            item.transform.SetParent(player.transform, true);
-
-            //Colocarlo delante del player y resetar su rotación
-
             player.SetItem(item);
         }
     }

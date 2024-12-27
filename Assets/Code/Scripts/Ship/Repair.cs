@@ -58,14 +58,15 @@ public class Repair : MonoBehaviour
 
     private void FinishRepairing()
     {
-        for(int i = 0; i < players.Count; i++) 
+        for(int i = players.Count - 1; i >= 0; i--) 
         {
+            RepairEnded(players[i]);
             StopRepairObject(players[i]);
         }
-        RepairEnded();
+
     }
 
-    protected virtual void RepairEnded()
+    protected virtual void RepairEnded(PlayerController player)
     {
 
     }
