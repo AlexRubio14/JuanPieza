@@ -89,9 +89,10 @@ public class PlayersReadyController : MonoBehaviour
             PlayersManager.instance.players[i].Item2.currentPlayerSelectorObject.SetActive(false);
         }
 
-
-        //Cambiar esto por simplemente un cambio de escena a la que toque
-        SceneManager.LoadScene(sceneToLoad);
+        if(TestPlayerController.Instance)
+            SceneManager.LoadScene(TestPlayerController.Instance.lastSceneActive);
+        else
+            SceneManager.LoadScene(sceneToLoad);
 
 
 
