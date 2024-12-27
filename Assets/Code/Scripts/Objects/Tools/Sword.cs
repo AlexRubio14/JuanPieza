@@ -16,7 +16,12 @@ public class Sword : Tool
         
     }
 
-    protected override void Interact()
+    public override void Interact(ObjectHolder _objectHolder)
+    {
+        base.Interact(_objectHolder);
+    }
+
+    protected override void UseItem()
     {
         Debug.Log("Corte con la espada");
     }

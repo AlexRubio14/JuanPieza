@@ -4,9 +4,9 @@ public abstract class InteractableObject : MonoBehaviour
 {
 
     [SerializeField] protected string objectName;
-    [SerializeField] private float weight;
-    [SerializeField] SelectedVisual selectedVisual;
-    [SerializeField] private bool isBeingUsed;
+    [SerializeField] protected float weight;
+    [SerializeField] protected SelectedVisual selectedVisual;
+    [SerializeField] protected bool isBeingUsed;
 
     public enum ObjectType { WEAPON, TOOL, DECORATION, RESOURCE };
 
@@ -30,8 +30,7 @@ public abstract class InteractableObject : MonoBehaviour
         
     }
 
-    protected abstract void Interact();
-    //protected abstract void UseItem();
+    public abstract void Interact(ObjectHolder _objectHolder);
 
     public float GetWeight()
     {
@@ -41,5 +40,15 @@ public abstract class InteractableObject : MonoBehaviour
     public SelectedVisual GetSelectedVisual()
     {
         return selectedVisual;
+    }
+
+    public bool GetIsBeingUsed()
+    {
+        return isBeingUsed;
+    }
+
+    public void SetIsBeingUsed(bool _value)
+    {
+        isBeingUsed = _value;
     }
 }
