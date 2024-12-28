@@ -265,6 +265,98 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352963231}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &385054919
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 385054921}
+  - component: {fileID: 385054920}
+  m_Layer: 0
+  m_Name: FishingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &385054920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385054919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43e0ff667e261dd4fa46eb5eaf3df772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPool:
+  - name: Madera
+    prefab: {fileID: 0}
+    rarity: 0
+  - name: Municion
+    prefab: {fileID: 0}
+    rarity: 0
+  - name: Peces
+    prefab: {fileID: 0}
+    rarity: 0
+  - name: Zapato
+    prefab: {fileID: 0}
+    rarity: 0
+  - name: Arma Tier 1
+    prefab: {fileID: 0}
+    rarity: 0
+  - name: Cerveza
+    prefab: {fileID: 0}
+    rarity: 1
+  - name: Cigarro
+    prefab: {fileID: 0}
+    rarity: 1
+  - name: Bonk
+    prefab: {fileID: 0}
+    rarity: 1
+  - name: Arma Tier 2
+    prefab: {fileID: 0}
+    rarity: 2
+  - name: Radio
+    prefab: {fileID: 0}
+    rarity: 2
+  - name: Bendicion Random
+    prefab: {fileID: 0}
+    rarity: 3
+  - name: Arma Tier 3
+    prefab: {fileID: 0}
+    rarity: 3
+  priorityList: 
+  rarityPercentages:
+    _serializedList:
+    - Key: 0
+      Value: 0.7
+    - Key: 1
+      Value: 0.25
+    - Key: 2
+      Value: 0.075
+    - Key: 3
+      Value: 0.02
+--- !u!4 &385054921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385054919}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.8846955, y: 2.9009337, z: 45.936443}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &539545624
 GameObject:
   m_ObjectHideFlags: 0
@@ -2158,3 +2250,4 @@ SceneRoots:
   - {fileID: 3995077}
   - {fileID: 308025187037263832}
   - {fileID: 5483664280665711836}
+  - {fileID: 385054921}
