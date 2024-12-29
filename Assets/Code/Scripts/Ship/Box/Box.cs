@@ -7,14 +7,15 @@ public class Box : MonoBehaviour
     [SerializeField] private InteractableObject itemDropped;
     private int itemsInBox;
 
-    public void DropItem(PlayerController player)
+    public InteractableObject DropItem(PlayerController player)
     {
         if(player.item == null && HasItem())
         {
-            Instantiate(itemDropped.gameObject);
-            player.SetItem(itemDropped);
             RemoveItemInBox();
+            return itemDropped;
         }
+
+        return null;
     }
 
     public void AddItemInBox()
