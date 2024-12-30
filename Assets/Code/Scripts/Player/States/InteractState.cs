@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class InteractState : PlayerState
@@ -43,6 +42,6 @@ public class InteractState : PlayerState
 
     public override void OnCollisionEnter(Collision collision)
     {
-
+        base.OnCollisionEnter(collision);
     }
 }

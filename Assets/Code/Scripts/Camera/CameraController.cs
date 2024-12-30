@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
 
     [Header("Players"), SerializeField]
     private List<Collider> playerColliders;
+    private List<PlayerStateMachine> playerStates = new List<PlayerStateMachine>();
 
     [Header("Players Variables"), SerializeField]
     private float minYDistance;
@@ -35,11 +36,16 @@ public class CameraController : MonoBehaviour
     
     private void Start()
     {
+        playerStates = new List<PlayerStateMachine>();
+
         //Guardamos la Y del primer Player
         playersY = playerColliders[0].transform.position.y;
         //Seteamos todos los players con la misma posicion en Y
         foreach (Collider item in playerColliders)
+        {
             item.transform.position = new Vector3(item.transform.position.x, playersY, item.transform.position.z);
+            playerStates.Add(item.GetComponent<PlayerStateMachine>());
+        }
         
         //colocar la camara a la distancia minima
         zOffset = transform.position.z - GetMiddlePointBetweenPlayers().z;
@@ -48,11 +54,13 @@ public class CameraController : MonoBehaviour
     public void AddPlayer(GameObject _newPlayer)
     {
         playerColliders.Add(_newPlayer.GetComponent<CapsuleCollider>());
+        playerStates.Add(_newPlayer.GetComponent<PlayerStateMachine>());
         _newPlayer.transform.position = new Vector3(_newPlayer.transform.position.x, playersY, _newPlayer.transform.position.z);
     }
     public void RemovePlayer(GameObject _removablePlayer)
     {
         playerColliders.Remove(_removablePlayer.GetComponent<CapsuleCollider>());
+        playerStates.Remove(_removablePlayer.GetComponent<PlayerStateMachine>());
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -68,7 +76,11 @@ public class CameraController : MonoBehaviour
         List<Collider> activePlayers = new List<Collider>();
         for (int i = 0; i < playerColliders.Count; i++)
         {
-            activePlayers.Add(playerColliders[i]);
+            if (playerColliders[i] != null && playerStates != null && (playerStates[i] == null || playerStates[i].currentState != playerStates[i].deathState))
+            {
+                activePlayers.Add(playerColliders[i]);
+
+            }
         }
 
         foreach (Collider item in activePlayers)
@@ -150,8 +162,14 @@ public class CameraController : MonoBehaviour
     {
         Vector3 middlePoint = Vector3.zero;
 
-        foreach (Collider item in playerColliders)
-            middlePoint += item.transform.position;
+        for (int i = 0; i < playerColliders.Count; i++)
+        {
+            if (playerColliders[i] != null && playerStates.Count > 0 && (playerStates[i] == null || playerStates[i].currentState != playerStates[i].deathState))
+            {
+                middlePoint += playerColliders[i].transform.position;
+
+            }
+        }
 
         if (middlePoint == Vector3.zero)
             return Vector3.zero;

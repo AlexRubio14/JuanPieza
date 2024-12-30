@@ -20,6 +20,12 @@ public abstract class PlayerState
     public abstract void InteractAction();
     public abstract void UseAction();
 
-    public abstract void OnCollisionEnter(Collision collision);
+    public virtual void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Water"))
+        {
+            stateMachine.ChangeState(stateMachine.deathState);
+        }
+    }
 
 }

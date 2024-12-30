@@ -47,6 +47,7 @@ public class RollState : PlayerState
 
     public override void OnCollisionEnter(Collision collision)
     {
+        base.OnCollisionEnter(collision);
         Debug.Log("Rebota con " + collision.contacts[0].otherCollider.gameObject.name);
         //Rebotar
         Vector3 bounceDir = collision.contacts[0].normal * controller.bounceForce.x + Vector3.up * controller.bounceForce.y;

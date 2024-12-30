@@ -42,7 +42,7 @@ public class IdleState : PlayerState
 
     public override void OnCollisionEnter(Collision collision)
     {
-        
+        base.OnCollisionEnter(collision);
     }
 
 }

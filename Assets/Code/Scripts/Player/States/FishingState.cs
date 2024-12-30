@@ -1,21 +1,20 @@
 using UnityEngine;
 
-public class UseState : PlayerState
+public class FishingState : PlayerState
 {
+    public FishingRod fishingRod;
+    
     public override void EnterState()
     {
-        //usar el objeto
     }
     public override void UpdateState()
     {
-
     }
     public override void FixedUpdateState()
     {
     }
     public override void ExitState()
     {
-
     }
 
     public override void RollAction()
@@ -30,11 +29,13 @@ public class UseState : PlayerState
 
     public override void UseAction()
     {
-        //nada
+        //Recoger Anzuelo
     }
 
     public override void OnCollisionEnter(Collision collision)
     {
         base.OnCollisionEnter(collision);
+
+        //Te pueden golpear y hacer daño
     }
 }

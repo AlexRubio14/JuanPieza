@@ -55,6 +55,6 @@ public class PushState : PlayerState
 
     public override void OnCollisionEnter(Collision collision)
     {
-
+        base.OnCollisionEnter(collision);
     }
 }

@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -53,9 +52,15 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private LayerMask interactableLayer;
     [SerializeField] public ObjectHolder objectHolder;
-
-
     public InteractableObject item { get; private set; }
+
+
+    [field: Space, Header("Push"), SerializeField]
+    public float timeToDie {  get; private set; }
+    [field: SerializeField]
+    public float swimSpeed { get; private set; }
+
+
 
     private void Awake()
     {
@@ -179,6 +184,11 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    public void SetItem(InteractableObject _item)
+    {
+        item = _item;
+    }
+    public Rigidbody GetRB() { return rb; }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -240,8 +250,4 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetItem(InteractableObject _item)
-    {
-        item = _item;
-    }
 }

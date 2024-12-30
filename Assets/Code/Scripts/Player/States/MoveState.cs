@@ -44,7 +44,7 @@ public class MoveState : PlayerState
 
     public override void OnCollisionEnter(Collision collision)
     {
-
+        base.OnCollisionEnter(collision);
     }
 
 }

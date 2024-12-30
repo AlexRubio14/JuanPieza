@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FishingObjectManager : MonoBehaviour
+public class ObjectPool : MonoBehaviour
 {
     public enum ItemRarity { BASIC, RARE, EPIC, LEGENDARY }
 
