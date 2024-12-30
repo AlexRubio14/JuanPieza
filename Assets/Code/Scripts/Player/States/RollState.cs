@@ -35,16 +35,6 @@ public class RollState : PlayerState
         //No puedes volver a rodar
     }
 
-    public override void InteractAction()
-    {
-
-    }
-
-    public override void UseAction()
-    {
-
-    }
-
     public override void OnCollisionEnter(Collision collision)
     {
         Debug.Log("Rebota con " + collision.contacts[0].otherCollider.gameObject.name);

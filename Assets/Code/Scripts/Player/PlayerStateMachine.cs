@@ -8,8 +8,6 @@ public class PlayerStateMachine : MonoBehaviour
     public MoveState moveState { get; private set; }
     public RollState rollState { get; private set; }
     public PushState pushState { get; private set; }
-    public InteractState interactState { get; private set; }
-    public UseState useState { get; private set; }
 
     public void InitializeStates(PlayerController _controller)
     {
@@ -21,10 +19,6 @@ public class PlayerStateMachine : MonoBehaviour
         rollState.InitializeState(_controller, this);
         pushState = new PushState();
         pushState.InitializeState(_controller, this);
-        interactState = new InteractState();
-        interactState.InitializeState(_controller, this);
-        useState = new UseState();
-        useState.InitializeState(_controller, this);
 
         ChangeState(idleState);
     }
@@ -46,7 +40,5 @@ public class PlayerStateMachine : MonoBehaviour
         currentState = _state;
 
         currentState.EnterState();
-
-        //Debug.Log("Estado actual " + currentState.ToString());
     }
 }

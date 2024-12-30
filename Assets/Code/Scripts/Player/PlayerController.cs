@@ -51,7 +51,6 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
 
-    [SerializeField] private LayerMask interactableLayer;
     [SerializeField] public ObjectHolder objectHolder;
 
 
@@ -120,12 +119,13 @@ public class PlayerController : MonoBehaviour
 
     private void InteractAction()
     {
-        stateMachine.currentState.InteractAction();
+        if(objectHolder.GetInteractableObject() !=  null)
+            objectHolder.GetInteractableObject().Interact(objectHolder);
     }
 
     private void UseAction()
     {
-        stateMachine.currentState.UseAction();
+        objectHolder.GetInteractableObject().UseItem(objectHolder);
     }
     #endregion
 
@@ -220,23 +220,6 @@ public class PlayerController : MonoBehaviour
             startPos = slopePosition.position + new Vector3(0, maxSlopeHeight, 0);
             endPos = startPos + slopePosition.forward * slopeCheckDistance;
             Gizmos.DrawLine(startPos, endPos);
-        }
-
-        Vector3 sphereCenter = transform.position + transform.forward * 1.29f;
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(sphereCenter, 1.5f);
-
-        Collider[] hitColliders = Physics.OverlapSphere(sphereCenter, 1.5f, interactableLayer);
-
-        if (hitColliders.Length > 0)
-        {
-            foreach (var objCollide in hitColliders)
-            {
-                Gizmos.color = Color.red;
-
-                Gizmos.DrawWireCube(objCollide.bounds.center, objCollide.bounds.size);
-            }
         }
     }
 

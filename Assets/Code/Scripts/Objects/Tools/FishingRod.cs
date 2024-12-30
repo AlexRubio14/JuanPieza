@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class FishingRod : Tool
 {
-
-    protected override void UseItem()
+    public override void UseItem(ObjectHolder _objectHolder)
     {
-        
+        throw new System.NotImplementedException();
     }
 }
