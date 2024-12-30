@@ -8,6 +8,9 @@ public abstract class InteractableObject : MonoBehaviour
     [SerializeField] protected SelectedVisual selectedVisual;
     [SerializeField] protected bool isBeingUsed;
 
+    [SerializeField]
+    public Rigidbody rb;
+
     public enum ObjectType { WEAPON, TOOL, DECORATION, RESOURCE };
 
     protected ObjectType objectType;
@@ -21,7 +24,8 @@ public abstract class InteractableObject : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
+
     }
 
     // Update is called once per frame
@@ -31,6 +35,8 @@ public abstract class InteractableObject : MonoBehaviour
     }
 
     public abstract void Interact(ObjectHolder _objectHolder);
+
+    public abstract void UseItem(ObjectHolder _objectHolder);
 
     public float GetWeight()
     {

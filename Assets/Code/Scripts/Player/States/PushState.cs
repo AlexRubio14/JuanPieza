@@ -43,15 +43,6 @@ public class PushState : PlayerState
     {
         //No puedes rodar
     }
-    public override void InteractAction()
-    {
-
-    }
-
-    public override void UseAction()
-    {
-
-    }
 
     public override void OnCollisionEnter(Collision collision)
     {

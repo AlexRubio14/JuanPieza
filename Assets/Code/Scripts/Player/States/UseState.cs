@@ -35,6 +35,6 @@ public class UseState : PlayerState
 
     public override void OnCollisionEnter(Collision collision)
     {
-        base.OnCollisionEnter(collision);
+
     }
 }

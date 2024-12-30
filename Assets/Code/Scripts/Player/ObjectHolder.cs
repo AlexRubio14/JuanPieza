@@ -3,130 +3,104 @@ using UnityEngine;
 
 public class ObjectHolder : MonoBehaviour
 {
+    [SerializeField] private float sphereCastRadius;
+    [SerializeField] private LayerMask itemsLayerMask;
+    [SerializeField] Transform sphereCastTransform;
 
-    [SerializeField] private List<GameObject> objectsInRangeToInteract;
-    [SerializeField] private GameObject objectPosition;
+    (InteractableObject, Collider) interactableObject = (null, null);
 
-    private GameObject selectedObject;
-    private InteractableObject currentInteractableObject;
-    private GameObject objectPicked;
+    [SerializeField] private Transform objectPickedPos;
+
+    private bool hasPickedObject = false;
+
+    public RaycastHit[] colliders;
 
     private void Awake()
     {
-        objectsInRangeToInteract = new List<GameObject>();
-
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+        colliders = new RaycastHit[0];
     }
 
     // Update is called once per frame
     void Update()
     {
-        SelectNeareastItem();
+        (InteractableObject, Collider) neareastObject = CheckItemsInRange();
+        ChangeInteractableObject(neareastObject);
     }
 
-    // Cuando un objeto sale del rango de actuar se limpia de la lista
-    private void ClearObject(GameObject _gameObject)
+    // Crea un sphereRaycast, te pilla el interactableObject mas cercano que no este siendo utilizado y te devuelve su script y su collider a la vez.
+    // Si no hay ningun item devuelve (null, null);
+    public (InteractableObject, Collider) CheckItemsInRange()
     {
-        for (int i = 0; i < objectsInRangeToInteract.Count; i++)
+        colliders = Physics.SphereCastAll(sphereCastTransform.position, sphereCastRadius, transform.forward, sphereCastRadius, itemsLayerMask);
+
+        (InteractableObject, Collider) currentinteractableObject = (null, null);
+
+        float lastDistance = 1000f;
+
+        foreach (RaycastHit item in colliders) 
         {
-            if (objectsInRangeToInteract[i] == _gameObject)
+            if(Vector3.Distance(transform.parent.position, item.collider.transform.position) >= lastDistance)
             {
-                objectsInRangeToInteract.RemoveAt(i);
-                return;
+                continue;
             }
+
+            InteractableObject tempObject = item.collider.GetComponent<InteractableObject>();
+
+            if (tempObject.GetIsBeingUsed())
+                continue;
+
+            lastDistance = Vector3.Distance(transform.parent.position, item.collider.transform.position);
+
+            currentinteractableObject = (tempObject, item.collider);
+
         }
+
+        return currentinteractableObject;
     }
 
-    // Recorre la lista de objetos que tienes en rango de actuar y selecciones el mas cercano al player
-
-    /// <summary>
-    /// Falta Hacer que al recorrer la list tener en cuenta si el objeto esta siendo utilizado para no contarlo
-    /// </summary>
-    private void SelectNeareastItem()
+    private void ChangeInteractableObject((InteractableObject, Collider) neareastObject)
     {
-        if (objectsInRangeToInteract.Count == 0)
+        if (hasPickedObject)
             return;
 
-        float currentdis = 100f;
-        Vector3 disFromObjectToPlayer = Vector3.zero;
-        int objectIndex = -1;
-
-        for (int i = 0; i < objectsInRangeToInteract.Count; i++)
+        if (neareastObject != interactableObject)
         {
-            disFromObjectToPlayer = objectsInRangeToInteract[i].transform.position - transform.position;
-            if(disFromObjectToPlayer.magnitude < currentdis)
+            if(interactableObject.Item1 != null)
             {
-                currentdis = disFromObjectToPlayer.magnitude;
-                objectIndex = i;
+                interactableObject.Item1.GetSelectedVisual().Hide();
             }
+
+            if(neareastObject.Item1 != null)
+            {
+                neareastObject.Item1.GetSelectedVisual().Show();
+            }
+
+            interactableObject = neareastObject;
         }
-
-        if(objectIndex == -1)
-        {
-            selectedObject = null;
-            currentInteractableObject = null;
-            return;
-        }
-
-        // Si el Objeto ya no es el mas cercano que deje de brillar el outline
-        if(objectsInRangeToInteract[objectIndex] != selectedObject && currentInteractableObject != null)
-        {
-            currentInteractableObject.GetSelectedVisual().Hide();
-        }
-
-        selectedObject = objectsInRangeToInteract[objectIndex];
-        currentInteractableObject = selectedObject.GetComponent<InteractableObject>();
-        
-        //Si el objeto mas cercano esta siendo usado no le ponemos outline
-        if(currentInteractableObject.GetIsBeingUsed() == false)
-        {
-            currentInteractableObject.GetSelectedVisual().Show();
-        }
-    }
-
-    public void PickObject()
-    {
-        if (selectedObject == null)
-            return;
-
-        objectPicked = selectedObject;
-        objectPicked.transform.position = objectPosition.transform.position;
-        objectPicked.transform.rotation = objectPosition.transform.rotation;
-        objectPicked.transform.SetParent(objectPosition.transform);
-    }
-
-    public GameObject GetSelectedObject()
-    {
-        return selectedObject;
     }
 
     public InteractableObject GetInteractableObject()
     {
-        return currentInteractableObject;
+        return interactableObject.Item1;
+    }
+    public Vector3 GetObjectPickedPosition()
+    {
+        return objectPickedPos.position;
     }
 
-    public GameObject GetObjectPicked()
+    public bool GetHasObjectPicked()
     {
-        return objectPicked;
+        return hasPickedObject;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void SetHasPickedObject(bool _value)
     {
-        objectsInRangeToInteract.Add(other.gameObject);
+        hasPickedObject = _value;
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnDrawGizmos()
     {
-        ClearObject(other.gameObject);
-        if(other.gameObject == selectedObject)
-        {
-            currentInteractableObject.GetSelectedVisual().Hide();
-            currentInteractableObject = null;
-        }
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(sphereCastTransform.position, sphereCastRadius);
     }
 }
