@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -59,7 +56,9 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField]
     public float swimSpeed { get; private set; }
 
-
+    [Space, Header("Interact"), SerializeField]
+    private Canvas interactCanvas;
+    public GameObject interactCanvasObject => interactCanvas.transform.gameObject;
 
     private void Awake()
     {
@@ -74,6 +73,8 @@ public class PlayerController : MonoBehaviour
         SuscribeActions();
         canRoll = true;
         objectHolder = GetComponentInChildren<ObjectHolder>();
+        interactCanvas.worldCamera = Camera.main;
+        interactCanvasObject.SetActive(false);
     }
 
     private void OnEnable()

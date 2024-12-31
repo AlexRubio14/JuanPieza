@@ -171,7 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 6
+  outlineWidth: 4
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -315,40 +315,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPool:
   - name: Madera
-    prefab: {fileID: 0}
+    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
     rarity: 0
   - name: Municion
-    prefab: {fileID: 0}
+    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
     rarity: 0
   - name: Peces
-    prefab: {fileID: 0}
+    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
     rarity: 0
   - name: Zapato
-    prefab: {fileID: 0}
+    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
     rarity: 0
   - name: Arma Tier 1
-    prefab: {fileID: 0}
+    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
     rarity: 0
   - name: Cerveza
-    prefab: {fileID: 0}
+    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
     rarity: 1
   - name: Cigarro
-    prefab: {fileID: 0}
+    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
     rarity: 1
   - name: Bonk
-    prefab: {fileID: 0}
+    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
     rarity: 1
   - name: Arma Tier 2
-    prefab: {fileID: 0}
+    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
     rarity: 2
   - name: Radio
-    prefab: {fileID: 0}
+    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
     rarity: 2
   - name: Bendicion Random
-    prefab: {fileID: 0}
+    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
     rarity: 3
   - name: Arma Tier 3
-    prefab: {fileID: 0}
+    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
     rarity: 3
   priorityList: 0000000000000000
   rarityPercentages:
@@ -390,6 +390,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   midXPos: 3.26
   minMaxTimeToFishing: {x: 3, y: 5}
+  framesToCheckPlayerPos: 10
+  playerRespawnOffset: 1.5
+  timeToHook: 1
+  parabolaSpeed: 1.8
+  parabolaHeight: 5
   <defaultYPos>k__BackingField: -0.24
   <deathZPos>k__BackingField: -35
 --- !u!114 &395433086
@@ -406,7 +411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 6
+  outlineWidth: 4
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -858,7 +863,7 @@ Transform:
   m_GameObject: {fileID: 615520332}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.85, y: 1, z: -19.01}
+  m_LocalPosition: {x: -5.63, y: 1, z: -19.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -878,7 +883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 6
+  outlineWidth: 4
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -1757,7 +1762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 6
+  outlineWidth: 4
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -2154,6 +2159,85 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &2115142043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2115142046}
+  - component: {fileID: 2115142045}
+  - component: {fileID: 2115142044}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2115142044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115142043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
+--- !u!114 &2115142045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115142043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &2115142046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115142043}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &308025187037263832
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2329,10 +2413,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450652528404645}
-  - component: {fileID: 919132148053094946}
-  - component: {fileID: 1254978171}
   - component: {fileID: 919132148053094945}
   - component: {fileID: 919132148053094944}
+  - component: {fileID: 919132148053094946}
+  - component: {fileID: 1254978171}
   m_Layer: 9
   m_Name: FishingRot
   m_TagString: Untagged
@@ -2362,7 +2446,7 @@ CapsuleCollider:
   m_Radius: 0.15
   m_Height: 3.8
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: -0.09}
+  m_Center: {x: 0, y: 0.9, z: -0.1}
 --- !u!54 &919132148053094945
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2407,6 +2491,7 @@ MonoBehaviour:
   selectedVisual: {fileID: 1254978171}
   isBeingUsed: 0
   rb: {fileID: 919132148053094945}
+  isFishing: 0
   hookPrefab: {fileID: 4474104942210594436, guid: cb1421a45ea9cda46b265e956f3cc815, type: 3}
   hookSpawnPoint: {fileID: 1581595792}
   throwForce: {x: 60, y: 30}
@@ -2651,7 +2736,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &6147481763291950265
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2770,3 +2855,4 @@ SceneRoots:
   - {fileID: 5483664280665711836}
   - {fileID: 385054921}
   - {fileID: 543450652528404645}
+  - {fileID: 2115142046}

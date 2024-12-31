@@ -16,7 +16,7 @@ public class Wood : Resource
 
     public override void Interact(ObjectHolder _objectHolder)
     {
-
+        base.Interact(_objectHolder);
     }
 
     public override void UseItem(ObjectHolder _objectHolder)

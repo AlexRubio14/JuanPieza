@@ -2,36 +2,43 @@ using UnityEngine;
 
 public abstract class Resource : InteractableObject
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public override void Interact(ObjectHolder _objectHolder)
     {
+        if (_objectHolder.GetHasObjectPicked())
+        {
+            DropItem(_objectHolder);
+            return;
+        }
+
         PickItem(_objectHolder);
     }
 
     private void PickItem(ObjectHolder _objectHolder)
     {
-        GameObject item = _objectHolder.GetInteractableObject().gameObject;
+        _objectHolder.SetInteractableObject((this, objectCollider));
+        
+        SetIsBeingUsed(true);
 
-        _objectHolder.GetInteractableObject().SetIsBeingUsed(true);
+        transform.position = _objectHolder.GetObjectPickedPosition();
+        transform.rotation = _objectHolder.transform.rotation;
 
-        item.transform.position = _objectHolder.GetObjectPickedPosition();
-        item.transform.rotation = _objectHolder.transform.rotation;
+        transform.SetParent(_objectHolder.transform.parent);
 
-        item.transform.SetParent(_objectHolder.transform.parent);
+        _objectHolder.SetHasPickedObject(true);
+
+        selectedVisual.Hide();
+        rb.isKinematic = true;
     }
-    private void DropItem()
+    private void DropItem(ObjectHolder _objectHolder)
     {
+        _objectHolder.SetInteractableObject((null, null));
 
+        SetIsBeingUsed(false);
+
+        transform.SetParent(null);
+
+        _objectHolder.SetHasPickedObject(false);
+
+        rb.isKinematic = false;
     }
 }

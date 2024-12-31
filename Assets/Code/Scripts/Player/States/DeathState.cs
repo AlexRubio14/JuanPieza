@@ -9,18 +9,22 @@ public class DeathState : PlayerState
     private float lerpProcess;
     public Vector3 hookPosition {  get; private set; }
 
+    public bool isSwimming;
     public Transform transform => controller.transform;
     private Rigidbody rb => controller.GetRB();
+
+    public PlayerStateMachine deathStateMachine => stateMachine;
+    
 
     public override void EnterState()
     {
         rb.isKinematic = true;
+        isSwimming = false;
         CalculateDeathPos();
         //Spawnear señal de ayuda
 
         hookPosition = Vector3.zero;
         FishingManager.instance.AddDeadPlayer(this);
-
     }
     public override void UpdateState()
     {
@@ -93,6 +97,7 @@ public class DeathState : PlayerState
 
     private void WaitToGetRescued()
     {
+        isSwimming = false;
         //Esperar a ser revivido
         Debug.Log("Esta cerca del anzuelo");
     }
@@ -101,6 +106,7 @@ public class DeathState : PlayerState
         //Lerp de la posicion actual hacia la del anzuelo mas cercano
         rb.position = transform.position + (endPosition - transform.position).normalized * controller.swimSpeed * Time.deltaTime;
         controller.SetRotation((endPosition - transform.position).normalized);
+        isSwimming = true;
         //Si mientras se esta yendo se quita el anzuelo se reiniciara el lerp hacia la muerte y la posicion inicial se volvera la actual
     }
 }

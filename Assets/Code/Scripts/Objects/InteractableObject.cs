@@ -10,6 +10,7 @@ public abstract class InteractableObject : MonoBehaviour
 
     [SerializeField]
     public Rigidbody rb;
+    protected Collider objectCollider;
 
     public enum ObjectType { WEAPON, TOOL, DECORATION, RESOURCE };
 
@@ -18,20 +19,8 @@ public abstract class InteractableObject : MonoBehaviour
 
     private void Awake()
     {
-        isBeingUsed = false;
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
         rb = GetComponent<Rigidbody>();
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        isBeingUsed = false;
     }
 
     public abstract void Interact(ObjectHolder _objectHolder);

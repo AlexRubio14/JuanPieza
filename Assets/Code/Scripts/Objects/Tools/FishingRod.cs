@@ -1,7 +1,8 @@
 using UnityEngine;
 public class FishingRod : Tool
 {
-    public bool isFishing {  get; private set; }
+    [HideInInspector]
+    public bool isFishing;
     private bool hookThrowed;
     private bool hookLanded;
 
@@ -14,8 +15,8 @@ public class FishingRod : Tool
 
     public HookController hook { get; private set; }
 
-
-    private PlayerStateMachine playerSM;
+    public PlayerController player { get; private set; }
+    public PlayerStateMachine playerSM { get; private set; }
     private void Start()
     {
         isFishing = false;
@@ -43,6 +44,7 @@ public class FishingRod : Tool
         base.Interact(_objectHolder);
 
         playerSM = _objectHolder.GetComponentInParent<PlayerStateMachine>();
+        player = _objectHolder.GetComponentInParent<PlayerController>();
         playerSM.fishingState.fishingRod = this;
     }
 
@@ -71,15 +73,19 @@ public class FishingRod : Tool
         FishingManager.instance.FishingRodUsed(this);
         isFishing = true;
     }
- 
     private void GrabHook()
     {
         FishingManager.instance.HookGrabbed(this);
 
+        if (!hook.onWater)
+        {
+            playerSM.ChangeState(playerSM.idleState);
+            isFishing = false;
+        }
         hook.gameObject.SetActive(false);
-        isFishing = false;
         hookThrowed = false;
         hookLanded = false;
+
     }
 
     private void OnEnable()

@@ -15,14 +15,14 @@ public abstract class Tool : InteractableObject
 
     private void PickItem(ObjectHolder _objectHolder)
     {
-        GameObject item = _objectHolder.GetInteractableObject().gameObject;
+        _objectHolder.SetInteractableObject((this, objectCollider));
 
-        _objectHolder.GetInteractableObject().SetIsBeingUsed(true);
+        SetIsBeingUsed(true);
 
-        item.transform.position = _objectHolder.GetObjectPickedPosition();
-        item.transform.rotation = _objectHolder.transform.rotation;
+        transform.position = _objectHolder.GetObjectPickedPosition();
+        transform.rotation = _objectHolder.transform.rotation;
 
-        item.transform.SetParent(_objectHolder.transform.parent);
+        transform.SetParent(_objectHolder.transform.parent);
 
         _objectHolder.SetHasPickedObject(true);
 
@@ -30,17 +30,16 @@ public abstract class Tool : InteractableObject
         rb.isKinematic = true;
     }
 
-    private void DropItem(ObjectHolder _objectHolder)
+    public void DropItem(ObjectHolder _objectHolder)
     {
-        GameObject item = _objectHolder.GetInteractableObject().gameObject;
+        _objectHolder.SetInteractableObject((null, null));
 
-        _objectHolder.GetInteractableObject().SetIsBeingUsed(false);
+        SetIsBeingUsed(false);
 
-        item.transform.SetParent(null);
+        transform.SetParent(null);
 
         _objectHolder.SetHasPickedObject(false);
 
         rb.isKinematic = false;
-
     }
 }

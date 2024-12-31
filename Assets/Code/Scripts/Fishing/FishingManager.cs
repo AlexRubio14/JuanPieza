@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
-using static FishingManager;
 
 public class FishingManager : MonoBehaviour
 {
@@ -15,22 +12,36 @@ public class FishingManager : MonoBehaviour
         public FishingRod fishingRod;
         public FishingState fishingState;
         public float timeToAppearObject;
+        public GameObject fishedObject;
+
+        public (DeathState, Side) currentPlayer;
+
         public float starterTime;
-        public int currentPlayerId;
-        public Vector3 lastPlayerPos;
         public float parabolaProcess;
+        public Vector3 parabolaStartPos;
+        public Vector3 parabolaEndPos;
     }
     private List<FishingData> fishingData;
     private ObjectPool fishingObjectPool;
 
     private List<(DeathState, Side)> deadPlayers;
-    
+
     [SerializeField]
     private float midXPos;
     [SerializeField]
     private Vector2 minMaxTimeToFishing;
+    [SerializeField]
+    private int framesToCheckPlayerPos;
+    [SerializeField]
+    private float playerRespawnOffset;
+    [Space, SerializeField]
+    private float timeToHook;
+    [SerializeField]
+    private float parabolaSpeed;
+    [SerializeField]
+    private float parabolaHeight;
 
-    [field: SerializeField]
+    [field: Space, SerializeField]
     public float defaultYPos { get; private set; }
     [field: SerializeField]
     public float deathZPos { get; private set; }
@@ -44,7 +55,7 @@ public class FishingManager : MonoBehaviour
 
         fishingObjectPool = GetComponent<ObjectPool>();
         fishingData = new List<FishingData>();
-        deadPlayers = new List<(DeathState, Side)> ();
+        deadPlayers = new List<(DeathState, Side)>();
     }
 
     // Update is called once per frame
@@ -66,42 +77,22 @@ public class FishingManager : MonoBehaviour
                     case FishingState.IDLE:
                         break;
                     case FishingState.WAITING_PLAYER:
-                        //Aqui o el player deberia estar nadando o ha perdido su oportunidad
-                        //Comprobar si la posicion actual es la misma que la anterior
-                        Vector3 actualPlayerPos = deadPlayers[fishingData[i].currentPlayerId].Item1.transform.position;
-
-                        if (actualPlayerPos == fishingData[i].lastPlayerPos) //El player esta quieto
-                        {
-                            //Empezar el evento para que el player recoja la caña y salve al player
-                            CanHook(i, FishingState.CAN_HOOK_PLAYER);
-                        }
-                        else //El player se esta moviendo
-                        {
-                            FishingData newData = fishingData[i];
-                            newData.lastPlayerPos = actualPlayerPos;
-                            fishingData[i] = newData;
-                        }
-
+                        WaitingPlayer(i);
                         break;
                     case FishingState.CAN_HOOK_PLAYER:
-                        //Aqui tiene el corto periodo de tiempo para que el player lo resucite
-                        //Si no le da el player que esta muerto tendra que continuar con su camino
+                        CanHookPlayer(i);
+                        break;
+                    case FishingState.HOOKED_PLAYER:
+                        HookedPlayer(i);
                         break;
                     case FishingState.WAITING_OBJECT:
-                        //Aqui esta esperando el tiempo necesario para que le spawnee un objeto
-                        if (Time.time - fishingData[i].starterTime >= fishingData[i].timeToAppearObject)
-                        {
-                            //Empezar el evento para que el player recoja la caña y consiga un objeto
-                            CanHook(i, FishingState.CAN_HOOK_OBJECT);
-                        }
+                        WaitingObject(i);                     
                         break;
                     case FishingState.CAN_HOOK_OBJECT:
-                        //Aqui tiene el corto periodo de tiempo para que el player recoja el objeto
-                        //Si lo deja a pasar volvera al estado de Waiting Object y generaremos las variables de nuevo
-
+                        CanHookObject(i);
                         break;
                     case FishingState.HOOKED_OBJECT:
-
+                        HookedObject(i);
                         break;
                     default:
                         break;
@@ -109,6 +100,92 @@ public class FishingManager : MonoBehaviour
             }
         }
     }
+
+    #region Fishing States
+    private void WaitingPlayer(int _id)
+    {
+        //Aqui o el player deberia estar nadando o ha perdido su oportunidad
+        //Comprobar si la posicion actual es la misma que la anterior
+        Vector3 actualPlayerPos = fishingData[_id].currentPlayer.Item1.transform.position;
+
+        if (!fishingData[_id].currentPlayer.Item1.isSwimming) //El player esta quieto
+        {
+            //Empezar el evento para que el player recoja la caña y salve al player
+            CanHook(_id, FishingState.CAN_HOOK_PLAYER);
+        }
+    }
+    private void CanHookPlayer(int _id)
+    {
+        //Aqui tiene el corto periodo de tiempo para que el player lo resucite
+        if (Time.time - fishingData[_id].starterTime >= timeToHook)
+        {
+            fishingData[_id].fishingRod.player.interactCanvasObject.SetActive(false);
+            //Generar las variables del player de nuevo
+            fishingData[_id].currentPlayer.Item1.CalculateDeathPos();
+        }
+
+    }
+    private void HookedPlayer(int _id)
+    {
+        FishingData parabolaData = fishingData[_id];
+        parabolaData.parabolaProcess += Time.deltaTime * parabolaSpeed;
+        fishingData[_id] = parabolaData;
+
+        fishingData[_id].currentPlayer.Item1.transform.position =
+            Parabola(fishingData[_id].parabolaStartPos, fishingData[_id].parabolaEndPos, parabolaHeight, fishingData[_id].parabolaProcess);
+
+
+
+        if (fishingData[_id].parabolaProcess >= 1)//Acabar la pesca
+        {
+            StopFishing(fishingData[_id].fishingRod);
+            //Cambiar el estado del player muerto
+            fishingData[_id].currentPlayer.Item1.deathStateMachine.ChangeState(fishingData[_id].currentPlayer.Item1.deathStateMachine.idleState);
+        }
+    }
+
+    private void WaitingObject(int _id)
+    {
+        //Aqui esta esperando el tiempo necesario para que le spawnee un objeto
+        if (Time.time - fishingData[_id].starterTime >= fishingData[_id].timeToAppearObject)
+        {
+            //Empezar el evento para que el player recoja la caña y consiga un objeto
+            CanHook(_id, FishingState.CAN_HOOK_OBJECT);
+        }
+    }
+    private void CanHookObject(int _id)
+    {
+        //Aqui tiene el corto periodo de tiempo para que el player recoja el objeto
+        //Si lo deja a pasar volvera al estado de Waiting Object y generaremos las variables de nuevo
+        if (Time.time - fishingData[_id].starterTime >= timeToHook)
+        {
+            fishingData[_id].fishingRod.player.interactCanvasObject.SetActive(false);
+            GenerateWaitObjectValues(_id);
+        }
+    }
+    private void HookedObject(int _id)
+    {
+        FishingData parabolaData = fishingData[_id];
+        parabolaData.parabolaProcess += Time.deltaTime * parabolaSpeed;
+        fishingData[_id] = parabolaData;
+
+        fishingData[_id].fishedObject.transform.position =
+            Parabola(fishingData[_id].parabolaStartPos, fishingData[_id].parabolaEndPos, parabolaHeight, fishingData[_id].parabolaProcess);
+
+
+
+        if (fishingData[_id].parabolaProcess >= 1)//Acabar la pesca
+        {
+            StopFishing(fishingData[_id].fishingRod);
+
+            //Dejar la caña anclada en el suelo
+            fishingData[_id].fishingRod.DropItem(fishingData[_id].fishingRod.player.objectHolder);
+
+            //Poner el objeto en la mano                                                        
+            fishingData[_id].fishedObject.GetComponent<InteractableObject>().Interact(fishingData[_id].fishingRod.player.objectHolder);
+        }
+    }
+    #endregion
 
     private Side GetSideByXPos(float _currentX)
     {
@@ -143,14 +220,21 @@ public class FishingManager : MonoBehaviour
         newData.fishingState = FishingState.WAITING_OBJECT;
         fishingData[_id] = newData;
     } 
+    
     private void CanHook(int _dataId ,FishingState _nextState)
     {
         FishingData newData = fishingData[_dataId];
 
         newData.fishingState = _nextState;
         newData.parabolaProcess = 0;
+        newData.starterTime = Time.time;
 
-        //Encender el 
+        fishingData[_dataId] = newData;
+        //Encender el cartel con una exclamacion
+        GameObject interactableCanvas = fishingData[_dataId].fishingRod.player.interactCanvasObject;
+        interactableCanvas.transform.forward = Camera.main.transform.forward;
+        interactableCanvas.transform.localPosition = new Vector3(0.2f, 2, 0.5f); 
+        interactableCanvas.SetActive(true);
     }
 
     public void FishingRodUsed(FishingRod _fishingRod)
@@ -170,11 +254,13 @@ public class FishingManager : MonoBehaviour
             {
                 //Setear en el player muerto el target
                 deadPlayers[i].Item1.SetHookPosition(fishingData[id].fishingRod.hook.transform.position);
-                FishingData newData = fishingData[id];
 
-                newData.currentPlayerId = i;
+                FishingData newData = fishingData[id];
+                newData.currentPlayer = deadPlayers[i];
+                newData.currentPlayer.Item1.isSwimming = true;
                 newData.fishingState = FishingState.WAITING_PLAYER;
                 fishingData[id] = newData;
+                
                 return;
             }
         }
@@ -187,31 +273,20 @@ public class FishingManager : MonoBehaviour
         int id = GetFisingRodId(_fishingRod);
         if (id == -1)
             return;
-
-        FishingData newData;
         
         switch (fishingData[id].fishingState)
         {
             case FishingState.WAITING_PLAYER:
-                if (deadPlayers.Count > 0 && deadPlayers[fishingData[id].currentPlayerId].Item1.hookPosition != Vector3.zero)
-                    deadPlayers[fishingData[id].currentPlayerId].Item1.CalculateDeathPos();
+                GrabWhileWaitingPlayer(id, _fishingRod);
                 break;
             case FishingState.CAN_HOOK_PLAYER:
-                //Revivir player (No cambiarle el estado de muerto hasta que llegue al barco)
+                GrabPlayer(id, _fishingRod);
                 break;
-            case FishingState.CAN_HOOK_OBJECT:
-                //Sacar el objeto del agua
-
-                //Generar objeto random de la pool
-
-                //Instanciarlo
-
-                //Colocarlo
-
-                //Cambiar al estado de Recogida
-                newData = fishingData[id];
-                newData.fishingState = FishingState.HOOKED_OBJECT;
-                fishingData[id] = newData;
+            case FishingState.WAITING_OBJECT:
+                StopFishing(_fishingRod); 
+                break;
+            case FishingState.CAN_HOOK_OBJECT://Sacar el objeto del agua
+                GrabObject(id, _fishingRod);
                 break;
             default:
                 break;
@@ -219,7 +294,13 @@ public class FishingManager : MonoBehaviour
         
 
     }
+    private void StopFishing(FishingRod _fishingRod)
+    {
+        _fishingRod.playerSM.ChangeState(_fishingRod.playerSM.idleState);
+        _fishingRod.isFishing = false;
+        _fishingRod.player.interactCanvasObject.SetActive(false);
 
+    }
 
     public void AddFishingRod(FishingRod _fishingRod)
     {
@@ -233,6 +314,41 @@ public class FishingManager : MonoBehaviour
         int id = GetFisingRodId(_fishingRod);
         if (id != -1)
             fishingData.Remove(fishingData[id]);
+    }
+    #endregion
+
+    #region Grab Fishing Rod
+    private void GrabWhileWaitingPlayer(int _id, FishingRod _fishingRod)
+    {
+        if (fishingData[_id].currentPlayer.Item1 != null && fishingData[_id].currentPlayer.Item1.hookPosition != Vector3.zero)
+            fishingData[_id].currentPlayer.Item1.CalculateDeathPos();
+        StopFishing(_fishingRod);
+    }
+    private void GrabPlayer(int _id, FishingRod _fishingRod)
+    {
+        //Revivir player (No cambiarle el estado de muerto hasta que llegue al barco)
+        FishingData newData = fishingData[_id];
+        newData.fishingState = FishingState.HOOKED_PLAYER;
+        newData.parabolaStartPos = _fishingRod.hook.transform.position;
+        newData.parabolaEndPos = _fishingRod.player.transform.position + -_fishingRod.player.transform.forward * playerRespawnOffset;
+        fishingData[_id] = newData;
+    }
+    private void GrabObject(int _id, FishingRod _fishingRod)
+    {
+
+        //Generar objeto random de la pool
+        ObjectPool.Item itemData = fishingObjectPool.GetRandomItem();
+        //Instanciarlo
+        GameObject newItem = Instantiate(itemData.prefab, _fishingRod.hook.transform.position, Quaternion.identity);
+        //Colocarlo
+        newItem.transform.forward = -_fishingRod.player.transform.forward;
+        //Cambiar al estado de Recogida
+        FishingData newData = fishingData[_id];
+        newData.fishingState = FishingState.HOOKED_OBJECT;
+        newData.fishedObject = newItem;
+        newData.parabolaStartPos = _fishingRod.hook.transform.position;
+        newData.parabolaEndPos = _fishingRod.player.transform.position;
+        fishingData[_id] = newData;
     }
     #endregion
 
