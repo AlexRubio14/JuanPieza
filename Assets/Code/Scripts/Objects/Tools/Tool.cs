@@ -2,19 +2,6 @@ using UnityEngine;
 
 public abstract class Tool : InteractableObject
 {
-    
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public override void Interact(ObjectHolder _objectHolder)
     {
         if (_objectHolder.GetHasObjectPicked())
@@ -40,6 +27,7 @@ public abstract class Tool : InteractableObject
         _objectHolder.SetHasPickedObject(true);
 
         selectedVisual.Hide();
+        rb.isKinematic = true;
     }
 
     private void DropItem(ObjectHolder _objectHolder)
@@ -51,6 +39,8 @@ public abstract class Tool : InteractableObject
         item.transform.SetParent(null);
 
         _objectHolder.SetHasPickedObject(false);
+
+        rb.isKinematic = false;
 
     }
 }

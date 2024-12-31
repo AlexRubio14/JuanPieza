@@ -124,13 +124,12 @@ public class PlayerController : MonoBehaviour
 
     private void InteractAction()
     {
-        if(objectHolder.GetInteractableObject() !=  null)
-            objectHolder.GetInteractableObject().Interact(objectHolder);
+        stateMachine.currentState.InteractAction();        
     }
 
     private void UseAction()
     {
-        objectHolder.GetInteractableObject().UseItem(objectHolder);
+        stateMachine.currentState.UseAction();        
     }
     #endregion
 
@@ -181,6 +180,15 @@ public class PlayerController : MonoBehaviour
     private void WaitRollCD()
     {
         canRoll = true;
+    }
+    public void Interact()
+    {
+        if (objectHolder.GetInteractableObject() != null)
+            objectHolder.GetInteractableObject().Interact(objectHolder);
+    }
+    public void Use()
+    {
+        objectHolder.GetInteractableObject().UseItem(objectHolder);
     }
     #endregion
 

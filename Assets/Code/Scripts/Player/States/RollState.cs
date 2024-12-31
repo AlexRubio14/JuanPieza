@@ -34,6 +34,8 @@ public class RollState : PlayerState
     {
         //No puedes volver a rodar
     }
+    public override void InteractAction() { /*No puedes interactuar*/ }
+    public override void UseAction() { /*No puedes usar ningun objeto*/ }
 
     public override void OnCollisionEnter(Collision collision)
     {

@@ -22,14 +22,11 @@ public class FishingState : PlayerState
         //No puedes rodar
     }
 
-    public override void InteractAction()
+    public override void InteractAction() { /*No puedes interactuar*/ }
+    public override void UseAction() 
     {
-        //nada
-    }
-
-    public override void UseAction()
-    {
-        //Recoger Anzuelo
+        //Aqui deberias tener la caña asi que puedes usarla
+        controller.Use();
     }
 
     public override void OnCollisionEnter(Collision collision)

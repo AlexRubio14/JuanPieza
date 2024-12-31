@@ -27,12 +27,12 @@ public class FishingRod : Tool
     {
         if(Input.GetKeyDown(KeyCode.K))
         {
-            UseItem();
+            UseItem(null);
         }
     }
 
-    protected override void UseItem()
-    {       
+    public override void UseItem(ObjectHolder _objectHolder)
+    {
         if (!isFishing && !hookThrowed) //Tirar anzuelo
             ThrowHook();
         else if (isFishing || hookLanded && !hook.onWater)//Recoger anzuelo
@@ -84,7 +84,8 @@ public class FishingRod : Tool
 
     private void OnEnable()
     {
-        FishingManager.instance.AddFishingRod(this);
+        if(FishingManager.instance)
+            FishingManager.instance.AddFishingRod(this);
     }
     private void OnDisable()
     {

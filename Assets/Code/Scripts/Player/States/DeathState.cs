@@ -24,34 +24,19 @@ public class DeathState : PlayerState
     }
     public override void UpdateState()
     {
+        if (hookPosition == Vector3.zero) //Si no hay ningun anzuelo en tu zona del mar 
+            SeaDrag();
+        else //Si hay algun anzuelo
+        {
+            //Si la distancia hacia el  anzuelo es menor a X esperar a ser rescatado
+            if (Vector3.Distance(transform.position, endPosition) <= 1)
+                WaitToGetRescued();
+            else
+                SwimToHook();
+        }
     }
     public override void FixedUpdateState()
     {
-        
-        
-        if(hookPosition == Vector3.zero) //Si no hay ningun anzuelo en tu zona del mar 
-        {
-            //Lerp de la posicion inicial a la final 
-            lerpProcess += Time.fixedDeltaTime;
-            rb.position = Vector3.Lerp(startPosition, endPosition, lerpProcess / controller.timeToDie);
-
-            if (lerpProcess / controller.timeToDie >= 1)
-                Debug.Log("Ha muerto");
-
-        }
-        else //Si hay algun anzuelo
-        {
-            //Lerp de la posicion actual hacia la del anzuelo mas cercano
-            rb.position = Vector3.Lerp(startPosition, endPosition, Time.fixedDeltaTime * controller.swimSpeed);
-
-            //Cuando se llegue a la posicion del anzuelo activar evento de recoger    
-            if(Vector3.Distance(startPosition, endPosition) <= 1)
-            {
-                //Revivir
-                Debug.Log("Revive");
-            }
-            //Si mientras se esta yendo se quita el anzuelo se reiniciara el lerp hacia la muerte y la posicion inicial se volvera la actual
-        }
            
     }
     public override void ExitState()
@@ -82,7 +67,6 @@ public class DeathState : PlayerState
         endPosition.y = FishingManager.instance.defaultYPos;
         endPosition.z = FishingManager.instance.deathZPos;
     }
-
     public void SetHookPosition(Vector3 _hookPos)
     {
         lerpProcess = 0;
@@ -96,4 +80,27 @@ public class DeathState : PlayerState
         endPosition = hookPosition;
     }
 
+    private void SeaDrag()
+    {
+        //Lerp de la posicion inicial a la final 
+        lerpProcess += Time.deltaTime;
+        rb.position = Vector3.Lerp(startPosition, endPosition, lerpProcess / controller.timeToDie);
+
+        if (lerpProcess / controller.timeToDie >= 1)
+            Debug.Log("Ha muerto");
+        
+    }
+
+    private void WaitToGetRescued()
+    {
+        //Esperar a ser revivido
+        Debug.Log("Esta cerca del anzuelo");
+    }
+    private void SwimToHook()
+    {
+        //Lerp de la posicion actual hacia la del anzuelo mas cercano
+        rb.position = transform.position + (endPosition - transform.position).normalized * controller.swimSpeed * Time.deltaTime;
+        controller.SetRotation((endPosition - transform.position).normalized);
+        //Si mientras se esta yendo se quita el anzuelo se reiniciara el lerp hacia la muerte y la posicion inicial se volvera la actual
+    }
 }
