@@ -97,9 +97,4 @@ public class FishingRod : Tool
     {
         FishingManager.instance.RemoveFishingRod(this);
     }
-
-    protected override void UseItem()
-    {
-        throw new System.NotImplementedException();
-    }
 }

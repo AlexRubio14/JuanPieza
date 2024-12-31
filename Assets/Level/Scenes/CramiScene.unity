@@ -283,120 +283,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352963231}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &385054919
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 385054921}
-  - component: {fileID: 385054920}
-  - component: {fileID: 385054922}
-  m_Layer: 0
-  m_Name: FishingManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &385054920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 385054919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43e0ff667e261dd4fa46eb5eaf3df772, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemPool:
-  - name: Madera
-    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
-    rarity: 0
-  - name: Municion
-    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
-    rarity: 0
-  - name: Peces
-    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
-    rarity: 0
-  - name: Zapato
-    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
-    rarity: 0
-  - name: Arma Tier 1
-    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
-    rarity: 0
-  - name: Cerveza
-    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
-    rarity: 1
-  - name: Cigarro
-    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
-    rarity: 1
-  - name: Bonk
-    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
-    rarity: 1
-  - name: Arma Tier 2
-    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
-    rarity: 2
-  - name: Radio
-    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
-    rarity: 2
-  - name: Bendicion Random
-    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
-    rarity: 3
-  - name: Arma Tier 3
-    prefab: {fileID: 5941943988759409877, guid: b6c11547edbdd3f4d98bce76b70eff66, type: 3}
-    rarity: 3
-  priorityList: 0000000000000000
-  rarityPercentages:
-    _serializedList:
-    - Key: 0
-      Value: 0.7
-    - Key: 1
-      Value: 0.25
-    - Key: 2
-      Value: 0.075
-    - Key: 3
-      Value: 0.02
---- !u!4 &385054921
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 385054919}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.8846955, y: 2.9009337, z: 45.936443}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &385054922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 385054919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e86887d9b9114749b643448dfa737e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  midXPos: 3.26
-  minMaxTimeToFishing: {x: 3, y: 5}
-  framesToCheckPlayerPos: 10
-  playerRespawnOffset: 1.5
-  timeToHook: 1
-  parabolaSpeed: 1.8
-  parabolaHeight: 5
-  <defaultYPos>k__BackingField: -0.24
-  <deathZPos>k__BackingField: -35
 --- !u!114 &395433086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2540,6 +2426,63 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &1361189465313943112
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7356194627300511325, guid: d448d01e81359114eaad0c045e827948, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.8846955
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356194627300511325, guid: d448d01e81359114eaad0c045e827948, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.9009337
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356194627300511325, guid: d448d01e81359114eaad0c045e827948, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 45.936443
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356194627300511325, guid: d448d01e81359114eaad0c045e827948, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356194627300511325, guid: d448d01e81359114eaad0c045e827948, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356194627300511325, guid: d448d01e81359114eaad0c045e827948, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356194627300511325, guid: d448d01e81359114eaad0c045e827948, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356194627300511325, guid: d448d01e81359114eaad0c045e827948, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356194627300511325, guid: d448d01e81359114eaad0c045e827948, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356194627300511325, guid: d448d01e81359114eaad0c045e827948, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8066213909585788101, guid: d448d01e81359114eaad0c045e827948, type: 3}
+      propertyPath: m_Name
+      value: FishingManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d448d01e81359114eaad0c045e827948, type: 3}
 --- !u!23 &1555716934167345835
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2853,6 +2796,6 @@ SceneRoots:
   - {fileID: 3995077}
   - {fileID: 308025187037263832}
   - {fileID: 5483664280665711836}
-  - {fileID: 385054921}
+  - {fileID: 1361189465313943112}
   - {fileID: 543450652528404645}
   - {fileID: 2115142046}

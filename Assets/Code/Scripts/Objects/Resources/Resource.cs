@@ -24,7 +24,7 @@ public abstract class Resource : InteractableObject
 
         transform.SetParent(_objectHolder.transform.parent);
 
-        _objectHolder.SetHasPickedObject(true);
+        _objectHolder.SetHasObjectPicked(true);
 
         selectedVisual.Hide();
         rb.isKinematic = true;
@@ -37,7 +37,7 @@ public abstract class Resource : InteractableObject
 
         transform.SetParent(null);
 
-        _objectHolder.SetHasPickedObject(false);
+        _objectHolder.SetHasObjectPicked(false);
 
         rb.isKinematic = false;
     }
