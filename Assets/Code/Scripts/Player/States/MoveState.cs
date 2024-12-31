@@ -27,10 +27,18 @@ public class MoveState : PlayerState
     {
         stateMachine.ChangeState(stateMachine.rollState);
     }
+    public override void InteractAction()
+    {
+        controller.Interact();
+    }
+    public override void UseAction()
+    {
+        controller.Use();
+    }
 
     public override void OnCollisionEnter(Collision collision)
     {
-
+        base.OnCollisionEnter(collision);
     }
 
 }

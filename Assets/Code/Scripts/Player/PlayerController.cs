@@ -1,8 +1,4 @@
-using NUnit.Framework;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -52,9 +48,17 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
 
     [SerializeField] public ObjectHolder objectHolder;
-
-
     public InteractableObject item { get; private set; }
+
+
+    [field: Space, Header("Push"), SerializeField]
+    public float timeToDie {  get; private set; }
+    [field: SerializeField]
+    public float swimSpeed { get; private set; }
+
+    [Space, Header("Interact"), SerializeField]
+    private Canvas interactCanvas;
+    public GameObject interactCanvasObject => interactCanvas.transform.gameObject;
 
     private void Awake()
     {
@@ -69,6 +73,8 @@ public class PlayerController : MonoBehaviour
         SuscribeActions();
         canRoll = true;
         objectHolder = GetComponentInChildren<ObjectHolder>();
+        interactCanvas.worldCamera = Camera.main;
+        interactCanvasObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -119,13 +125,12 @@ public class PlayerController : MonoBehaviour
 
     private void InteractAction()
     {
-        if(objectHolder.GetInteractableObject() !=  null)
-            objectHolder.GetInteractableObject().Interact(objectHolder);
+        stateMachine.currentState.InteractAction();        
     }
 
     private void UseAction()
     {
-        objectHolder.GetInteractableObject().UseItem(objectHolder);
+        stateMachine.currentState.UseAction();        
     }
     #endregion
 
@@ -177,8 +182,22 @@ public class PlayerController : MonoBehaviour
     {
         canRoll = true;
     }
+    public void Interact()
+    {
+        if (objectHolder.GetInteractableObject() != null)
+            objectHolder.GetInteractableObject().Interact(objectHolder);
+    }
+    public void Use()
+    {
+        objectHolder.GetInteractableObject().UseItem(objectHolder);
+    }
     #endregion
 
+    public void SetItem(InteractableObject _item)
+    {
+        item = _item;
+    }
+    public Rigidbody GetRB() { return rb; }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -223,8 +242,4 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetItem(InteractableObject _item)
-    {
-        item = _item;
-    }
 }

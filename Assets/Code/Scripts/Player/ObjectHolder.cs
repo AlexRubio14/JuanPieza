@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ObjectHolder : MonoBehaviour
@@ -24,8 +23,11 @@ public class ObjectHolder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        (InteractableObject, Collider) neareastObject = CheckItemsInRange();
-        ChangeInteractableObject(neareastObject);
+        if (!hasPickedObject)
+        {
+            (InteractableObject, Collider) neareastObject = CheckItemsInRange();
+            ChangeInteractableObject(neareastObject);
+        }
     }
 
     // Crea un sphereRaycast, te pilla el interactableObject mas cercano que no este siendo utilizado y te devuelve su script y su collider a la vez.
@@ -83,6 +85,10 @@ public class ObjectHolder : MonoBehaviour
     public InteractableObject GetInteractableObject()
     {
         return interactableObject.Item1;
+    }
+    public void SetInteractableObject((InteractableObject, Collider) _interactableObject)
+    {
+        interactableObject = _interactableObject;
     }
     public Vector3 GetObjectPickedPosition()
     {

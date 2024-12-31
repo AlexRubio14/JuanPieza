@@ -15,9 +15,16 @@ public abstract class PlayerState
     public abstract void UpdateState();
     public abstract void FixedUpdateState();
     public abstract void ExitState();
-
+    
     public abstract void RollAction();
-
-    public abstract void OnCollisionEnter(Collision collision);
+    public abstract void InteractAction();
+    public abstract void UseAction();
+    public virtual void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Water"))
+        {
+            stateMachine.ChangeState(stateMachine.deathState);
+        }
+    }
 
 }

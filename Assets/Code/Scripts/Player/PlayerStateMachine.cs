@@ -8,6 +8,8 @@ public class PlayerStateMachine : MonoBehaviour
     public MoveState moveState { get; private set; }
     public RollState rollState { get; private set; }
     public PushState pushState { get; private set; }
+    public FishingState fishingState { get; private set; }
+    public DeathState deathState { get; private set; }
 
     public void InitializeStates(PlayerController _controller)
     {
@@ -19,6 +21,10 @@ public class PlayerStateMachine : MonoBehaviour
         rollState.InitializeState(_controller, this);
         pushState = new PushState();
         pushState.InitializeState(_controller, this);
+        fishingState = new FishingState();
+        fishingState.InitializeState(_controller, this);
+        deathState = new DeathState();
+        deathState.InitializeState(_controller, this);
 
         ChangeState(idleState);
     }
@@ -40,5 +46,10 @@ public class PlayerStateMachine : MonoBehaviour
         currentState = _state;
 
         currentState.EnterState();
+    }
+
+    private void OnDisable()
+    {
+        currentState.ExitState();
     }
 }
