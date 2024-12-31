@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 9178469154202676254}
   - component: {fileID: 1368518478953210378}
   - component: {fileID: 3622083986062369275}
-  - component: {fileID: 3081061161652684717}
   - component: {fileID: 8361404259722753180}
+  - component: {fileID: 8897925437961549400}
+  - component: {fileID: 5181382868670303678}
+  - component: {fileID: 3081061161652684717}
   - component: {fileID: 2254593256201433652}
   - component: {fileID: 4446892466199824541}
   m_Layer: 0
@@ -90,6 +92,59 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8361404259722753180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282872445104571694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 555eee365dcdff74faa6fca362a9bdba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: CannonBoxBroken
+  weight: 10
+  selectedVisual: {fileID: 8897925437961549400}
+  isBeingUsed: 0
+  rb: {fileID: 4446892466199824541}
+  itemNeeded: {fileID: 0}
+  repairDuration: 2
+  repairSpeed: 0.2
+  fixedSibling: {fileID: 7074629630316515128}
+--- !u!114 &8897925437961549400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282872445104571694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ad746d5a6581945ab61ea7f4501189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineArray:
+  - {fileID: 5181382868670303678}
+--- !u!114 &5181382868670303678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282872445104571694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!65 &3081061161652684717
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -111,22 +166,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.03, y: 0.03, z: 0.007}
   m_Center: {x: -0.00017054798, y: 0.00006531457, z: 0.0033802667}
---- !u!114 &8361404259722753180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1282872445104571694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 555eee365dcdff74faa6fca362a9bdba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemNeeded: {fileID: 0}
-  repairDuration: 2
-  repairSpeed: 0.2
-  fixedSibling: {fileID: 7074629630316515128}
 --- !u!65 &2254593256201433652
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -393,6 +432,8 @@ GameObject:
   - component: {fileID: 353437537941044948}
   - component: {fileID: 3204234038764834985}
   - component: {fileID: 8427452760553678582}
+  - component: {fileID: 6197873964884232472}
+  - component: {fileID: 4751708208054039794}
   - component: {fileID: 2012623186213377644}
   - component: {fileID: 3947863102983567594}
   - component: {fileID: 4180345605095306999}
@@ -486,11 +527,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8574d1d8bf2ef3f4eb9aa4a573fe242c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: 
-  weight: 0
-  selectedVisual: {fileID: 0}
+  objectName: CannonBoxFixed
+  weight: 10
+  selectedVisual: {fileID: 6197873964884232472}
   isBeingUsed: 0
-  rb: {fileID: 0}
+  rb: {fileID: 4180345605095306999}
   itemDropped: {fileID: 0}
   itemDroppedCollider: {fileID: 0}
   decorations:
@@ -511,6 +552,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 0}
   brokenSibling: {fileID: 1282872445104571694}
+--- !u!114 &6197873964884232472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074629630316515128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ad746d5a6581945ab61ea7f4501189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineArray:
+  - {fileID: 4751708208054039794}
+--- !u!114 &4751708208054039794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074629630316515128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!65 &2012623186213377644
 BoxCollider:
   m_ObjectHideFlags: 0

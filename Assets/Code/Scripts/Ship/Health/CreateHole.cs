@@ -15,7 +15,7 @@ public class CreateHole : DetectBullet
         GameObject _hole = Instantiate(hole);
         _hole.transform.position = new Vector3(position.x, position.y + 0.15f, position.z);
         _hole.GetComponent<Hole>().SetShipInformation(ship);
-        _hole.GetComponent<Repair>().SetbulletInformation(ship, bullet.GetDamage());
+        _hole.GetComponentInChildren<Repair>().SetbulletInformation(ship, bullet.GetDamage());
         _hole.transform.SetParent(this.transform, true);
     }
 }

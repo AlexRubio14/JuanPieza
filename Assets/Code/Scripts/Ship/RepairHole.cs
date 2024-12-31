@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class RepairHole : Repair
 {
-    protected override void RepairEnded(PlayerController player)
+    protected override void RepairEnded(ObjectHolder _objectHolder)
     {
-        ship.RemoveInteractuableObject(player.item);
-        player.SetItem(null);
-        //Destruir el item
+        ship.RemoveInteractuableObject(_objectHolder.GetInteractableObject());
+        Destroy(_objectHolder.gameObject);
         Destroy(gameObject);
     }
 }

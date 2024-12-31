@@ -185,6 +185,8 @@ GameObject:
   - component: {fileID: 4493179413357469045}
   - component: {fileID: 8256618914855057819}
   - component: {fileID: 7047459118052183363}
+  - component: {fileID: 3115065031757210210}
+  - component: {fileID: 3875919332600808288}
   - component: {fileID: 2056537766317088524}
   - component: {fileID: 6454809922734941576}
   - component: {fileID: 4025500362423804808}
@@ -279,9 +281,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f929a802fa6043409985b0d5055cc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: 
-  weight: 0
-  selectedVisual: {fileID: 0}
+  objectName: HammerBoxFixed
+  weight: 10
+  selectedVisual: {fileID: 3115065031757210210}
   isBeingUsed: 0
   rb: {fileID: 4025500362423804808}
   itemDropped: {fileID: 0}
@@ -305,6 +307,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 0}
   brokenSibling: {fileID: 6218878107081918593}
+--- !u!114 &3115065031757210210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2176768186935484883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ad746d5a6581945ab61ea7f4501189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineArray:
+  - {fileID: 3875919332600808288}
+--- !u!114 &3875919332600808288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2176768186935484883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!65 &2056537766317088524
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -505,6 +539,8 @@ GameObject:
   - component: {fileID: 4283319524340496838}
   - component: {fileID: 7874347728258563060}
   - component: {fileID: 6648285181300586274}
+  - component: {fileID: 7429775827871594159}
+  - component: {fileID: 705618523576384416}
   - component: {fileID: 2564244954606982766}
   - component: {fileID: 273136944739521766}
   - component: {fileID: 3855134665583516917}
@@ -514,7 +550,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &393898041387545833
 Transform:
   m_ObjectHideFlags: 0
@@ -595,10 +631,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555eee365dcdff74faa6fca362a9bdba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectName: HammerBoxBroken
+  weight: 10
+  selectedVisual: {fileID: 7429775827871594159}
+  isBeingUsed: 0
+  rb: {fileID: 3855134665583516917}
   itemNeeded: {fileID: 0}
   repairDuration: 2
   repairSpeed: 0.2
   fixedSibling: {fileID: 2176768186935484883}
+--- !u!114 &7429775827871594159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6218878107081918593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ad746d5a6581945ab61ea7f4501189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineArray:
+  - {fileID: 705618523576384416}
+--- !u!114 &705618523576384416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6218878107081918593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!65 &2564244954606982766
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -184,6 +184,8 @@ GameObject:
   - component: {fileID: 6967976292104818335}
   - component: {fileID: 8690245307773709719}
   - component: {fileID: 9069426772208356874}
+  - component: {fileID: 4290889227264282575}
+  - component: {fileID: 9058661888651999533}
   - component: {fileID: 5110421549006170061}
   - component: {fileID: 889221947196407032}
   - component: {fileID: 5297986626431996406}
@@ -193,7 +195,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4488132606226847788
 Transform:
   m_ObjectHideFlags: 0
@@ -274,10 +276,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555eee365dcdff74faa6fca362a9bdba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemNeeded: {fileID: 0}
+  objectName: SwordBoxBroken
+  weight: 10
+  selectedVisual: {fileID: 4290889227264282575}
+  isBeingUsed: 0
+  rb: {fileID: 5297986626431996406}
+  itemNeeded: {fileID: 9069426772208356874}
   repairDuration: 2
   repairSpeed: 0.2
   fixedSibling: {fileID: 8153978340977050914}
+--- !u!114 &4290889227264282575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6816082766001514106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ad746d5a6581945ab61ea7f4501189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineArray:
+  - {fileID: 9058661888651999533}
+--- !u!114 &9058661888651999533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6816082766001514106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!65 &5110421549006170061
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -360,6 +399,8 @@ GameObject:
   - component: {fileID: 8574417786059969674}
   - component: {fileID: 4239423778071471859}
   - component: {fileID: 4619614500128188260}
+  - component: {fileID: 7133486282910182429}
+  - component: {fileID: 836151463396432615}
   - component: {fileID: 2687239110404376400}
   - component: {fileID: 2007120669920175301}
   - component: {fileID: 376658213259322710}
@@ -454,9 +495,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f929a802fa6043409985b0d5055cc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: 
-  weight: 0
-  selectedVisual: {fileID: 0}
+  objectName: SwordBoxFixed
+  weight: 10
+  selectedVisual: {fileID: 7133486282910182429}
   isBeingUsed: 0
   rb: {fileID: 376658213259322710}
   itemDropped: {fileID: 0}
@@ -480,6 +521,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 0}
   brokenSibling: {fileID: 6816082766001514106}
+--- !u!114 &7133486282910182429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8153978340977050914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ad746d5a6581945ab61ea7f4501189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineArray:
+  - {fileID: 836151463396432615}
+--- !u!114 &836151463396432615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8153978340977050914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!65 &2687239110404376400
 BoxCollider:
   m_ObjectHideFlags: 0

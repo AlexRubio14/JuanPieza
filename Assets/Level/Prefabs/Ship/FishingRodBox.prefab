@@ -218,6 +218,8 @@ GameObject:
   - component: {fileID: 295480982656487025}
   - component: {fileID: 2531626387984484914}
   - component: {fileID: 299659729089196061}
+  - component: {fileID: 2168289159223264401}
+  - component: {fileID: 2581430922971670293}
   - component: {fileID: 6310204214533041214}
   - component: {fileID: 2005555795732363297}
   - component: {fileID: 596446504341132805}
@@ -312,9 +314,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f929a802fa6043409985b0d5055cc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: 
-  weight: 0
-  selectedVisual: {fileID: 0}
+  objectName: FishingRodBoxFixed
+  weight: 10
+  selectedVisual: {fileID: 2168289159223264401}
   isBeingUsed: 0
   rb: {fileID: 596446504341132805}
   itemDropped: {fileID: 0}
@@ -338,6 +340,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 0}
   brokenSibling: {fileID: 6501252709550753326}
+--- !u!114 &2168289159223264401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4048575890191899347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ad746d5a6581945ab61ea7f4501189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineArray:
+  - {fileID: 2581430922971670293}
+--- !u!114 &2581430922971670293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4048575890191899347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!65 &6310204214533041214
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -419,6 +453,8 @@ GameObject:
   - component: {fileID: 7514618370693419593}
   - component: {fileID: 7478249367744824250}
   - component: {fileID: 1161886840500686268}
+  - component: {fileID: 1095693004144397600}
+  - component: {fileID: 263544981337281944}
   - component: {fileID: 5363933712195332653}
   - component: {fileID: 6096559140703924350}
   - component: {fileID: 271876631312908364}
@@ -428,7 +464,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8368683940832476688
 Transform:
   m_ObjectHideFlags: 0
@@ -509,10 +545,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555eee365dcdff74faa6fca362a9bdba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectName: FishingRodBoxBroken
+  weight: 10
+  selectedVisual: {fileID: 1095693004144397600}
+  isBeingUsed: 0
+  rb: {fileID: 271876631312908364}
   itemNeeded: {fileID: 0}
   repairDuration: 2
   repairSpeed: 0.2
   fixedSibling: {fileID: 4048575890191899347}
+--- !u!114 &1095693004144397600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501252709550753326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ad746d5a6581945ab61ea7f4501189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineArray:
+  - {fileID: 263544981337281944}
+--- !u!114 &263544981337281944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501252709550753326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!65 &5363933712195332653
 BoxCollider:
   m_ObjectHideFlags: 0

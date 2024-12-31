@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
-public class Repair : MonoBehaviour
+public class Repair : InteractableObject
 {
     [Header("Item")]
     [SerializeField] private InteractableObject itemNeeded;
@@ -13,7 +12,7 @@ public class Repair : MonoBehaviour
     private float currentRepairTime;
 
     [Header("Player")]
-    private List<PlayerController> players;
+    private List<(PlayerController, ObjectHolder)> players;
 
     [Header("Ship")]
     protected Ship ship;
@@ -21,26 +20,25 @@ public class Repair : MonoBehaviour
 
     private void Start()
     {
-        players = new List<PlayerController>();
-    }
-    public void StartRepairObject(PlayerController player)
-    {
-        if (player.item == itemNeeded)
-        {
-            players.Add(player);
-            //Change State
-        }
+        players = new List<(PlayerController, ObjectHolder)>();
     }
 
-    public void StopRepairObject(PlayerController player)
+    public override void Interact(ObjectHolder _objectHolder)
     {
-        players.Remove(player);
-        //Change State
+        if (_objectHolder.GetInteractableObject() == itemNeeded)
+        {
+            players.Add((_objectHolder.GetComponentInParent<PlayerController>(), _objectHolder));
+        }
     }
 
     private void Update()
     {
-        if(players.Count > 0)
+        RepairObjec();
+    }
+
+    private void RepairObjec()
+    {
+        if (players.Count > 0)
         {
             currentRepairTime += repairSpeed * players.Count * Time.deltaTime;
             if (currentRepairTime >= repairDuration)
@@ -60,13 +58,11 @@ public class Repair : MonoBehaviour
     {
         for(int i = players.Count - 1; i >= 0; i--) 
         {
-            RepairEnded(players[i]);
-            StopRepairObject(players[i]);
+            RepairEnded(players[i].Item2);
         }
-
     }
 
-    protected virtual void RepairEnded(PlayerController player)
+    protected virtual void RepairEnded(ObjectHolder _objectHolder)
     {
 
     }
@@ -75,5 +71,9 @@ public class Repair : MonoBehaviour
     {
         ship = _ship;
         damageDeal = amount;
+    }
+    public override void UseItem(ObjectHolder _objectHolder)
+    {
+        throw new System.NotImplementedException();
     }
 }
