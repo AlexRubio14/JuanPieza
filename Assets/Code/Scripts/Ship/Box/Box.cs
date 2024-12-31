@@ -1,29 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Box : MonoBehaviour
+public class Box : InteractableObject
 {
     [Header("Item")]
     [SerializeField] private InteractableObject itemDropped;
-    private int itemsInBox;
+    [SerializeField] private Collider itemDroppedCollider;
+    protected int itemsInBox;
 
-    public InteractableObject DropItem(PlayerController player)
-    {
-        if(player.item == null && HasItem())
-        {
-            RemoveItemInBox();
-            return itemDropped;
-        }
-
-        return null;
-    }
-
-    public void AddItemInBox()
+    public virtual void AddItemInBox()
     {
         itemsInBox++;
     }
 
-    public void RemoveItemInBox()
+    public virtual void RemoveItemInBox()
     {
         itemsInBox--;
     }
@@ -31,5 +21,20 @@ public class Box : MonoBehaviour
     public bool HasItem()
     {
         return itemsInBox > 0;
+    }
+
+    public override void Interact(ObjectHolder _objectHolder)
+    {
+        if (!_objectHolder.GetHasObjectPicked() && HasItem())
+        {
+            RemoveItemInBox();
+            _objectHolder.SetHasObjectPicked(true);
+            _objectHolder.InstantiateItem(itemDropped, itemDroppedCollider);
+        }
+    }
+
+    public override void UseItem(ObjectHolder _objectHolder)
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class RepairObject : Repair
 {
-    protected override void RepairEnded(PlayerController player)
+    [Header("Sibling")]
+    [SerializeField] private GameObject fixedSibling;
+    protected override void RepairEnded(ObjectHolder _objectHolder)
     {
-        //volver a activar 
+        fixedSibling.SetActive(true);
+        gameObject.SetActive(false);
     }
 }

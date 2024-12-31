@@ -37,7 +37,7 @@ public abstract class Tool : InteractableObject
 
         item.transform.SetParent(_objectHolder.transform.parent);
 
-        _objectHolder.SetHasPickedObject(true);
+        _objectHolder.SetHasObjectPicked(true);
 
         selectedVisual.Hide();
     }
@@ -50,7 +50,7 @@ public abstract class Tool : InteractableObject
 
         item.transform.SetParent(null);
 
-        _objectHolder.SetHasPickedObject(false);
+        _objectHolder.SetHasObjectPicked(false);
 
     }
 }

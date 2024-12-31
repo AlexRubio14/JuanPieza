@@ -94,9 +94,23 @@ public class ObjectHolder : MonoBehaviour
         return hasPickedObject;
     }
 
-    public void SetHasPickedObject(bool _value)
+    public void SetHasObjectPicked(bool _value)
     {
         hasPickedObject = _value;
+    }
+
+    public void InstantiateItem(InteractableObject _interactableObject, Collider _interactableObjectCollider)
+    {
+        GameObject item = Instantiate(_interactableObject.gameObject);
+        item.transform.SetParent(transform.parent, true);
+        item.transform.localPosition = objectPickedPos.position;
+        SetInteractableObject(_interactableObject, _interactableObjectCollider);
+    }
+
+    public void SetInteractableObject(InteractableObject _interactableObject, Collider _interactableObjectCollider)
+    {
+        interactableObject.Item1 = _interactableObject;
+        interactableObject.Item2 = _interactableObjectCollider;
     }
 
     private void OnDrawGizmos()
