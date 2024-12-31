@@ -6,4 +6,9 @@ public class FishingRod : Tool
     {
         throw new System.NotImplementedException();
     }
+
+    protected override void UseItem()
+    {
+        throw new System.NotImplementedException();
+    }
 }
