@@ -1,7 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectDetectBullet : DetectBullet
 {
+    [Header("Sibling")]
+    [SerializeField] private GameObject brokenSibling;
     protected override void DetectCollision(Collision collision)
     {
         base.DetectCollision(collision);
@@ -10,7 +13,9 @@ public class ObjectDetectBullet : DetectBullet
 
     protected void SetInformation()
     {
-        GetComponent<Repair>().SetbulletInformation(ship, bullet.GetDamage());
+        brokenSibling.SetActive(true);
+        brokenSibling.GetComponent<Repair>().SetbulletInformation(ship, bullet.GetDamage());
+        gameObject.SetActive(false);
     }
 
 }

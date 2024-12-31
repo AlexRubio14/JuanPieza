@@ -6,14 +6,14 @@ public class Box : InteractableObject
     [Header("Item")]
     [SerializeField] private InteractableObject itemDropped;
     [SerializeField] private Collider itemDroppedCollider;
-    private int itemsInBox;
+    protected int itemsInBox;
 
-    public void AddItemInBox()
+    public virtual void AddItemInBox()
     {
         itemsInBox++;
     }
 
-    public void RemoveItemInBox()
+    public virtual void RemoveItemInBox()
     {
         itemsInBox--;
     }
