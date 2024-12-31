@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Sword : Tool
 {
+    [SerializeField] protected CapsuleCollider attackCollider;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,5 +25,16 @@ public class Sword : Tool
     public override void UseItem(ObjectHolder _objectHolder)
     {
         Debug.Log("Corte con la espada");
+        //empezar funcion de ataque
+    }
+
+    public void ActivateAttackCollider()
+    {
+        attackCollider.enabled = true;
+    }
+
+    public void DeactivateAttackCollider()
+    {
+        attackCollider.enabled = false;
     }
 }

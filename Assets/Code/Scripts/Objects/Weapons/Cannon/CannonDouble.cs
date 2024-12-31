@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Wood : Resource
+public class CannonDouble : Weapon
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,6 +16,6 @@ public class Wood : Resource
 
     public override void UseItem(ObjectHolder _objectHolder)
     {
-        Debug.Log("Uso madera");
+        Shoot();
     }
 }
