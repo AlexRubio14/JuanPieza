@@ -1,94 +1,162 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
     [Header("Map Parameters")]
-    private int mapHeight;
+    [SerializeField] private int mapHeight; 
+    private int currentHeight;
 
     [Header("Node Data")]
     [SerializeField] private List<NodeData> allNodes;
     [SerializeField] private NodeData startNode;
     [SerializeField] private NodeData boss;
-    private Dictionary<int, List<NodeData>> nodes;
+    private Dictionary<NodeData.NodeType, List<NodeData>> nodes;
     private Dictionary<int, List<NodeData>> map;
 
     private void Start()
     {
-        nodes = new Dictionary<int, List<NodeData>>();
-        map = new Dictionary<int, List<NodeData>>();
+        nodes = new Dictionary<NodeData.NodeType, List<NodeData>>(); 
+        map = new Dictionary<int, List<NodeData>>(); 
 
-        mapHeight = boss.difficult;
+        currentHeight = 0; 
 
-        GenerateMap();
+        GenerateMap(); 
     }
 
-    public void GenerateMap()
+    private void GenerateMap()
     {
         nodes = OrderNodes();
-        map[startNode.difficult] = new List<NodeData> { startNode };
 
-        SetRandomChildrens(startNode);
+        if (!map.ContainsKey(currentHeight))
+        {
+            map[currentHeight] = new List<NodeData>() { startNode };
+        }
 
-        map[mapHeight] = new List<NodeData> { boss };
+        foreach (NodeData node in map[currentHeight])
+        {
+            node.nodeHeigth = currentHeight;
+        }
 
-        Debug.Log($"Boss Node: {boss.name}, Children: None (Boss is the final node)");
+        SetRandomChildrens(startNode, currentHeight);
+
+        PrintMap();
     }
 
-    private void SetRandomChildrens(NodeData node)
+    private void SetRandomChildrens(NodeData node, int nodeHeight)
     {
-        int nextDifficulty = node.difficult + 1;
+        nodeHeight++;
 
-        if (nextDifficulty == mapHeight)
+        if (nodeHeight == mapHeight)
         {
+            if (!map.ContainsKey(nodeHeight))
+            {
+                map[nodeHeight] = new List<NodeData>();
+            }
+
+            boss.nodeHeigth = nodeHeight;
+            map[nodeHeight].Add(boss);
+
             node.children = new List<NodeData> { boss };
-            Debug.Log($"Node: {node.name}, Children: {string.Join(", ", node.children.Select(c => c.name))}");
+
             return;
         }
 
-        List<NodeData> availableNodes = nodes[nextDifficulty];
+        List<NodeData> children = new List<NodeData>();
 
-        List<NodeData> selectedChildren = availableNodes.OrderBy(x => Random.value).Take(2).ToList();
-
-        node.children = selectedChildren;
-
-        if (!map.ContainsKey(nextDifficulty))
+        for (int i = 0; i < 2; i++)
         {
-            map[nextDifficulty] = new List<NodeData>();
-        }
-        foreach (var child in selectedChildren)
-        {
-            if (!map[nextDifficulty].Contains(child))
+            NodeData.NodeType childType = GetNodeTypeBasedOnProbability();
+            NodeData originalNode = nodes[childType].OrderBy(x => Random.value).FirstOrDefault();
+            NodeData selectedNode = originalNode?.CretaeNode();
+
+            if (selectedNode != null)
             {
-                map[nextDifficulty].Add(child);
+                selectedNode.nodeHeigth = nodeHeight;
+                children.Add(selectedNode);
             }
         }
 
-        Debug.Log($"Node: {node.name}, Children: {string.Join(", ", node.children.Select(c => c.name))}");
+        node.children = children;
 
-        foreach (NodeData child in selectedChildren)
+        if (!map.ContainsKey(nodeHeight))
         {
-            SetRandomChildrens(child);
+            map[nodeHeight] = new List<NodeData>();
+        }
+
+        foreach (var child in children)
+        {
+            map[nodeHeight].Add(child);
+        }
+
+        foreach (NodeData child in children)
+        {
+            SetRandomChildrens(child, child.nodeHeigth);
         }
     }
 
-    private Dictionary<int, List<NodeData>> OrderNodes()
+    private NodeData.NodeType GetNodeTypeBasedOnProbability()
     {
-        Dictionary<int, List<NodeData>> nodesByDifficulty = new Dictionary<int, List<NodeData>>();
+        float randomChance = Random.value; 
+
+        if (randomChance <= 0.80f)
+        {
+            return NodeData.NodeType.BATTLE;
+        }
+        else if (randomChance <= 0.95f)
+        {
+            return NodeData.NodeType.SHOP;
+        }
+        else
+        {
+            return NodeData.NodeType.EVENT;
+        }
+    }
+
+    private Dictionary<NodeData.NodeType, List<NodeData>> OrderNodes()
+    {
+        Dictionary<NodeData.NodeType, List<NodeData>> nodesByType = new Dictionary<NodeData.NodeType, List<NodeData>>();
 
         foreach (NodeData node in allNodes)
         {
-            int key = node.difficult;
+            NodeData.NodeType key = node.nodeType;
 
-            if (!nodesByDifficulty.ContainsKey(key))
+            if (!nodesByType.ContainsKey(key))
             {
-                nodesByDifficulty[key] = new List<NodeData>();
+                nodesByType[key] = new List<NodeData>();
             }
 
-            nodesByDifficulty[key].Add(node);
+            nodesByType[key].Add(node);
         }
 
-        return nodesByDifficulty;
+        return nodesByType;
+    }
+
+    private void PrintMap()
+    {
+        for (int height = 0; height <= mapHeight; height++) 
+        {
+            if (map.ContainsKey(height)) 
+            {
+                foreach (NodeData node in map[height])
+                {
+                    if (node.children != null && node.children.Count > 0)
+                    {
+                        var childNames = node.children.OrderBy(c => c.nodeHeigth).Select(c => c.name).ToList();
+                        Debug.Log($"Node: {node.name}, Children: {string.Join(", ", childNames)}, Height: {node.nodeHeigth} ");
+                    }
+                    else
+                    {
+                        Debug.Log($"Node: {node.name}, Height: {node.nodeHeigth} ");
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log($"Height {height}: No nodes");
+            }
+        }
     }
 }

@@ -11,4 +11,16 @@ public class NodeData : ScriptableObject
     public int difficult;
     public string sceneName;
     public List<NodeData> children;
+    public int nodeHeigth;
+
+    public NodeData CretaeNode()
+    {
+        return new NodeData
+        {
+            name = this.name,
+            nodeType = this.nodeType,
+            nodeHeigth = this.nodeHeigth,
+            children = new List<NodeData>()
+        };
+    }
 }
