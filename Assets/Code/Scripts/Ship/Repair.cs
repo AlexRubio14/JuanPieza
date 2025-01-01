@@ -40,6 +40,7 @@ public class Repair : InteractableObject
     {
         if (players.Count > 0)
         {
+            Debug.Log("entra");
             currentRepairTime += repairSpeed * players.Count * Time.deltaTime;
             if (currentRepairTime >= repairDuration)
             {

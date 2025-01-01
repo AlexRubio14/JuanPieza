@@ -7,7 +7,6 @@ public class Box : InteractableObject
     [SerializeField] private InteractableObject itemDropped;
     [SerializeField] private Collider itemDroppedCollider;
     protected int itemsInBox;
-
     public virtual void AddItemInBox()
     {
         itemsInBox++;

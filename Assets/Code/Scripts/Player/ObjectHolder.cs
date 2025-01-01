@@ -108,8 +108,9 @@ public class ObjectHolder : MonoBehaviour
     public void InstantiateItem(InteractableObject _interactableObject, Collider _interactableObjectCollider)
     {
         GameObject item = Instantiate(_interactableObject.gameObject);
+        item.GetComponent<Rigidbody>().isKinematic = true;
         item.transform.SetParent(transform.parent, true);
-        item.transform.localPosition = objectPickedPos.position;
+        item.transform.position = objectPickedPos.position;
         SetInteractableObject(_interactableObject, _interactableObjectCollider);
     }
 
