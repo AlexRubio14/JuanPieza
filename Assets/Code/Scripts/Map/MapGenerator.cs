@@ -2,27 +2,25 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Unity.VisualScripting.Metadata;
 
 public class MapGenerator : MonoBehaviour
 {
     [Header("Map Parameters")]
-    [SerializeField] private int mapHeight; 
+    [SerializeField] private int mapHeight;
+    [SerializeField] private List<float> percentage; 
+    [SerializeField] private float divider; 
     private int currentHeight;
 
     [Header("Node Data")]
     [SerializeField] private List<NodeData> allNodes;
     [SerializeField] private NodeData startNode;
     [SerializeField] private NodeData boss;
-    private Dictionary<NodeData.NodeType, List<NodeData>> nodes;
-    private Dictionary<int, List<NodeData>> map;
+    private Dictionary<NodeData.NodeType, List<NodeData>> nodes = new Dictionary<NodeData.NodeType, List<NodeData>>();
+    private Dictionary<int, List<NodeData>> map = new Dictionary<int, List<NodeData>>(); 
 
     private void Start()
     {
-        nodes = new Dictionary<NodeData.NodeType, List<NodeData>>(); 
-        map = new Dictionary<int, List<NodeData>>(); 
-
-        currentHeight = 0; 
-
         GenerateMap(); 
     }
 
@@ -30,89 +28,122 @@ public class MapGenerator : MonoBehaviour
     {
         nodes = OrderNodes();
 
-        if (!map.ContainsKey(currentHeight))
-        {
-            map[currentHeight] = new List<NodeData>() { startNode };
-        }
+        CreateMapHeight(currentHeight);
+        CreateMapHeight(mapHeight);
 
-        foreach (NodeData node in map[currentHeight])
-        {
-            node.nodeHeigth = currentHeight;
-        }
+        List<float> probabilites = new List<float>() { percentage[0], percentage[1], percentage[2] };
 
-        SetRandomChildrens(startNode, currentHeight);
+        NodeData bossNode = CreateNodeMap(boss, mapHeight, probabilites);
+        NodeData _startNode = CreateNodeMap(startNode, currentHeight, probabilites);
 
+        SetRandomChildrens(_startNode, currentHeight, bossNode);
         PrintMap();
     }
 
-    private void SetRandomChildrens(NodeData node, int nodeHeight)
+    private void SetRandomChildrens(NodeData node, int nodeHeight, NodeData boss)
     {
         nodeHeight++;
 
+        CreateMapHeight(nodeHeight);
+
         if (nodeHeight == mapHeight)
         {
-            if (!map.ContainsKey(nodeHeight))
-            {
-                map[nodeHeight] = new List<NodeData>();
-            }
-
-            boss.nodeHeigth = nodeHeight;
-            map[nodeHeight].Add(boss);
-
             node.children = new List<NodeData> { boss };
-
             return;
         }
 
-        List<NodeData> children = new List<NodeData>();
+        node.children = CreateNodeChildren(nodeHeight, node);
 
-        for (int i = 0; i < 2; i++)
+        foreach (NodeData child in node.children)
         {
-            NodeData.NodeType childType = GetNodeTypeBasedOnProbability();
-            NodeData originalNode = nodes[childType].OrderBy(x => Random.value).FirstOrDefault();
-            NodeData selectedNode = originalNode?.CretaeNode();
-
-            if (selectedNode != null)
-            {
-                selectedNode.nodeHeigth = nodeHeight;
-                children.Add(selectedNode);
-            }
-        }
-
-        node.children = children;
-
-        if (!map.ContainsKey(nodeHeight))
-        {
-            map[nodeHeight] = new List<NodeData>();
-        }
-
-        foreach (var child in children)
-        {
-            map[nodeHeight].Add(child);
-        }
-
-        foreach (NodeData child in children)
-        {
-            SetRandomChildrens(child, child.nodeHeigth);
+            SetRandomChildrens(child, child.nodeHeigth, boss);
         }
     }
 
-    private NodeData.NodeType GetNodeTypeBasedOnProbability()
+    private (NodeData.NodeType, List<float>) GetNodeTypeBasedOnProbability(NodeData node)
     {
-        float randomChance = Random.value; 
+        float battlePercentage = node.battlePercentage;
+        float shopPercentage = node.shopPercentage;
+        float eventPercentage = node.eventPercentage;
 
-        if (randomChance <= 0.80f)
+        if (node.nodeType == NodeData.NodeType.BATTLE)
         {
-            return NodeData.NodeType.BATTLE;
+            battlePercentage /= divider;
+            shopPercentage += (node.battlePercentage - battlePercentage) / 2;
+            eventPercentage += (node.battlePercentage - battlePercentage) / 2;
         }
-        else if (randomChance <= 0.95f)
+        else if (node.nodeType == NodeData.NodeType.SHOP)
         {
-            return NodeData.NodeType.SHOP;
+            shopPercentage /= divider;
+            battlePercentage += (node.shopPercentage - shopPercentage) / 2;
+            eventPercentage += (node.shopPercentage - shopPercentage) / 2;
+        }
+        else if (node.nodeType == NodeData.NodeType.EVENT)
+        {
+            eventPercentage /= divider;
+            battlePercentage += (node.eventPercentage - eventPercentage) / 2;
+            shopPercentage += (node.eventPercentage - eventPercentage) / 2;
+        }
+
+        List<float> probabilities = new List<float> { battlePercentage, shopPercentage, eventPercentage };
+        float randomChance = Random.value;
+        if (randomChance <= battlePercentage)
+        {
+            return (NodeData.NodeType.BATTLE, probabilities);
+        }
+        else if (randomChance <= battlePercentage + shopPercentage)
+        {
+            return (NodeData.NodeType.SHOP, probabilities);
         }
         else
         {
-            return NodeData.NodeType.EVENT;
+            return (NodeData.NodeType.EVENT, probabilities);
         }
+    } 
+
+    private void CreateMapHeight(int height)
+    {
+        if (!map.ContainsKey(height))
+        {
+            map[height] = new List<NodeData>();
+        }
+    }
+
+    private NodeData CreateNodeMap(NodeData node, int height, List<float> probabilities) 
+    {
+        NodeData selectedNode = node?.CretaeNode();
+        selectedNode.nodeHeigth = height;
+        selectedNode.battlePercentage = probabilities[0];
+        selectedNode.shopPercentage = probabilities[1];
+        selectedNode.eventPercentage = probabilities[2];
+        map[height].Add(selectedNode);
+
+        return selectedNode;
+    }
+
+    private List<NodeData> CreateNodeChildren(int nodeHeight, NodeData node)
+    {
+        List<NodeData> children = new List<NodeData>();
+        HashSet<NodeData.NodeType> assignedTypes = new HashSet<NodeData.NodeType>(); 
+
+        for (int i = 0; i < 2; i++)
+        {
+            (NodeData.NodeType childType, List<float> childProbabilities) = GetNodeTypeBasedOnProbability(node);
+
+            while (assignedTypes.Contains(childType) && (childType == NodeData.NodeType.SHOP || childType == NodeData.NodeType.EVENT))
+            {
+                (childType, childProbabilities) = GetNodeTypeBasedOnProbability(node);
+            }
+
+            if (childType == NodeData.NodeType.SHOP || childType == NodeData.NodeType.EVENT)
+            {
+                assignedTypes.Add(childType);
+            }
+
+            NodeData originalNode = nodes[childType].OrderBy(x => Random.value).FirstOrDefault();
+            children.Add(CreateNodeMap(originalNode, nodeHeight, childProbabilities));
+        }
+        return children;
     }
 
     private Dictionary<NodeData.NodeType, List<NodeData>> OrderNodes()
@@ -136,20 +167,22 @@ public class MapGenerator : MonoBehaviour
 
     private void PrintMap()
     {
-        for (int height = 0; height <= mapHeight; height++) 
+        for (int height = 0; height <= mapHeight; height++)
         {
-            if (map.ContainsKey(height)) 
+            if (map.ContainsKey(height))
             {
                 foreach (NodeData node in map[height])
                 {
+                    string probabilities = $"Battle: {node.battlePercentage:P1}, Shop: {node.shopPercentage:P1}, Event: {node.eventPercentage:P1}";
+
                     if (node.children != null && node.children.Count > 0)
                     {
                         var childNames = node.children.OrderBy(c => c.nodeHeigth).Select(c => c.name).ToList();
-                        Debug.Log($"Node: {node.name}, Children: {string.Join(", ", childNames)}, Height: {node.nodeHeigth} ");
+                        Debug.Log($"Node: {node.name}, Probabilities: {probabilities}, Children: {string.Join(", ", childNames)}, Height: {node.nodeHeigth}");
                     }
                     else
                     {
-                        Debug.Log($"Node: {node.name}, Height: {node.nodeHeigth} ");
+                        Debug.Log($"Node: {node.name}, Probabilities: {probabilities}, Height: {node.nodeHeigth}");
                     }
                 }
             }
