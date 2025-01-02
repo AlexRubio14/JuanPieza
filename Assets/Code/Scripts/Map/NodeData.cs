@@ -8,13 +8,7 @@ public class NodeData : ScriptableObject
     public enum NodeType { BATTLE, EVENT, SHOP, BOSS }
 
     public NodeType nodeType;
-    public int difficult;
     public string sceneName;
-    public List<NodeData> children;
-    public int nodeHeigth;
-    public float battlePercentage;
-    public float shopPercentage;
-    public float eventPercentage;
 
     public NodeData CretaeNode()
     {
@@ -23,8 +17,6 @@ public class NodeData : ScriptableObject
             name = this.name,
             sceneName = this.sceneName,
             nodeType = this.nodeType,
-            nodeHeigth = this.nodeHeigth,
-            children = new List<NodeData>()
         };
     }
 }

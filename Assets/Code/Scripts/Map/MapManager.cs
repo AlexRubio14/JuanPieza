@@ -7,9 +7,9 @@ public class MapManager : MonoBehaviour
 {
     public static MapManager Instance { get; private set; }
 
-    private NodeData currentLevel;
-    private List<NodeData> childrenLevel = new List<NodeData>();
-    private Dictionary<int, List<NodeData>> map = new Dictionary<int, List<NodeData>>();
+    private LevelNode currentLevel;
+    private List<LevelNode> childrenLevel = new List<LevelNode>();
+    private Dictionary<int, List<LevelNode>> map = new Dictionary<int, List<LevelNode>>();
     private int mapHeight;
 
     private void Awake()
@@ -27,7 +27,7 @@ public class MapManager : MonoBehaviour
 
     private void Update()
     {
-        if(currentLevel.children.Count > 1)
+        if (currentLevel._nodeChildren.Count > 1)
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -38,7 +38,7 @@ public class MapManager : MonoBehaviour
                 UpdateCurrentLevel(childrenLevel[1]);
             }
         }
-        else if(currentLevel.children.Count > 0)
+        else if (currentLevel._nodeChildren.Count > 0)
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -51,22 +51,25 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    private void UpdateCurrentLevel(NodeData _currentLevel)
+    private void UpdateCurrentLevel(LevelNode _currentLevel)
     {
         currentLevel = _currentLevel;
-        childrenLevel = currentLevel.children;
-        Debug.Log($"Node: {currentLevel.name},Height: {currentLevel.nodeHeigth}");
+        childrenLevel = currentLevel._nodeChildren;
+        var childNames = currentLevel._nodeChildren.OrderBy(c => c._nodeHeigth).Select(c => c._node.name).ToList();
+        Debug.Log($"Node: {currentLevel._node.name},Height: {currentLevel._nodeHeigth},Children: {string.Join(", ", childNames)}");
     }
 
-    public void SetMap(Dictionary<int, List<NodeData>> _map)
+    public void SetMap(Dictionary<int, List<LevelNode>> _map)
     {
         map = _map;
 
-        List<NodeData> levelZeroNodes = map[0];
+        List<LevelNode> levelZeroNodes = map[0];
         foreach (var node in levelZeroNodes)
         {
             UpdateCurrentLevel(node);
         }
+
+        //PrintMap();
     }
 
     private void PrintMap()
@@ -75,7 +78,7 @@ public class MapManager : MonoBehaviour
         {
             foreach (var node in level.Value)
             {
-                if (node.nodeType == NodeData.NodeType.BOSS)
+                if (node._node.nodeType == NodeData.NodeType.BOSS)
                 {
                     mapHeight = level.Key;
                     break;
@@ -87,18 +90,18 @@ public class MapManager : MonoBehaviour
         {
             if (map.ContainsKey(height))
             {
-                foreach (NodeData node in map[height])
+                foreach (LevelNode node in map[height])
                 {
-                    string probabilities = $"Battle: {node.battlePercentage:P1}, Shop: {node.shopPercentage:P1}, Event: {node.eventPercentage:P1}";
+                    string probabilities = $"Battle: {node._nodeBattlePercentage:P1}, Shop: {node._nodeShopPercentage:P1}, Event: {node._nodeEventPercentage:P1}";
 
-                    if (node.children != null && node.children.Count > 0)
+                    if (node._nodeChildren != null && node._nodeChildren.Count > 0)
                     {
-                        var childNames = node.children.OrderBy(c => c.nodeHeigth).Select(c => c.name).ToList();
-                        Debug.Log($"Node: {node.name}, Probabilities: {probabilities}, Children: {string.Join(", ", childNames)}, Height: {node.nodeHeigth}");
+                        var childNames = node._nodeChildren.OrderBy(c => c._nodeHeigth).Select(c => c._node.name).ToList();
+                        Debug.Log($"Node: {node._node.name}, Probabilities: {probabilities}, Children: {string.Join(", ", childNames)}, Height: {node._nodeHeigth}");
                     }
                     else
                     {
-                        Debug.Log($"Node: {node.name}, Probabilities: {probabilities}, Height: {node.nodeHeigth}");
+                        Debug.Log($"Node: {node._node.name}, Probabilities: {probabilities}, Height: {node._nodeHeigth}");
                     }
                 }
             }

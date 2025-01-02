@@ -1,8 +1,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static Unity.VisualScripting.Metadata;
+
+public class LevelNode
+{
+    public NodeData _node;
+    public List<LevelNode> _nodeChildren;
+    public int _nodeHeigth;
+    public float _nodeBattlePercentage;
+    public float _nodeShopPercentage;
+    public float _nodeEventPercentage;
+
+    public static LevelNode CreateLevelNode(NodeData node, int height, List<float> probabilities)
+    {
+        LevelNode newLevelNode = new LevelNode();
+        newLevelNode._node = node?.CretaeNode();
+        newLevelNode._nodeChildren = new List<LevelNode>();
+        newLevelNode._nodeHeigth = height;
+        newLevelNode._nodeBattlePercentage = probabilities[0];
+        newLevelNode._nodeShopPercentage = probabilities[1];
+        newLevelNode._nodeEventPercentage = probabilities[2];
+
+        return newLevelNode;
+    }
+}
 
 public class MapGenerator : MonoBehaviour
 {
@@ -20,7 +44,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private NodeData startNode;
     [SerializeField] private NodeData boss;
     private Dictionary<NodeData.NodeType, List<NodeData>> nodes = new Dictionary<NodeData.NodeType, List<NodeData>>();
-    private Dictionary<int, List<NodeData>> map = new Dictionary<int, List<NodeData>>(); 
+    private Dictionary<int, List<LevelNode>> map = new Dictionary<int, List<LevelNode>>(); 
 
     private void Start()
     {
@@ -36,14 +60,14 @@ public class MapGenerator : MonoBehaviour
 
         List<float> probabilites = new List<float>() { percentage[0], percentage[1], percentage[2] };
 
-        NodeData bossNode = CreateNodeMap(boss, mapHeight, probabilites);
-        NodeData _startNode = CreateNodeMap(startNode, currentHeight, probabilites);
+        LevelNode bossNode = CreateNodeMap(boss, mapHeight, probabilites);
+        LevelNode _startNode = CreateNodeMap(startNode, currentHeight, probabilites);
 
         SetRandomChildrens(_startNode, currentHeight, bossNode);
         manager.SetMap(map);
     }
 
-    private void SetRandomChildrens(NodeData node, int nodeHeight, NodeData boss)
+    private void SetRandomChildrens(LevelNode node, int nodeHeight, LevelNode boss)
     {
         nodeHeight++;
 
@@ -51,34 +75,34 @@ public class MapGenerator : MonoBehaviour
 
         if (nodeHeight == mapHeight)
         {
-            node.children = new List<NodeData> { boss };
+            node._nodeChildren = new List<LevelNode> { boss };
             return;
         }
 
-        node.children = CreateNodeChildren(nodeHeight, node);
+        node._nodeChildren = CreateNodeChildren(nodeHeight, node);
 
-        foreach (NodeData child in node.children)
+        foreach (LevelNode child in node._nodeChildren)
         {
-            SetRandomChildrens(child, child.nodeHeigth, boss);
+            SetRandomChildrens(child, child._nodeHeigth, boss);
         }
     }
 
-    private (NodeData.NodeType, List<float>) GetNodeTypeBasedOnProbability(NodeData node)
+    private (NodeData.NodeType, List<float>) GetNodeTypeBasedOnProbability(LevelNode node)
     {
         float randomChance = Random.value;
-        if (randomChance <= node.battlePercentage)
+        if (randomChance <= node._nodeBattlePercentage)
         {
-            List<float> values = GetNodesProbability(new List<float>() { node.battlePercentage, node.shopPercentage, node.eventPercentage });
+            List<float> values = GetNodesProbability(new List<float>() { node._nodeBattlePercentage, node._nodeShopPercentage, node._nodeEventPercentage });
             return (NodeData.NodeType.BATTLE, new List<float>() { values[0], values[1], values[2] });
         }
-        else if (randomChance <= node.battlePercentage + node.shopPercentage)
+        else if (randomChance <= node._nodeBattlePercentage + node._nodeShopPercentage)
         {
-            List<float> values = GetNodesProbability(new List<float>() { node.shopPercentage, node.battlePercentage, node.eventPercentage });
+            List<float> values = GetNodesProbability(new List<float>() { node._nodeShopPercentage, node._nodeBattlePercentage, node._nodeEventPercentage });
             return (NodeData.NodeType.SHOP, new List<float>() { values[1], values[0], values[2] });
         }
         else
         {
-            List<float> values = GetNodesProbability(new List<float>() { node.eventPercentage, node.battlePercentage, node.shopPercentage });
+            List<float> values = GetNodesProbability(new List<float>() { node._nodeEventPercentage, node._nodeBattlePercentage, node._nodeShopPercentage });
             return (NodeData.NodeType.EVENT, new List<float>() { values[1], values[2], values[0] });
         }
     }
@@ -102,25 +126,21 @@ public class MapGenerator : MonoBehaviour
     {
         if (!map.ContainsKey(height))
         {
-            map[height] = new List<NodeData>();
+            map[height] = new List<LevelNode>();
         }
     }
 
-    private NodeData CreateNodeMap(NodeData node, int height, List<float> probabilities) 
+    private LevelNode CreateNodeMap(NodeData node, int height, List<float> probabilities) 
     {
-        NodeData selectedNode = node?.CretaeNode();
-        selectedNode.nodeHeigth = height;
-        selectedNode.battlePercentage = probabilities[0];
-        selectedNode.shopPercentage = probabilities[1];
-        selectedNode.eventPercentage = probabilities[2];
-        map[height].Add(selectedNode);
+        LevelNode newNode = LevelNode.CreateLevelNode(node, height, probabilities);
+        map[height].Add(newNode);
 
-        return selectedNode;
+        return newNode;
     }
 
-    private List<NodeData> CreateNodeChildren(int nodeHeight, NodeData node)
+    private List<LevelNode> CreateNodeChildren(int nodeHeight, LevelNode node)
     {
-        List<NodeData> children = new List<NodeData>();
+        List<LevelNode> children = new List<LevelNode>();
         HashSet<NodeData.NodeType> assignedTypes = new HashSet<NodeData.NodeType>(); 
 
         for (int i = 0; i < 2; i++)
