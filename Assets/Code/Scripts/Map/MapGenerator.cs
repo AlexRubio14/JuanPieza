@@ -6,6 +6,9 @@ using static Unity.VisualScripting.Metadata;
 
 public class MapGenerator : MonoBehaviour
 {
+    [Header("Manager")]
+    [SerializeField] private MapManager manager;
+
     [Header("Map Parameters")]
     [SerializeField] private int mapHeight;
     [SerializeField] private List<float> percentage; 
@@ -37,7 +40,7 @@ public class MapGenerator : MonoBehaviour
         NodeData _startNode = CreateNodeMap(startNode, currentHeight, probabilites);
 
         SetRandomChildrens(_startNode, currentHeight, bossNode);
-        PrintMap();
+        manager.SetMap(map);
     }
 
     private void SetRandomChildrens(NodeData node, int nodeHeight, NodeData boss)
@@ -62,44 +65,38 @@ public class MapGenerator : MonoBehaviour
 
     private (NodeData.NodeType, List<float>) GetNodeTypeBasedOnProbability(NodeData node)
     {
-        float battlePercentage = node.battlePercentage;
-        float shopPercentage = node.shopPercentage;
-        float eventPercentage = node.eventPercentage;
-
-        if (node.nodeType == NodeData.NodeType.BATTLE)
-        {
-            battlePercentage /= divider;
-            shopPercentage += (node.battlePercentage - battlePercentage) / 2;
-            eventPercentage += (node.battlePercentage - battlePercentage) / 2;
-        }
-        else if (node.nodeType == NodeData.NodeType.SHOP)
-        {
-            shopPercentage /= divider;
-            battlePercentage += (node.shopPercentage - shopPercentage) / 2;
-            eventPercentage += (node.shopPercentage - shopPercentage) / 2;
-        }
-        else if (node.nodeType == NodeData.NodeType.EVENT)
-        {
-            eventPercentage /= divider;
-            battlePercentage += (node.eventPercentage - eventPercentage) / 2;
-            shopPercentage += (node.eventPercentage - eventPercentage) / 2;
-        }
-
-        List<float> probabilities = new List<float> { battlePercentage, shopPercentage, eventPercentage };
         float randomChance = Random.value;
-        if (randomChance <= battlePercentage)
+        if (randomChance <= node.battlePercentage)
         {
-            return (NodeData.NodeType.BATTLE, probabilities);
+            List<float> values = GetNodesProbability(new List<float>() { node.battlePercentage, node.shopPercentage, node.eventPercentage });
+            return (NodeData.NodeType.BATTLE, new List<float>() { values[0], values[1], values[2] });
         }
-        else if (randomChance <= battlePercentage + shopPercentage)
+        else if (randomChance <= node.battlePercentage + node.shopPercentage)
         {
-            return (NodeData.NodeType.SHOP, probabilities);
+            List<float> values = GetNodesProbability(new List<float>() { node.shopPercentage, node.battlePercentage, node.eventPercentage });
+            return (NodeData.NodeType.SHOP, new List<float>() { values[1], values[0], values[2] });
         }
         else
         {
-            return (NodeData.NodeType.EVENT, probabilities);
+            List<float> values = GetNodesProbability(new List<float>() { node.eventPercentage, node.battlePercentage, node.shopPercentage });
+            return (NodeData.NodeType.EVENT, new List<float>() { values[1], values[2], values[0] });
         }
-    } 
+    }
+
+    private List<float> GetNodesProbability(List<float> initPorbabilities)
+    {
+        float _divider = initPorbabilities[0] / divider;
+        initPorbabilities[1] += (initPorbabilities[0] - _divider) / 2;
+        initPorbabilities[2] += (initPorbabilities[0] - _divider) / 2;
+
+        return new List<float>
+        {
+            _divider,
+            initPorbabilities[1],
+            initPorbabilities[2]
+        };
+
+    }
 
     private void CreateMapHeight(int height)
     {
@@ -163,33 +160,5 @@ public class MapGenerator : MonoBehaviour
         }
 
         return nodesByType;
-    }
-
-    private void PrintMap()
-    {
-        for (int height = 0; height <= mapHeight; height++)
-        {
-            if (map.ContainsKey(height))
-            {
-                foreach (NodeData node in map[height])
-                {
-                    string probabilities = $"Battle: {node.battlePercentage:P1}, Shop: {node.shopPercentage:P1}, Event: {node.eventPercentage:P1}";
-
-                    if (node.children != null && node.children.Count > 0)
-                    {
-                        var childNames = node.children.OrderBy(c => c.nodeHeigth).Select(c => c.name).ToList();
-                        Debug.Log($"Node: {node.name}, Probabilities: {probabilities}, Children: {string.Join(", ", childNames)}, Height: {node.nodeHeigth}");
-                    }
-                    else
-                    {
-                        Debug.Log($"Node: {node.name}, Probabilities: {probabilities}, Height: {node.nodeHeigth}");
-                    }
-                }
-            }
-            else
-            {
-                Debug.Log($"Height {height}: No nodes");
-            }
-        }
     }
 }

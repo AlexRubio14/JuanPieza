@@ -34,6 +34,6 @@ public class Box : InteractableObject
 
     public override void UseItem(ObjectHolder _objectHolder)
     {
-        throw new System.NotImplementedException();
+
     }
 }
