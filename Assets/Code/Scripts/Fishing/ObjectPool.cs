@@ -5,23 +5,13 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public enum ItemRarity { BASIC, RARE, EPIC, LEGENDARY }
-
-    [Serializable]
-    public struct Item
-    {
-        public string name;
-        public GameObject prefab;
-        public ItemRarity rarity;
-    }
-
     [SerializeField]
-    private Item[] itemPool;
+    private ObjectSO[] itemPool;
     [SerializeField]
     private int[] priorityList;
 
     [SerializedDictionary("Rarity", "Percentage")]
-    public SerializedDictionary<ItemRarity, float> rarityPercentages;
+    public SerializedDictionary<ObjectSO.ItemRarity, float> rarityPercentages;
 
     private float totalPercentage;
 
@@ -33,7 +23,7 @@ public class ObjectPool : MonoBehaviour
     private void Start()
     {
         totalPercentage = 0;
-        foreach (KeyValuePair<ItemRarity, float> item in rarityPercentages)
+        foreach (KeyValuePair<ObjectSO.ItemRarity, float> item in rarityPercentages)
             totalPercentage += item.Value;
 
     }
@@ -54,13 +44,13 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-    public Item GetRandomItem()
+    public ObjectSO GetRandomItem()
     {
-        ItemRarity currentRarity = ItemRarity.BASIC;
+        ObjectSO.ItemRarity currentRarity = ObjectSO.ItemRarity.BASIC;
 
         float randNum = UnityEngine.Random.Range(0, totalPercentage);
         float currentPercentage = 0;
-        foreach (KeyValuePair<ItemRarity, float> item in rarityPercentages)
+        foreach (KeyValuePair<ObjectSO.ItemRarity, float> item in rarityPercentages)
         {
             if (randNum <= currentPercentage + item.Value)
             {
@@ -71,9 +61,9 @@ public class ObjectPool : MonoBehaviour
             currentPercentage += item.Value;
         }
 
-        List<Item> currentRarityItems = new List<Item>();
+        List<ObjectSO> currentRarityItems = new List<ObjectSO>();
 
-        foreach (Item item in itemPool)
+        foreach (ObjectSO item in itemPool)
         {
             if(item.rarity == currentRarity)
                 currentRarityItems.Add(item);
@@ -83,16 +73,16 @@ public class ObjectPool : MonoBehaviour
 
         switch (currentRarityItems[randomItem].rarity)
         {
-            case ItemRarity.BASIC:
+            case ObjectSO.ItemRarity.BASIC:
                 totalBasics++;
                 break;
-            case ItemRarity.RARE:
+            case ObjectSO.ItemRarity.RARE:
                 totalRares++;
                 break;
-            case ItemRarity.EPIC:
+            case ObjectSO.ItemRarity.EPIC:
                 totalEpics++;
                 break;
-            case ItemRarity.LEGENDARY:
+            case ObjectSO.ItemRarity.LEGENDARY:
                 totalLegendaries++;
                 break;
             default:

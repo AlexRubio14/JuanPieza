@@ -337,7 +337,7 @@ public class FishingManager : MonoBehaviour
     {
 
         //Generar objeto random de la pool
-        ObjectPool.Item itemData = fishingObjectPool.GetRandomItem();
+        ObjectSO itemData = fishingObjectPool.GetRandomItem();
         //Instanciarlo
         GameObject newItem = Instantiate(itemData.prefab, _fishingRod.hook.transform.position, Quaternion.identity);
         //Colocarlo

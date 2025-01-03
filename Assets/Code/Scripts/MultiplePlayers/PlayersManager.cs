@@ -18,7 +18,5 @@ public class PlayersManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         players = new List<(PlayerInput, SinglePlayerController)>();
-
-
     }
 }

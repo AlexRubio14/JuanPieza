@@ -4,6 +4,7 @@ public class MoveState : PlayerState
 {
     public override void EnterState()
     {
+        controller.animator.SetBool("Moving", true);
     }
 
     public override void UpdateState()
@@ -20,7 +21,7 @@ public class MoveState : PlayerState
     }
     public override void ExitState()
     {
-
+        controller.animator.SetBool("Moving", false);
     }
 
     public override void RollAction()
