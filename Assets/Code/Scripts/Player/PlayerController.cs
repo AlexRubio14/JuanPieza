@@ -60,9 +60,13 @@ public class PlayerController : MonoBehaviour
     private Canvas interactCanvas;
     public GameObject interactCanvasObject => interactCanvas.transform.gameObject;
 
+
+    public Animator animator { get; private set; }
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
 
         stateMachine = GetComponent<PlayerStateMachine>();
         stateMachine.InitializeStates(this);
