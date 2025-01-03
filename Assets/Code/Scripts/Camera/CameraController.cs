@@ -18,7 +18,6 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float maxZDistance;
     private float zOffset;
-    private float playersY;
 
     [Space, Header("Cameras"), SerializeField]
     private Camera insideCamera;
@@ -39,11 +38,9 @@ public class CameraController : MonoBehaviour
         playerStates = new List<PlayerStateMachine>();
 
         //Guardamos la Y del primer Player
-        playersY = playerColliders[0].transform.position.y;
         //Seteamos todos los players con la misma posicion en Y
         foreach (Collider item in playerColliders)
         {
-            item.transform.position = new Vector3(item.transform.position.x, playersY, item.transform.position.z);
             playerStates.Add(item.GetComponent<PlayerStateMachine>());
         }
         
@@ -55,7 +52,6 @@ public class CameraController : MonoBehaviour
     {
         playerColliders.Add(_newPlayer.GetComponent<CapsuleCollider>());
         playerStates.Add(_newPlayer.GetComponent<PlayerStateMachine>());
-        _newPlayer.transform.position = new Vector3(_newPlayer.transform.position.x, playersY, _newPlayer.transform.position.z);
     }
     public void RemovePlayer(GameObject _removablePlayer)
     {
@@ -174,7 +170,6 @@ public class CameraController : MonoBehaviour
         if (middlePoint == Vector3.zero)
             return Vector3.zero;
 
-        middlePoint.y = playersY;
         middlePoint /= playerColliders.Count;
         return middlePoint;
     }

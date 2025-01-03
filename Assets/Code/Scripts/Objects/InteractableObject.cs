@@ -3,8 +3,7 @@ using UnityEngine;
 public abstract class InteractableObject : MonoBehaviour
 {
 
-    [SerializeField] protected string objectName;
-    [SerializeField] protected float weight;
+    [SerializeField] protected ObjectSO objectSO;
     [SerializeField] protected SelectedVisual selectedVisual;
     [SerializeField] protected bool isBeingUsed;
 
@@ -29,7 +28,7 @@ public abstract class InteractableObject : MonoBehaviour
 
     public float GetWeight()
     {
-        return weight;
+        return objectSO.weight;
     }
 
     public SelectedVisual GetSelectedVisual()
