@@ -27,8 +27,22 @@ public class StoreObjectPool : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(GetRandomItem().name);
+        Item randomItem = GetRandomItem();
+
+        if (randomItem.prefab != null)
+        {
+            Instantiate(randomItem.prefab, transform.position, transform.rotation);
+        }
+        else
+        {
+            Debug.LogWarning($"El prefab para el item {randomItem.name} es null.");
+        }
         
+        
+        Debug.Log("Basicos " + totalBasics);
+        Debug.Log("Raros " + totalRares);
+        Debug.Log("Epicos " + totalEpics);
+        Debug.Log("Legendarios " + totalLegendaries);
     }
 
     public Item GetRandomItem()
