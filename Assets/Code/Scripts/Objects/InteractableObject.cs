@@ -46,4 +46,9 @@ public abstract class InteractableObject : MonoBehaviour
     {
         isBeingUsed = _value;
     }
+
+    public string GetObjectName()
+    {
+        return objectName;
+    }
 }
