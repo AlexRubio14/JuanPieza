@@ -7,7 +7,6 @@ public class Box : InteractableObject
     [SerializeField] private InteractableObject itemDropped;
     [SerializeField] private Collider itemDroppedCollider;
     protected int itemsInBox;
-
     public virtual void AddItemInBox()
     {
         itemsInBox++;
@@ -35,6 +34,6 @@ public class Box : InteractableObject
 
     public override void UseItem(ObjectHolder _objectHolder)
     {
-        throw new System.NotImplementedException();
+
     }
 }
