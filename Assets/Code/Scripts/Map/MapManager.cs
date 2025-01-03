@@ -12,6 +12,13 @@ public class MapManager : MonoBehaviour
     private Dictionary<int, List<LevelNode>> map = new Dictionary<int, List<LevelNode>>();
     private int mapHeight;
 
+    List<Votation> votations = new List<Votation>();
+
+    [Header("VotationTimer")]
+    [SerializeField] private float voteTime;
+    private float currentTime;
+    private bool startVoteTimer;
+
     private void Awake()
     {
         if (Instance == null)
@@ -27,28 +34,45 @@ public class MapManager : MonoBehaviour
 
     private void Update()
     {
-        if (currentLevel._nodeChildren.Count > 1)
+        Timer();
+    }
+
+    private void Timer()
+    {
+        if (startVoteTimer)
         {
-            if (Input.GetKeyDown(KeyCode.A))
+            currentTime += Time.deltaTime;
+            if (currentTime >= voteTime)
             {
-                UpdateCurrentLevel(childrenLevel[0]);
-            }
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                UpdateCurrentLevel(childrenLevel[1]);
+                VotationDecision();
+                foreach (var vot in votations)
+                    vot.gameObject.SetActive(false);
+                startVoteTimer = false;
             }
         }
-        else if (currentLevel._nodeChildren.Count > 0)
+    }
+
+    private void VotationDecision()
+    {
+        if (votations[0].GetCurrentsPlayer() == votations[1].GetCurrentsPlayer())
         {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                UpdateCurrentLevel(childrenLevel[0]);
-            }
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                UpdateCurrentLevel(childrenLevel[0]);
-            }
+            RandomDecision();
+            return;
         }
+
+        if (votations[0].GetCurrentsPlayer() > votations[1].GetCurrentsPlayer())
+            UpdateCurrentLevel(currentLevel._nodeChildren[votations[0].GetDirecctionValue()]);
+        else
+            UpdateCurrentLevel(currentLevel._nodeChildren[votations[1].GetDirecctionValue()]);
+    }
+
+    private void RandomDecision()
+    {
+        float randomChance = Random.value;
+        if(randomChance < 0.5f)
+            UpdateCurrentLevel(currentLevel._nodeChildren[votations[0].GetDirecctionValue()]);
+        else
+            UpdateCurrentLevel(currentLevel._nodeChildren[votations[1].GetDirecctionValue()]);
     }
 
     private void UpdateCurrentLevel(LevelNode _currentLevel)
@@ -68,8 +92,14 @@ public class MapManager : MonoBehaviour
         {
             UpdateCurrentLevel(node);
         }
+    }
 
-        //PrintMap();
+    public void SetVotations(List<Votation> _votations)
+    {
+        votations = _votations;
+        foreach (var vot in votations)
+            vot.gameObject.SetActive(true);
+        startVoteTimer = true;
     }
 
     private void PrintMap()
