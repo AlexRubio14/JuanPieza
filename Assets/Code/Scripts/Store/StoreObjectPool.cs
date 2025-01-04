@@ -1,6 +1,7 @@
 using AYellowpaper.SerializedCollections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StoreObjectPool : MonoBehaviour
@@ -12,25 +13,33 @@ public class StoreObjectPool : MonoBehaviour
     {
         public string name;
         public GameObject prefab;
+        public int price;
         public ItemRarity rarity;
     }
     
     [SerializeField] private Item[] itemPool;
+    [SerializeField] private Item[] otherItemPool;
+    [SerializeField] private Item[] weaponItemPool;
+
     [SerializedDictionary("Rarity", "Percentage")] public SerializedDictionary<ItemRarity, float> rarityPercentages;
     
     private float totalPercentage;
     
-    private void Start()
+    public Item[] GetItemPool()
     {
-        Item randomItem = GetRandomItem();
-
-        if (randomItem.prefab != null)
-        {
-            Instantiate(randomItem.prefab, transform.position, transform.rotation);
-        }
+        return itemPool;
     }
 
-    public Item GetRandomItem()
+    public Item[] GetWeaponPool()
+    {
+        return weaponItemPool;
+    }
+    public Item[] GetOtherPool()
+    {
+        return otherItemPool;
+    }
+
+    public Item GetRandomItem(Item[] itemList)
     {
         ItemRarity currentRarity = ItemRarity.BASIC;
 
@@ -49,7 +58,7 @@ public class StoreObjectPool : MonoBehaviour
 
         List<Item> currentRarityItems = new List<Item>();
 
-        foreach (Item item in itemPool)
+        foreach (Item item in itemList)
         {
             if(item.rarity == currentRarity)
                 currentRarityItems.Add(item);
