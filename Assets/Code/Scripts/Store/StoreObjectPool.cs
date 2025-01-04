@@ -19,12 +19,7 @@ public class StoreObjectPool : MonoBehaviour
     [SerializedDictionary("Rarity", "Percentage")] public SerializedDictionary<ItemRarity, float> rarityPercentages;
     
     private float totalPercentage;
-
-    int totalBasics;
-    int totalRares;
-    int totalEpics;
-    int totalLegendaries;
-
+    
     private void Start()
     {
         Item randomItem = GetRandomItem();
@@ -33,16 +28,6 @@ public class StoreObjectPool : MonoBehaviour
         {
             Instantiate(randomItem.prefab, transform.position, transform.rotation);
         }
-        else
-        {
-            Debug.LogWarning($"El prefab para el item {randomItem.name} es null.");
-        }
-        
-        
-        Debug.Log("Basicos " + totalBasics);
-        Debug.Log("Raros " + totalRares);
-        Debug.Log("Epicos " + totalEpics);
-        Debug.Log("Legendarios " + totalLegendaries);
     }
 
     public Item GetRandomItem()
@@ -71,25 +56,7 @@ public class StoreObjectPool : MonoBehaviour
         }
 
         int randomItem = UnityEngine.Random.Range(0, currentRarityItems.Count);
-
-        switch (currentRarityItems[randomItem].rarity)
-        {
-            case ItemRarity.BASIC:
-                totalBasics++;
-                break;
-            case ItemRarity.RARE:
-                totalRares++;
-                break;
-            case ItemRarity.EPIC:
-                totalEpics++;
-                break;
-            case ItemRarity.LEGENDARY:
-                totalLegendaries++;
-                break;
-            default:
-                break;
-        }
-
+        
         return currentRarityItems[randomItem];
     }
 }
