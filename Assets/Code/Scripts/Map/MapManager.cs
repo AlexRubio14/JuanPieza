@@ -109,10 +109,10 @@ public class MapManager : MonoBehaviour
 
     public void SetVotations(List<Votation> _votations)
     {
-        //Camera lerp
+        CameraManager.Instance.SetSailCamera(true);
+        CameraManager.Instance.SetSimpleCamera(false);
 
         votations = _votations;
-        InitVotations();
     }
 
     private void ActiveUI()
@@ -123,6 +123,7 @@ public class MapManager : MonoBehaviour
 
     public void InitVotations()
     {
+        CameraManager.Instance.SetSailCamera(false);
         if (currentLevel._nodeChildren.Count == 1)
         {
             UpdateCurrentLevel(currentLevel._nodeChildren[0]);
