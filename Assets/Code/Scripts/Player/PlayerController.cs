@@ -89,6 +89,7 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         SuscribeActions();
+        PlayersManager.instance.ingamePlayers.Add(this);
     }
     private void SuscribeActions()
     {
@@ -113,6 +114,8 @@ public class PlayerController : MonoBehaviour
         playerInput.OnInteractAction -= InteractAction;
 
         playerInput.OnUseAction -= UseAction;
+
+        PlayersManager.instance.ingamePlayers.Remove(this);
     }
 
 

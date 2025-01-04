@@ -9,7 +9,7 @@ public class ObjectPool : MonoBehaviour
     private ObjectSO[] itemPool;
     [SerializeField]
     private int[] priorityList;
-
+    
     [SerializedDictionary("Rarity", "Percentage")]
     public SerializedDictionary<ObjectSO.ItemRarity, float> rarityPercentages;
 
@@ -25,7 +25,6 @@ public class ObjectPool : MonoBehaviour
         totalPercentage = 0;
         foreach (KeyValuePair<ObjectSO.ItemRarity, float> item in rarityPercentages)
             totalPercentage += item.Value;
-
     }
 
     private void Update()

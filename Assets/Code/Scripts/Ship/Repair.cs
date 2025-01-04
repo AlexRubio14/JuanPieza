@@ -25,21 +25,19 @@ public class Repair : InteractableObject
 
     public override void Interact(ObjectHolder _objectHolder)
     {
-        if (_objectHolder.GetInteractableObject() == itemNeeded)
-        {
-            players.Add((_objectHolder.GetComponentInParent<PlayerController>(), _objectHolder));
-        }
+        players.Add((_objectHolder.GetComponentInParent<PlayerController>(), _objectHolder));
     }
 
     private void Update()
     {
-        RepairObjec();
+        RepairObject();
     }
 
-    private void RepairObjec()
+    private void RepairObject()
     {
         if (players.Count > 0)
         {
+            Debug.Log("entra");
             currentRepairTime += repairSpeed * players.Count * Time.deltaTime;
             if (currentRepairTime >= repairDuration)
             {
@@ -74,6 +72,11 @@ public class Repair : InteractableObject
     }
     public override void UseItem(ObjectHolder _objectHolder)
     {
-        throw new System.NotImplementedException();
+
+    }
+
+    public InteractableObject GetItemNeeded()
+    {
+        return itemNeeded;
     }
 }

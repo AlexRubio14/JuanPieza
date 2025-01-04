@@ -23,11 +23,8 @@ public class ObjectHolder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!hasPickedObject)
-        {
-            (InteractableObject, Collider) neareastObject = CheckItemsInRange();
-            ChangeInteractableObject(neareastObject);
-        }
+        (InteractableObject, Collider) neareastObject = CheckItemsInRange();
+        ChangeInteractableObject(neareastObject);
     }
 
     // Crea un sphereRaycast, te pilla el interactableObject mas cercano que no este siendo utilizado y te devuelve su script y su collider a la vez.
@@ -108,8 +105,9 @@ public class ObjectHolder : MonoBehaviour
     public void InstantiateItem(InteractableObject _interactableObject, Collider _interactableObjectCollider)
     {
         GameObject item = Instantiate(_interactableObject.gameObject);
+        item.GetComponent<Rigidbody>().isKinematic = true;
         item.transform.SetParent(transform.parent, true);
-        item.transform.localPosition = objectPickedPos.position;
+        item.transform.position = objectPickedPos.position;
         SetInteractableObject(_interactableObject, _interactableObjectCollider);
     }
 

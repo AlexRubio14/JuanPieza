@@ -8,6 +8,7 @@ public class PlayersManager : MonoBehaviour
 
     [field: SerializeField]
     public List<(PlayerInput, SinglePlayerController)> players {  get; private set; }
+    public List<PlayerController> ingamePlayers {  get; private set; }
 
     private void Awake()
     {
@@ -18,5 +19,11 @@ public class PlayersManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         players = new List<(PlayerInput, SinglePlayerController)>();
+        ingamePlayers = new List<PlayerController>();
+    } 
+
+    public List<(PlayerInput, SinglePlayerController)> GetPlayers()
+    {
+        return players;
     }
 }

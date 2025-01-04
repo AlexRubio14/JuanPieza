@@ -11,6 +11,7 @@ public class WoodShelf : Box
     private void Start()
     {
         currentDecorationInShelf = 4;
+        itemsInBox = 4;
     }
     public override void AddItemInBox()
     {
