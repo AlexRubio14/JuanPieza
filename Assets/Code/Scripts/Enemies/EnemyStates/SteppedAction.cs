@@ -6,12 +6,10 @@ public abstract class SteppedAction : EnemyAction
     protected enum ActionState { GOING_RESOURCE, WAITING_RESOURCE, GOING_TARGET, INTERACTING }
     protected ActionState currentState = ActionState.GOING_RESOURCE;
 
-    public enum ResourceType { WOOD, BULLET, BARREL, FUEL }
+    public enum ResourceType { WOOD, BULLET, BARREL, FUEL, HAMMER }
     protected ResourceType resouceType;
 
-    protected Transform transform;
 
-    protected float distanceToInteract;
     protected float timeWaited = 0;
 
     protected EnemyObject resource;
@@ -45,57 +43,85 @@ public abstract class SteppedAction : EnemyAction
         switch (currentState)
         {
             case ActionState.GOING_RESOURCE:
-                agent.SetDestination(resource.transform.position);
-                if (IsNearToDestiny(resource.transform.position))
-                {
-                    currentState = ActionState.WAITING_RESOURCE;
-                    agent.isStopped = true;
-                }
-
-                CheckResourceObjectActive();
+                GoingResource();
                 break;
             case ActionState.WAITING_RESOURCE:
-                timeWaited += Time.deltaTime;
-                if (timeWaited >= timeToGetResource)
-                {
-                    timeWaited = 0;
-                    //Poner recurso en la mano
-                    onEnableResource(resouceType, true);
-                    //Activar animacion de pickUp
-                }
-
-                CheckResourceObjectActive();
+                WaitingResource();
                 break;
             case ActionState.GOING_TARGET:
-                agent.SetDestination(target.transform.position);
-                if (IsNearToDestiny(target.transform.position))
-                {
-                    currentState = ActionState.INTERACTING;
-                    agent.isStopped = true;
-                    //Empezar animacion de reparar
-                    //Activar particulas de reparar
-                    //Desactivar objeto de la mano
-                    onEnableResource(resouceType, false);
-                }
+                GoingTarget();
                 break;
             case ActionState.INTERACTING:
-                //Esperar para reparar
-                timeWaited += Time.deltaTime;
-
-                if (timeToInteract <= timeWaited)
-                {
-                    //Reparar
-                    Interact();
-                    onActionEnd();
-                }
+                Interacting();
                 break;
             default:
                 break;
         }
     }
+
+    protected abstract void Interact();
     private void CheckResourceObjectActive()
     {
         if (resource.isBroken)
             onActionEnd();
     }
+
+
+    protected virtual void GoingResource()
+    {
+        agent.SetDestination(resource.transform.position);
+        //Animacion de moverse a true
+        if (IsNearToDestiny(resource.transform.position))
+        {
+            currentState = ActionState.WAITING_RESOURCE;
+            agent.isStopped = true;
+            //Animacion de moverse a false
+
+            return;
+        }
+
+        CheckResourceObjectActive();
+    }
+    protected virtual void WaitingResource()
+    {
+        timeWaited += Time.deltaTime;
+        if (timeWaited >= timeToGetResource)
+        {
+            timeWaited = 0;
+            //Poner recurso en la mano
+            onEnableResource(resouceType, true);
+            //Activar animacion de pickUp
+
+            //Animacion de moverse a true
+        }
+
+        CheckResourceObjectActive();
+    }
+    protected virtual void GoingTarget()
+    {
+        agent.SetDestination(target.transform.position);
+        if (IsNearToDestiny(target.transform.position))
+        {
+            currentState = ActionState.INTERACTING;
+            agent.isStopped = true;
+            //Empezar animacion de reparar
+            //Animacion moverse false
+            //Activar particulas de reparar
+            onEnableResource(resouceType, false);
+        }
+    }
+    protected virtual void Interacting()
+    {
+        //Esperar para reparar
+        timeWaited += Time.deltaTime;
+
+        if (timeToInteract <= timeWaited)
+        {
+            //Parar animacion de interactuar
+            //Reparar
+            Interact();
+            onActionEnd();
+        }
+    }
+
 }

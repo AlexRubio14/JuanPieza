@@ -5,13 +5,17 @@ public abstract class EnemyAction
 {
     public enum ActionType { REPAIR_SHIP, SHOOT_CANNON, RELOAD_CANNON, REPAIR_CANNON, REPAIR_BULLET_SPAWN }
     public ActionType currentAction;
+    
     protected NavMeshAgent agent;
     protected Animator animator;
+
+    protected Transform transform;
+    protected float distanceToInteract;
+
 
     public Action onActionEnd;
 
     public abstract void StateUpdate();
-    protected abstract void Interact();
     
     protected bool IsNearToDestiny(Vector3 _destiny)
     {

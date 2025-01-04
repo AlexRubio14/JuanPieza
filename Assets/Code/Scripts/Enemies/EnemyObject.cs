@@ -4,8 +4,6 @@ public abstract class EnemyObject : MonoBehaviour
 {
     [SerializeField]
     public EnemieManager enemieManager;
-    [SerializeField]
-    private Transform resourcePosition;
 
     public bool isBroken;
 
@@ -16,20 +14,26 @@ public abstract class EnemyObject : MonoBehaviour
 
     public abstract void UseObject();
 
-    public void BreakWeapon()
+    public abstract void OnBreakObject();
+    public abstract void OnFixObject();
+
+    public virtual void BreakObject()
     {
         fixedWeapon.SetActive(false);
         brokenWeapon.SetActive(true);
 
         isBroken = true;
+
+        OnBreakObject();
     }
 
-    public void FixWeapon()
+    public virtual void FixObject()
     {
         fixedWeapon.SetActive(true);
         brokenWeapon.SetActive(false);
 
 
         isBroken = false;
+        OnFixObject();
     }
 }

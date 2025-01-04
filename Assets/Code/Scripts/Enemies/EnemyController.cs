@@ -1,4 +1,5 @@
 using AYellowpaper.SerializedCollections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,7 +16,10 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
+
+        foreach (KeyValuePair<SteppedAction.ResourceType, GameObject> item in resourcesMeshes)
+            item.Value.SetActive(false);
     }
 
 
@@ -28,10 +32,14 @@ public class EnemyController : MonoBehaviour
 
     public void EnableResource(SteppedAction.ResourceType _resource, bool _enabled)
     {
-        //resourcesMeshes[_resource].SetActive(_enabled);
+        resourcesMeshes[_resource].SetActive(_enabled);
     }
     public void StopAction()
     {
+        foreach (KeyValuePair<SteppedAction.ResourceType, GameObject> item in resourcesMeshes)
+            item.Value.SetActive(false);
+
+        //Poner animacion de coger a false
         currentAction.onActionEnd -= StopAction;
         currentAction = null;
     }

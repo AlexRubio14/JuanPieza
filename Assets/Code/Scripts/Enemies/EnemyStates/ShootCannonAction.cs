@@ -3,18 +3,16 @@ using UnityEngine;
 public class ShootCannonAction : EnemyAction
 {
 
-    public ShootCannonAction(ActionType _action, Transform _transform, GameObject _target, float _distanceToInteract, float _timeToInteract)
+    public ShootCannonAction(ActionType _action, Transform _transform, EnemyWeapon _target, float _distanceToInteract, float _timeToInteract)
     {
 
     }
 
     public override void StateUpdate()
     {
-        throw new System.NotImplementedException();
-    }
+        //Ir hacia el arma
 
-    protected override void Interact()
-    {
+        //Disparar
 
     }
 }

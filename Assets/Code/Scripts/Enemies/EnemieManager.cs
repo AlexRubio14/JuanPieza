@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemieManager : MonoBehaviour
@@ -13,7 +12,7 @@ public class EnemieManager : MonoBehaviour
     [SerializeField]
     private Transform enemySpawnPoint;
 
-    private List<EnemyController> enemyList;
+    private List<EnemyController> enemyCannons;
     private List<EnemyAction> toDoList;
     [SerializeField]
     private EnemyAction.ActionType[] priorityList;
@@ -40,9 +39,7 @@ public class EnemieManager : MonoBehaviour
 
     private void Start()
     {
-        enemyList = new List<EnemyController>();
         toDoList = new List<EnemyAction>();
-
     }
 
     private void OnEnable()
@@ -56,7 +53,7 @@ public class EnemieManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        foreach (EnemyController enemy in enemyList)
+        foreach (EnemyController enemy in enemyCannons)
         {
             if (enemy.currentAction == null)
                 AsignActionToEnemy(enemy, GetSomethingToDo());
@@ -125,21 +122,21 @@ public class EnemieManager : MonoBehaviour
         EnemyAction action = new RepairShipAction(EnemyAction.ActionType.REPAIR_SHIP, transform, woodResource, _hole, SteppedAction.ResourceType.WOOD, interactDistance, timeToGetResource, timeToRepair);
         toDoList.Add(action);
     }
-    public void AddShootCannonAction()
+    public void AddShootCannonAction(EnemyWeapon _weapon)
     {
-        EnemyAction action = new ShootCannonAction(EnemyAction.ActionType.SHOOT_CANNON, transform, /*Parte trasera del Cañon*/, interactDistance, timeToRepair);
+        EnemyAction action = new ShootCannonAction(EnemyAction.ActionType.SHOOT_CANNON, transform, /*Parte trasera del Cañon*/ _weapon, interactDistance, timeToRepair);
 
         toDoList.Add(action);
     }
-    public void AddReloadCannonAction()
+    public void AddReloadCannonAction(GameObject _cannonPos)
     {
-        EnemyAction action = new ReloadCannonAction(EnemyAction.ActionType.RELOAD_CANNON, transform, woodResource, /*Cañon*/, SteppedAction.ResourceType.WOOD, interactDistance, timeToGetResource, timeToRepair);
+        EnemyAction action = new ReloadCannonAction(EnemyAction.ActionType.RELOAD_CANNON, transform, woodResource, /*Cañon*/_cannonPos, SteppedAction.ResourceType.BULLET, interactDistance, timeToGetResource, timeToRepair);
 
         toDoList.Add(action);
     }
-    public void AddRepairCannonAction()
+    public void AddRepairCannonAction(GameObject _cannonPos)
     {
-        EnemyAction action = new RepairCannonAction(EnemyAction.ActionType.REPAIR_CANNON, transform, woodResource, /*Cañon*/, SteppedAction.ResourceType.WOOD, interactDistance, timeToGetResource, timeToRepair);
+        EnemyAction action = new RepairCannonAction(EnemyAction.ActionType.REPAIR_CANNON, transform, woodResource, /*Cañon*/_cannonPos, SteppedAction.ResourceType.HAMMER, interactDistance, timeToGetResource, timeToRepair);
 
         toDoList.Add(action);
     }
