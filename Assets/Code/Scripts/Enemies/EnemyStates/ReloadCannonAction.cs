@@ -1,31 +1,30 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class ReloadCannonAction : SteppedAction
 {
-    EnemyObject targetObject;
-    public ReloadCannonAction(ActionType _action, Transform _transform, EnemyObject _resource, GameObject _target, ResourceType _resourceType, float _distanceToInteract, float _timeToGetResource, float _timeToInteract) 
-        : base(_action, _transform, _resource, _target, _resourceType, _distanceToInteract, _timeToGetResource, _timeToInteract)
+    public ReloadCannonAction(ActionType _action, EnemyObject _resource, EnemyObject _target, ResourceType _resourceType, float _distanceToInteract, float _timeToGetResource, float _timeToInteract) 
+        : base(_action, _resource, _target, _resourceType, _distanceToInteract, _timeToGetResource, _timeToInteract)
     {
-        targetObject = _target.GetComponent<EnemyObject>();
     }
 
     protected override void GoingResource()
     {
-        if (!targetObject.isBroken)
+        if (!target.isBroken)
             base.GoingResource();
         else
             onActionEnd();
     }
     protected override void WaitingResource()
     {
-        if (!targetObject.isBroken)
+        if (!target.isBroken)
             base.WaitingResource();
         else
             onActionEnd();
     }
     protected override void GoingTarget()
     {
-        if(!targetObject.isBroken)
+        if(!target.isBroken)
             base.GoingTarget();
         else
             onActionEnd();
@@ -33,11 +32,15 @@ public class ReloadCannonAction : SteppedAction
 
     protected override void Interacting()
     {
-        base.Interacting();
+        if (!target.isBroken)
+            base.Interacting();
+        else
+            onActionEnd();
     }
 
     protected override void Interact()
     {
         //Cargar el cañon
+        ((EnemyWeapon)target).LoadWeapon();
     }
 }

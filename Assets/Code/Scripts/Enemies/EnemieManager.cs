@@ -12,7 +12,7 @@ public class EnemieManager : MonoBehaviour
     [SerializeField]
     private Transform enemySpawnPoint;
 
-    private List<EnemyController> enemyCannons;
+    private List<EnemyController> enemyList;
     private List<EnemyAction> toDoList;
     [SerializeField]
     private EnemyAction.ActionType[] priorityList;
@@ -36,10 +36,19 @@ public class EnemieManager : MonoBehaviour
     private float timeToRepair;
     [SerializeField]
     private float timeToInteract;
+    [SerializeField]
+    private float timeToShoot;
 
-    private void Start()
+    private void Awake()
     {
         toDoList = new List<EnemyAction>();
+        enemyList = new List<EnemyController>();
+        for (int i = 0; i < totalEnemies; i++)
+        {
+            GameObject newEnemy = Instantiate(enemyPrefab, enemySpawnPoint.position, Quaternion.identity);
+            enemyList.Add(newEnemy.GetComponent<EnemyController>());
+        }
+
     }
 
     private void OnEnable()
@@ -53,7 +62,7 @@ public class EnemieManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        foreach (EnemyController enemy in enemyCannons)
+        foreach (EnemyController enemy in enemyList)
         {
             if (enemy.currentAction == null)
                 AsignActionToEnemy(enemy, GetSomethingToDo());
@@ -74,7 +83,10 @@ public class EnemieManager : MonoBehaviour
         foreach(EnemyAction action in toDoList)
         {
             if(action.currentAction == EnemyAction.ActionType.REPAIR_SHIP)
+            {
+                toDoList.Remove(action);
                 return action;
+            }
 
             int currentId = GetCurrentActionId(action.currentAction);
 
@@ -85,6 +97,8 @@ public class EnemieManager : MonoBehaviour
             }
         }
 
+        if (greatestAction != null)
+            toDoList.Remove(greatestAction);
         return greatestAction;
     }
     private int GetCurrentActionId(EnemyAction.ActionType _currentAcition)
@@ -108,41 +122,41 @@ public class EnemieManager : MonoBehaviour
         _enemy.currentAction = _action;
         _action.onActionEnd += _enemy.StopAction;
 
-        SteppedAction steppedAction = (SteppedAction)_action;
-        if(steppedAction != null)
-            steppedAction.onEnableResource += _enemy.EnableResource;
+        if(_action is SteppedAction)
+            ((SteppedAction)_action).onEnableResource += _enemy.EnableResource;
 
         _action.SetAgent(_enemy.agent);
         _action.SetAnimator(_enemy.animator);
+        _action.SetTransform(_enemy.transform);
     }
 
     #region Add Actions
     public void AddRepairShipAction(GameObject _hole)
     {
-        EnemyAction action = new RepairShipAction(EnemyAction.ActionType.REPAIR_SHIP, transform, woodResource, _hole, SteppedAction.ResourceType.WOOD, interactDistance, timeToGetResource, timeToRepair);
+        EnemyAction action = new RepairShipAction(EnemyAction.ActionType.REPAIR_SHIP, woodResource, _hole, SteppedAction.ResourceType.WOOD, interactDistance, timeToGetResource, timeToRepair);
         toDoList.Add(action);
     }
     public void AddShootCannonAction(EnemyWeapon _weapon)
     {
-        EnemyAction action = new ShootCannonAction(EnemyAction.ActionType.SHOOT_CANNON, transform, /*Parte trasera del Cañon*/ _weapon, interactDistance, timeToRepair);
+        EnemyAction action = new ShootCannonAction(EnemyAction.ActionType.SHOOT_CANNON, /*Parte trasera del Cañon*/ _weapon, interactDistance / 2, timeToShoot);
 
         toDoList.Add(action);
     }
-    public void AddReloadCannonAction(GameObject _cannonPos)
+    public void AddReloadCannonAction(EnemyObject _cannon)
     {
-        EnemyAction action = new ReloadCannonAction(EnemyAction.ActionType.RELOAD_CANNON, transform, woodResource, /*Cañon*/_cannonPos, SteppedAction.ResourceType.BULLET, interactDistance, timeToGetResource, timeToRepair);
+        EnemyAction action = new ReloadCannonAction(EnemyAction.ActionType.RELOAD_CANNON, bulletResource, /*Cañon*/_cannon, SteppedAction.ResourceType.BULLET, interactDistance, timeToGetResource, timeToInteract);
 
         toDoList.Add(action);
     }
-    public void AddRepairCannonAction(GameObject _cannonPos)
+    public void AddRepairCannonAction(EnemyObject _cannon)
     {
-        EnemyAction action = new RepairCannonAction(EnemyAction.ActionType.REPAIR_CANNON, transform, woodResource, /*Cañon*/_cannonPos, SteppedAction.ResourceType.HAMMER, interactDistance, timeToGetResource, timeToRepair);
+        EnemyAction action = new RepairCannonAction(EnemyAction.ActionType.REPAIR_CANNON, hammerObject, /*Cañon*/_cannon, SteppedAction.ResourceType.HAMMER, interactDistance, timeToGetResource, timeToRepair);
 
         toDoList.Add(action);
     }
     public void AddRepairBulletSpawnAction()
     {
-        EnemyAction action = new RepairBulletSpawnerAction(EnemyAction.ActionType.REPAIR_BULLET_SPAWN, transform, woodResource, /*Spawn de balas*/ bulletResource.gameObject, SteppedAction.ResourceType.WOOD, interactDistance, timeToGetResource, timeToRepair);
+        EnemyAction action = new RepairBulletSpawnerAction(EnemyAction.ActionType.REPAIR_BULLET_SPAWN, hammerObject, /*Spawn de balas*/ bulletResource, SteppedAction.ResourceType.HAMMER, interactDistance, timeToGetResource, timeToRepair);
         toDoList.Add(action);
     }
     #endregion

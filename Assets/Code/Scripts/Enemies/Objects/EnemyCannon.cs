@@ -1,7 +1,9 @@
+using UnityEngine;
 public class EnemyCannon : EnemyWeapon
-{
+{  
     public override void UseObject()
     {
-        throw new System.NotImplementedException();
+        base.UseObject();
+        Debug.Log("Dispara");
     }
 }

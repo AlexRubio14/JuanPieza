@@ -9,30 +9,35 @@ public abstract class SteppedAction : EnemyAction
     public enum ResourceType { WOOD, BULLET, BARREL, FUEL, HAMMER }
     protected ResourceType resouceType;
 
-
-    protected float timeWaited = 0;
-
     protected EnemyObject resource;
     protected float timeToGetResource;
-
-    protected GameObject target;
-    protected float timeToInteract;
-
 
     public Action<ResourceType, bool> onEnableResource;
 
 
-    public SteppedAction(ActionType _action, Transform _transform, EnemyObject _resource, GameObject _target, ResourceType _resourceType, float _distanceToInteract, float _timeToGetResource, float _timeToInteract)
+    public SteppedAction(ActionType _action, EnemyObject _resource, EnemyObject _target, ResourceType _resourceType, float _distanceToInteract, float _timeToGetResource, float _timeToInteract)
     {
         currentAction = _action;
-        transform = _transform;
         resource = _resource;
         target = _target;
+        targetObject = null;
         resouceType = _resourceType;
         distanceToInteract = _distanceToInteract;
         timeToGetResource = _timeToGetResource;
         timeToInteract = _timeToInteract;
     }
+    public SteppedAction(ActionType _action, EnemyObject _resource, GameObject _targetObject, ResourceType _resourceType, float _distanceToInteract, float _timeToGetResource, float _timeToInteract)
+    {
+        currentAction = _action;
+        resource = _resource;
+        target = null;
+        targetObject = _targetObject;
+        resouceType = _resourceType;
+        distanceToInteract = _distanceToInteract;
+        timeToGetResource = _timeToGetResource;
+        timeToInteract = _timeToInteract;
+    }
+
 
 
     public override void StateUpdate()
@@ -70,12 +75,16 @@ public abstract class SteppedAction : EnemyAction
     protected virtual void GoingResource()
     {
         agent.SetDestination(resource.transform.position);
+        agent.isStopped = false;
+
         //Animacion de moverse a true
+        animator.SetBool("Moving", true);
         if (IsNearToDestiny(resource.transform.position))
         {
             currentState = ActionState.WAITING_RESOURCE;
             agent.isStopped = true;
             //Animacion de moverse a false
+            animator.SetBool("Moving", false);
 
             return;
         }
@@ -87,25 +96,34 @@ public abstract class SteppedAction : EnemyAction
         timeWaited += Time.deltaTime;
         if (timeWaited >= timeToGetResource)
         {
+            currentState = ActionState.GOING_TARGET;
             timeWaited = 0;
             //Poner recurso en la mano
             onEnableResource(resouceType, true);
             //Activar animacion de pickUp
-
+            animator.SetBool("Pick", true);
             //Animacion de moverse a true
+            animator.SetBool("Moving", true);
+            agent.isStopped = false;
+            return;
         }
 
         CheckResourceObjectActive();
     }
     protected virtual void GoingTarget()
     {
-        agent.SetDestination(target.transform.position);
-        if (IsNearToDestiny(target.transform.position))
+        Vector3 targetPos = target? target.transform.position : targetObject.transform.position;
+        agent.SetDestination(targetPos);
+        if (IsNearToDestiny(targetPos))
         {
             currentState = ActionState.INTERACTING;
             agent.isStopped = true;
             //Empezar animacion de reparar
+            animator.SetBool("Interacting", true);
+            animator.SetBool("Pick", false);
             //Animacion moverse false
+            animator.SetBool("Moving", false);
+            agent.isStopped = true;
             //Activar particulas de reparar
             onEnableResource(resouceType, false);
         }
@@ -118,9 +136,13 @@ public abstract class SteppedAction : EnemyAction
         if (timeToInteract <= timeWaited)
         {
             //Parar animacion de interactuar
+            animator.SetBool("Interacting", false);
+            agent.isStopped = false;
+
             //Reparar
             Interact();
             onActionEnd();
+
         }
     }
 

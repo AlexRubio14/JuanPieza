@@ -1,11 +1,12 @@
 using UnityEngine;
 public class FishingRod : Tool
 {
+    private bool fishingRodAdded = false;
+
     [HideInInspector]
     public bool isFishing;
     private bool hookThrowed;
     private bool hookLanded;
-
     [Space, Header("Hook"), SerializeField]
     private GameObject hookPrefab;
     [SerializeField]
@@ -19,6 +20,13 @@ public class FishingRod : Tool
     public PlayerStateMachine playerSM { get; private set; }
     private void Start()
     {
+
+        if (FishingManager.instance && !fishingRodAdded)
+        {
+            FishingManager.instance.AddFishingRod(this);
+            fishingRodAdded = true;
+        }
+
         isFishing = false;
         hook = Instantiate(hookPrefab, transform.position, Quaternion.identity).GetComponent<HookController>();
         hook.gameObject.SetActive(false);
@@ -62,7 +70,7 @@ public class FishingRod : Tool
         playerSM.ChangeState(playerSM.fishingState);
 
         hookThrowed = true;
-        Invoke("StartFishing", 1f);
+        Invoke("StartFishing", 0.75f);
     }
     private void StartFishing()
     {
@@ -90,8 +98,11 @@ public class FishingRod : Tool
 
     private void OnEnable()
     {
-        if(FishingManager.instance)
+        if (FishingManager.instance)
+        {
             FishingManager.instance.AddFishingRod(this);
+            fishingRodAdded = true;
+        }
     }
     private void OnDisable()
     {
