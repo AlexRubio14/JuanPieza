@@ -99,9 +99,15 @@ public class MapManager : MonoBehaviour
 
     public void SetVotations(List<Votation> _votations)
     {
-        votations = _votations;
+        //Camera lerp
 
-        if(currentLevel._nodeChildren.Count == 1)
+        votations = _votations;
+        InitVotations();
+    }
+
+    public void InitVotations()
+    {
+        if (currentLevel._nodeChildren.Count == 1)
         {
             UpdateCurrentLevel(currentLevel._nodeChildren[0]);
             return;

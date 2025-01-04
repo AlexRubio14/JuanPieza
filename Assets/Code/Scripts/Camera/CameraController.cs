@@ -8,7 +8,6 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private CameraMovement camState = CameraMovement.NONE;
 
-
     [Header("Players"), SerializeField]
     private List<Collider> playerColliders;
     private List<PlayerStateMachine> playerStates = new List<PlayerStateMachine>();
@@ -23,6 +22,7 @@ public class CameraController : MonoBehaviour
     private Camera insideCamera;
     [SerializeField]
     private Camera externalCamera;
+    private bool defaultCamera;
 
     [Header("Cameras Variables"), SerializeField, Range(0, 1)]
     private float movementSpeed;
@@ -36,6 +36,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         playerStates = new List<PlayerStateMachine>();
+        defaultCamera = true;
 
         //Guardamos la Y del primer Player
         //Seteamos todos los players con la misma posicion en Y
@@ -61,8 +62,11 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        CheckCamDistance();
-        MoveCamera();
+        if (defaultCamera)
+        {
+            CheckCamDistance();
+            MoveCamera();
+        }
     }
 
     private void CheckCamDistance()
@@ -180,6 +184,9 @@ public class CameraController : MonoBehaviour
         Gizmos.DrawSphere(GetMiddlePointBetweenPlayers(),0.4f);
     }
 
-
+    public void SetDefaultCamera(bool value)
+    {
+        defaultCamera = value;
+    }
     
 }
