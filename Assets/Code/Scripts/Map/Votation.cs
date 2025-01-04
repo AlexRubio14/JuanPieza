@@ -32,6 +32,11 @@ public class Votation : MonoBehaviour
         }
     }
 
+    public void CleanPlayerList()
+    {
+        currentsPlayers.Clear();
+    }
+
     public List<PlayerController> GetCurrentsPlayer()
     {
         return currentsPlayers;

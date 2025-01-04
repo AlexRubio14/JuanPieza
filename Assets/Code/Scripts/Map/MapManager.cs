@@ -61,6 +61,7 @@ public class MapManager : MonoBehaviour
     private void UpdateUIPlayerText()
     {
         CanvasManager.Instance.SetInformationPlayers(votations);
+        CanvasManager.Instance.SetTimerUiInformation(currentTime, voteTime);
     }
 
 
@@ -129,7 +130,11 @@ public class MapManager : MonoBehaviour
         }
 
         foreach (var vot in votations)
+        {
+            vot.CleanPlayerList();
             vot.gameObject.SetActive(true);
+        }
+
         ActiveUI();
         startVoteTimer = true;
     }

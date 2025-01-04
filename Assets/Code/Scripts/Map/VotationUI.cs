@@ -20,9 +20,8 @@ public class VotationUI : MonoBehaviour
         string playerNames = "";
         foreach (var player in _players)
         {
-            playerNames += "J" + player.playerInput + "  "; 
+            playerNames += "J" + (player.playerInput.playerReference+1) + "  "; 
         }
-
         players.text = playerNames;
     }
 }

@@ -7,6 +7,7 @@ public class CanvasManager : MonoBehaviour
 
     [Header("Votation")]
     [SerializeField] private List<VotationUI> ui;
+    [SerializeField] private VotationTimer timer;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class CanvasManager : MonoBehaviour
         { 
             _ui.gameObject.SetActive(state);
         }
+        timer.gameObject.SetActive(state);
     }
 
     public void SetInformationDestination(LevelNode node)
@@ -35,6 +37,7 @@ public class CanvasManager : MonoBehaviour
         foreach (var _ui in ui)
         {
             _ui.SetDestinationText(node._nodeChildren[i]._node.name);
+            i++;
         }
     }
 
@@ -44,6 +47,12 @@ public class CanvasManager : MonoBehaviour
         foreach (var _ui in ui)
         {
             _ui.SetPlayers(_votation[i].GetCurrentsPlayer());
+            i++;
         }
+    }
+
+    public void SetTimerUiInformation(float time, float maxTime)
+    {
+        timer.SetTimerUi(time, maxTime);
     }
 }
