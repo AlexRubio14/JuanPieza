@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -38,6 +39,8 @@ public class PlayersReadyController : MonoBehaviour
         //_newPlayer.GetComponent<PlayerController>().spawnPos = playersStartPos[playerIndex];
         SetPlayerInputEvents(_newPlayer);
         DisplayStartGameButton();
+
+        _newPlayer.GetComponent<GameInput>().playerReference = playerIndex;
     }   
 
     private void PlacePlayerOnMenu(int _playerIndex)
