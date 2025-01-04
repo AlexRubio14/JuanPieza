@@ -48,6 +48,11 @@ public class Ship : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.X)) 
+        {
+            StartVotation();
+        }
+
         FlotationLerp();
         WeightControl();
     }

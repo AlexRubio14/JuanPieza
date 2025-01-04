@@ -47,6 +47,9 @@ public class MapManager : MonoBehaviour
                 VotationDecision();
                 foreach (var vot in votations)
                     vot.gameObject.SetActive(false);
+                currentTime = 0;
+                foreach (var player in PlayersManager.instance.ingamePlayers)
+                    player.votationDone = false;
                 startVoteTimer = false;
             }
         }
@@ -97,6 +100,13 @@ public class MapManager : MonoBehaviour
     public void SetVotations(List<Votation> _votations)
     {
         votations = _votations;
+
+        if(currentLevel._nodeChildren.Count == 1)
+        {
+            UpdateCurrentLevel(currentLevel._nodeChildren[0]);
+            return;
+        }
+
         foreach (var vot in votations)
             vot.gameObject.SetActive(true);
         startVoteTimer = true;

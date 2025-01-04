@@ -11,11 +11,12 @@ public class Votation : MonoBehaviour
     {
         currentsPlayers = 0;
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && !other.GetComponent<PlayerController>().votationDone)
         {
             currentsPlayers++;
+            other.GetComponent<PlayerController>().votationDone = true;
         }
     }
 
@@ -24,6 +25,7 @@ public class Votation : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             currentsPlayers--;
+            other.GetComponent<PlayerController>().votationDone = false;
         }
     }
 
