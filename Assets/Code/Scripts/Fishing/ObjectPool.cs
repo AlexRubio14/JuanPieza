@@ -9,9 +9,7 @@ public class ObjectPool : MonoBehaviour
     private ObjectSO[] itemPool;
     [SerializeField]
     private int[] priorityList;
-
-    [SerializeField] private int[] priorityList;
-
+    
     [SerializedDictionary("Rarity", "Percentage")]
     public SerializedDictionary<ObjectSO.ItemRarity, float> rarityPercentages;
 
