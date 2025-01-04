@@ -17,5 +17,8 @@ public class CreateHole : DetectBullet
         _hole.GetComponent<Hole>().SetShipInformation(ship);
         _hole.GetComponentInChildren<Repair>().SetbulletInformation(ship, bullet.GetDamage());
         _hole.transform.SetParent(transform, true);
+
+        if(ship.onDamageRecieved != null)
+            ship.onDamageRecieved(_hole);
     }
 }

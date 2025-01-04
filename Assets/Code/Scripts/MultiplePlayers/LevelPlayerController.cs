@@ -21,8 +21,10 @@ public class LevelPlayerController : MonoBehaviour
             
             PlayersManager.instance.players[i].Item1.actions.FindActionMap("PlayerSelectMenu").Disable();
             PlayersManager.instance.players[i].Item1.actions.FindActionMap("Gameplay").Enable();
+            PlayersManager.instance.players[i].Item1.SwitchCurrentActionMap("Gameplay");
 
-            cameraCont.AddPlayer(controller.gameObject);
+            if (cameraCont)
+                cameraCont.AddPlayer(controller.gameObject);
         }
 
         

@@ -1,3 +1,4 @@
+using CartoonFX.CustomShaderImporter;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -19,10 +20,10 @@ public class PlayerController : MonoBehaviour
     private Transform[] slopePositions;
     [SerializeField]
     public float maxSlopeHeight;
-    [SerializeField]
-    private float slopeCheckDistance;
-    [SerializeField]
-    private float slopeOffset;
+    [field: SerializeField]
+    public float slopeCheckDistance { get; private set; }
+    [field: SerializeField]
+    public float slopeOffset {  get; private set; }
     [SerializeField]
     private LayerMask slopeCheckLayer;
 
@@ -35,6 +36,10 @@ public class PlayerController : MonoBehaviour
     private bool canRoll;
     [field: SerializeField]
     public Vector2 bounceForce { get; private set; }
+    [field: SerializeField]
+    public float rollSlopeDistance {  get; private set; }
+    [field: SerializeField]
+    public float rollSlopeOffset {  get; private set; }
 
     [field: Space, Header("Push"), SerializeField]
     public float pushRadius { get; private set; }
@@ -51,7 +56,7 @@ public class PlayerController : MonoBehaviour
     public InteractableObject item { get; private set; }
 
 
-    [field: Space, Header("Push"), SerializeField]
+    [field: Space, Header("Death"), SerializeField]
     public float timeToDie {  get; private set; }
     [field: SerializeField]
     public float swimSpeed { get; private set; }
@@ -143,25 +148,28 @@ public class PlayerController : MonoBehaviour
     {
         rb.AddForce(_direction * _speed, ForceMode.Force);
     }
-    public void CheckSlope()
+    public void CheckSlope(float _slopeLength, float _slopeOffset)
     {
         //Hacer Raycast en las tres direcciones
         foreach (Transform slopePosition in slopePositions)
         {
-            if (!Physics.Raycast(slopePosition.position, slopePosition.forward, slopeCheckDistance, slopeCheckLayer))
+            RaycastHit hit;
+            Physics.Raycast(slopePosition.position, slopePosition.forward, out hit, _slopeLength, slopeCheckLayer);
+            if (!hit.collider)
                 continue;
             
             //Si choca 
             //Hacer otro raycast mas arriba
-            for (float i = slopeOffset; i < maxSlopeHeight; i += slopeOffset)
+            for (float i = _slopeOffset; i < maxSlopeHeight; i += _slopeOffset)
             {
                 Vector3 currentSlopePos = slopePosition.position;
                 currentSlopePos.y += i;
 
                 //Hacer otro raycast
-                if (!Physics.Raycast(currentSlopePos, slopePosition.forward, slopeCheckDistance, slopeCheckLayer))
-                {
-                    rb.position = rb.position + new Vector3(0, i + 0.25f, 0);
+                if (!Physics.Raycast(currentSlopePos, slopePosition.forward, _slopeLength, slopeCheckLayer))
+                {   
+                    rb.position = hit.point + new Vector3(0, i + 0.25f, 0);
+                    //Debug.Break();
                     return;
                 }
             }

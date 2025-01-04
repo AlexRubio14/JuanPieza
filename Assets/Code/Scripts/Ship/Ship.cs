@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,7 +27,7 @@ public class Ship : MonoBehaviour
     [SerializeField] private float damageTime;
     private float currentTime;
 
-
+    public Action<GameObject> onDamageRecieved;
 
     private void Start()
     {

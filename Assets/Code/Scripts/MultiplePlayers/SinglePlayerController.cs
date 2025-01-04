@@ -6,7 +6,6 @@ public class SinglePlayerController : MonoBehaviour
      * Tiene que ser don't destroy on load
      * Tiene que contener el player input
      * Tiene que contener variables de player como por ejemplo los cosmeticos
-     * Al entrar estar en una escena 
      */
 
     [field: SerializeField]
