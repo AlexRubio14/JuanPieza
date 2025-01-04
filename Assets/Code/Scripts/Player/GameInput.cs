@@ -11,6 +11,9 @@ public class GameInput : MonoBehaviour
     public Action OnRollAction;
     public Action OnThrowAction;
 
+    public int playerReference { get;  set; }
+
+
     public void ReadMovement(InputAction.CallbackContext obj)
     {
         if (OnMoveAction != null)
@@ -48,5 +51,4 @@ public class GameInput : MonoBehaviour
                 OnThrowAction();
         }
     }
-
 }

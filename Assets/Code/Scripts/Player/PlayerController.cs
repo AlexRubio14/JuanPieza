@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private PlayerStateMachine stateMachine;
+    public PlayerStateMachine stateMachine;
 
     [HideInInspector]
     public GameInput playerInput;
@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField]
     public Vector2 pushForce { get; private set; }
 
-    private Rigidbody rb;
+    public Rigidbody rb { get; private set; }
 
     [SerializeField] public ObjectHolder objectHolder;
     public InteractableObject item { get; private set; }
@@ -58,8 +58,15 @@ public class PlayerController : MonoBehaviour
 
     [Space, Header("Interact"), SerializeField]
     private Canvas interactCanvas;
+
     public GameObject interactCanvasObject => interactCanvas.transform.gameObject;
 
+    [field: Space, Header("CannonMovement"), SerializeField]
+    public float acceleration { get; private set; }
+    [field: SerializeField]
+    public float cannonMovementSpeed { get; private set; }
+    [field:SerializeField]
+    public float cannonRotationSpeed { get; private set; }
 
     public Animator animator { get; private set; }
 
@@ -188,8 +195,27 @@ public class PlayerController : MonoBehaviour
     }
     public void Interact()
     {
-        if (objectHolder.GetInteractableObject() != null)
-            objectHolder.GetInteractableObject().Interact(objectHolder);
+        if (objectHolder.GetInteractableObject() == null)
+            return;
+
+        InteractableObject tempInteractableObj = objectHolder.GetInteractableObject();
+
+        switch (tempInteractableObj.GetScriptableObject().objectType)
+        {
+            case ObjectSO.ObjectType.WEAPON:
+                tempInteractableObj.transform.SetParent(transform);
+                tempInteractableObj.Interact(objectHolder); 
+                break;
+            case ObjectSO.ObjectType.TOOL:
+                break;
+            case ObjectSO.ObjectType.DECORATION:
+                break;
+            case ObjectSO.ObjectType.RESOURCE:
+                break;
+            default:
+                break;
+        }
+        objectHolder.GetInteractableObject().Interact(objectHolder);
     }
     public void Use()
     {

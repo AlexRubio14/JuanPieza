@@ -5,16 +5,11 @@ public abstract class InteractableObject : MonoBehaviour
 
     [SerializeField] protected ObjectSO objectSO;
     [SerializeField] protected SelectedVisual selectedVisual;
-    [SerializeField] protected bool isBeingUsed;
+    protected bool isBeingUsed;
 
     [SerializeField]
     public Rigidbody rb;
     protected Collider objectCollider;
-
-    public enum ObjectType { WEAPON, TOOL, DECORATION, RESOURCE };
-
-    protected ObjectType objectType;
-
 
     private void Awake()
     {
@@ -46,8 +41,8 @@ public abstract class InteractableObject : MonoBehaviour
         isBeingUsed = _value;
     }
 
-    public string GetObjectName()
+    public ObjectSO GetScriptableObject()
     {
-        return objectName;
+        return objectSO;
     }
 }

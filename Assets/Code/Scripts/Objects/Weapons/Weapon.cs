@@ -5,7 +5,7 @@ public abstract class Weapon : InteractableObject
     public bool hasAmmo { get; private set; }
     [SerializeField] GameObject ammoObject;
 
-    [SerializeField] protected Vector3 ridingPos;
+    [SerializeField] protected Transform ridingPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,6 +21,16 @@ public abstract class Weapon : InteractableObject
 
     public override void Interact(ObjectHolder _objectHolder)
     {
+
+        PlayerController player = _objectHolder.transform.parent.gameObject.GetComponent<PlayerController>();
+
+        PlayersManager.instance.players[player.playerInput.playerReference].Item1.SwitchCurrentActionMap("CannonGameplay");
+        
+        if(hasAmmo) 
+        {
+
+        }
+
         //si tiene bala
 
         //si no tiene bala
@@ -33,6 +43,6 @@ public abstract class Weapon : InteractableObject
 
     public override void UseItem(ObjectHolder _objectHolder)
     {
-        throw new System.NotImplementedException();
+
     }
 }
