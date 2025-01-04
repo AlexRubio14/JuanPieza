@@ -1,21 +1,24 @@
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Votation : MonoBehaviour
 {
     [Header("Direcction")]
-    [SerializeField] protected int direcctionValue;
+    [SerializeField] private int direcctionValue;
 
-    protected int currentsPlayers;
+    private List<PlayerController> currentsPlayers;
 
     private void Start()
     {
-        currentsPlayers = 0;
+        currentsPlayers = new List<PlayerController>();
     }
     private void OnTriggerStay(Collider other)
     {
         if(other.CompareTag("Player") && !other.GetComponent<PlayerController>().votationDone)
         {
-            currentsPlayers++;
+            currentsPlayers.Add(other.GetComponent<PlayerController>());
             other.GetComponent<PlayerController>().votationDone = true;
         }
     }
@@ -24,12 +27,12 @@ public class Votation : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            currentsPlayers--;
+            currentsPlayers.Remove(other.GetComponent<PlayerController>());
             other.GetComponent<PlayerController>().votationDone = false;
         }
     }
 
-    public int GetCurrentsPlayer()
+    public List<PlayerController> GetCurrentsPlayer()
     {
         return currentsPlayers;
     }

@@ -30,6 +30,7 @@ public class MapManager : MonoBehaviour
         {
             Destroy(gameObject); 
         }
+        CanvasManager.Instance.SetVotationUIState(false);
     }
 
     private void Update()
@@ -42,6 +43,7 @@ public class MapManager : MonoBehaviour
         if (startVoteTimer)
         {
             currentTime += Time.deltaTime;
+            UpdateUIPlayerText();
             if (currentTime >= voteTime)
             {
                 VotationDecision();
@@ -50,20 +52,27 @@ public class MapManager : MonoBehaviour
                 currentTime = 0;
                 foreach (var player in PlayersManager.instance.ingamePlayers)
                     player.votationDone = false;
+                CanvasManager.Instance.SetVotationUIState(false);
                 startVoteTimer = false;
             }
         }
     }
 
+    private void UpdateUIPlayerText()
+    {
+        CanvasManager.Instance.SetInformationPlayers(votations);
+    }
+
+
     private void VotationDecision()
     {
-        if (votations[0].GetCurrentsPlayer() == votations[1].GetCurrentsPlayer())
+        if (votations[0].GetCurrentsPlayer().Count == votations[1].GetCurrentsPlayer().Count)
         {
             RandomDecision();
             return;
         }
 
-        if (votations[0].GetCurrentsPlayer() > votations[1].GetCurrentsPlayer())
+        if (votations[0].GetCurrentsPlayer().Count > votations[1].GetCurrentsPlayer().Count)
             UpdateCurrentLevel(currentLevel._nodeChildren[votations[0].GetDirecctionValue()]);
         else
             UpdateCurrentLevel(currentLevel._nodeChildren[votations[1].GetDirecctionValue()]);
@@ -105,6 +114,12 @@ public class MapManager : MonoBehaviour
         InitVotations();
     }
 
+    private void ActiveUI()
+    {
+        CanvasManager.Instance.SetVotationUIState(true);
+        CanvasManager.Instance.SetInformationDestination(currentLevel);
+    }
+
     public void InitVotations()
     {
         if (currentLevel._nodeChildren.Count == 1)
@@ -115,6 +130,7 @@ public class MapManager : MonoBehaviour
 
         foreach (var vot in votations)
             vot.gameObject.SetActive(true);
+        ActiveUI();
         startVoteTimer = true;
     }
 
