@@ -14,10 +14,16 @@ public class MapManager : MonoBehaviour
 
     List<Votation> votations = new List<Votation>();
 
-    [Header("VotationTimer")]
+    [Header("Votation Timer")]
     [SerializeField] private float voteTime;
     private float currentTime;
     private bool startVoteTimer;
+    private int choosenChild;
+
+    [Header("Votation Direction")]
+    [SerializeField] private float firstPointZ;
+    [SerializeField] private float secondPointZ;
+    [SerializeField] private float secondPointX;
 
     private void Awake()
     {
@@ -47,15 +53,47 @@ public class MapManager : MonoBehaviour
             if (currentTime >= voteTime)
             {
                 VotationDecision();
-                foreach (var vot in votations)
-                    vot.gameObject.SetActive(false);
-                currentTime = 0;
-                foreach (var player in PlayersManager.instance.ingamePlayers)
-                    player.votationDone = false;
-                CanvasManager.Instance.SetVotationUIState(false);
-                startVoteTimer = false;
+                StartMovingShip();
+                DesactiveInformation();
             }
         }
+    }
+
+    private void DesactiveInformation()
+    {
+        foreach (var vot in votations)
+            vot.gameObject.SetActive(false);
+        foreach (var player in PlayersManager.instance.ingamePlayers)
+            player.votationDone = false;
+
+        CanvasManager.Instance.SetVotationUIState(false);
+        currentTime = 0;
+        startVoteTimer = false;
+    }
+
+    private void StartMovingShip()
+    {
+        List<Vector3> positions = new List<Vector3>();
+        ShipCurve shipCurve = FindFirstObjectByType<ShipCurve>();
+        GameObject ship = shipCurve.gameObject;
+
+        positions.Add(ship.transform.position);
+        positions.Add(new Vector3(ship.transform.position.x, ship.transform.position.y, ship.transform.position.z + firstPointZ));
+       
+        switch(choosenChild)
+        {
+            case 0:
+                positions.Add(new Vector3(ship.transform.position.x - secondPointX, ship.transform.position.y, ship.transform.position.z + secondPointZ));
+                break;
+            case 1:
+                positions.Add(new Vector3(ship.transform.position.x + secondPointX, ship.transform.position.y, ship.transform.position.z + secondPointZ));
+                break;
+            default:
+                positions.Add(new Vector3(ship.transform.position.x, ship.transform.position.y, ship.transform.position.z + secondPointZ));
+                break;
+        }
+
+        shipCurve.SetStartMovement(true, positions);
     }
 
     private void UpdateUIPlayerText()
@@ -74,26 +112,27 @@ public class MapManager : MonoBehaviour
         }
 
         if (votations[0].GetCurrentsPlayer().Count > votations[1].GetCurrentsPlayer().Count)
-            UpdateCurrentLevel(currentLevel._nodeChildren[votations[0].GetDirecctionValue()]);
+            UpdateCurrentLevel(currentLevel._nodeChildren[votations[0].GetDirecctionValue()], 0);
         else
-            UpdateCurrentLevel(currentLevel._nodeChildren[votations[1].GetDirecctionValue()]);
+            UpdateCurrentLevel(currentLevel._nodeChildren[votations[1].GetDirecctionValue()], 1);
     }
 
     private void RandomDecision()
     {
         float randomChance = Random.value;
         if(randomChance < 0.5f)
-            UpdateCurrentLevel(currentLevel._nodeChildren[votations[0].GetDirecctionValue()]);
+            UpdateCurrentLevel(currentLevel._nodeChildren[votations[0].GetDirecctionValue()], 0);
         else
-            UpdateCurrentLevel(currentLevel._nodeChildren[votations[1].GetDirecctionValue()]);
+            UpdateCurrentLevel(currentLevel._nodeChildren[votations[1].GetDirecctionValue()], 1);
     }
 
-    private void UpdateCurrentLevel(LevelNode _currentLevel)
+    private void UpdateCurrentLevel(LevelNode _currentLevel, int index)
     {
         currentLevel = _currentLevel;
         childrenLevel = currentLevel._nodeChildren;
-        var childNames = currentLevel._nodeChildren.OrderBy(c => c._nodeHeigth).Select(c => c._node.name).ToList();
-        Debug.Log($"Node: {currentLevel._node.name},Height: {currentLevel._nodeHeigth},Children: {string.Join(", ", childNames)}");
+        choosenChild = index;
+        //var childNames = currentLevel._nodeChildren.OrderBy(c => c._nodeHeigth).Select(c => c._node.name).ToList();
+        //Debug.Log($"Node: {currentLevel._node.name},Height: {currentLevel._nodeHeigth},Children: {string.Join(", ", childNames)}");
     }
 
     public void SetMap(Dictionary<int, List<LevelNode>> _map)
@@ -103,7 +142,7 @@ public class MapManager : MonoBehaviour
         List<LevelNode> levelZeroNodes = map[0];
         foreach (var node in levelZeroNodes)
         {
-            UpdateCurrentLevel(node);
+            UpdateCurrentLevel(node, 0);
         }
     }
 
@@ -126,7 +165,7 @@ public class MapManager : MonoBehaviour
         CameraManager.Instance.SetSailCamera(false);
         if (currentLevel._nodeChildren.Count == 1)
         {
-            UpdateCurrentLevel(currentLevel._nodeChildren[0]);
+            UpdateCurrentLevel(currentLevel._nodeChildren[0], 2);
             return;
         }
 
@@ -138,45 +177,5 @@ public class MapManager : MonoBehaviour
 
         ActiveUI();
         startVoteTimer = true;
-    }
-
-    private void PrintMap()
-    {
-        foreach (var level in map)
-        {
-            foreach (var node in level.Value)
-            {
-                if (node._node.nodeType == NodeData.NodeType.BOSS)
-                {
-                    mapHeight = level.Key;
-                    break;
-                }
-            }
-        }
-
-        for (int height = 0; height <= mapHeight; height++)
-        {
-            if (map.ContainsKey(height))
-            {
-                foreach (LevelNode node in map[height])
-                {
-                    string probabilities = $"Battle: {node._nodeBattlePercentage:P1}, Shop: {node._nodeShopPercentage:P1}, Event: {node._nodeEventPercentage:P1}";
-
-                    if (node._nodeChildren != null && node._nodeChildren.Count > 0)
-                    {
-                        var childNames = node._nodeChildren.OrderBy(c => c._nodeHeigth).Select(c => c._node.name).ToList();
-                        Debug.Log($"Node: {node._node.name}, Probabilities: {probabilities}, Children: {string.Join(", ", childNames)}, Height: {node._nodeHeigth}");
-                    }
-                    else
-                    {
-                        Debug.Log($"Node: {node._node.name}, Probabilities: {probabilities}, Height: {node._nodeHeigth}");
-                    }
-                }
-            }
-            else
-            {
-                Debug.Log($"Height {height}: No nodes");
-            }
-        }
     }
 }
