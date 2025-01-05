@@ -2,47 +2,37 @@ using UnityEngine;
 
 public abstract class Weapon : InteractableObject
 {
+    [Space, Header("Weapon"), SerializeField]
+    protected Transform ridingPos;
     public bool hasAmmo { get; private set; }
-    [SerializeField] GameObject ammoObject;
-
-    [SerializeField] protected Transform ridingPos;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public override void Interact(ObjectHolder _objectHolder)
     {
-
+        
         PlayerController player = _objectHolder.transform.parent.gameObject.GetComponent<PlayerController>();
 
-        PlayersManager.instance.players[player.playerInput.playerReference].Item1.SwitchCurrentActionMap("CannonGameplay");
-        
-        if(hasAmmo) 
+        if (hasAmmo) //Si tienes municion
         {
+            //Cambiar el mapa de inputs
+            PlayersManager.instance.players[player.playerInput.playerReference].Item1.SwitchCurrentActionMap("CannonGameplay");
+            player.transform.position = ridingPos.position;
 
+            transform.SetParent(player.transform);
         }
+        else //Si no tiene municion 
+        {
+            if ( _objectHolder.GetHandInteractableObject().objectSO == objectToInteract) //Comprobar si tiene el objeto necesario en la mano en la mano
+            {
 
-        //si tiene bala
-
-        //si no tiene bala
+            }
+            
+        }
     }
 
-    protected void Shoot()
-    {
-
-    }
+    protected abstract void Shoot();
 
     public override void UseItem(ObjectHolder _objectHolder)
     {
-
+        Shoot();
     }
 }

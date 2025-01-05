@@ -1,4 +1,3 @@
-using CartoonFX.CustomShaderImporter;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -53,7 +52,6 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb { get; private set; }
 
     [SerializeField] public ObjectHolder objectHolder;
-    public InteractableObject item { get; private set; }
 
 
     [field: Space, Header("Death"), SerializeField]
@@ -65,6 +63,7 @@ public class PlayerController : MonoBehaviour
     private Canvas interactCanvas;
 
     public GameObject interactCanvasObject => interactCanvas.transform.gameObject;
+
 
     [Header("Votation")]
     public bool votationDone {  get; set; }
@@ -127,7 +126,6 @@ public class PlayerController : MonoBehaviour
 
         PlayersManager.instance.ingamePlayers.Remove(this);
     }
-
 
     #region Input Actions 
     private void MovementAction(Vector2 _movementInput)
@@ -209,12 +207,12 @@ public class PlayerController : MonoBehaviour
     }
     public void Interact()
     {
-        if (objectHolder.GetInteractableObject() == null)
+        if (objectHolder.GetNearestInteractableObject() == null)
             return;
 
-        InteractableObject tempInteractableObj = objectHolder.GetInteractableObject();
+        InteractableObject tempInteractableObj = objectHolder.GetNearestInteractableObject();
 
-        switch (tempInteractableObj.GetScriptableObject().objectType)
+        switch (tempInteractableObj.objectSO.objectType)
         {
             case ObjectSO.ObjectType.WEAPON:
                 tempInteractableObj.transform.SetParent(transform);
@@ -229,18 +227,14 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
-        objectHolder.GetInteractableObject().Interact(objectHolder);
+        objectHolder.GetNearestInteractableObject().Interact(objectHolder);
     }
     public void Use()
     {
-        objectHolder.GetInteractableObject().UseItem(objectHolder);
+        objectHolder.GetNearestInteractableObject().UseItem(objectHolder);
     }
     #endregion
 
-    public void SetItem(InteractableObject _item)
-    {
-        item = _item;
-    }
     public Rigidbody GetRB() { return rb; }
 
     private void OnCollisionEnter(Collision collision)

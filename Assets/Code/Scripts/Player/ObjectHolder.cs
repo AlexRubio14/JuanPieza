@@ -5,15 +5,17 @@ public class ObjectHolder : MonoBehaviour
 {
     [SerializeField] private float sphereCastRadius;
     [SerializeField] private LayerMask itemsLayerMask;
-    [SerializeField] Transform sphereCastTransform;
+    [SerializeField] private Transform sphereCastTransform;
 
-    (InteractableObject, Collider) interactableObject = (null, null);
+    private InteractableObject nearestInteractableObject;
+
+    private InteractableObject interactableObject;
 
     [SerializeField] private Transform objectPickedPos;
 
     private bool hasPickedObject = false;
 
-    public RaycastHit[] colliders;
+    private RaycastHit[] colliders;
 
     private void Awake()
     {
@@ -21,19 +23,18 @@ public class ObjectHolder : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        (InteractableObject, Collider) neareastObject = CheckItemsInRange();
-        ChangeInteractableObject(neareastObject);
+        InteractableObject neareastObject = CheckItemsInRange();
+        ChangeNearestInteractableObject(neareastObject);
     }
 
     // Crea un sphereRaycast, te pilla el interactableObject mas cercano que no este siendo utilizado y te devuelve su script y su collider a la vez.
-    // Si no hay ningun item devuelve (null, null);
-    public (InteractableObject, Collider) CheckItemsInRange()
+    public InteractableObject CheckItemsInRange()
     {
         colliders = Physics.SphereCastAll(sphereCastTransform.position, sphereCastRadius, transform.forward, sphereCastRadius, itemsLayerMask);
 
-        (InteractableObject, Collider) currentinteractableObject = (null, null);
+        InteractableObject currentinteractableObject = null;
 
         float lastDistance = 1000f;
 
@@ -46,75 +47,78 @@ public class ObjectHolder : MonoBehaviour
 
             InteractableObject tempObject = item.collider.GetComponent<InteractableObject>();
 
-            if (tempObject.GetIsBeingUsed())
+            if (tempObject.isBeingUsed)
                 continue;
 
             lastDistance = Vector3.Distance(transform.parent.position, item.collider.transform.position);
 
-            currentinteractableObject = (tempObject, item.collider);
+            currentinteractableObject = tempObject;
 
         }
 
         return currentinteractableObject;
     }
-
-    private void ChangeInteractableObject((InteractableObject, Collider) neareastObject)
+    private void ChangeNearestInteractableObject(InteractableObject _neareastObject)
     {
-        if (hasPickedObject)
-            return;
-
-        if (neareastObject != interactableObject)
+        if (_neareastObject != nearestInteractableObject)
         {
-            if(interactableObject.Item1 != null)
-            {
-                interactableObject.Item1.GetSelectedVisual().Hide();
-            }
+            if(nearestInteractableObject != null)
+                nearestInteractableObject.GetSelectedVisual().Hide();
 
-            if(neareastObject.Item1 != null)
+            if (_neareastObject != null)
             {
-                neareastObject.Item1.GetSelectedVisual().Show();
-            }
+                if (_neareastObject.objectToInteract == interactableObject.objectSO)
+                    _neareastObject.GetSelectedVisual().Show();
+                else
+                {
+                    //Mostrar el interactable object que necesita
 
-            interactableObject = neareastObject;
+                }
+            }
+                
+
+            nearestInteractableObject = _neareastObject;
         }
     }
 
-    public InteractableObject GetInteractableObject()
-    {
-        return interactableObject.Item1;
-    }
-    public void SetInteractableObject((InteractableObject, Collider) _interactableObject)
-    {
-        interactableObject = _interactableObject;
-    }
+    #region Getters
     public Vector3 GetObjectPickedPosition()
     {
         return objectPickedPos.position;
     }
-
     public bool GetHasObjectPicked()
     {
         return hasPickedObject;
     }
+    public InteractableObject GetHandInteractableObject()
+    {
+        return interactableObject;
+    }
+    public InteractableObject GetNearestInteractableObject()
+    {
+        return nearestInteractableObject;
+    }
 
+    #endregion
+
+    #region Setters
     public void SetHasObjectPicked(bool _value)
     {
         hasPickedObject = _value;
     }
-
-    public void InstantiateItem(InteractableObject _interactableObject, Collider _interactableObjectCollider)
+    public void SetInteractableObject(InteractableObject _interactableObject)
     {
-        GameObject item = Instantiate(_interactableObject.gameObject);
+        interactableObject = _interactableObject;
+    }
+    #endregion
+
+    public void InstantiateItem(ObjectSO _interactableObject)
+    {
+        GameObject item = Instantiate(_interactableObject.prefab);
         item.GetComponent<Rigidbody>().isKinematic = true;
         item.transform.SetParent(transform.parent, true);
         item.transform.position = objectPickedPos.position;
-        SetInteractableObject(_interactableObject, _interactableObjectCollider);
-    }
-
-    public void SetInteractableObject(InteractableObject _interactableObject, Collider _interactableObjectCollider)
-    {
-        interactableObject.Item1 = _interactableObject;
-        interactableObject.Item2 = _interactableObjectCollider;
+        SetInteractableObject(item.GetComponent<InteractableObject>());
     }
 
     private void OnDrawGizmos()

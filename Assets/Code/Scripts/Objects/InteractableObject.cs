@@ -3,9 +3,10 @@ using UnityEngine;
 public abstract class InteractableObject : MonoBehaviour
 {
 
-    [SerializeField] protected ObjectSO objectSO;
+    [field: SerializeField] public ObjectSO objectSO {  get; protected set; }
+    [field: SerializeField] public ObjectSO objectToInteract {  get; protected set; }
     [SerializeField] protected SelectedVisual selectedVisual;
-    protected bool isBeingUsed;
+    public bool isBeingUsed { get; protected set; }
 
     [SerializeField]
     public Rigidbody rb;
@@ -21,19 +22,9 @@ public abstract class InteractableObject : MonoBehaviour
 
     public abstract void UseItem(ObjectHolder _objectHolder);
 
-    public float GetWeight()
-    {
-        return objectSO.weight;
-    }
-
     public SelectedVisual GetSelectedVisual()
     {
         return selectedVisual;
-    }
-
-    public bool GetIsBeingUsed()
-    {
-        return isBeingUsed;
     }
 
     public void SetIsBeingUsed(bool _value)
@@ -41,8 +32,4 @@ public abstract class InteractableObject : MonoBehaviour
         isBeingUsed = _value;
     }
 
-    public ObjectSO GetScriptableObject()
-    {
-        return objectSO;
-    }
 }

@@ -15,7 +15,7 @@ public abstract class Resource : InteractableObject
 
     private void PickItem(ObjectHolder _objectHolder)
     {
-        _objectHolder.SetInteractableObject((this, objectCollider));
+        _objectHolder.SetInteractableObject(this);
         
         SetIsBeingUsed(true);
 
@@ -31,7 +31,7 @@ public abstract class Resource : InteractableObject
     }
     private void DropItem(ObjectHolder _objectHolder)
     {
-        _objectHolder.SetInteractableObject((null, null));
+        _objectHolder.SetInteractableObject(null);
 
         SetIsBeingUsed(false);
 
