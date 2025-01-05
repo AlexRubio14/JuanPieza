@@ -4,7 +4,7 @@ using UnityEngine;
 public class Repair : InteractableObject
 {
     [Header("Item")]
-    [SerializeField] private InteractableObject itemNeeded;
+    [SerializeField] private ObjectSO itemNeeded;
 
     [Header("Time")]
     [SerializeField] private float repairDuration;
@@ -37,7 +37,6 @@ public class Repair : InteractableObject
     {
         if (players.Count > 0)
         {
-            Debug.Log("entra");
             currentRepairTime += repairSpeed * players.Count * Time.deltaTime;
             if (currentRepairTime >= repairDuration)
             {
@@ -75,7 +74,7 @@ public class Repair : InteractableObject
 
     }
 
-    public InteractableObject GetItemNeeded()
+    public ObjectSO GetItemNeeded()
     {
         return itemNeeded;
     }

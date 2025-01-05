@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,7 +27,8 @@ public class Ship : MonoBehaviour
     [SerializeField] private float damageTime;
     private float currentTime;
 
-
+    [Header("Votation")]
+    [SerializeField] private List<Votation> votations;
 
     private void Start()
     {
@@ -38,10 +38,20 @@ public class Ship : MonoBehaviour
         currentHeight = transform.position.y;
 
         objects = new Dictionary<InteractableObject, int>();
+
+        foreach (Votation _votation in votations)
+        {
+            _votation.gameObject.SetActive(false);
+        }
     }
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.X)) 
+        {
+            StartVotation();
+        }
+
         FlotationLerp();
         WeightControl();
     }
@@ -86,6 +96,11 @@ public class Ship : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+    }
+
+    public void StartVotation()
+    {
+        MapManager.Instance.SetVotations(votations);
     }
 
     public void AddInteractuableObject(InteractableObject interactableObject)

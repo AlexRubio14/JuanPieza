@@ -12,6 +12,19 @@ public class MapManager : MonoBehaviour
     private Dictionary<int, List<LevelNode>> map = new Dictionary<int, List<LevelNode>>();
     private int mapHeight;
 
+    List<Votation> votations = new List<Votation>();
+
+    [Header("Votation Timer")]
+    [SerializeField] private float voteTime;
+    private float currentTime;
+    private bool startVoteTimer;
+    private int choosenChild;
+
+    [Header("Votation Direction")]
+    [SerializeField] private float firstPointZ;
+    [SerializeField] private float secondPointZ;
+    [SerializeField] private float secondPointX;
+
     private void Awake()
     {
         if (Instance == null)
@@ -23,40 +36,103 @@ public class MapManager : MonoBehaviour
         {
             Destroy(gameObject); 
         }
+        CanvasManager.Instance.SetVotationUIState(false);
     }
 
     private void Update()
     {
-        if (currentLevel._nodeChildren.Count > 1)
+        Timer();
+    }
+
+    private void Timer()
+    {
+        if (startVoteTimer)
         {
-            if (Input.GetKeyDown(KeyCode.A))
+            currentTime += Time.deltaTime;
+            UpdateUIPlayerText();
+            if (currentTime >= voteTime)
             {
-                UpdateCurrentLevel(childrenLevel[0]);
-            }
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                UpdateCurrentLevel(childrenLevel[1]);
-            }
-        }
-        else if (currentLevel._nodeChildren.Count > 0)
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                UpdateCurrentLevel(childrenLevel[0]);
-            }
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                UpdateCurrentLevel(childrenLevel[0]);
+                VotationDecision();
+                StartMovingShip();
+                DesactiveInformation();
             }
         }
     }
 
-    private void UpdateCurrentLevel(LevelNode _currentLevel)
+    private void DesactiveInformation()
+    {
+        foreach (var vot in votations)
+            vot.gameObject.SetActive(false);
+        foreach (var player in PlayersManager.instance.ingamePlayers)
+            player.votationDone = false;
+
+        CanvasManager.Instance.SetVotationUIState(false);
+        currentTime = 0;
+        startVoteTimer = false;
+    }
+
+    private void StartMovingShip()
+    {
+        List<Vector3> positions = new List<Vector3>();
+        ShipCurve shipCurve = FindFirstObjectByType<ShipCurve>();
+        GameObject ship = shipCurve.gameObject;
+
+        positions.Add(ship.transform.position);
+        positions.Add(new Vector3(ship.transform.position.x, ship.transform.position.y, ship.transform.position.z + firstPointZ));
+       
+        switch(choosenChild)
+        {
+            case 0:
+                positions.Add(new Vector3(ship.transform.position.x - secondPointX, ship.transform.position.y, ship.transform.position.z + secondPointZ));
+                break;
+            case 1:
+                positions.Add(new Vector3(ship.transform.position.x + secondPointX, ship.transform.position.y, ship.transform.position.z + secondPointZ));
+                break;
+            default:
+                positions.Add(new Vector3(ship.transform.position.x, ship.transform.position.y, ship.transform.position.z + secondPointZ));
+                break;
+        }
+
+        shipCurve.SetStartMovement(true, positions);
+    }
+
+    private void UpdateUIPlayerText()
+    {
+        CanvasManager.Instance.SetInformationPlayers(votations);
+        CanvasManager.Instance.SetTimerUiInformation(currentTime, voteTime);
+    }
+
+
+    private void VotationDecision()
+    {
+        if (votations[0].GetCurrentsPlayer().Count == votations[1].GetCurrentsPlayer().Count)
+        {
+            RandomDecision();
+            return;
+        }
+
+        if (votations[0].GetCurrentsPlayer().Count > votations[1].GetCurrentsPlayer().Count)
+            UpdateCurrentLevel(currentLevel._nodeChildren[votations[0].GetDirecctionValue()], 0);
+        else
+            UpdateCurrentLevel(currentLevel._nodeChildren[votations[1].GetDirecctionValue()], 1);
+    }
+
+    private void RandomDecision()
+    {
+        float randomChance = Random.value;
+        if(randomChance < 0.5f)
+            UpdateCurrentLevel(currentLevel._nodeChildren[votations[0].GetDirecctionValue()], 0);
+        else
+            UpdateCurrentLevel(currentLevel._nodeChildren[votations[1].GetDirecctionValue()], 1);
+    }
+
+    private void UpdateCurrentLevel(LevelNode _currentLevel, int index)
     {
         currentLevel = _currentLevel;
         childrenLevel = currentLevel._nodeChildren;
-        var childNames = currentLevel._nodeChildren.OrderBy(c => c._nodeHeigth).Select(c => c._node.name).ToList();
-        Debug.Log($"Node: {currentLevel._node.name},Height: {currentLevel._nodeHeigth},Children: {string.Join(", ", childNames)}");
+        choosenChild = index;
+        //var childNames = currentLevel._nodeChildren.OrderBy(c => c._nodeHeigth).Select(c => c._node.name).ToList();
+        //Debug.Log($"Node: {currentLevel._node.name},Height: {currentLevel._nodeHeigth},Children: {string.Join(", ", childNames)}");
     }
 
     public void SetMap(Dictionary<int, List<LevelNode>> _map)
@@ -66,49 +142,40 @@ public class MapManager : MonoBehaviour
         List<LevelNode> levelZeroNodes = map[0];
         foreach (var node in levelZeroNodes)
         {
-            UpdateCurrentLevel(node);
+            UpdateCurrentLevel(node, 0);
         }
-
-        //PrintMap();
     }
 
-    private void PrintMap()
+    public void SetVotations(List<Votation> _votations)
     {
-        foreach (var level in map)
+        CameraManager.Instance.SetSailCamera(true);
+        CameraManager.Instance.SetSimpleCamera(false);
+
+        votations = _votations;
+    }
+
+    private void ActiveUI()
+    {
+        CanvasManager.Instance.SetVotationUIState(true);
+        CanvasManager.Instance.SetInformationDestination(currentLevel);
+    }
+
+    public void InitVotations()
+    {
+        CameraManager.Instance.SetSailCamera(false);
+        if (currentLevel._nodeChildren.Count == 1)
         {
-            foreach (var node in level.Value)
-            {
-                if (node._node.nodeType == NodeData.NodeType.BOSS)
-                {
-                    mapHeight = level.Key;
-                    break;
-                }
-            }
+            UpdateCurrentLevel(currentLevel._nodeChildren[0], 2);
+            return;
         }
 
-        for (int height = 0; height <= mapHeight; height++)
+        foreach (var vot in votations)
         {
-            if (map.ContainsKey(height))
-            {
-                foreach (LevelNode node in map[height])
-                {
-                    string probabilities = $"Battle: {node._nodeBattlePercentage:P1}, Shop: {node._nodeShopPercentage:P1}, Event: {node._nodeEventPercentage:P1}";
-
-                    if (node._nodeChildren != null && node._nodeChildren.Count > 0)
-                    {
-                        var childNames = node._nodeChildren.OrderBy(c => c._nodeHeigth).Select(c => c._node.name).ToList();
-                        Debug.Log($"Node: {node._node.name}, Probabilities: {probabilities}, Children: {string.Join(", ", childNames)}, Height: {node._nodeHeigth}");
-                    }
-                    else
-                    {
-                        Debug.Log($"Node: {node._node.name}, Probabilities: {probabilities}, Height: {node._nodeHeigth}");
-                    }
-                }
-            }
-            else
-            {
-                Debug.Log($"Height {height}: No nodes");
-            }
+            vot.CleanPlayerList();
+            vot.gameObject.SetActive(true);
         }
+
+        ActiveUI();
+        startVoteTimer = true;
     }
 }

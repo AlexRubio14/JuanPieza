@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -12,6 +11,8 @@ public class ShipWheel : InteractableObject
     [SerializeField] private float sailTimer;
     private float currentTime;
     private bool timerIsActive;
+
+    [SerializeField] private Ship ship;
 
     private void Start()
     {
@@ -29,6 +30,7 @@ public class ShipWheel : InteractableObject
             {
                 timerIsActive = false;
                 //zarpar
+                ship.StartVotation();
             }
         }
     }
@@ -57,6 +59,7 @@ public class ShipWheel : InteractableObject
             if (players.Count == PlayersManager.instance.GetPlayers().Count)
             {
                 //zarpar
+                ship.StartVotation();
             }
         }
     }
