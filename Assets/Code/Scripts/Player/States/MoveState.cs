@@ -15,7 +15,7 @@ public class MoveState : PlayerState
     public override void FixedUpdateState()
     {
         controller.Rotate(controller.movementDirection, controller.rotationSpeed);
-        controller.CheckSlope();
+        controller.CheckSlope(controller.slopeCheckDistance, controller.slopeOffset);
         controller.Movement(controller.movementDirection, controller.baseMovementSpeed);
         
     }

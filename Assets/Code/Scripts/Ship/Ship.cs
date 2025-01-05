@@ -27,6 +27,7 @@ public class Ship : MonoBehaviour
     [SerializeField] private float damageTime;
     private float currentTime;
 
+    public Action<GameObject> onDamageRecieved;
     [Header("Votation")]
     [SerializeField] private List<Votation> votations;
 
@@ -65,7 +66,7 @@ public class Ship : MonoBehaviour
     {
         if (currentWeight >= maxWeigth)
         {
-            //Enseñar mensaje
+            //Enseï¿½ar mensaje
             currentTime += Time.deltaTime;
             if (currentTime > damageTime)
             {

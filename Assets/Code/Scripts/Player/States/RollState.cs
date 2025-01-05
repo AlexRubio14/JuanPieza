@@ -14,6 +14,7 @@ public class RollState : PlayerState
     }
     public override void UpdateState()
     {
+
         //Contar el tiempo rodando
         rollTimePassed += Time.deltaTime;
         if(rollTimePassed >= controller.rollDuration)
@@ -24,6 +25,7 @@ public class RollState : PlayerState
     }
     public override void FixedUpdateState()
     {
+        controller.CheckSlope(controller.rollSlopeDistance, controller.rollSlopeOffset);
     }
     public override void ExitState()
     {
@@ -40,6 +42,9 @@ public class RollState : PlayerState
     public override void OnCollisionEnter(Collision collision)
     {
         base.OnCollisionEnter(collision);
+
+        if (!collision.gameObject.CompareTag("Scenario"))
+            return;
         Debug.Log("Rebota con " + collision.contacts[0].otherCollider.gameObject.name);
         //Rebotar
         Vector3 bounceDir = collision.contacts[0].normal * controller.bounceForce.x + Vector3.up * controller.bounceForce.y;
