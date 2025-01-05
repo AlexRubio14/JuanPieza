@@ -111,16 +111,18 @@ public class MapManager : MonoBehaviour
             return;
         }
 
-        if (votations[0].GetCurrentsPlayer().Count > votations[1].GetCurrentsPlayer().Count)
-            UpdateCurrentLevel(currentLevel._nodeChildren[votations[0].GetDirecctionValue()], 0);
-        else
-            UpdateCurrentLevel(currentLevel._nodeChildren[votations[1].GetDirecctionValue()], 1);
+        UpdateLevelCondition(votations[0].GetCurrentsPlayer().Count > votations[1].GetCurrentsPlayer().Count);
     }
 
     private void RandomDecision()
     {
         float randomChance = Random.value;
-        if(randomChance < 0.5f)
+        UpdateLevelCondition(randomChance < 0.5f);
+    }
+
+    private void UpdateLevelCondition(bool state)
+    {
+        if (state)
             UpdateCurrentLevel(currentLevel._nodeChildren[votations[0].GetDirecctionValue()], 0);
         else
             UpdateCurrentLevel(currentLevel._nodeChildren[votations[1].GetDirecctionValue()], 1);
