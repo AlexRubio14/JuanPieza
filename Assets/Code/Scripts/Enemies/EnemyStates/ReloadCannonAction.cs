@@ -13,21 +13,21 @@ public class ReloadCannonAction : SteppedAction
         if (!target.isBroken)
             base.GoingResource();
         else
-            onActionEnd();
+            onActionEnd(false);
     }
     protected override void WaitingResource()
     {
         if (!target.isBroken)
             base.WaitingResource();
         else
-            onActionEnd();
+            onActionEnd(false);
     }
     protected override void GoingTarget()
     {
         if(!target.isBroken)
             base.GoingTarget();
         else
-            onActionEnd();
+            onActionEnd(false);
     }
 
     protected override void Interacting()
@@ -35,7 +35,7 @@ public class ReloadCannonAction : SteppedAction
         if (!target.isBroken)
             base.Interacting();
         else
-            onActionEnd();
+            onActionEnd(false);
     }
 
     protected override void Interact()

@@ -68,7 +68,7 @@ public abstract class SteppedAction : EnemyAction
     private void CheckResourceObjectActive()
     {
         if (resource.isBroken)
-            onActionEnd();
+            onActionEnd(false);
     }
 
 
@@ -141,7 +141,7 @@ public abstract class SteppedAction : EnemyAction
 
             //Reparar
             Interact();
-            onActionEnd();
+            onActionEnd(true);
 
         }
     }

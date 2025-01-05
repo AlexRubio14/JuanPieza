@@ -7,6 +7,12 @@ public class FishingRod : Tool
     public bool isFishing;
     private bool hookThrowed;
     private bool hookLanded;
+
+    [Space, Header("Fishing Rod"), SerializeField]
+    private GameObject idleFishingRod;
+    [SerializeField]
+    private GameObject landedFishingRod;
+
     [Space, Header("Hook"), SerializeField]
     private GameObject hookPrefab;
     [SerializeField]
@@ -70,6 +76,10 @@ public class FishingRod : Tool
         playerSM.ChangeState(playerSM.fishingState);
 
         hookThrowed = true;
+
+        idleFishingRod.SetActive(false);
+        landedFishingRod.SetActive(true);
+
         Invoke("StartFishing", 0.75f);
     }
     private void StartFishing()
@@ -93,6 +103,9 @@ public class FishingRod : Tool
         hook.gameObject.SetActive(false);
         hookThrowed = false;
         hookLanded = false;
+
+        idleFishingRod.SetActive(true);
+        landedFishingRod.SetActive(false);
 
     }
 

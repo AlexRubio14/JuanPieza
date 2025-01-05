@@ -45,8 +45,9 @@ public class EnemieManager : MonoBehaviour
         enemyList = new List<EnemyController>();
         for (int i = 0; i < totalEnemies; i++)
         {
-            GameObject newEnemy = Instantiate(enemyPrefab, enemySpawnPoint.position, Quaternion.identity);
-            enemyList.Add(newEnemy.GetComponent<EnemyController>());
+            EnemyController newEnemy = Instantiate(enemyPrefab, enemySpawnPoint.position, Quaternion.identity).GetComponent<EnemyController>();
+            newEnemy.enemieManager = this;
+            enemyList.Add(newEnemy);
         }
 
     }
@@ -158,6 +159,11 @@ public class EnemieManager : MonoBehaviour
     {
         EnemyAction action = new RepairBulletSpawnerAction(EnemyAction.ActionType.REPAIR_BULLET_SPAWN, hammerObject, /*Spawn de balas*/ bulletResource, SteppedAction.ResourceType.HAMMER, interactDistance, timeToGetResource, timeToRepair);
         toDoList.Add(action);
+    }
+
+    public void AddExistantAction(EnemyAction _action)
+    {
+        toDoList.Add(_action);
     }
     #endregion
 

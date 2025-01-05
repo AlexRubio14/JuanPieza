@@ -37,12 +37,12 @@ public class ShootCannonAction : EnemyAction
 
             if (timeWaited >= timeToInteract)
             {
-                animator.SetTrigger("UseCanon");
+                animator.SetTrigger("Shoot");
                 animator.SetBool("Pick", false);
                 agent.isStopped = false;
                 //Disparar cuando acabe el tiempo
                 target.UseObject();
-                onActionEnd();
+                onActionEnd(true);
             }
         }
 

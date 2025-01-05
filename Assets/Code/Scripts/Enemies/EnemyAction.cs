@@ -19,13 +19,14 @@ public abstract class EnemyAction
     protected float timeWaited = 0;
 
 
-    public Action onActionEnd;
+    public Action<bool> onActionEnd;
 
     public abstract void StateUpdate();
     
     protected bool IsNearToDestiny(Vector3 _destiny)
     {
         //Debug.Log(Vector3.Distance(transform.position,_destiny));
+        _destiny.y = transform.position.y;
         return Vector3.Distance(transform.position, _destiny) <= distanceToInteract;
     }
     public void SetAgent(NavMeshAgent _agent)
