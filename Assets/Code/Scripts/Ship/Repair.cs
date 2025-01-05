@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class Repair : InteractableObject
 {
-    [Header("Item")]
-    [SerializeField] private ObjectSO itemNeeded;
-
     [Header("Time")]
     [SerializeField] private float repairDuration;
     [SerializeField] private float repairSpeed;
@@ -22,16 +19,29 @@ public class Repair : InteractableObject
     {
         players = new List<(PlayerController, ObjectHolder)>();
     }
+    private void Update()
+    {
+        RepairObject();
+    }
 
     public override void Interact(ObjectHolder _objectHolder)
     {
         players.Add((_objectHolder.GetComponentInParent<PlayerController>(), _objectHolder));
     }
-
-    private void Update()
+    public override void StopInteract(ObjectHolder _objectHolder)
     {
-        RepairObject();
+
     }
+    public override void UseItem(ObjectHolder _objectHolder)
+    {
+
+    }
+    public override bool CanInteract(ObjectHolder _objectHolder)
+    {
+
+        return true;
+    }
+
 
     private void RepairObject()
     {
@@ -50,32 +60,21 @@ public class Repair : InteractableObject
             currentRepairTime = 0;
         }
     }
-
     private void FinishRepairing()
     {
-        for(int i = players.Count - 1; i >= 0; i--) 
+        for (int i = players.Count - 1; i >= 0; i--)
         {
             RepairEnded(players[i].Item2);
         }
     }
-
     protected virtual void RepairEnded(ObjectHolder _objectHolder)
     {
 
     }
-
     public void SetbulletInformation(Ship _ship, float amount)
     {
         ship = _ship;
         damageDeal = amount;
     }
-    public override void UseItem(ObjectHolder _objectHolder)
-    {
 
-    }
-
-    public ObjectSO GetItemNeeded()
-    {
-        return itemNeeded;
-    }
 }

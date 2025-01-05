@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,7 +26,7 @@ public class WoodBox : Box
     private void UpdateDecorations()
     {
         for (int i = 0; i < decorations.Count; i++)
-            decorations[i].SetActive(true);
+            decorations[i].SetActive(false);
 
         SetCurrentDecorationValue();
 
@@ -40,21 +39,14 @@ public class WoodBox : Box
     private void SetCurrentDecorationValue()
     {
         if(itemsInBox == 0)
-        {
             currentDecoration = 3;
-        }
-        if (itemsInBox <= 5)
-        {
-            currentDecoration = 0;
-        }
-        else if (itemsInBox <= 15)
-        {
-            currentDecoration = 1;
-        }
-        else
-        {
+        else if (itemsInBox <= 5)
             currentDecoration = 2;
-        }
+        else if (itemsInBox <= 10)
+            currentDecoration = 1;
+        else
+            currentDecoration = 0;
+
     }
 }
 

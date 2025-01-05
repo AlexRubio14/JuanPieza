@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal.Commands;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -111,6 +112,8 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnInteractAction += InteractAction;
 
+        playerInput.OnStopInteractAction += StopInteractAction;
+
         playerInput.OnUseAction += UseAction;
     }
 
@@ -121,6 +124,8 @@ public class PlayerController : MonoBehaviour
         playerInput.OnRollAction -= RollAction;
 
         playerInput.OnInteractAction -= InteractAction;
+
+        playerInput.OnStopInteractAction -= StopInteractAction;
 
         playerInput.OnUseAction -= UseAction;
 
@@ -147,7 +152,10 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.currentState.InteractAction();        
     }
-
+    private void StopInteractAction()
+    {
+        stateMachine.currentState.StopInteractAction();
+    }
     private void UseAction()
     {
         stateMachine.currentState.UseAction();        
@@ -207,31 +215,29 @@ public class PlayerController : MonoBehaviour
     }
     public void Interact()
     {
-        if (objectHolder.GetNearestInteractableObject() == null)
+        InteractableObject handObject = objectHolder.GetHandInteractableObject();
+        if (!objectHolder.GetHandInteractableObject() && 
+            (!objectHolder.GetNearestInteractableObject() || 
+            objectHolder.GetNearestInteractableObject() && !objectHolder.GetNearestInteractableObject().CanInteract(objectHolder))
+            )
             return;
 
-        InteractableObject tempInteractableObj = objectHolder.GetNearestInteractableObject();
+        if (objectHolder.GetNearestInteractableObject() && objectHolder.GetNearestInteractableObject().CanInteract(objectHolder))
+            objectHolder.GetNearestInteractableObject().Interact(objectHolder);
+        else
+            objectHolder.GetHandInteractableObject().Interact(objectHolder);
 
-        switch (tempInteractableObj.objectSO.objectType)
-        {
-            case ObjectSO.ObjectType.WEAPON:
-                tempInteractableObj.transform.SetParent(transform);
-                tempInteractableObj.Interact(objectHolder); 
-                break;
-            case ObjectSO.ObjectType.TOOL:
-                break;
-            case ObjectSO.ObjectType.DECORATION:
-                break;
-            case ObjectSO.ObjectType.RESOURCE:
-                break;
-            default:
-                break;
-        }
-        objectHolder.GetNearestInteractableObject().Interact(objectHolder);
+        animator.SetBool("Pick", objectHolder.GetHandInteractableObject());
+
+    }
+    public void StopInteract()
+    {
+
     }
     public void Use()
     {
-        objectHolder.GetNearestInteractableObject().UseItem(objectHolder);
+        if(objectHolder.GetHandInteractableObject())
+            objectHolder.GetHandInteractableObject().UseItem(objectHolder);
     }
     #endregion
 

@@ -18,6 +18,7 @@ public abstract class PlayerState
     
     public abstract void RollAction();
     public abstract void InteractAction();
+    public abstract void StopInteractAction();
     public abstract void UseAction();
     public virtual void OnCollisionEnter(Collision collision)
     {

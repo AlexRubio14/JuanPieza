@@ -1,11 +1,10 @@
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class Box : InteractableObject
 {
-    [Header("Item")]
-    [SerializeField] private ObjectSO itemDropped;
-    [SerializeField] private Collider itemDroppedCollider;
-    protected int itemsInBox;
+    [Space, Header("Item"), SerializeField] protected ObjectSO itemDropped;
+    [SerializeField] protected int itemsInBox;
     public virtual void AddItemInBox()
     {
         itemsInBox++;
@@ -23,13 +22,30 @@ public class Box : InteractableObject
 
     public override void Interact(ObjectHolder _objectHolder)
     {
-        if (!_objectHolder.GetHasObjectPicked() && HasItem())
+        if (!CanInteract(_objectHolder))
+            return;
+
+        if (!_objectHolder.GetHasObjectPicked())
         {
             RemoveItemInBox();
-            _objectHolder.SetHasObjectPicked(true);
-            _objectHolder.InstantiateItem(itemDropped);
+            _objectHolder.InstantiateItemInHand(itemDropped);
         }
+        else if (_objectHolder.GetHasObjectPicked())
+        {
+            AddItemInBox();
+            InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
+            Destroy(currentObject.gameObject);
+        }
+
     }
 
     public override void UseItem(ObjectHolder _objectHolder) { }
+
+    public override bool CanInteract(ObjectHolder _objectHolder)
+    {
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+
+        return !handObject && HasItem() 
+            || handObject && handObject.objectSO == objectToInteract;
+    }
 }

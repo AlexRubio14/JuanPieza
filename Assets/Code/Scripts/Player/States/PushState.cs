@@ -44,6 +44,7 @@ public class PushState : PlayerState
         //No puedes rodar
     }
     public override void InteractAction() { /*No puede interactuar aqui*/ }
+    public override void StopInteractAction() { /*No hace nada*/ }
     public override void UseAction() { /*No puede usar nada aqui*/ }
 
 

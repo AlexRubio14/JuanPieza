@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public abstract class Tool : InteractableObject
 {
     public override void Interact(ObjectHolder _objectHolder)
@@ -15,31 +13,16 @@ public abstract class Tool : InteractableObject
 
     private void PickItem(ObjectHolder _objectHolder)
     {
-        _objectHolder.SetInteractableObject(this);
+        _objectHolder.ChangeObjectInHand(this);
 
         SetIsBeingUsed(true);
 
-        transform.position = _objectHolder.GetObjectPickedPosition();
-        transform.rotation = _objectHolder.transform.rotation;
-
-        transform.SetParent(_objectHolder.transform.parent);
-
-        _objectHolder.SetHasObjectPicked(true);
-
         selectedVisual.Hide();
-        rb.isKinematic = true;
     }
 
     public void DropItem(ObjectHolder _objectHolder)
     {
-        _objectHolder.SetInteractableObject(null);
-
         SetIsBeingUsed(false);
-
-        transform.SetParent(null);
-
-        _objectHolder.SetHasObjectPicked(false);
-
-        rb.isKinematic = false;
+        _objectHolder.RemoveItemFromHand();
     }
 }

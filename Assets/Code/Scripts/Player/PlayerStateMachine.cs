@@ -9,7 +9,9 @@ public class PlayerStateMachine : MonoBehaviour
     public RollState rollState { get; private set; }
     public PushState pushState { get; private set; }
     public FishingState fishingState { get; private set; }
+    public CannonState cannonState { get; private set; }
     public DeathState deathState { get; private set; }
+    
 
     public void InitializeStates(PlayerController _controller)
     {

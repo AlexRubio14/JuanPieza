@@ -52,7 +52,7 @@ public class DeathState : PlayerState
     public override void RollAction() { /*No puedes rodar*/ }
 
     public override void InteractAction() { /*No puedes interactuar*/ }
-
+    public override void StopInteractAction() { /*No hace nada*/ }
     public override void UseAction() { /*No puedes usar ningun objeto*/ }
 
     public override void OnCollisionEnter(Collision collision)
@@ -109,4 +109,6 @@ public class DeathState : PlayerState
         isSwimming = true;
         //Si mientras se esta yendo se quita el anzuelo se reiniciara el lerp hacia la muerte y la posicion inicial se volvera la actual
     }
+
+    
 }

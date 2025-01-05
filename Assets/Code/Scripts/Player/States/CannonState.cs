@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem.XInput;
-using UnityEngine.InputSystem.XR;
 
 public class CannonState : PlayerState
 {
@@ -25,7 +23,10 @@ public class CannonState : PlayerState
 
 
 
-    public override void InteractAction() { /*No puedes interactuar*/ }
+    public override void InteractAction() { 
+        
+    }
+    public override void StopInteractAction() { /*No hace nada*/ }
     public override void UseAction()
     {
         //Aqui deberias tener la caña asi que puedes usarla
@@ -62,4 +63,6 @@ public class CannonState : PlayerState
                 );
         }
     }
+
+    
 }

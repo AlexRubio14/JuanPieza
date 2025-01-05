@@ -19,6 +19,7 @@ public abstract class InteractableObject : MonoBehaviour
     }
 
     public abstract void Interact(ObjectHolder _objectHolder);
+    public virtual void StopInteract(ObjectHolder _objectHolder) { }
 
     public abstract void UseItem(ObjectHolder _objectHolder);
 
@@ -31,5 +32,15 @@ public abstract class InteractableObject : MonoBehaviour
     {
         isBeingUsed = _value;
     }
+
+    public virtual bool CanInteract(ObjectHolder _objectHolder)
+    {
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+        
+        return 
+            handObject && objectToInteract == handObject.objectSO || 
+            !_objectHolder.GetHandInteractableObject() && !objectToInteract;
+    }
+
 
 }

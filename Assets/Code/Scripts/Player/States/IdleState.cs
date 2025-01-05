@@ -28,6 +28,11 @@ public class IdleState : PlayerState
     {
         controller.Interact();
     }
+    public override void StopInteractAction() 
+    {
+        controller.StopInteract();
+    }
+
     public override void UseAction()
     {
         controller.Use();

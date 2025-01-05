@@ -58,28 +58,6 @@ public class ObjectHolder : MonoBehaviour
 
         return currentinteractableObject;
     }
-    private void ChangeNearestInteractableObject(InteractableObject _neareastObject)
-    {
-        if (_neareastObject != nearestInteractableObject)
-        {
-            if(nearestInteractableObject != null)
-                nearestInteractableObject.GetSelectedVisual().Hide();
-
-            if (_neareastObject != null)
-            {
-                if (_neareastObject.objectToInteract == interactableObject.objectSO)
-                    _neareastObject.GetSelectedVisual().Show();
-                else
-                {
-                    //Mostrar el interactable object que necesita
-
-                }
-            }
-                
-
-            nearestInteractableObject = _neareastObject;
-        }
-    }
 
     #region Getters
     public Vector3 GetObjectPickedPosition()
@@ -102,25 +80,74 @@ public class ObjectHolder : MonoBehaviour
     #endregion
 
     #region Setters
-    public void SetHasObjectPicked(bool _value)
+    public void ChangeObjectInHand(InteractableObject _interactableObject)
     {
-        hasPickedObject = _value;
-    }
-    public void SetInteractableObject(InteractableObject _interactableObject)
-    {
+        if (interactableObject)
+            RemoveItemFromHand();
+
+        hasPickedObject = true;
         interactableObject = _interactableObject;
+        if (!_interactableObject)
+            return;
+        _interactableObject.transform.position = GetObjectPickedPosition();
+        _interactableObject.transform.rotation = transform.rotation;
+
+        _interactableObject.transform.SetParent(transform.parent);
+
+
+        _interactableObject.rb.isKinematic = true;
+
     }
+    public InteractableObject RemoveItemFromHand()
+    {
+
+        hasPickedObject = false;
+        interactableObject.transform.SetParent(null);
+        interactableObject.rb.isKinematic = false;
+
+        InteractableObject currentIO = interactableObject;
+        interactableObject = null;
+
+        return currentIO;
+
+
+    }
+    public void ChangeNearestInteractableObject(InteractableObject _nearestObject)
+    {
+        if (_nearestObject != nearestInteractableObject)
+        {
+            if (nearestInteractableObject)
+                nearestInteractableObject.GetSelectedVisual().Hide();
+
+            if (!_nearestObject)
+            {
+                nearestInteractableObject = _nearestObject;
+                return;
+            }
+
+            if (_nearestObject.CanInteract(this))
+                _nearestObject.GetSelectedVisual().Show();
+            else
+            {
+                //Mostrar el interactable object que necesita
+
+            }
+
+            nearestInteractableObject = _nearestObject;
+        }
+    }
+
     #endregion
 
-    public void InstantiateItem(ObjectSO _interactableObject)
+    public void InstantiateItemInHand(ObjectSO _interactableObject)
     {
-        GameObject item = Instantiate(_interactableObject.prefab);
+        InteractableObject item = Instantiate(_interactableObject.prefab).GetComponent<InteractableObject>();
+        item.SetIsBeingUsed(true);
         item.GetComponent<Rigidbody>().isKinematic = true;
         item.transform.SetParent(transform.parent, true);
         item.transform.position = objectPickedPos.position;
-        SetInteractableObject(item.GetComponent<InteractableObject>());
+        ChangeObjectInHand(item);
     }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;

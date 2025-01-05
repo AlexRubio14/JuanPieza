@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3081061161652684717}
   - component: {fileID: 2254593256201433652}
   - component: {fileID: 4446892466199824541}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CannonBoxBroken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,9 +104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555eee365dcdff74faa6fca362a9bdba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectSO: {fileID: 0}
+  <objectSO>k__BackingField: {fileID: 0}
+  <objectToInteract>k__BackingField: {fileID: 0}
   selectedVisual: {fileID: 8897925437961549400}
-  isBeingUsed: 0
   rb: {fileID: 4446892466199824541}
   itemNeeded: {fileID: 0}
   repairDuration: 2
@@ -224,7 +224,8 @@ GameObject:
   - component: {fileID: 5122830880436244496}
   - component: {fileID: 805627262032115683}
   - component: {fileID: 1060678089750828429}
-  m_Layer: 0
+  - component: {fileID: 4402243769415029465}
+  m_Layer: 9
   m_Name: HighBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,6 +300,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4402243769415029465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523587347921471352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &2125427756097205554
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8167073194016919252}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CanonBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +362,8 @@ GameObject:
   - component: {fileID: 4854805034532241838}
   - component: {fileID: 8483103402523393831}
   - component: {fileID: 6515271372814422489}
-  m_Layer: 0
+  - component: {fileID: 5538624978762935892}
+  m_Layer: 9
   m_Name: MediumBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,6 +438,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5538624978762935892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2502555266850210586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &7074629630316515128
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,10 +471,9 @@ GameObject:
   - component: {fileID: 8427452760553678582}
   - component: {fileID: 6197873964884232472}
   - component: {fileID: 4751708208054039794}
-  - component: {fileID: 2012623186213377644}
   - component: {fileID: 3947863102983567594}
   - component: {fileID: 4180345605095306999}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CannonBoxFixed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -526,16 +563,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8574d1d8bf2ef3f4eb9aa4a573fe242c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectSO: {fileID: 0}
+  <objectSO>k__BackingField: {fileID: 11400000, guid: 28a9a632cf86f0c45a8da7a16225dd92, type: 2}
+  <objectToInteract>k__BackingField: {fileID: 11400000, guid: dffcfb1857ced7d4fb477cee9121a908, type: 2}
   selectedVisual: {fileID: 6197873964884232472}
-  isBeingUsed: 0
   rb: {fileID: 4180345605095306999}
-  itemDropped: {fileID: 0}
-  itemDroppedCollider: {fileID: 0}
+  itemDropped: {fileID: 11400000, guid: dffcfb1857ced7d4fb477cee9121a908, type: 2}
+  itemsInBox: 0
   decorations:
-  - {fileID: 7652512408123853915}
-  - {fileID: 2502555266850210586}
   - {fileID: 1523587347921471352}
+  - {fileID: 2502555266850210586}
+  - {fileID: 7652512408123853915}
 --- !u!114 &8427452760553678582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,6 +601,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineArray:
   - {fileID: 4751708208054039794}
+  - {fileID: 4402243769415029465}
+  - {fileID: 5538624978762935892}
+  - {fileID: 4691505786016870215}
 --- !u!114 &4751708208054039794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -578,31 +618,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 2
+  outlineWidth: 4
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!65 &2012623186213377644
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7074629630316515128}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.03, y: 0.03, z: 0.007}
-  m_Center: {x: -0.00017054798, y: 0.00006531457, z: 0.0033802667}
 --- !u!65 &3947863102983567594
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -633,7 +652,7 @@ Rigidbody:
   m_GameObject: {fileID: 7074629630316515128}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -646,7 +665,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -662,7 +681,8 @@ GameObject:
   - component: {fileID: 52967337621297812}
   - component: {fileID: 4334183430651248662}
   - component: {fileID: 4497968253578086952}
-  m_Layer: 0
+  - component: {fileID: 4691505786016870215}
+  m_Layer: 9
   m_Name: LowerBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -737,3 +757,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4691505786016870215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7652512408123853915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

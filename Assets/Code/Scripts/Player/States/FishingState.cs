@@ -23,6 +23,7 @@ public class FishingState : PlayerState
     }
 
     public override void InteractAction() { /*No puedes interactuar*/ }
+    public override void StopInteractAction() { /*No hace nada*/ }
     public override void UseAction() 
     {
         //Aqui deberias tener la caña asi que puedes usarla
