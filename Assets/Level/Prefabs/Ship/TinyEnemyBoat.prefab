@@ -390,7 +390,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5004ae27d0a034d4db1c99a0f7c96bd8, type: 2}
+  - {fileID: 2100000, guid: 817949999ffc2114b8bddad58323507d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -476,7 +476,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5004ae27d0a034d4db1c99a0f7c96bd8, type: 2}
+  - {fileID: 2100000, guid: 817949999ffc2114b8bddad58323507d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1340,6 +1340,7 @@ MonoBehaviour:
   maxWeigth: 300
   weigthDamage: 1
   damageTime: 15
+  votations: []
 --- !u!54 &7670309692406009392
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1404,10 +1405,10 @@ GameObject:
   - component: {fileID: 9070693941817944967}
   - component: {fileID: 2955108872659230932}
   - component: {fileID: 4881278100887689140}
-  - component: {fileID: 3947079177199771932}
   - component: {fileID: 547502004850151544}
-  - component: {fileID: 3463888115507526012}
+  - component: {fileID: 7911164116761891665}
   - component: {fileID: 3828869468331380018}
+  - component: {fileID: 3463888115507526012}
   m_Layer: 8
   m_Name: LowerFloor
   m_TagString: Untagged
@@ -1483,28 +1484,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3947079177199771932
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6591914894322242601}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -6745816700161996667, guid: 52e12675979025149a72a7c63094050f, type: 3}
 --- !u!54 &547502004850151544
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1532,24 +1511,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3463888115507526012
-MonoBehaviour:
+--- !u!65 &7911164116761891665
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6591914894322242601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6140746f33cef5749a6fef9a7f119698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ship: {fileID: 477343024127472566}
-  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  objectLayer:
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 512
-  holeRadius: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.228392, y: 0.16447902, z: 14.362647}
+  m_Center: {x: 0.029829264, y: 2.259503, z: 2.6127381}
 --- !u!114 &3828869468331380018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1580,8 +1562,26 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 528a7f80085d30b41af81709d5263d88, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: df363bae2cab2b24fb33eae3a7fbd1e2, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &3463888115507526012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6591914894322242601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6140746f33cef5749a6fef9a7f119698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ship: {fileID: 477343024127472566}
+  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
+  objectLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  holeRadius: 2
 --- !u!1 &6612920496985839305
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,6 +25,8 @@ public class PlayerStateMachine : MonoBehaviour
         pushState.InitializeState(_controller, this);
         fishingState = new FishingState();
         fishingState.InitializeState(_controller, this);
+        cannonState = new CannonState();
+        cannonState.InitializeState(_controller, this);
         deathState = new DeathState();
         deathState.InitializeState(_controller, this);
 

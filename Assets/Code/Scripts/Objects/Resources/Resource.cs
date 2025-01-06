@@ -15,13 +15,10 @@ public abstract class Resource : InteractableObject
     {
         _objectHolder.ChangeObjectInHand(this);
         
-        SetIsBeingUsed(true);
-
         selectedVisual.Hide();
     }
     private void DropItem(ObjectHolder _objectHolder)
     {
-        SetIsBeingUsed(false);
         _objectHolder.RemoveItemFromHand();
     }
 

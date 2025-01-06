@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CannonState : PlayerState
 {
+    private Weapon currentWeapon;
+
     public override void EnterState()
     {
     }
@@ -11,58 +13,57 @@ public class CannonState : PlayerState
     }
     public override void FixedUpdateState()
     {
+        MoveCannon();
+        TiltCannon();
     }
     public override void ExitState()
     {
     }
 
-    public override void RollAction()
+    public override void RollAction() { /*No puedes rodar*/ }
+    
+    public override void InteractAction() 
     {
-        //No puedes rodar
+        controller.Interact();
     }
-
-
-
-    public override void InteractAction() { 
-        
+    public override void StopInteractAction() 
+    {
+        controller.StopInteract();    
     }
-    public override void StopInteractAction() { /*No hace nada*/ }
     public override void UseAction()
     {
-        //Aqui deberias tener la caña asi que puedes usarla
         controller.Use();
     }
-
     public override void OnCollisionEnter(Collision collision)
     {
         base.OnCollisionEnter(collision);
 
         //Te pueden golpear y hacer daño
-    }
+    }  
 
-    private void CannonMovement()
+    private void MoveCannon()
     {
-        float forwardInput = controller.movementInput.y;
-        float rotationInput = controller.movementInput.x;
-
-        Vector3 moveDirection = controller.transform.forward * forwardInput;
-        controller.rb.AddForce(moveDirection * controller.acceleration, ForceMode.Acceleration);
-
-        if (rotationInput != 0)
-        {
-            float rotationAmount = rotationInput * controller.cannonRotationSpeed * Time.deltaTime;
-            controller.transform.Rotate(0, rotationAmount, 0); // Rotate around the Y axis
-        }
-
-        if (controller.rb.linearVelocity.magnitude > controller.cannonMovementSpeed)
-        {
-            controller.rb.linearVelocity = new Vector3(
-                controller.rb.linearVelocity.normalized.x * controller.cannonMovementSpeed,
-                controller.rb.linearVelocity.y,
-                controller.rb.linearVelocity.normalized.z * controller.cannonMovementSpeed
-                );
-        }
+        if (controller.movementInput.x != 0)
+            controller.Movement(controller.transform.forward, controller.cannonSpeed * controller.movementInput.x);
+        if (controller.movementInput.y != 0)
+            controller.Rotate(controller.transform.right * controller.movementInput.y, controller.cannonRotationSpeed);
     }
+    private void TiltCannon()
+    {
+        if (controller.cannonTilt == 0)
+            return;
 
-    
+        currentWeapon.tiltProcess = Mathf.Clamp01(currentWeapon.tiltProcess + controller.cannonTilt * currentWeapon.tiltSpeed * Time.fixedDeltaTime);
+        currentWeapon.tiltObject.localRotation = Quaternion.Lerp(
+            Quaternion.Euler(currentWeapon.minWeaponTilt),
+            Quaternion.Euler(currentWeapon.maxWeaponTilt), 
+            currentWeapon.tiltProcess * currentWeapon.tiltSpeed
+            );
+
+
+    }
+    public void SetWeapon(Weapon _weapon)
+    {
+        currentWeapon = _weapon;
+    }
 }

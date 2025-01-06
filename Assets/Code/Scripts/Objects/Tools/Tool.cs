@@ -15,14 +15,11 @@ public abstract class Tool : InteractableObject
     {
         _objectHolder.ChangeObjectInHand(this);
 
-        SetIsBeingUsed(true);
-
         selectedVisual.Hide();
     }
 
     public void DropItem(ObjectHolder _objectHolder)
     {
-        SetIsBeingUsed(false);
         _objectHolder.RemoveItemFromHand();
     }
 }

@@ -30,7 +30,6 @@ public class CreateHole : DetectBullet
 
 
     }
-
     private void BreakNearbyObjects(Vector3 _position)
     {
         RaycastHit[] hits = Physics.SphereCastAll(_position, holeRadius, Vector3.forward, 0, objectLayer);
