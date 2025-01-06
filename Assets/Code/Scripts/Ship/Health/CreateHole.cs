@@ -21,14 +21,11 @@ public class CreateHole : DetectBullet
         GameObject _hole = Instantiate(hole);
         _hole.transform.position = position;
         _hole.GetComponent<Hole>().SetShipInformation(ship);
-        _hole.GetComponentInChildren<Repair>().SetbulletInformation(ship, bullet.GetDamage());
+        _hole.GetComponentInChildren<RepairHole>().SetbulletInformation(ship, bullet.GetDamage());
         _hole.transform.SetParent(transform, true);
 
         if(ship.onDamageRecieved != null)
             ship.onDamageRecieved(_hole);
-
-
-
     }
 
     private void BreakNearbyObjects(Vector3 _position)
@@ -40,6 +37,10 @@ public class CreateHole : DetectBullet
             if (hit.collider.TryGetComponent(out EnemyObject _enemyObject))
             {
                 _enemyObject.BreakObject();
+            }
+            if(hit.collider.TryGetComponent(out ObjectState _objectState))
+            {
+                _objectState.SetIsBroke(true);
             }
         }
 
