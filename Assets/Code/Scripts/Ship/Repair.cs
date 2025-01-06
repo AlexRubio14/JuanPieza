@@ -3,22 +3,19 @@ using UnityEngine;
 
 public class Repair : InteractableObject
 {
+    [Header("RepairItem")]
+    [SerializeField] private ObjectSO repairItem;
+
     [Header("Time")]
     [SerializeField] private float repairDuration;
-    [SerializeField] private float repairSpeed;
     private float currentRepairTime;
 
     [Header("Player")]
-    private List<(PlayerController, ObjectHolder)> players;
+    private List<PlayerController> players = new List<PlayerController>();
 
-    [Header("Ship")]
-    protected Ship ship;
-    private float damageDeal;
+    [Header("State")]
+    [SerializeField] protected ObjectState state;
 
-    private void Start()
-    {
-        players = new List<(PlayerController, ObjectHolder)>();
-    }
     private void Update()
     {
         RepairObject();
@@ -26,11 +23,12 @@ public class Repair : InteractableObject
 
     public override void Interact(ObjectHolder _objectHolder)
     {
-        players.Add((_objectHolder.GetComponentInParent<PlayerController>(), _objectHolder));
+        if(state.GetIsBroken() && CanInteract(_objectHolder))
+            players.Add(_objectHolder.GetComponentInParent<PlayerController>());
     }
     public override void StopInteract(ObjectHolder _objectHolder)
     {
-
+        players.Remove(_objectHolder.GetComponentInParent<PlayerController>());
     }
     public override void UseItem(ObjectHolder _objectHolder)
     {
@@ -38,20 +36,19 @@ public class Repair : InteractableObject
     }
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
-        return true;
+        return !handObject || handObject && handObject.objectSO == repairItem;
     }
-
 
     private void RepairObject()
     {
         if (players.Count > 0)
         {
-            currentRepairTime += repairSpeed * players.Count * Time.deltaTime;
+            currentRepairTime += players.Count * Time.deltaTime;
             if (currentRepairTime >= repairDuration)
             {
                 FinishRepairing();
-                ship.SetCurrentHealth(damageDeal);
                 currentRepairTime = 0;
             }
         }
@@ -64,17 +61,24 @@ public class Repair : InteractableObject
     {
         for (int i = players.Count - 1; i >= 0; i--)
         {
-            RepairEnded(players[i].Item2);
+            RepairEnded(players[i].objectHolder);
+            StopInteract(players[i].objectHolder);
         }
     }
+
+    public bool IsPlayerReparing(PlayerController _playerController)
+    {
+        if(players.Count <= 0) 
+        {
+            return false;
+        }
+
+        return players.Contains(_playerController);
+    }
+
     protected virtual void RepairEnded(ObjectHolder _objectHolder)
     {
 
-    }
-    public void SetbulletInformation(Ship _ship, float amount)
-    {
-        ship = _ship;
-        damageDeal = amount;
     }
 
 }

@@ -6,6 +6,7 @@ public class DetectBullet : MonoBehaviour
     [SerializeField] protected Ship ship;
 
     protected Bullet bullet { get; private set; }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet") && !collision.gameObject.GetComponent<Bullet>().GetDamageDone())
