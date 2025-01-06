@@ -136,6 +136,86 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 5032e0d6-de67-477c-a898-e4ef9b8c6598
     m_ActionName: 'PlayerSelectMenu/Exit[/Keyboard/escape,/DualSenseGamepadHID/buttonEast]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7037647223120207762}
+        m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
+        m_MethodName: ReadCannonForwardMovement
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 878f05c3-9cb2-4a4f-9846-020aa2e501fa
+    m_ActionName: 'CannonGameplay/MoveForward[/Keyboard/s,/Keyboard/w]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7037647223120207762}
+        m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
+        m_MethodName: ReadCannonSideMovement
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 37fb9944-b88e-49f0-84c3-60d833b20ac3
+    m_ActionName: 'CannonGameplay/MoveSide[/Keyboard/a,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7037647223120207762}
+        m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
+        m_MethodName: InteractAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c87b404b-3c93-445a-8518-4a98770b3dd1
+    m_ActionName: 'CannonGameplay/Interact[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7037647223120207762}
+        m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
+        m_MethodName: UseAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 94cc6104-b448-49e3-9a96-f091566055fd
+    m_ActionName: 'CannonGameplay/Use[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7037647223120207762}
+        m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
+        m_MethodName: TiltCannon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 04d5ebc7-0b8b-4c67-8d5b-164e6b229e1d
+    m_ActionName: 'CannonGameplay/TiltWeapon[/Mouse/rightButton,/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerSelectMenu

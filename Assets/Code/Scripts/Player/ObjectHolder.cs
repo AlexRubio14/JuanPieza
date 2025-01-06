@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectHolder : MonoBehaviour
@@ -80,7 +79,7 @@ public class ObjectHolder : MonoBehaviour
     #endregion
 
     #region Setters
-    public void ChangeObjectInHand(InteractableObject _interactableObject)
+    public void ChangeObjectInHand(InteractableObject _interactableObject, bool _setParent = true)
     {
         if (interactableObject)
             RemoveItemFromHand();
@@ -89,13 +88,19 @@ public class ObjectHolder : MonoBehaviour
         interactableObject = _interactableObject;
         if (!_interactableObject)
             return;
+        
+        _interactableObject.rb.isKinematic = true;
+
+        if (!_setParent)
+            return;
         _interactableObject.transform.position = GetObjectPickedPosition();
         _interactableObject.transform.rotation = transform.rotation;
 
         _interactableObject.transform.SetParent(transform.parent);
+        _interactableObject.SetIsBeingUsed(true);
 
 
-        _interactableObject.rb.isKinematic = true;
+
 
     }
     public InteractableObject RemoveItemFromHand()
@@ -107,6 +112,9 @@ public class ObjectHolder : MonoBehaviour
 
         InteractableObject currentIO = interactableObject;
         interactableObject = null;
+
+        if (currentIO)
+            currentIO.SetIsBeingUsed(false);
 
         return currentIO;
 

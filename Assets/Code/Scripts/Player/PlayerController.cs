@@ -1,4 +1,3 @@
-using NUnit.Framework.Internal.Commands;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -68,12 +67,12 @@ public class PlayerController : MonoBehaviour
 
     [Header("Votation")]
     public bool votationDone {  get; set; }
-    [field: Space, Header("CannonMovement"), SerializeField]
-    public float acceleration { get; private set; }
-    [field: SerializeField]
-    public float cannonMovementSpeed { get; private set; }
+
+    [field: Space, Header("Cannon"), SerializeField]
+    public float cannonSpeed { get; private set; }
     [field:SerializeField]
     public float cannonRotationSpeed { get; private set; }
+    public float cannonTilt {  get; private set; }
 
 
     public Animator animator { get; private set; }
@@ -115,6 +114,10 @@ public class PlayerController : MonoBehaviour
         playerInput.OnStopInteractAction += StopInteractAction;
 
         playerInput.OnUseAction += UseAction;
+
+        playerInput.OnWeaponMoveAction += CannonMovementAction;
+
+        playerInput.OnWeaponTiltAction += CannonTiltAction;
     }
 
     private void OnDisable()
@@ -129,6 +132,10 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnUseAction -= UseAction;
 
+        playerInput.OnWeaponMoveAction -= CannonMovementAction;
+
+        playerInput.OnWeaponTiltAction -= CannonTiltAction;
+
         PlayersManager.instance.ingamePlayers.Remove(this);
     }
 
@@ -137,7 +144,6 @@ public class PlayerController : MonoBehaviour
     {
         movementInput = _movementInput;
         movementDirection = new Vector3(movementInput.x, 0, movementInput.y);
-
     }
     private void RollAction()
     {
@@ -147,7 +153,6 @@ public class PlayerController : MonoBehaviour
             Invoke("WaitRollCD", rollCD);
         }
     }
-
     private void InteractAction()
     {
         stateMachine.currentState.InteractAction();        
@@ -159,6 +164,21 @@ public class PlayerController : MonoBehaviour
     private void UseAction()
     {
         stateMachine.currentState.UseAction();        
+    }
+
+    private void CannonMovementAction(bool _isForward, float _axis)
+    {
+        Vector2 newInput = movementInput;
+        if(_isForward)
+            newInput.x = _axis;
+        else
+            newInput.y = _axis;
+
+        movementInput = newInput;
+    }
+    private void CannonTiltAction(float _axis)
+    {
+        cannonTilt = _axis;
     }
     #endregion
 
@@ -232,7 +252,6 @@ public class PlayerController : MonoBehaviour
     }
     public void StopInteract()
     {
-
     }
     public void Use()
     {
