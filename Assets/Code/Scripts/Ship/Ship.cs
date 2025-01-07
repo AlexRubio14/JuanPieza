@@ -11,6 +11,7 @@ public class Ship : MonoBehaviour
     [Header("LerpValues")]
     [SerializeField] private float heightChangeSpeed;
     [SerializeField] private float lowerY;
+    [SerializeField] private float destroyY;
     private float initY;
     private float targetHeight;
     private float currentHeight;
@@ -32,6 +33,8 @@ public class Ship : MonoBehaviour
     [Header("Votation")]
     [SerializeField] private List<Votation> votations;
 
+    private Animator animator;
+
     public void Initialize()
     {
         currentHealth = maxHealth;
@@ -44,14 +47,15 @@ public class Ship : MonoBehaviour
             _votation.gameObject.SetActive(false);
         }
 
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.X))
-        //{
-        //    StartVotation();
-        //}
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            SetCurrentHealth(-20);
+        }
 
         FlotationLerp();
         WeightControl();
@@ -67,7 +71,6 @@ public class Ship : MonoBehaviour
     {
         if (currentWeight >= maxWeigth)
         {
-            //Ense�ar mensaje
             currentTime += Time.deltaTime;
             if (currentTime > damageTime)
             {
@@ -83,15 +86,16 @@ public class Ship : MonoBehaviour
     public void SetCurrentHealth(float amount)
     {
         currentHealth += amount;
-        CheckHealth();
         targetHeight = Mathf.Lerp(lowerY, initY, currentHealth / maxHealth);
+        CheckHealth();
     }
     private void CheckHealth()
     {
         if (currentHealth < 0)
         {
             currentHealth = 0;
-            //Destroy
+            targetHeight = destroyY;
+            animator.SetBool("Dead", true);
         }
         if (currentHealth > maxHealth)
         {

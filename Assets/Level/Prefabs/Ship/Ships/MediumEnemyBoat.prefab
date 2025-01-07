@@ -1355,6 +1355,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 439735759584416010}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
+  objectLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  holeRadius: 2
 --- !u!64 &1216599643861999032
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2012,6 +2016,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 439735759584416010}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
+  objectLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  holeRadius: 2
 --- !u!64 &7269308645584835777
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2354,6 +2362,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 439735759584416010}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
+  objectLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  holeRadius: 2
 --- !u!64 &7249205865153081289
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2938,6 +2950,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 439735759584416010}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
+  objectLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  holeRadius: 2
 --- !u!64 &3782341409466370733
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4613,6 +4629,7 @@ GameObject:
   - component: {fileID: 4117391693616101791}
   - component: {fileID: 439735759584416010}
   - component: {fileID: 6330436407681195130}
+  - component: {fileID: 8788184589190241473}
   m_Layer: 0
   m_Name: MediumEnemyBoat
   m_TagString: Untagged
@@ -4692,9 +4709,11 @@ MonoBehaviour:
   maxHealth: 100
   heightChangeSpeed: 1
   lowerY: -2.6
+  destroyY: 0
   maxWeigth: 300
   weigthDamage: 1
   damageTime: 15
+  votations: []
 --- !u!54 &6330436407681195130
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4722,6 +4741,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &8788184589190241473
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8144919203893667171}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f935b4d61bedc32409ab958067bb789b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8157790529008613003
 GameObject:
   m_ObjectHideFlags: 0

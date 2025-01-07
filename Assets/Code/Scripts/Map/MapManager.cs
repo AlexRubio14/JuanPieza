@@ -63,8 +63,6 @@ public class MapManager : MonoBehaviour
     {
         foreach (var vot in votations)
             vot.gameObject.SetActive(false);
-        foreach (var player in PlayersManager.instance.ingamePlayers)
-            player.votationDone = false;
 
         VotationCanvasManager.Instance.SetVotationUIState(false);
         currentTime = 0;

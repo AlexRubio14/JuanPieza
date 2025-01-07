@@ -65,9 +65,6 @@ public class PlayerController : MonoBehaviour
     public GameObject interactCanvasObject => interactCanvas.transform.gameObject;
 
 
-    [Header("Votation")]
-    public bool votationDone {  get; set; }
-
     [field: Space, Header("Cannon"), SerializeField]
     public float cannonSpeed { get; private set; }
     [field:SerializeField]

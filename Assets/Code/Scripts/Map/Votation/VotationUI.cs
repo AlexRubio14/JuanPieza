@@ -15,12 +15,12 @@ public class VotationUI : MonoBehaviour
         destination.text = destinationText;
     }
 
-    public void SetPlayers(List<PlayerController> _players) 
+    public void SetPlayers(List<(PlayerController, int)> _players) 
     {
         string playerNames = "";
         foreach (var player in _players)
         {
-            playerNames += "J" + (player.playerInput.playerReference+1) + "  "; 
+            playerNames += "J" + (player.Item2+1) + "  "; 
         }
         players.text = playerNames;
     }
