@@ -39,7 +39,19 @@ public class Repair : InteractableObject
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
-        return !handObject || handObject && handObject.objectSO == repairItem;
+        return handObject && handObject.objectSO == repairItem;
+    }
+
+    public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+        
+        if (handObject && handObject.objectSO == repairItem)
+        {
+            return HintController.ActionType.HOLD;
+        }
+
+        return HintController.ActionType.NONE;
     }
 
     private void RepairObject()

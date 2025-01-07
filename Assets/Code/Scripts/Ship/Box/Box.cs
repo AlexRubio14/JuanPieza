@@ -62,4 +62,19 @@ public class Box : RepairObject
         return !handObject && HasItem()
             || handObject && handObject.objectSO == objectToInteract;
     }
+
+    public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        if (state.GetIsBroken())
+            return base.ShowNeededInputHint(_objectHolder);
+        
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+    
+        if (!handObject && HasItem() || handObject && handObject.objectSO == objectToInteract)
+        {
+            return HintController.ActionType.INTERACT;
+        }
+        
+        return HintController.ActionType.NONE;
+    }
 }

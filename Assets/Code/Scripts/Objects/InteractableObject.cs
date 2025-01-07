@@ -31,7 +31,6 @@ public abstract class InteractableObject : MonoBehaviour
     public virtual void StopInteract(ObjectHolder _objectHolder) { }
 
     public abstract void UseItem(ObjectHolder _objectHolder);
-
     public SelectedVisual GetSelectedVisual()
     {
         return selectedVisual;
@@ -60,4 +59,16 @@ public abstract class InteractableObject : MonoBehaviour
     {
         ShipsManager.instance.playerShip.RemoveInteractuableObject(this);
     }
+    public virtual HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+
+        if (handObject && objectToInteract == handObject.objectSO || !_objectHolder.GetHandInteractableObject() && !objectToInteract)
+        {
+            return HintController.ActionType.INTERACT;
+        }
+ 
+        return HintController.ActionType.NONE;
+    }
+
 }

@@ -5,7 +5,7 @@ public class StoreObjectSpawner : MonoBehaviour
 {
     [SerializeField] private StoreObjectPool storeObjectPool;
 
-    private StoreObjectPool.Item randomItem;
+    private ObjectSO randomItem;
     private void Start()
     {
         InstanceRandomObject();

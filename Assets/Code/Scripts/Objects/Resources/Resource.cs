@@ -29,4 +29,14 @@ public abstract class Resource : InteractableObject
         return !handObject;
     }
 
+    public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+
+        if (!handObject)
+        {
+            return HintController.ActionType.INTERACT;
+        }
+        return HintController.ActionType.NONE;
+    }
 }
