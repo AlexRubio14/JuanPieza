@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
+using UnityEngine.SceneManagement;
 
 public class ShipCurve : Ship
 {
@@ -31,6 +32,8 @@ public class ShipCurve : Ship
             {
                 t = 1f;
                 startMovement = false;
+                ShipSceneManager.Instance.SetObjectsToSpawn();
+                SceneManager.LoadScene(MapManager.Instance.GetCurrentLevel()._node.sceneName);
             }
 
             rb.MovePosition(CalculateQuadraticBezierPoint(t, points[0], points[1], points[2]));
