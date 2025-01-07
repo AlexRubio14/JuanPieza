@@ -37,6 +37,9 @@ public class ShipWheel : InteractableObject
 
     public override void Interact(ObjectHolder _objectHolder)
     {
+        if (ship.CheckOverweight())
+            return;
+
         PlayerController interactingPlayer = _objectHolder.GetComponentInParent<PlayerController>();
         if (players.Contains(interactingPlayer))
         {
