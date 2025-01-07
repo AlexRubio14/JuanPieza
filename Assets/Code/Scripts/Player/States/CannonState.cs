@@ -19,9 +19,7 @@ public class CannonState : PlayerState
     public override void ExitState()
     {
     }
-
     public override void RollAction() { /*No puedes rodar*/ }
-    
     public override void InteractAction() 
     {
         controller.Interact();
@@ -33,6 +31,7 @@ public class CannonState : PlayerState
     public override void UseAction()
     {
         controller.Use();
+        controller.animator.SetTrigger("Shoot");
     }
     public override void OnCollisionEnter(Collision collision)
     {
@@ -43,6 +42,8 @@ public class CannonState : PlayerState
 
     private void MoveCannon()
     {
+        controller.animator.SetBool("Moving", controller.movementInput.x != 0);
+
         if (controller.movementInput.x != 0)
             controller.Movement(controller.transform.forward, controller.cannonSpeed * controller.movementInput.x);
         if (controller.movementInput.y != 0)

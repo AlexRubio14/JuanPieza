@@ -1,13 +1,23 @@
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public abstract class EnemyWeapon : EnemyObject
 {
-    protected bool isLoaded = false;
+    public bool isLoaded {  get; private set; }
+
     [field: SerializeField]
-    public Transform weaponShootPosition {  get; protected set; }
+    public Transform shooterPosition {  get; protected set; }
+    [field: SerializeField]
+    public Transform bulletSpawnPosition {  get; protected set; }
+
+    [SerializeField]
+    protected GameObject bullet;
+    [field: SerializeField]
+    public float bulletForce { get; protected set; }
 
     private void Start()
     {
+        isLoaded = false;
         enemieManager.AddReloadCannonAction(this);
     }
 
@@ -24,6 +34,7 @@ public abstract class EnemyWeapon : EnemyObject
     public override void UseObject()
     {
         enemieManager.AddReloadCannonAction(this);
+        isLoaded = false;
     }
     public virtual void LoadWeapon()
     {

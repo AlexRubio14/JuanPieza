@@ -3,7 +3,7 @@ using UnityEngine;
 public class ShootCannonAction : EnemyAction
 {
 
-    public ShootCannonAction(ActionType _action, EnemyWeapon _target, float _distanceToInteract, float _timeToInteract)
+    public ShootCannonAction(ActionType _action, EnemyWeapon _target, float _distanceToInteract, float _timeToInteract, Ship _playersShip)
     {
         currentAction = _action;
         target = _target;
@@ -13,7 +13,7 @@ public class ShootCannonAction : EnemyAction
 
     public override void StateUpdate()
     {
-        Vector3 targetPos = ((EnemyWeapon)target).weaponShootPosition.position;
+        Vector3 targetPos = ((EnemyWeapon)target).shooterPosition.position;
         if (!IsNearToDestiny(targetPos))
         {
             //Ir hacia el arma
@@ -34,6 +34,8 @@ public class ShootCannonAction : EnemyAction
             animator.SetBool("Pick", true);
             animator.SetBool("Moving", false);
             timeWaited += Time.deltaTime;
+            //Apuntar
+            EnemyWeapon weapon = (EnemyWeapon)target;
 
             if (timeWaited >= timeToInteract)
             {
