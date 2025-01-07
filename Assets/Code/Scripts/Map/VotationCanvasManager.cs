@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CanvasManager : MonoBehaviour
+public class VotationCanvasManager : MonoBehaviour
 {
-    public static CanvasManager Instance { get; private set; }
+    public static VotationCanvasManager Instance { get; private set; }
 
     [Header("Votation")]
     [SerializeField] private List<VotationUI> ui;
