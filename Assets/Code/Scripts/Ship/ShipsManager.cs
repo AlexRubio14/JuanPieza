@@ -1,0 +1,19 @@
+using UnityEngine;
+
+public class ShipsManager : MonoBehaviour
+{
+    public static ShipsManager instance;
+
+    [field: SerializeField]
+    public Ship playerShip {  get; private set; }
+    [field: SerializeField]
+    public Ship[] enemiesShips { get; private set; }
+
+    private void Awake()
+    {
+        if (instance != null)
+            Destroy(instance.gameObject);
+
+        instance = this;
+    }
+}

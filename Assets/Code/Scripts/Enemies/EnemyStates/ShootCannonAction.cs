@@ -36,6 +36,9 @@ public class ShootCannonAction : EnemyAction
             timeWaited += Time.deltaTime;
             //Apuntar
             EnemyWeapon weapon = (EnemyWeapon)target;
+            //Vector3 direction = 
+            //Vector3 targetPos = ShipsManager.instance.playerShip
+            //weapon.bulletSpawnPosition
 
             if (timeWaited >= timeToInteract)
             {

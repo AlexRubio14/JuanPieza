@@ -15,17 +15,9 @@ public class Ship : MonoBehaviour
     private float targetHeight;
     private float currentHeight;
 
-
-    [Space, Header("Inventory"), SerializeField]
-    private Vector3 checkBoxPosition;
-    [SerializeField]
-    private Vector3 checkBoxSize;
-    [SerializeField]
-    private LayerMask objectLayer;
-
     [Header("Weigth")]
     [SerializeField] private float maxWeigth;
-    private List<InteractableObject> objects;
+    private List<InteractableObject> objects = new List<InteractableObject>();
     private float currentWeight;
 
     [Header("WeigthDamage")]
@@ -47,14 +39,11 @@ public class Ship : MonoBehaviour
         targetHeight = initY;
         currentHeight = transform.position.y;
 
-        objects = new List<InteractableObject>();
-
         foreach (Votation _votation in votations)
         {
             _votation.gameObject.SetActive(false);
         }
 
-        CheckItemsInShip();
     }
 
     private void Update()
@@ -66,14 +55,6 @@ public class Ship : MonoBehaviour
 
         FlotationLerp();
         WeightControl();
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            foreach (InteractableObject item in objects)
-            {
-                Debug.Log("Hay " + item.name);
-            }
-        }
     }
 
     #region Health Flotation
@@ -105,7 +86,7 @@ public class Ship : MonoBehaviour
         CheckHealth();
         targetHeight = Mathf.Lerp(lowerY, initY, currentHealth / maxHealth);
     }
-    private void ChechHealth()
+    private void CheckHealth()
     {
         if (currentHealth < 0)
         {
@@ -127,18 +108,15 @@ public class Ship : MonoBehaviour
     #endregion
 
     #region Inventory
-    private void CheckItemsInShip()
-    {
-        RaycastHit[] hits = Physics.BoxCastAll(transform.position + checkBoxPosition, checkBoxSize, transform.forward, Quaternion.identity, 1, objectLayer);
-
-        foreach (RaycastHit hit in hits)
-            AddInteractuableObject(hit.collider.GetComponent<InteractableObject>());
-
-    }
     public void AddInteractuableObject(InteractableObject interactableObject)
     {
         if (objects.Contains(interactableObject))
             return;
+
+        if (interactableObject.objectSO.objectType == ObjectSO.ObjectType.BOX)
+        {
+            currentWeight += ((Box)interactableObject).GetItemsInBox() * ((Box)interactableObject).GetItemToDrop().weight;
+        }
 
         objects.Add(interactableObject);
         currentWeight += interactableObject.objectSO.weight;
@@ -151,12 +129,28 @@ public class Ship : MonoBehaviour
         currentWeight -= interactableObject.objectSO.weight;
         objects.Remove(interactableObject);
     }
-    #endregion
-
-
-    private void OnDrawGizmosSelected()
+    
+    public void AddWeight(float _weight)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position + checkBoxPosition, checkBoxSize);
+        currentWeight += _weight;
     }
+    public void RemoveWeight(float _weight)
+    {
+        currentWeight -= _weight;
+    }
+
+    public List<Weapon> GetAllWeapons()
+    {
+        List<Weapon> weaponList = new List<Weapon>();
+
+        foreach (InteractableObject item in objects)
+        {
+            if(item is Weapon)
+                weaponList.Add((Weapon)item);
+        }
+
+        return weaponList;
+
+    }
+    #endregion
 }

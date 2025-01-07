@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
-
 public abstract class EnemyWeapon : EnemyObject
 {
     public bool isLoaded {  get; private set; }
@@ -14,6 +12,9 @@ public abstract class EnemyWeapon : EnemyObject
     protected GameObject bullet;
     [field: SerializeField]
     public float bulletForce { get; protected set; }
+    [field: SerializeField]
+    public float shootHeightOffset { get; protected set; }
+
 
     private void Start()
     {

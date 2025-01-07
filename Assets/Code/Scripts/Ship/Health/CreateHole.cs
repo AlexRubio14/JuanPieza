@@ -34,13 +34,10 @@ public class CreateHole : DetectBullet
         foreach (RaycastHit hit in hits) 
         {
             if (hit.collider.TryGetComponent(out EnemyObject _enemyObject))
-            {
                 _enemyObject.BreakObject();
-            }
-            if(hit.collider.TryGetComponent(out ObjectState _objectState))
-            {
-                _objectState.SetIsBroke(true);
-            }
+            else if(hit.collider.TryGetComponent(out Repair _objectToRepair))
+                _objectToRepair.GetObjectState().SetIsBroke(true);
+
         }
 
     }

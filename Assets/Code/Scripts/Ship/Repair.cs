@@ -3,18 +3,13 @@ using UnityEngine;
 
 public class Repair : InteractableObject
 {
-    [Header("RepairItem")]
+    [Space, Header("Repair Item")]
     [SerializeField] private ObjectSO repairItem;
-
-    [Header("Time")]
+    [SerializeField] protected ObjectState state;
     [SerializeField] private float repairDuration;
     private float currentRepairTime;
-
-    [Header("Player")]
     private List<PlayerController> players = new List<PlayerController>();
 
-    [Header("State")]
-    [SerializeField] protected ObjectState state;
 
     private void Update()
     {
@@ -69,12 +64,11 @@ public class Repair : InteractableObject
     public bool IsPlayerReparing(PlayerController _playerController)
     {
         if(players.Count <= 0) 
-        {
             return false;
-        }
 
         return players.Contains(_playerController);
     }
+    public ObjectState GetObjectState() { return state; }
 
     protected virtual void RepairEnded(ObjectHolder _objectHolder)
     {
