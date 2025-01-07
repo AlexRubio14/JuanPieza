@@ -2,7 +2,6 @@ using UnityEngine;
 
 public abstract class InteractableObject : MonoBehaviour
 {
-
     [field: SerializeField] public ObjectSO objectSO {  get; protected set; }
     [field: SerializeField] public ObjectSO objectToInteract {  get; protected set; }
     [SerializeField] protected SelectedVisual selectedVisual;
@@ -22,7 +21,6 @@ public abstract class InteractableObject : MonoBehaviour
     public virtual void StopInteract(ObjectHolder _objectHolder) { }
 
     public abstract void UseItem(ObjectHolder _objectHolder);
-
     public SelectedVisual GetSelectedVisual()
     {
         return selectedVisual;
@@ -42,5 +40,16 @@ public abstract class InteractableObject : MonoBehaviour
             !_objectHolder.GetHandInteractableObject() && !objectToInteract;
     }
 
+    public virtual HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+
+        if (handObject && objectToInteract == handObject.objectSO || !_objectHolder.GetHandInteractableObject() && !objectToInteract)
+        {
+            return HintController.ActionType.INTERACT;
+        }
+ 
+        return HintController.ActionType.NONE;
+    }
 
 }

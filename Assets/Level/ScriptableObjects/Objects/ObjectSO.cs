@@ -10,7 +10,10 @@ public class ObjectSO : ScriptableObject
 
     [field: SerializeField]
     public GameObject prefab { get; private set; }
-
+    
+    [field: SerializeField]
+    public int price { get; private set; }
+    
     [field: SerializeField]
     public float weight { get; private set; }
 

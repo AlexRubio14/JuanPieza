@@ -45,7 +45,7 @@ public abstract class Weapon : InteractableObject
 
         if (isBeingUsed) //Desmontarse
             UnMount(player, _objectHolder);
-        else if (!hasAmmo && handObject && handObject.objectSO == objectToInteract) //Si no tiene municion agregar la bala al cañon
+        else if (!hasAmmo && handObject && handObject.objectSO == objectToInteract) //Si no tiene municion agregar la bala al caï¿½on
             Reload(_objectHolder);
         else if (!handObject) //Montarse al arma
             Mount(player, _objectHolder);
@@ -62,6 +62,22 @@ public abstract class Weapon : InteractableObject
         return !handObject /*Montarse*/ || isBeingUsed /*Bajarse*/ || !hasAmmo && handObject && handObject.objectSO == objectToInteract /*Recargar*/ ;
     }
 
+    public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+
+        if (!handObject || isBeingUsed)
+        {
+            return HintController.ActionType.USE;
+        }
+        if (!hasAmmo && handObject && handObject.objectSO == objectToInteract)
+        {
+            return HintController.ActionType.HOLD;
+        }
+
+        return HintController.ActionType.NONE;
+    }
+
     protected void Mount(PlayerController _player, ObjectHolder _objectHolder)
     {
         _objectHolder.ChangeObjectInHand(this, false);
@@ -72,7 +88,7 @@ public abstract class Weapon : InteractableObject
         PlayerStateMachine playerSM = _objectHolder.GetComponentInParent<PlayerStateMachine>();
         playerSM.cannonState.SetWeapon(this);
         playerSM.ChangeState(playerSM.cannonState);
-        //Hacer Tp al player a la posicion de montar al cañon
+        //Hacer Tp al player a la posicion de montar al caï¿½on
         _player.transform.position = ridingPos.position;
         _player.transform.forward = ridingPos.forward;
         //El padre del arma sera el player 
@@ -90,7 +106,7 @@ public abstract class Weapon : InteractableObject
         PlayerStateMachine playerSM = _objectHolder.GetComponentInParent<PlayerStateMachine>();
         playerSM.ChangeState(playerSM.idleState);
 
-        //Quitar el cañon del player
+        //Quitar el caï¿½on del player
         _objectHolder.RemoveItemFromHand();
     }
     protected void Reload(ObjectHolder _objectHolder)
@@ -101,6 +117,6 @@ public abstract class Weapon : InteractableObject
         InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
         Destroy(currentObject.gameObject);
     }
-
+    
     protected abstract void Shoot();
 }
