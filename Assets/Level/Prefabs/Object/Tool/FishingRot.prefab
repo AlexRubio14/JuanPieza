@@ -210,6 +210,37 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!1 &2237092538417025630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6494870820321284709}
+  m_Layer: 9
+  m_Name: GrabPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6494870820321284709
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2237092538417025630}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalPosition: {x: 0, y: -0.621, z: -0.005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4534217488849783477}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!1 &4862280524418518942
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,15 +335,16 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6849946475231036619}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17367753, y: -0.68544596, z: 0.17367756, w: 0.6854459}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.1, y: 2.38, z: -10.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 999420443324674263}
   - {fileID: 3900850089985575315}
+  - {fileID: 6494870820321284709}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 28.437, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &4998625932396824625
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -379,6 +411,7 @@ MonoBehaviour:
   <objectToInteract>k__BackingField: {fileID: 0}
   selectedVisual: {fileID: 8424893037913959896}
   rb: {fileID: 4998625932396824625}
+  <grabPivot>k__BackingField: {fileID: 6494870820321284709}
   isFishing: 0
   idleFishingRod: {fileID: 8356758219893130542}
   landedFishingRod: {fileID: 7188740020458667814}

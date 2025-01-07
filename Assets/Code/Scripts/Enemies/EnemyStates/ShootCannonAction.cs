@@ -69,7 +69,7 @@ public class ShootCannonAction : EnemyAction
         Vector3 weaponTargetPos = nearestObject.transform.position;
 
         Vector3 targetDirection = (weaponTargetPos - shootPos).normalized;
-        Vector3 finalDirection = targetDirection + Vector3.up * weapon.shootHeightOffset;
+        Vector3 finalDirection = targetDirection + Vector3.up * weapon.shootHeightOffset * (Vector3.Distance(shootPos, weaponTargetPos) / 4) ;
 
         weapon.bulletSpawnPosition.forward = Vector3.Lerp(weapon.bulletSpawnPosition.forward, finalDirection, Time.deltaTime * weapon.aimSpeed);
 

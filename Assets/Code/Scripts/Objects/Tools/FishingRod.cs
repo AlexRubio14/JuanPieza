@@ -49,7 +49,7 @@ public class FishingRod : Tool
     public override void UseItem(ObjectHolder _objectHolder)
     {
         if (!isFishing && !hookThrowed) //Tirar anzuelo
-            ThrowHook();
+            ThrowHook(_objectHolder.transform.rotation);
         else if (isFishing || hookLanded && !hook.onWater)//Recoger anzuelo
             GrabHook();
     }
@@ -62,11 +62,11 @@ public class FishingRod : Tool
         playerSM.fishingState.fishingRod = this;
     }
 
-    private void ThrowHook()
+    private void ThrowHook(Quaternion _hookRotation)
     {
         hook.gameObject.SetActive(true);
         hook.transform.position = hookSpawnPoint.position;
-        hook.transform.rotation = hookSpawnPoint.rotation;
+        hook.transform.rotation = _hookRotation;
 
         hook.rb.linearVelocity = Vector3.zero;
 
