@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ShipCurve : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class ShipCurve : MonoBehaviour
             {
                 t = 1f;
                 startMovement = false;
+                ShipSceneManager.Instance.SetObjectsToSpawn();
+                SceneManager.LoadScene(MapManager.Instance.GetCurrentLevel()._node.sceneName);
             }
 
             Vector3 targetPosition = CalculateQuadraticBezierPoint(t, points[0], points[1], points[2]);

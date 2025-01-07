@@ -180,4 +180,9 @@ public class MapManager : MonoBehaviour
         ActiveUI();
         startVoteTimer = true;
     }
+
+    public LevelNode GetCurrentLevel()
+    {
+        return currentLevel;
+    }
 }
