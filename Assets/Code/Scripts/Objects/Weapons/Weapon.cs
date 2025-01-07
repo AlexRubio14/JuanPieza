@@ -66,13 +66,18 @@ public abstract class Weapon : InteractableObject
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
-        if (!handObject || isBeingUsed)
+        if (!handObject || isBeingUsed && !hasAmmo)
+        {
+            return HintController.ActionType.INTERACT;
+        }
+        if (hasAmmo)
         {
             return HintController.ActionType.USE;
         }
         if (!hasAmmo && handObject && handObject.objectSO == objectToInteract)
         {
-            return HintController.ActionType.HOLD;
+            return HintController.ActionType.INTERACT;
+            //return HintController.ActionType.HOLD;
         }
 
         return HintController.ActionType.NONE;

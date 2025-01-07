@@ -76,12 +76,15 @@ public class PlayerController : MonoBehaviour
 
 
     public Animator animator { get; private set; }
+    
+    private HintController hintController;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
-
+        hintController = GetComponent<HintController>();
+        
         stateMachine = GetComponent<PlayerStateMachine>();
         stateMachine.InitializeStates(this);
     }
@@ -236,17 +239,23 @@ public class PlayerController : MonoBehaviour
     public void Interact()
     {
         InteractableObject handObject = objectHolder.GetHandInteractableObject();
-        if (!objectHolder.GetHandInteractableObject() && 
-            (!objectHolder.GetNearestInteractableObject() || 
-            objectHolder.GetNearestInteractableObject() && !objectHolder.GetNearestInteractableObject().CanInteract(objectHolder))
-            )
+        InteractableObject nearestObject = objectHolder.GetNearestInteractableObject();
+        
+        if (!handObject && (!nearestObject || nearestObject && !nearestObject.CanInteract(objectHolder)))
             return;
 
-        if (objectHolder.GetNearestInteractableObject() && objectHolder.GetNearestInteractableObject().CanInteract(objectHolder))
-            objectHolder.GetNearestInteractableObject().Interact(objectHolder);
+        if (nearestObject && nearestObject.CanInteract(objectHolder))
+        {
+            nearestObject.Interact(objectHolder);
+            objectHolder.ChangeNearestInteractableObject(null);
+            hintController.UpdateActionType(nearestObject.ShowNeededInputHint(objectHolder));
+        }        
         else
-            objectHolder.GetHandInteractableObject().Interact(objectHolder);
-
+        {
+            handObject.Interact(objectHolder);
+            hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));
+        }
+        
         animator.SetBool("Pick", objectHolder.GetHandInteractableObject());
 
     }
@@ -264,8 +273,13 @@ public class PlayerController : MonoBehaviour
     }
     public void Use()
     {
-        if(objectHolder.GetHandInteractableObject())
-            objectHolder.GetHandInteractableObject().UseItem(objectHolder);
+        InteractableObject handObject = objectHolder.GetHandInteractableObject();
+
+        if (handObject)
+        {
+            handObject.UseItem(objectHolder);
+            hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));
+        }
     }
     #endregion
 

@@ -5,12 +5,13 @@ public class ObjectHolder : MonoBehaviour
     [SerializeField] private float sphereCastRadius;
     [SerializeField] private LayerMask itemsLayerMask;
     [SerializeField] private Transform sphereCastTransform;
-
+    
     private InteractableObject nearestInteractableObject;
 
     private InteractableObject interactableObject;
 
     [SerializeField] private Transform objectPickedPos;
+    private HintController hintController;
 
     private bool hasPickedObject = false;
 
@@ -18,6 +19,7 @@ public class ObjectHolder : MonoBehaviour
 
     private void Awake()
     {
+        hintController = GetComponentInParent<HintController>();
         colliders = new RaycastHit[0];
     }
 
@@ -99,9 +101,6 @@ public class ObjectHolder : MonoBehaviour
         _interactableObject.transform.SetParent(transform.parent);
         _interactableObject.SetIsBeingUsed(true);
 
-
-
-
     }
     public InteractableObject RemoveItemFromHand()
     {
@@ -130,6 +129,7 @@ public class ObjectHolder : MonoBehaviour
             if (!_nearestObject)
             {
                 nearestInteractableObject = _nearestObject;
+                hintController.UpdateActionType(HintController.ActionType.NONE);
                 return;
             }
 
@@ -142,6 +142,9 @@ public class ObjectHolder : MonoBehaviour
             }
 
             nearestInteractableObject = _nearestObject;
+            
+           
+            hintController.UpdateActionType(nearestInteractableObject.ShowNeededInputHint(this));
         }
     }
 
