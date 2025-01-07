@@ -1474,6 +1474,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1798300188017550894, guid: 535d196b498267844976a8e298d30f88, type: 3}
+      propertyPath: lowerY
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798300188017550894, guid: 535d196b498267844976a8e298d30f88, type: 3}
+      propertyPath: destroyY
+      value: -1.3
+      objectReference: {fileID: 0}
     - target: {fileID: 2418087686159776117, guid: 535d196b498267844976a8e298d30f88, type: 3}
       propertyPath: m_Name
       value: Ship
@@ -1484,11 +1492,11 @@ PrefabInstance:
       objectReference: {fileID: 2037055845}
     - target: {fileID: 8371856127479981112, guid: 535d196b498267844976a8e298d30f88, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 0.9312343
       objectReference: {fileID: 0}
     - target: {fileID: 8371856127479981112, guid: 535d196b498267844976a8e298d30f88, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.55
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8371856127479981112, guid: 535d196b498267844976a8e298d30f88, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1525,7 +1533,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2418087686159776117, guid: 535d196b498267844976a8e298d30f88, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2037055850}
   m_SourcePrefab: {fileID: 100100000, guid: 535d196b498267844976a8e298d30f88, type: 3}
 --- !u!114 &1437485489 stripped
 MonoBehaviour:
@@ -2527,6 +2538,52 @@ MonoBehaviour:
   newY: 7
   moveSpeed: 0.5
   rotationSpeed: 1
+--- !u!1 &2028224599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2028224601}
+  - component: {fileID: 2028224600}
+  m_Layer: 0
+  m_Name: ShipManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2028224600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028224599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cc75f25e39573e48b5e686209a41c0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <playerShip>k__BackingField: {fileID: 2037055845}
+  <enemiesShips>k__BackingField: []
+--- !u!4 &2028224601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028224599}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.538029, y: -26.326603, z: 20.263157}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2037055840 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2418087686159776117, guid: 535d196b498267844976a8e298d30f88, type: 3}
@@ -2543,6 +2600,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe9deb0fc1956446a6095fc95bf33f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &2037055850
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037055840}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0412cee73568643498fc20319c6f71a7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2115142043
 GameObject:
   m_ObjectHideFlags: 0
