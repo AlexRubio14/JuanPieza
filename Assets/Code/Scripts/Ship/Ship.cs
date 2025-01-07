@@ -133,4 +133,8 @@ public class Ship : MonoBehaviour
         }
     }
 
+    public bool CheckOverweight()
+    {
+        return currentWeight >= maxWeigth;
+    }
 }
