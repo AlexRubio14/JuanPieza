@@ -14,6 +14,8 @@ public abstract class EnemyWeapon : EnemyObject
     public float bulletForce { get; protected set; }
     [field: SerializeField]
     public float shootHeightOffset { get; protected set; }
+    [field: SerializeField]
+    public float aimSpeed { get; protected set; }
 
 
     private void Start()

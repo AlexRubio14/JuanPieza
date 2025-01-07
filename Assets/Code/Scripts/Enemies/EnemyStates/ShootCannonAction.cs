@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ShootCannonAction : EnemyAction
@@ -34,12 +35,9 @@ public class ShootCannonAction : EnemyAction
             animator.SetBool("Pick", true);
             animator.SetBool("Moving", false);
             timeWaited += Time.deltaTime;
-            //Apuntar
-            EnemyWeapon weapon = (EnemyWeapon)target;
-            //Vector3 direction = 
-            //Vector3 targetPos = ShipsManager.instance.playerShip
-            //weapon.bulletSpawnPosition
 
+            AimCannon();
+            
             if (timeWaited >= timeToInteract)
             {
                 animator.SetTrigger("Shoot");
@@ -50,6 +48,52 @@ public class ShootCannonAction : EnemyAction
                 onActionEnd(true);
             }
         }
+
+    }
+
+    private void AimCannon()
+    {
+        //Apuntar
+        EnemyWeapon weapon = (EnemyWeapon)target;
+        Vector3 shootPos = weapon.bulletSpawnPosition.position;
+
+
+        InteractableObject nearestObject = GetNearestObject(ShipsManager.instance.playerShip.GetAllWeapons(), shootPos);
+
+        if (nearestObject == null)
+            nearestObject = GetNearestObject(ShipsManager.instance.playerShip.GetInventory(), shootPos);
+
+        if (nearestObject == null)
+            return;
+
+        Vector3 weaponTargetPos = nearestObject.transform.position;
+
+        Vector3 targetDirection = (weaponTargetPos - shootPos).normalized;
+        Vector3 finalDirection = targetDirection + Vector3.up * weapon.shootHeightOffset;
+
+        weapon.bulletSpawnPosition.forward = Vector3.Lerp(weapon.bulletSpawnPosition.forward, finalDirection, Time.deltaTime * weapon.aimSpeed);
+
+    }
+    private InteractableObject GetNearestObject(List<InteractableObject> _objectsToBreak, Vector3 _targetPos)
+    {
+        float minDistance = 1000;
+        InteractableObject currentObjectToBreak = null;
+
+        foreach (InteractableObject objectToBreak in _objectsToBreak) 
+        {
+            if (objectToBreak is not Repair || ((Repair)objectToBreak).GetObjectState().GetIsBroken())
+                continue;
+
+            float currentDistance = Vector3.Distance(_targetPos, objectToBreak.transform.position);
+            if(currentDistance < minDistance)
+            {
+                currentObjectToBreak = objectToBreak;
+                minDistance = currentDistance;
+            }
+        }
+
+
+        return currentObjectToBreak;
 
     }
 }

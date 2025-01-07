@@ -119,8 +119,9 @@ MonoBehaviour:
   <shooterPosition>k__BackingField: {fileID: 2795919515613367450}
   <bulletSpawnPosition>k__BackingField: {fileID: 4655383837223992068}
   bullet: {fileID: 1671708259023600102, guid: df42d371418fd1049a75270b1505a351, type: 3}
-  <bulletForce>k__BackingField: 850
-  <shootHeightOffset>k__BackingField: 0
+  <bulletForce>k__BackingField: 150
+  <shootHeightOffset>k__BackingField: 0.3
+  <aimSpeed>k__BackingField: 0.55
 --- !u!208 &8832532681473636027
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -310,7 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitLayers:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 272
   rb: {fileID: 762032817644874531, guid: df42d371418fd1049a75270b1505a351, type: 3}
   starterPos: {fileID: 4655383837223992068}
   maxSteps: 200
