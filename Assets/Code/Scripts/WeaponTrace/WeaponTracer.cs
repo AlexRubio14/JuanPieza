@@ -4,39 +4,28 @@ public class WeaponTracer : MonoBehaviour
 {
 
     [SerializeField]
-    private LayerMask hitLayers;
+    protected LayerMask hitLayers;
     [SerializeField]
-    private Rigidbody rb;
+    protected Rigidbody rb;
     [SerializeField]
-    private Transform starterPos;
+    protected Transform starterPos;
 
     [Space, SerializeField]
-    private int maxSteps;
+    protected int maxSteps;
     [SerializeField]
-    private float stepSize;
+    protected float stepSize;
 
-    private Weapon weapon;
-    private LineRenderer lineRenderer;
+    [SerializeField]
+    protected LineRenderer lineRenderer;
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        weapon = GetComponentInParent<Weapon>();
         lineRenderer = GetComponent<LineRenderer>();
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    protected void PredictTrajectory(float _force)
     {
-        if (weapon.isBeingUsed)
-            PredictTrajectory();
-         
-        lineRenderer.enabled = weapon.isBeingUsed;
-    }
-
-
-    public void PredictTrajectory()
-    {
-        Vector3 velocity = weapon.bulletForce / rb.mass * starterPos.forward;
+        Vector3 velocity = _force / rb.mass * starterPos.forward;
         Vector3 position = starterPos.position;
         UpdateLineRenderer(1, (0, position));
         for (int i = 1; i <= maxSteps; i++)
@@ -59,14 +48,14 @@ public class WeaponTracer : MonoBehaviour
         
     }
 
-    private Vector3 CalculateNewVelocity(Vector3 _velocity, float _drag, float _increment)
+    protected Vector3 CalculateNewVelocity(Vector3 _velocity, float _drag, float _increment)
     {
         _velocity += Physics.gravity * _increment;
-        _velocity *= Mathf.Clamp01(1 - _drag * _increment);
+        _velocity *= Mathf.Clamp01(1f - (_drag * 1.1f) * _increment);
         return _velocity;
     }
 
-    private void UpdateLineRenderer(int _count, (int point, Vector3 pos) _pointPos)
+    protected void UpdateLineRenderer(int _count, (int point, Vector3 pos) _pointPos)
     {
         if (_pointPos.point >= _count)
             return;

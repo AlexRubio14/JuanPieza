@@ -139,7 +139,7 @@ public class EnemieManager : MonoBehaviour
     }
     public void AddShootCannonAction(EnemyWeapon _weapon)
     {
-        EnemyAction action = new ShootCannonAction(EnemyAction.ActionType.SHOOT_CANNON, /*Parte trasera del Cañon*/ _weapon, interactDistance / 2, timeToShoot);
+        EnemyAction action = new ShootCannonAction(EnemyAction.ActionType.SHOOT_CANNON, /*Parte trasera del Cañon*/ _weapon, interactDistance / 2, timeToShoot, playerShip);
 
         toDoList.Add(action);
     }
