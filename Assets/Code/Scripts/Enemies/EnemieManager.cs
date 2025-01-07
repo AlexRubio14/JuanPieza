@@ -18,8 +18,6 @@ public class EnemieManager : MonoBehaviour
     private EnemyAction.ActionType[] priorityList;
     [SerializeField]
     private Ship enemyShip;
-    [SerializeField]
-    private Ship playerShip;
 
     [Space, Header("Resource Spots"), SerializeField]
     private EnemyObject woodResource;
@@ -139,7 +137,7 @@ public class EnemieManager : MonoBehaviour
     }
     public void AddShootCannonAction(EnemyWeapon _weapon)
     {
-        EnemyAction action = new ShootCannonAction(EnemyAction.ActionType.SHOOT_CANNON, /*Parte trasera del Cañon*/ _weapon, interactDistance / 2, timeToShoot, playerShip);
+        EnemyAction action = new ShootCannonAction(EnemyAction.ActionType.SHOOT_CANNON, /*Parte trasera del Cañon*/ _weapon, interactDistance / 2, timeToShoot);
 
         toDoList.Add(action);
     }

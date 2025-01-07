@@ -4,7 +4,7 @@ using UnityEngine;
 public class ShootCannonAction : EnemyAction
 {
 
-    public ShootCannonAction(ActionType _action, EnemyWeapon _target, float _distanceToInteract, float _timeToInteract, Ship _playersShip)
+    public ShootCannonAction(ActionType _action, EnemyWeapon _target, float _distanceToInteract, float _timeToInteract)
     {
         currentAction = _action;
         target = _target;
@@ -48,7 +48,6 @@ public class ShootCannonAction : EnemyAction
                 onActionEnd(true);
             }
         }
-
     }
 
     private void AimCannon()

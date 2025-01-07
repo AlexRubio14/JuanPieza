@@ -330,8 +330,8 @@ GameObject:
   - component: {fileID: 2640195164968152856}
   - component: {fileID: 4110812420746228066}
   - component: {fileID: 2057772964880838636}
-  - component: {fileID: 3863750450597804000}
   - component: {fileID: 3152293238559396758}
+  - component: {fileID: 3863750450597804000}
   - component: {fileID: 7631052473422567200}
   m_Layer: 9
   m_Name: HammerBox
@@ -405,21 +405,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3863750450597804000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3067715719850451956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd800e70723aeee4b81600ebd755ddf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fixedSibling: {fileID: 2176768186935484883}
-  brokenSibling: {fileID: 6218878107081918593}
-  isBroken: 0
 --- !u!114 &3152293238559396758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,6 +421,7 @@ MonoBehaviour:
   <objectToInteract>k__BackingField: {fileID: 11400000, guid: 9e26296dc990cde42ba9934d00849992, type: 2}
   selectedVisual: {fileID: 7631052473422567200}
   rb: {fileID: 2057772964880838636}
+  <grabPivot>k__BackingField: {fileID: 0}
   repairItem: {fileID: 11400000, guid: 9e26296dc990cde42ba9934d00849992, type: 2}
   state: {fileID: 3863750450597804000}
   repairDuration: 5
@@ -446,6 +432,22 @@ MonoBehaviour:
   - {fileID: 1997050350362056784}
   - {fileID: 4193768753776101152}
   - {fileID: 8424204912449867802}
+  forceMultiplier: 0
+--- !u!114 &3863750450597804000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3067715719850451956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd800e70723aeee4b81600ebd755ddf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fixedSibling: {fileID: 2176768186935484883}
+  brokenSibling: {fileID: 6218878107081918593}
+  isBroken: 0
 --- !u!114 &7631052473422567200
 MonoBehaviour:
   m_ObjectHideFlags: 0
