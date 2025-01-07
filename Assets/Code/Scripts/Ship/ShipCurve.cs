@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
-public class ShipCurve : MonoBehaviour
+public class ShipCurve : Ship
 {
     private List<Vector3> points;
 
@@ -17,6 +18,7 @@ public class ShipCurve : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        base.Initialize();
     }
 
     private void FixedUpdate()
@@ -31,9 +33,8 @@ public class ShipCurve : MonoBehaviour
                 startMovement = false;
             }
 
-            Vector3 targetPosition = CalculateQuadraticBezierPoint(t, points[0], points[1], points[2]);
-
-            rb.MovePosition(targetPosition);
+            rb.MovePosition(CalculateQuadraticBezierPoint(t, points[0], points[1], points[2]));
+            rb.MoveRotation(Quaternion.LookRotation(CalculateBezierTangent(t, points[0], points[1], points[2]),Vector3.up));
         }
     }
 
@@ -41,6 +42,13 @@ public class ShipCurve : MonoBehaviour
     {
         float u = 1 - t;
         return (u * u * p0) + (2 * u * t * p1) + (t * t * p2);
+    }
+
+    private Vector3 CalculateBezierTangent(float t, Vector3 p0, Vector3 p1, Vector3 p2)
+    {
+        float u = 1 - t;
+        Vector3 tangent = (2 * u * (p1 - p0)) + (2 * t * (p2 - p1));
+        return tangent.normalized; 
     }
 
     public void SetStartMovement(bool state, List<Vector3> _points)

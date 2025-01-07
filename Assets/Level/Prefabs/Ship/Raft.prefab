@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7799658489055061891}
   - component: {fileID: 4253993484148170079}
   - component: {fileID: 28328118972861302}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Raft.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,6 +89,156 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1179984625207939054
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4767911784153542025}
+  - component: {fileID: 504839304792407517}
+  - component: {fileID: 6650519826086783022}
+  - component: {fileID: 3960906928068121675}
+  - component: {fileID: 291070966500283959}
+  - component: {fileID: 8353490804995313050}
+  m_Layer: 8
+  m_Name: VotationRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4767911784153542025
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179984625207939054}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.56, y: 0.30000007, z: -1.97}
+  m_LocalScale: {x: 5.091261, y: 0.38, z: 11.97847}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 350956542403486526}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &504839304792407517
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179984625207939054}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6650519826086783022
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179984625207939054}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: dc4f8e26e10a55d48911567a8692cca0, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3960906928068121675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179984625207939054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c9637108ef92f44ab18f6c9aca9b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direcctionValue: 1
+--- !u!65 &291070966500283959
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179984625207939054}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &8353490804995313050
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179984625207939054}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1227239524653154457
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,7 +250,7 @@ GameObject:
   - component: {fileID: 7849924217477073564}
   - component: {fileID: 7030960753440467118}
   - component: {fileID: 5968365632560440775}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodRaft.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +336,7 @@ GameObject:
   - component: {fileID: 1071108734447487848}
   - component: {fileID: 3478794051012048673}
   - component: {fileID: 7914022070242788157}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Raft.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +423,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8371856127479981112}
-  - component: {fileID: 7667896435004296199}
+  - component: {fileID: 1798300188017550894}
   - component: {fileID: 3787857318974121445}
   - component: {fileID: 2634385266736153035}
   - component: {fileID: 8365819680216379399}
@@ -309,9 +459,10 @@ Transform:
   - {fileID: 8162652920675514661}
   - {fileID: 2101000035143690665}
   - {fileID: 7849924217477073564}
+  - {fileID: 350956542403486526}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7667896435004296199
+--- !u!114 &1798300188017550894
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -320,7 +471,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2418087686159776117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3354d4e17ee817c45b52f569b132dcf4, type: 3}
+  m_Script: {fileID: 11500000, guid: 1fe9deb0fc1956446a6095fc95bf33f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
@@ -329,7 +480,10 @@ MonoBehaviour:
   maxWeigth: 200
   weigthDamage: 1
   damageTime: 15
-  votations: []
+  votations:
+  - {fileID: 232221409706662743}
+  - {fileID: 3960906928068121675}
+  speed: 0.05
 --- !u!114 &3787857318974121445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,7 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6140746f33cef5749a6fef9a7f119698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 7667896435004296199}
+  ship: {fileID: 0}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
   objectLayer:
     serializedVersion: 2
@@ -396,6 +550,39 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &2469744633720590609
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 350956542403486526}
+  m_Layer: 8
+  m_Name: Votation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &350956542403486526
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469744633720590609}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5745193734522100569}
+  - {fileID: 4767911784153542025}
+  m_Father: {fileID: 8371856127479981112}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3414835403249822125
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,7 +594,7 @@ GameObject:
   - component: {fileID: 2315643460022243104}
   - component: {fileID: 8445198697626894130}
   - component: {fileID: 4304243372391586514}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodRaft.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -493,7 +680,7 @@ GameObject:
   - component: {fileID: 8162652920675514661}
   - component: {fileID: 2656159393607072304}
   - component: {fileID: 1099653207732826648}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodRaft.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -568,6 +755,156 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &4144480080449451988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5745193734522100569}
+  - component: {fileID: 564268597567900149}
+  - component: {fileID: 6082058344677597585}
+  - component: {fileID: 232221409706662743}
+  - component: {fileID: 2323079701520611537}
+  - component: {fileID: 7051864681919654431}
+  m_Layer: 8
+  m_Name: VotationLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5745193734522100569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4144480080449451988}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.63, y: 0.3, z: -1.97}
+  m_LocalScale: {x: 5.091261, y: 0.38, z: 11.97847}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 350956542403486526}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &564268597567900149
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4144480080449451988}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6082058344677597585
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4144480080449451988}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 4c151b5260dcd7847aefb0ba15a24dd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &232221409706662743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4144480080449451988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c9637108ef92f44ab18f6c9aca9b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direcctionValue: 0
+--- !u!65 &2323079701520611537
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4144480080449451988}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &7051864681919654431
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4144480080449451988}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5182368779887349658
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,7 +916,7 @@ GameObject:
   - component: {fileID: 1755236860553861771}
   - component: {fileID: 2147335964027698386}
   - component: {fileID: 7134541843127835304}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Raft.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -668,7 +1005,7 @@ GameObject:
   - component: {fileID: 6366213392345782190}
   - component: {fileID: 6260658843140020181}
   - component: {fileID: 4009819646148721476}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Raft.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -757,7 +1094,7 @@ GameObject:
   - component: {fileID: 3613656489600740320}
   - component: {fileID: 3333532142035692462}
   - component: {fileID: 5012285751990842607}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodRaft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -843,7 +1180,7 @@ GameObject:
   - component: {fileID: 869619206396510830}
   - component: {fileID: 7040597220536272304}
   - component: {fileID: 1165073652447727689}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodRaft.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -929,7 +1266,7 @@ GameObject:
   - component: {fileID: 2101000035143690665}
   - component: {fileID: 185192404165933208}
   - component: {fileID: 8511089313728435752}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodRaft.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1015,7 +1352,7 @@ GameObject:
   - component: {fileID: 882180321998069152}
   - component: {fileID: 6407673153427507041}
   - component: {fileID: 6848635742858022512}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Raft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1104,7 +1441,7 @@ GameObject:
   - component: {fileID: 8794091969405143985}
   - component: {fileID: 1496219819400828029}
   - component: {fileID: 3769127875162516270}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Raft.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}

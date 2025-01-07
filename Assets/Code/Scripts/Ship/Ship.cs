@@ -32,7 +32,7 @@ public class Ship : MonoBehaviour
     [Header("Votation")]
     [SerializeField] private List<Votation> votations;
 
-    private void Start()
+    public void Initialize()
     {
         currentHealth = maxHealth;
         initY = transform.position.y;
@@ -48,7 +48,7 @@ public class Ship : MonoBehaviour
 
     private void Update()
     {
-        //if(Input.GetKeyDown(KeyCode.X)) 
+        //if (Input.GetKeyDown(KeyCode.X))
         //{
         //    StartVotation();
         //}

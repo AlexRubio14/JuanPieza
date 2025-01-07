@@ -36,7 +36,7 @@ public class MapManager : MonoBehaviour
         {
             Destroy(gameObject); 
         }
-        CanvasManager.Instance.SetVotationUIState(false);
+        VotationCanvasManager.Instance.SetVotationUIState(false);
     }
 
     private void Update()
@@ -66,7 +66,7 @@ public class MapManager : MonoBehaviour
         foreach (var player in PlayersManager.instance.ingamePlayers)
             player.votationDone = false;
 
-        CanvasManager.Instance.SetVotationUIState(false);
+        VotationCanvasManager.Instance.SetVotationUIState(false);
         currentTime = 0;
         startVoteTimer = false;
     }
@@ -98,8 +98,8 @@ public class MapManager : MonoBehaviour
 
     private void UpdateUIPlayerText()
     {
-        CanvasManager.Instance.SetInformationPlayers(votations);
-        CanvasManager.Instance.SetTimerUiInformation(currentTime, voteTime);
+        VotationCanvasManager.Instance.SetInformationPlayers(votations);
+        VotationCanvasManager.Instance.SetTimerUiInformation(currentTime, voteTime);
     }
 
 
@@ -133,8 +133,6 @@ public class MapManager : MonoBehaviour
         currentLevel = _currentLevel;
         childrenLevel = currentLevel._nodeChildren;
         choosenChild = index;
-        //var childNames = currentLevel._nodeChildren.OrderBy(c => c._nodeHeigth).Select(c => c._node.name).ToList();
-        //Debug.Log($"Node: {currentLevel._node.name},Height: {currentLevel._nodeHeigth},Children: {string.Join(", ", childNames)}");
     }
 
     public void SetMap(Dictionary<int, List<LevelNode>> _map)
@@ -158,8 +156,8 @@ public class MapManager : MonoBehaviour
 
     private void ActiveUI()
     {
-        CanvasManager.Instance.SetVotationUIState(true);
-        CanvasManager.Instance.SetInformationDestination(currentLevel);
+        VotationCanvasManager.Instance.SetVotationUIState(true);
+        VotationCanvasManager.Instance.SetInformationDestination(currentLevel);
     }
 
     public void InitVotations()

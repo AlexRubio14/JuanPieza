@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WoodShelf : Box
@@ -7,9 +8,19 @@ public class WoodShelf : Box
     [SerializeField] private List<GameObject> decorations;
     private int currentDecorationInShelf;
 
+    [Header("Force")]
+    [SerializeField] private float forceMultiplier;
+
     private void Start()
     {
-        currentDecorationInShelf = itemsInBox;
+        currentDecorationInShelf = 4;
+
+        while(currentDecorationInShelf != itemsInBox)
+        {
+            currentDecorationInShelf--;
+            decorations[currentDecorationInShelf].SetActive(false);
+        }
+
     }
     public override void AddItemInBox()
     {
@@ -28,5 +39,35 @@ public class WoodShelf : Box
 
         currentDecorationInShelf--;
         decorations[currentDecorationInShelf].SetActive(false);
+    }
+
+    public void DropItems()
+    {
+        switch(itemsInBox)
+        {
+            case 0:
+                break;
+            case 1:
+                ThrowItems(1);
+                break;
+            default:
+                ThrowItems(2);
+                break;
+        }
+    }
+
+    private void ThrowItems(int cuantity)
+    {
+        for(int i = 0; i<cuantity; i++) 
+        {
+            GameObject _objectSO = Instantiate(itemDropped.prefab, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
+            float randomX = Random.value > 0.5f ? 1f : -1f; 
+            float randomZ = Random.value > 0.5f ? 1f : -1f; 
+
+            Vector3 force = new Vector3(randomX, 1f, randomZ) * forceMultiplier;
+
+            _objectSO.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+            RemoveItemInBox();
+        }
     }
 }
