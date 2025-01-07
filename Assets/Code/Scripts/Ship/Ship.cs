@@ -59,10 +59,10 @@ public class Ship : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.X)) 
-        {
-            StartVotation();
-        }
+        //if(Input.GetKeyDown(KeyCode.X)) 
+        //{
+        //    StartVotation();
+        //}
 
         FlotationLerp();
         WeightControl();
@@ -102,7 +102,7 @@ public class Ship : MonoBehaviour
     public void SetCurrentHealth(float amount)
     {
         currentHealth += amount;
-        ChechHealth();
+        CheckHealth();
         targetHeight = Mathf.Lerp(lowerY, initY, currentHealth / maxHealth);
     }
     private void ChechHealth()

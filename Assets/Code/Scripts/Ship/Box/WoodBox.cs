@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WoodBox : Box
+public class ItemBox : Box
 {
     [Header("Decorations")]
     [SerializeField] private List<GameObject> decorations;

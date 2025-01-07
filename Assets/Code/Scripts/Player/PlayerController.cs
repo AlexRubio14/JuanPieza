@@ -252,6 +252,15 @@ public class PlayerController : MonoBehaviour
     }
     public void StopInteract()
     {
+        InteractableObject nearObject = objectHolder.GetNearestInteractableObject();
+
+        if (nearObject as Repair)
+        {
+            if (((Repair)nearObject).IsPlayerReparing(this))
+            {
+                nearObject.StopInteract(objectHolder);
+            }
+        }
     }
     public void Use()
     {
