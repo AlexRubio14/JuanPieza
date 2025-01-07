@@ -24,6 +24,10 @@ public enum DeviceType { KEYBOARD = 0, GAMEPAD = 1}
     [SerializeField] private Image hintImage;
     [SerializeField] private float hintOffset;
 
+    [Space]
+    [Header("Progress Bar")]
+    [SerializeField] private ProgressBar progressBar;
+    
     public bool isInteracting;
     
     private void Start()
@@ -45,6 +49,7 @@ public enum DeviceType { KEYBOARD = 0, GAMEPAD = 1}
     {
         Vector3 playerPos = transform.position + new Vector3(0, hintOffset, 0);
         hintImage.transform.position = playerPos;
+        progressBar.transform.position = playerPos;
     }
 
     public void UpdateActionType(ActionType _action)
@@ -53,19 +58,29 @@ public enum DeviceType { KEYBOARD = 0, GAMEPAD = 1}
         {
             //Ocultar la UI de inputs
             hintImage.gameObject.SetActive(false);
+            progressBar.gameObject.SetActive(false);
+            progressBar.SetCurrentValue(0);
             return;
         }
 
         if (_action == ActionType.HOLD)
         {
             hintImage.gameObject.SetActive(false);
+            progressBar.gameObject.SetActive(false);
             return;
         }
         
         //Mostrar la UI de inputs
         hintImage.gameObject.SetActive(true);
-
+        progressBar.gameObject.SetActive(false);
+        
         Sprite currentSprite = ActionSprites[_action][(int)deviceType];
         hintImage.sprite = currentSprite;
+    }
+
+    public void SetProgressBar(float max, float current)
+    {
+        progressBar.SetMaxValue(max);
+        progressBar.SetCurrentValue(current);
     }
 }
