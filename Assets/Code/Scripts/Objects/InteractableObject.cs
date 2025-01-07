@@ -2,10 +2,12 @@ using UnityEngine;
 
 public abstract class InteractableObject : MonoBehaviour
 {
-
-    [field: SerializeField] public ObjectSO objectSO {  get; protected set; }
-    [field: SerializeField] public ObjectSO objectToInteract {  get; protected set; }
-    [SerializeField] protected SelectedVisual selectedVisual;
+    [field: Header("Interactable Object"), SerializeField] 
+    public ObjectSO objectSO {  get; protected set; }
+    [field: SerializeField] 
+    public ObjectSO objectToInteract {  get; protected set; }
+    [SerializeField] 
+    protected SelectedVisual selectedVisual;
     public bool isBeingUsed { get; protected set; }
 
     [SerializeField]
@@ -16,6 +18,11 @@ public abstract class InteractableObject : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         isBeingUsed = false;
+    }
+    private void Start()
+    {
+        if(ShipsManager.instance)
+            ShipsManager.instance.playerShip.AddInteractuableObject(this);
     }
 
     public abstract void Interact(ObjectHolder _objectHolder);
@@ -42,5 +49,13 @@ public abstract class InteractableObject : MonoBehaviour
             !_objectHolder.GetHandInteractableObject() && !objectToInteract;
     }
 
-
+    private void OnEnable()
+    {
+        if (ShipsManager.instance)
+            ShipsManager.instance.playerShip.AddInteractuableObject(this);
+    }
+    protected void OnDestroy()
+    {
+        ShipsManager.instance.playerShip.RemoveInteractuableObject(this);
+    }
 }

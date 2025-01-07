@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public abstract class Weapon : InteractableObject
+public abstract class Weapon : RepairObject
 {
     [Space, Header("Weapon"), SerializeField]
     protected Transform ridingPos;
 
     [field: SerializeField]
-    public float bulletForce {  get; protected set; }
+    public float bulletForce { get; protected set; }
     public bool hasAmmo { get; protected set; }
 
     [field: Space,Header("Tilt"), SerializeField]
@@ -37,7 +37,9 @@ public abstract class Weapon : InteractableObject
 
     public override void Interact(ObjectHolder _objectHolder)
     {
-        if (!CanInteract(_objectHolder))
+        base.Interact(_objectHolder);
+
+        if (!CanInteract(_objectHolder) || state.GetIsBroken())
             return;
 
         PlayerController player = _objectHolder.transform.parent.gameObject.GetComponent<PlayerController>();
@@ -57,6 +59,9 @@ public abstract class Weapon : InteractableObject
     }
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
+        if(state.GetIsBroken())
+            return base.CanInteract(_objectHolder);
+
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
         return !handObject /*Montarse*/ || isBeingUsed /*Bajarse*/ || !hasAmmo && handObject && handObject.objectSO == objectToInteract /*Recargar*/ ;

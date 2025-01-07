@@ -147,7 +147,7 @@ public class ObjectHolder : MonoBehaviour
 
     #endregion
 
-    public void InstantiateItemInHand(ObjectSO _interactableObject)
+    public InteractableObject InstantiateItemInHand(ObjectSO _interactableObject)
     {
         InteractableObject item = Instantiate(_interactableObject.prefab).GetComponent<InteractableObject>();
         item.SetIsBeingUsed(true);
@@ -155,6 +155,7 @@ public class ObjectHolder : MonoBehaviour
         item.transform.SetParent(transform.parent, true);
         item.transform.position = objectPickedPos.position;
         ChangeObjectInHand(item);
+        return item;
     }
     private void OnDrawGizmos()
     {

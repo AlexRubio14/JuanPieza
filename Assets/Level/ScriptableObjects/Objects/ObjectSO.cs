@@ -17,7 +17,7 @@ public class ObjectSO : ScriptableObject
     [field: SerializeField]
     public ItemRarity rarity { get; private set; }
 
-    public enum ObjectType { WEAPON, TOOL, DECORATION, RESOURCE };
+    public enum ObjectType { WEAPON, TOOL, DECORATION, RESOURCE, BOX };
 
     public ObjectType objectType;
 

@@ -1,19 +1,26 @@
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class Box : RepairObject
 {
     [Space, Header("Item"), SerializeField] protected ObjectSO itemDropped;
     [SerializeField] protected int itemsInBox;
-
     public virtual void AddItemInBox()
     {
         itemsInBox++;
+        ShipsManager.instance.playerShip.AddWeight(itemDropped.weight);
     }
-
     public virtual void RemoveItemInBox()
     {
         itemsInBox--;
+        ShipsManager.instance.playerShip.RemoveWeight(itemDropped.weight);
+    }
+    public int GetItemsInBox()
+    {
+        return itemsInBox;
+    }
+    public ObjectSO GetItemToDrop()
+    {
+        return itemDropped;
     }
 
     public bool HasItem()
@@ -31,7 +38,8 @@ public class Box : RepairObject
         if (!_objectHolder.GetHasObjectPicked())
         {
             RemoveItemInBox();
-            _objectHolder.InstantiateItemInHand(itemDropped);
+            InteractableObject boxObject = _objectHolder.InstantiateItemInHand(itemDropped);
+            ShipsManager.instance.playerShip.AddInteractuableObject(boxObject);
         }
         else if (_objectHolder.GetHasObjectPicked())
         {

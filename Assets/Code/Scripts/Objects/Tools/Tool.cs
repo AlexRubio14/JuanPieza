@@ -1,4 +1,4 @@
-public abstract class Tool : InteractableObject
+public class Tool : InteractableObject
 {
     public override void Interact(ObjectHolder _objectHolder)
     {
@@ -22,4 +22,5 @@ public abstract class Tool : InteractableObject
     {
         _objectHolder.RemoveItemFromHand();
     }
+    public override void UseItem(ObjectHolder _objectHolder) { }
 }
