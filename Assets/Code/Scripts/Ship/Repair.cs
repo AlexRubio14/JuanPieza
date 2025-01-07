@@ -19,11 +19,17 @@ public class Repair : InteractableObject
     public override void Interact(ObjectHolder _objectHolder)
     {
         if(state.GetIsBroken() && CanInteract(_objectHolder))
-            players.Add(_objectHolder.GetComponentInParent<PlayerController>());
+        {
+            PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
+            playerCont.animator.SetBool("Interacting", true);
+            players.Add(playerCont);
+        }
     }
     public override void StopInteract(ObjectHolder _objectHolder)
     {
-        players.Remove(_objectHolder.GetComponentInParent<PlayerController>());
+        PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
+        playerCont.animator.SetBool("Interacting", false);
+        players.Remove(playerCont);
     }
     public override void UseItem(ObjectHolder _objectHolder)
     {

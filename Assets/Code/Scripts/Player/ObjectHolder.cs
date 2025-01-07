@@ -10,7 +10,7 @@ public class ObjectHolder : MonoBehaviour
 
     private InteractableObject interactableObject;
 
-    [SerializeField] private Transform objectPickedPos;
+    [SerializeField] private Transform[] objectPickedPos;
 
     private bool hasPickedObject = false;
 
@@ -59,10 +59,6 @@ public class ObjectHolder : MonoBehaviour
     }
 
     #region Getters
-    public Vector3 GetObjectPickedPosition()
-    {
-        return objectPickedPos.position;
-    }
     public bool GetHasObjectPicked()
     {
         return hasPickedObject;
@@ -86,6 +82,7 @@ public class ObjectHolder : MonoBehaviour
 
         hasPickedObject = true;
         interactableObject = _interactableObject;
+
         if (!_interactableObject)
             return;
         
@@ -93,12 +90,21 @@ public class ObjectHolder : MonoBehaviour
 
         if (!_setParent)
             return;
-        _interactableObject.transform.position = GetObjectPickedPosition();
-        _interactableObject.transform.rotation = transform.rotation;
 
         _interactableObject.transform.SetParent(transform.parent);
-        _interactableObject.SetIsBeingUsed(true);
+        
+        _interactableObject.transform.position = objectPickedPos[(int)_interactableObject.objectSO.objectSize].position;
+        _interactableObject.transform.position += _interactableObject.grabPivot.transform.localPosition;
 
+        _interactableObject.transform.rotation = transform.rotation;
+        _interactableObject.transform.forward = _interactableObject.grabPivot.transform.forward;
+
+
+        foreach (Collider item in _interactableObject.GetComponents<Collider>())
+            item.enabled = false;
+
+        _interactableObject.SetIsBeingUsed(true);
+        
 
 
 
@@ -106,15 +112,21 @@ public class ObjectHolder : MonoBehaviour
     public InteractableObject RemoveItemFromHand()
     {
 
-        hasPickedObject = false;
-        interactableObject.transform.SetParent(null);
-        interactableObject.rb.isKinematic = false;
-
         InteractableObject currentIO = interactableObject;
+
+        hasPickedObject = false;
         interactableObject = null;
 
         if (currentIO)
+        {
+            currentIO.transform.SetParent(null);
             currentIO.SetIsBeingUsed(false);
+            currentIO.rb.isKinematic = false;
+            foreach (Collider item in currentIO.GetComponents<Collider>())
+                item.enabled = true;
+
+
+        }
 
         return currentIO;
 
@@ -153,7 +165,7 @@ public class ObjectHolder : MonoBehaviour
         item.SetIsBeingUsed(true);
         item.GetComponent<Rigidbody>().isKinematic = true;
         item.transform.SetParent(transform.parent, true);
-        item.transform.position = objectPickedPos.position;
+        item.transform.position = objectPickedPos[(int)_interactableObject.objectSize].position;
         ChangeObjectInHand(item);
         return item;
     }

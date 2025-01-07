@@ -21,4 +21,8 @@ public class ObjectSO : ScriptableObject
 
     public ObjectType objectType;
 
+    public enum ObjectSize { SMALL, MEDIUM, BIG }
+    [field: SerializeField]
+    public ObjectSize objectSize { get; private set; }
+
 }

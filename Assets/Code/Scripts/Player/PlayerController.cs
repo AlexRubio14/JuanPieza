@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerStateMachine stateMachine;
+    public PlayerStateMachine stateMachine {  get; private set; }
 
     [HideInInspector]
     public GameInput playerInput;
@@ -257,9 +257,8 @@ public class PlayerController : MonoBehaviour
         if (nearObject as Repair)
         {
             if (((Repair)nearObject).IsPlayerReparing(this))
-            {
                 nearObject.StopInteract(objectHolder);
-            }
+
         }
     }
     public void Use()
