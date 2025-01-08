@@ -22,7 +22,6 @@ public class PlayersReadyController : MonoBehaviour
     [Space, SerializeField]
     private GameObject[] playerUIPos;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +40,16 @@ public class PlayersReadyController : MonoBehaviour
         DisplayStartGameButton();
 
         _newPlayer.GetComponent<GameInput>().playerReference = playerIndex;
+
+        SkinnedMeshRenderer[] renderers = _newPlayer.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        foreach (SkinnedMeshRenderer renderer in renderers)
+        {
+            renderer.material = PlayersManager.instance.characterMat[_newPlayer.playerIndex];
+        }
+
+        MeshRenderer hatRenderer = _newPlayer.gameObject.GetComponentInChildren<MeshRenderer>();
+        hatRenderer.material = PlayersManager.instance.characterMat[_newPlayer.playerIndex];
     }   
 
     private void PlacePlayerOnMenu(int _playerIndex)

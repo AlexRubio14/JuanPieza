@@ -38,10 +38,8 @@ public class CreateHole : DetectBullet
             else if(hit.collider.TryGetComponent(out Repair _objectToRepair))
             {
                 _objectToRepair.GetObjectState().SetIsBroke(true);
-                if (_objectToRepair.gameObject.GetComponent<WoodShelf>() != null)
-                {
-                    _objectToRepair.gameObject.GetComponent<WoodShelf>().DropItems();
-                }
+                _objectToRepair.OnBreakObject();
+                
             }
         }
 

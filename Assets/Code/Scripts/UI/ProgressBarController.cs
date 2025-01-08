@@ -9,7 +9,6 @@ public class ProgressBarController : MonoBehaviour
    {
       progressBarImage.fillAmount = progress / maxProgress;
    }
-
    public void EnableProgressBar(bool enable)
    {
       gameObject.SetActive(enable);

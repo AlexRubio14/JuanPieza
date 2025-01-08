@@ -6,7 +6,9 @@ public class RollState : PlayerState
     public override void EnterState()
     {
         rollTimePassed = 0;
-        
+
+        controller.animator.SetTrigger("Roll");
+
         if (controller.movementInput != Vector2.zero)
             controller.AddImpulse(controller.movementDirection, controller.rollSpeed);
         else
@@ -44,13 +46,13 @@ public class RollState : PlayerState
     {
         base.OnCollisionEnter(collision);
 
-        if (!collision.gameObject.CompareTag("Scenario"))
+        if (!collision.gameObject.CompareTag("Scenario") && !collision.gameObject.CompareTag("Object"))
             return;
-        Debug.Log("Rebota con " + collision.contacts[0].otherCollider.gameObject.name);
         //Rebotar
         Vector3 bounceDir = collision.contacts[0].normal * controller.bounceForce.x + Vector3.up * controller.bounceForce.y;
         controller.AddImpulse(bounceDir, controller.rollSpeed);
         rollTimePassed = -controller.rollDuration / 2;
+        controller.animator.SetTrigger("Roll");
 
     }
 }

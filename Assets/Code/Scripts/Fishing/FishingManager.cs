@@ -26,12 +26,9 @@ public class FishingManager : MonoBehaviour
 
     private List<(DeathState, Side)> deadPlayers;
 
-    [SerializeField]
     private float midXPos;
     [SerializeField]
     private Vector2 minMaxTimeToFishing;
-    [SerializeField]
-    private int framesToCheckPlayerPos;
     [SerializeField]
     private float playerRespawnOffset;
     [Space, SerializeField]
@@ -56,6 +53,11 @@ public class FishingManager : MonoBehaviour
         fishingObjectPool = GetComponent<ObjectPool>();
         fishingData = new List<FishingData>();
         deadPlayers = new List<(DeathState, Side)>();
+    }
+
+    private void Start()
+    {
+        midXPos = ShipsManager.instance.playerShip.transform.position.x;
     }
 
     // Update is called once per frame
