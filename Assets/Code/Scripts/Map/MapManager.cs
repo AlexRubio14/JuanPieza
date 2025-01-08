@@ -7,8 +7,8 @@ public class MapManager : MonoBehaviour
 {
     public static MapManager Instance { get; private set; }
 
-    private LevelNode currentLevel;
-    private List<LevelNode> childrenLevel = new List<LevelNode>();
+    [SerializeField] private NodeData currentLevel;
+    private List<NodeData> childrenLevel = new List<NodeData>();
     private Dictionary<int, List<LevelNode>> map = new Dictionary<int, List<LevelNode>>();
     private int mapHeight;
 
@@ -37,6 +37,7 @@ public class MapManager : MonoBehaviour
             Destroy(gameObject); 
         }
         VotationCanvasManager.Instance.SetVotationUIState(false);
+        UpdateCurrentLevel(currentLevel,0);
     }
 
     private void Update()
@@ -121,27 +122,27 @@ public class MapManager : MonoBehaviour
     private void UpdateLevelCondition(bool state)
     {
         if (state)
-            UpdateCurrentLevel(currentLevel._nodeChildren[votations[0].GetDirecctionValue()], 0);
+            UpdateCurrentLevel(currentLevel.children[votations[0].GetDirecctionValue()], 0);
         else
-            UpdateCurrentLevel(currentLevel._nodeChildren[votations[1].GetDirecctionValue()], 1);
+            UpdateCurrentLevel(currentLevel.children[votations[1].GetDirecctionValue()], 1);
     }
 
-    private void UpdateCurrentLevel(LevelNode _currentLevel, int index)
+    private void UpdateCurrentLevel(NodeData _currentLevel, int index)
     {
         currentLevel = _currentLevel;
-        childrenLevel = currentLevel._nodeChildren;
+        childrenLevel = currentLevel.children;
         choosenChild = index;
     }
 
     public void SetMap(Dictionary<int, List<LevelNode>> _map)
     {
-        map = _map;
+        //map = _map;
 
-        List<LevelNode> levelZeroNodes = map[0];
-        foreach (var node in levelZeroNodes)
-        {
-            UpdateCurrentLevel(node, 0);
-        }
+        //List<LevelNode> levelZeroNodes = map[0];
+        //foreach (var node in levelZeroNodes)
+        //{
+        //    UpdateCurrentLevel(node, 0);
+        //}
     }
 
     public void SetVotations(List<Votation> _votations)
@@ -161,9 +162,9 @@ public class MapManager : MonoBehaviour
     public void InitVotations()
     {
         CameraManager.Instance.SetSailCamera(false);
-        if (currentLevel._nodeChildren.Count == 1)
+        if (currentLevel.children.Count == 1)
         {
-            UpdateCurrentLevel(currentLevel._nodeChildren[0], 2);
+            UpdateCurrentLevel(currentLevel.children[0], 2);
             return;
         }
 
@@ -177,7 +178,7 @@ public class MapManager : MonoBehaviour
         startVoteTimer = true;
     }
 
-    public LevelNode GetCurrentLevel()
+    public NodeData GetCurrentLevel()
     {
         return currentLevel;
     }

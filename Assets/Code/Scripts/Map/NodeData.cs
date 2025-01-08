@@ -9,6 +9,7 @@ public class NodeData : ScriptableObject
 
     public NodeType nodeType;
     public string sceneName;
+    public List<NodeData> children;
 
     public NodeData CretaeNode()
     {

@@ -31,12 +31,12 @@ public class VotationCanvasManager : MonoBehaviour
         timer.gameObject.SetActive(state);
     }
 
-    public void SetInformationDestination(LevelNode node)
+    public void SetInformationDestination(NodeData node)
     {
         int i = 0;
         foreach (var _ui in ui)
         {
-            _ui.SetDestinationText(node._nodeChildren[i]._node.name);
+            _ui.SetDestinationText(node.children[i].nodeType.ToString());
             i++;
         }
     }

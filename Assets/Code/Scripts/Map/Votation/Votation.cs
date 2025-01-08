@@ -8,13 +8,9 @@ public class Votation : MonoBehaviour
     [Header("Direcction")]
     [SerializeField] private int direcctionValue;
 
-    private List<(PlayerController, int)> currentsPlayers;
+    private List<(PlayerController, int)> currentsPlayers = new List<(PlayerController, int)>();
     private static Dictionary<PlayerController, Votation> globalPlayersInVotation = new Dictionary<PlayerController, Votation>();
 
-    private void Start()
-    {
-        currentsPlayers = new List<(PlayerController, int)>();
-    }
     private void OnTriggerStay(Collider other)
     {
         if(other.CompareTag("Player"))
