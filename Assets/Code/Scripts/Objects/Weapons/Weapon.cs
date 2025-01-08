@@ -54,8 +54,11 @@ public abstract class Weapon : RepairObject
     }
     public override void UseItem(ObjectHolder _objectHolder)
     {
-        if(hasAmmo)
-            Shoot();
+        if (!hasAmmo)
+            return;
+        Shoot();
+        animator.SetTrigger("Shoot");
+        animator.SetBool("HasAmmo", false);
     }
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
@@ -126,6 +129,9 @@ public abstract class Weapon : RepairObject
         //Borrar la bala de la mano
         InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
         Destroy(currentObject.gameObject);
+
+        animator.SetBool("HasAmmo", true);
+
     }
     
     protected abstract void Shoot();

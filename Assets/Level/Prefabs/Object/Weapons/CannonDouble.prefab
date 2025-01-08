@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 4533079699732526716}
   - component: {fileID: 2884378185280330747}
   - component: {fileID: 1173568168622258923}
+  - component: {fileID: 3242741993357289315}
   m_Layer: 9
   m_Name: CannonDouble
   m_TagString: Untagged
@@ -186,6 +187,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!95 &3242741993357289315
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687742630878781227}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: b7b9723be0de8674aa27f7225f51fced, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3426756992027230203
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,6 +658,22 @@ PrefabInstance:
     - target: {fileID: -4896626252465552065, guid: aabb417618e04ee4f8e4113d0ef21c43, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -4615906843999357965, guid: aabb417618e04ee4f8e4113d0ef21c43, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.4999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -4615906843999357965, guid: aabb417618e04ee4f8e4113d0ef21c43, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5000001
+      objectReference: {fileID: 0}
+    - target: {fileID: -4615906843999357965, guid: aabb417618e04ee4f8e4113d0ef21c43, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5000001
+      objectReference: {fileID: 0}
+    - target: {fileID: -4615906843999357965, guid: aabb417618e04ee4f8e4113d0ef21c43, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: aabb417618e04ee4f8e4113d0ef21c43, type: 3}
       propertyPath: m_Name
