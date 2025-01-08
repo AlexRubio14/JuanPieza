@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class ShipWheel : InteractableObject
+public class ShippingSail : InteractableObject
 {
     private List<PlayerController> players;
 
-    [SerializeField] private TextMeshProUGUI timerText;
+    [Space, SerializeField] private TextMeshProUGUI timerText;
 
     [SerializeField] private float sailTimer;
     private float currentTime;
