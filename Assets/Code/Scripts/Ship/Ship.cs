@@ -95,7 +95,8 @@ public class Ship : MonoBehaviour
         {
             currentHealth = 0;
             targetHeight = destroyY;
-            animator.SetBool("Dead", true);
+            if (animator)
+                animator.SetBool("Dead", true);
         }
         if (currentHealth > maxHealth)
         {
