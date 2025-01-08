@@ -11,6 +11,8 @@ public class EnemieManager : MonoBehaviour
     private GameObject enemyPrefab;
     [SerializeField]
     private Transform enemySpawnPoint;
+    [SerializeField]
+    private float enemySpawnOffset;
 
     private List<EnemyController> enemyList;
     private List<EnemyAction> toDoList;
@@ -43,6 +45,7 @@ public class EnemieManager : MonoBehaviour
         enemyList = new List<EnemyController>();
         for (int i = 0; i < totalEnemies; i++)
         {
+            Vector3 spawnPos = enemySpawnPoint.position + new Vector3(Random.Range(-enemySpawnOffset, enemySpawnOffset), 0, Random.Range(-enemySpawnOffset, enemySpawnOffset));
             EnemyController newEnemy = Instantiate(enemyPrefab, enemySpawnPoint.position, Quaternion.identity).GetComponent<EnemyController>();
             newEnemy.enemieManager = this;
             enemyList.Add(newEnemy);

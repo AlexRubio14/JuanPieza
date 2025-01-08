@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WoodShelf : Box
@@ -41,9 +40,9 @@ public class WoodShelf : Box
         decorations[currentDecorationInShelf].SetActive(false);
     }
 
-    public void DropItems()
+    public override void OnBreakObject()
     {
-        switch(itemsInBox)
+        switch (itemsInBox)
         {
             case 0:
                 break;

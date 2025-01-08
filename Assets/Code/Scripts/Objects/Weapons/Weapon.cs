@@ -22,6 +22,9 @@ public abstract class Weapon : RepairObject
     public float tiltProcess;
 
     protected Animator animator;
+    protected int mountedPlayerId = -1;
+
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -95,8 +98,9 @@ public abstract class Weapon : RepairObject
     {
         _objectHolder.ChangeObjectInHand(this, false);
 
+        mountedPlayerId = _player.playerInput.playerReference;
         //Cambiar el mapa de inputs
-        PlayersManager.instance.players[_player.playerInput.playerReference].Item1.SwitchCurrentActionMap("CannonGameplay");
+        PlayersManager.instance.players[mountedPlayerId].Item1.SwitchCurrentActionMap("CannonGameplay");
         //Cambiar estado del player
         PlayerStateMachine playerSM = _objectHolder.GetComponentInParent<PlayerStateMachine>();
         playerSM.cannonState.SetWeapon(this);
@@ -121,6 +125,8 @@ public abstract class Weapon : RepairObject
 
         //Quitar el ca�on del player
         _objectHolder.RemoveItemFromHand();
+
+        mountedPlayerId = -1;
     }
     protected void Reload(ObjectHolder _objectHolder)
     {
@@ -133,6 +139,16 @@ public abstract class Weapon : RepairObject
         animator.SetBool("HasAmmo", true);
 
     }
-    
+
+    public override void OnBreakObject()
+    {
+        if (mountedPlayerId == -1)
+            return;
+
+        PlayerController currentPlayer = PlayersManager.instance.ingamePlayers[mountedPlayerId];
+        UnMount(currentPlayer, currentPlayer.objectHolder);
+        currentPlayer.animator.SetBool("Pick", false);
+    }
+
     protected abstract void Shoot();
 }

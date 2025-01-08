@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class CannonState : PlayerState
@@ -6,6 +7,7 @@ public class CannonState : PlayerState
 
     public override void EnterState()
     {
+        controller.animator.SetBool("OnCannon", true);
     }
     public override void UpdateState()
     {
@@ -18,6 +20,7 @@ public class CannonState : PlayerState
     }
     public override void ExitState()
     {
+        controller.animator.SetBool("OnCannon", false);
     }
     public override void RollAction() { /*No puedes rodar*/ }
     public override void InteractAction() 

@@ -25,6 +25,11 @@ public class DeathState : PlayerState
 
         hookPosition = Vector3.zero;
         FishingManager.instance.AddDeadPlayer(this);
+
+        controller.objectHolder.RemoveItemFromHand();
+
+        controller.animator.SetTrigger("Dead");
+        controller.animator.SetBool("Swimming", true);
     }
     public override void UpdateState()
     {
@@ -47,6 +52,7 @@ public class DeathState : PlayerState
     {
         FishingManager.instance.RemoveDeadPlayer(this);
         rb.isKinematic = false;
+        controller.animator.SetBool("Swimming", false);
     }
 
     public override void RollAction() { /*No puedes rodar*/ }

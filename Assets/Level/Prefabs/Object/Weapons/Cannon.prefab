@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 503275928408252352}
   m_Layer: 9
   m_Name: Cannon
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -282,7 +282,7 @@ MonoBehaviour:
   state: {fileID: 4300835090632305158}
   repairDuration: 1.5
   ridingPos: {fileID: 938006466121223223}
-  <bulletForce>k__BackingField: 850
+  <bulletForce>k__BackingField: 750
   <tiltObject>k__BackingField: {fileID: 9181302360641929845}
   <minWeaponTilt>k__BackingField: {x: 175, y: 0, z: -90}
   <maxWeaponTilt>k__BackingField: {x: 230, y: 0, z: -90}
@@ -360,7 +360,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8849408466616681510}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f2a76404050b80c4b8dd72fbbda3d00a, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -734,6 +734,14 @@ PrefabInstance:
     - target: {fileID: -4896626252465552065, guid: c1b5c4b13864ad34c80b294339afaa5e, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -4615906843999357965, guid: c1b5c4b13864ad34c80b294339afaa5e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.000003678014
+      objectReference: {fileID: 0}
+    - target: {fileID: -4615906843999357965, guid: c1b5c4b13864ad34c80b294339afaa5e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.000003678014
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c1b5c4b13864ad34c80b294339afaa5e, type: 3}
       propertyPath: m_Name

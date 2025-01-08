@@ -100,4 +100,5 @@ public class Repair : InteractableObject
 
     }
 
+    public virtual void OnBreakObject() { }
 }

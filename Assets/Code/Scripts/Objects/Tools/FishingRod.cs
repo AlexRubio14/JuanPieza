@@ -49,24 +49,32 @@ public class FishingRod : Tool
     public override void UseItem(ObjectHolder _objectHolder)
     {
         if (!isFishing && !hookThrowed) //Tirar anzuelo
-            ThrowHook(_objectHolder.transform.rotation);
+            ThrowHook(_objectHolder);
         else if (isFishing || hookLanded && !hook.onWater)//Recoger anzuelo
             GrabHook();
     }
     public override void Interact(ObjectHolder _objectHolder)
     {
         base.Interact(_objectHolder);
-
-        playerSM = _objectHolder.GetComponentInParent<PlayerStateMachine>();
-        player = _objectHolder.GetComponentInParent<PlayerController>();
-        playerSM.fishingState.fishingRod = this;
+        if (!player)
+        {
+            playerSM = _objectHolder.GetComponentInParent<PlayerStateMachine>();
+            player = _objectHolder.GetComponentInParent<PlayerController>();
+            playerSM.fishingState.fishingRod = this;
+        }
     }
 
-    private void ThrowHook(Quaternion _hookRotation)
+    private void ThrowHook(ObjectHolder _objectHolder)
     {
+        if (!player)
+        {
+            playerSM = _objectHolder.GetComponentInParent<PlayerStateMachine>();
+            player = _objectHolder.GetComponentInParent<PlayerController>();
+            playerSM.fishingState.fishingRod = this;
+        }
         hook.gameObject.SetActive(true);
         hook.transform.position = hookSpawnPoint.position;
-        hook.transform.rotation = _hookRotation;
+        hook.transform.rotation = _objectHolder.transform.rotation;
 
         hook.rb.linearVelocity = Vector3.zero;
 

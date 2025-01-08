@@ -15,7 +15,7 @@ public class ObjectState : MonoBehaviour
 
         isBroken = state;
         if (fixedSibling)
-        fixedSibling.SetActive(!state);
+            fixedSibling.SetActive(!state);
         if(brokenSibling)
             brokenSibling.SetActive(state);
     }

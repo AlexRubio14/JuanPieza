@@ -10,6 +10,8 @@ public class PlayersManager : MonoBehaviour
     public List<(PlayerInput, SinglePlayerController)> players {  get; private set; }
     public List<PlayerController> ingamePlayers {  get; private set; }
 
+    [field: Space, SerializeField]
+    public Material[] characterMat {  get; private set; }
     private void Awake()
     {
         if (instance != null && instance != this)
