@@ -22,6 +22,7 @@ public class Repair : InteractableObject
         {
             PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
             playerCont.animator.SetBool("Interacting", true);
+            playerCont.progressBar.EnableProgressBar(true);
             players.Add(playerCont);
         }
     }
@@ -29,6 +30,7 @@ public class Repair : InteractableObject
     {
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
         playerCont.animator.SetBool("Interacting", false);
+        playerCont.progressBar.EnableProgressBar(false);
         players.Remove(playerCont);
     }
     public override void UseItem(ObjectHolder _objectHolder)
@@ -63,6 +65,11 @@ public class Repair : InteractableObject
             {
                 FinishRepairing();
                 currentRepairTime = 0;
+            }
+
+            foreach (PlayerController player in players)
+            {
+                player.progressBar.SetProgress(currentRepairTime, repairDuration);
             }
         }
         else

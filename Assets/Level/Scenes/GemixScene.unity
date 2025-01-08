@@ -291,6 +291,7 @@ MonoBehaviour:
   <objectToInteract>k__BackingField: {fileID: 0}
   selectedVisual: {fileID: 72180926}
   rb: {fileID: 72180925}
+  <grabPivot>k__BackingField: {fileID: 0}
   storeObjectPool: {fileID: 113768300}
   chestType: 3
   chestWeaponPrice: 150
@@ -516,6 +517,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12183d5f8ed77594eb94c7a39d74b1cc, type: 3}
+--- !u!1 &233369083 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: afed917c0d3fd854ba15a887f0777256, type: 3}
+  m_PrefabInstance: {fileID: 1500002806}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &299823870
 GameObject:
   m_ObjectHideFlags: 0
@@ -1382,6 +1388,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneyText: {fileID: 1584255715}
+--- !u!1 &780713400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 780713402}
+  - component: {fileID: 780713401}
+  m_Layer: 0
+  m_Name: ShipManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &780713401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780713400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cc75f25e39573e48b5e686209a41c0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <playerShip>k__BackingField: {fileID: 935450342}
+  <enemiesShips>k__BackingField: []
+--- !u!4 &780713402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780713400}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -21.357363, y: 1.6254585, z: -1.3819861}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &795229955
 GameObject:
   m_ObjectHideFlags: 0
@@ -1666,6 +1718,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 43a5795a363253f479398260a44c562a, type: 3}
   m_PrefabInstance: {fileID: 889314630}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &935450342 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1798300188017550894, guid: 535d196b498267844976a8e298d30f88, type: 3}
+  m_PrefabInstance: {fileID: 692050003}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe9deb0fc1956446a6095fc95bf33f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &970380435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2541,6 +2604,7 @@ MonoBehaviour:
   <objectToInteract>k__BackingField: {fileID: 0}
   selectedVisual: {fileID: 1295862620}
   rb: {fileID: 1295862621}
+  <grabPivot>k__BackingField: {fileID: 0}
   storeObjectPool: {fileID: 113768300}
   chestType: 0
   chestWeaponPrice: 150
@@ -2960,13 +3024,37 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: afed917c0d3fd854ba15a887f0777256, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1500002808}
   m_SourcePrefab: {fileID: 100100000, guid: afed917c0d3fd854ba15a887f0777256, type: 3}
 --- !u!4 &1500002807 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: afed917c0d3fd854ba15a887f0777256, type: 3}
   m_PrefabInstance: {fileID: 1500002806}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1500002808
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233369083}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.04078096, y: 0.039181937, z: 0.0023543406}
+  m_Center: {x: 4.316852e-11, y: -2.3851362e-11, z: 0.00064025517}
 --- !u!1 &1518684176
 GameObject:
   m_ObjectHideFlags: 0
@@ -4022,3 +4110,4 @@ SceneRoots:
   - {fileID: 127704981}
   - {fileID: 1568037998}
   - {fileID: 542540642}
+  - {fileID: 780713402}

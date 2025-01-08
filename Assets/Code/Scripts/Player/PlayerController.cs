@@ -76,6 +76,9 @@ public class PlayerController : MonoBehaviour
     
     private HintController hintController;
 
+    [field: SerializeField]
+    public ProgressBarController progressBar { get; private set; }
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
