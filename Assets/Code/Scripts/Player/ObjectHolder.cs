@@ -109,7 +109,6 @@ public class ObjectHolder : MonoBehaviour
     }
     public InteractableObject RemoveItemFromHand()
     {
-
         InteractableObject currentIO = interactableObject;
 
         hasPickedObject = false;

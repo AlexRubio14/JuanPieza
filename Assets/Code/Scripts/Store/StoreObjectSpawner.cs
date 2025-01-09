@@ -21,7 +21,7 @@ public class StoreObjectSpawner : InteractableObject
 
     public override void UseItem(ObjectHolder _objectHolder)
     {
-        throw new NotImplementedException();
+        
     }
 
     private void OnItemPickedUp()
