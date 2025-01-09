@@ -34,7 +34,6 @@ public class MoneyManager : MonoBehaviour
     {
         if (amount <= 0)
         {
-            Debug.LogWarning("Attempted to spend a non-positive amount of money.");
             return false;
         }
 

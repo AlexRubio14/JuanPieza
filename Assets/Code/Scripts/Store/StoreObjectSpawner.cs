@@ -1,21 +1,34 @@
 using System;
 using UnityEngine;
 
-public class StoreObjectSpawner : MonoBehaviour
+public class StoreObjectSpawner : InteractableObject
 {
     [SerializeField] private StoreObjectPool storeObjectPool;
-
+    
+    private InteractableObject interactableObject;
     private ObjectSO randomItem;
+    private int lastChildCount;
+    
     private void Start()
     {
         InstanceRandomObject();
     }
 
-    private void Update()
+    public override void Interact(ObjectHolder _objectHolder)
     {
-        // Detecta que si no tiene hijos, gasta el dinero y borra el objeto padre
-        if (transform.childCount == 0 && MoneyManager.Instance.SpendMoney(randomItem.price))
+        OnItemPickedUp();
+    }
+
+    public override void UseItem(ObjectHolder _objectHolder)
+    {
+        
+    }
+
+    private void OnItemPickedUp()
+    {
+        if (MoneyManager.Instance.SpendMoney(randomItem.price))
         {
+            interactableObject.SetIsBeingUsed(false);
             Destroy(gameObject);
         }
     }
@@ -26,7 +39,8 @@ public class StoreObjectSpawner : MonoBehaviour
 
         if (randomItem.prefab != null)
         {
-            Instantiate(randomItem.prefab, transform.position, transform.rotation, transform);
+            interactableObject = Instantiate(randomItem.prefab, transform.position, transform.rotation, transform).GetComponent<InteractableObject>();
+            interactableObject.SetIsBeingUsed(true);
         }
     }
 }

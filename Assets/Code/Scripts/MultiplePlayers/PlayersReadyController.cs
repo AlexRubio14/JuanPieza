@@ -105,12 +105,5 @@ public class PlayersReadyController : MonoBehaviour
             SceneManager.LoadScene(TestPlayerController.Instance.lastSceneActive);
         else
             SceneManager.LoadScene(sceneToLoad);
-
-
-
-
-
-       
     }
-
 }

@@ -89,6 +89,11 @@ public class Ship : MonoBehaviour
         targetHeight = Mathf.Lerp(lowerY, initY, currentHealth / maxHealth);
         CheckHealth();
     }
+
+    public void SetMaxHealth()
+    {
+        currentHealth = maxHealth;
+    }
     private void CheckHealth()
     {
         if (currentHealth < 0)
