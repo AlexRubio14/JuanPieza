@@ -119,10 +119,9 @@ public class Ship : MonoBehaviour
             return;
 
         if (interactableObject.objectSO.objectType == ObjectSO.ObjectType.BOX)
-        {
             currentWeight += ((Box)interactableObject).GetItemsInBox() * ((Box)interactableObject).GetItemToDrop().weight;
-        }
 
+        interactableObject.transform.SetParent(transform);
         objects.Add(interactableObject);
         currentWeight += interactableObject.objectSO.weight;
     }

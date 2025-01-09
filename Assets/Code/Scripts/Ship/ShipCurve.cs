@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 using UnityEngine.SceneManagement;
 
 public class ShipCurve : Ship
@@ -19,7 +16,7 @@ public class ShipCurve : Ship
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        base.Initialize();
+        Initialize();
     }
 
     private void FixedUpdate()

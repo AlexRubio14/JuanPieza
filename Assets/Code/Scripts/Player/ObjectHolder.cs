@@ -121,7 +121,7 @@ public class ObjectHolder : MonoBehaviour
 
         if (currentIO)
         {
-            currentIO.transform.SetParent(null);
+            currentIO.transform.SetParent(ShipsManager.instance.playerShip.transform);
             currentIO.SetIsBeingUsed(false);
             currentIO.rb.isKinematic = false;
             foreach (Collider item in currentIO.GetComponents<Collider>())

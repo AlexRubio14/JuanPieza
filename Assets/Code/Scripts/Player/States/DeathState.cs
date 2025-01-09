@@ -104,8 +104,6 @@ public class DeathState : PlayerState
     private void WaitToGetRescued()
     {
         isSwimming = false;
-        //Esperar a ser revivido
-        Debug.Log("Esta cerca del anzuelo");
     }
     private void SwimToHook()
     {

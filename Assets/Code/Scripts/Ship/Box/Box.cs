@@ -40,6 +40,8 @@ public class Box : RepairObject
             RemoveItemInBox();
             InteractableObject boxObject = _objectHolder.InstantiateItemInHand(itemDropped);
             ShipsManager.instance.playerShip.AddInteractuableObject(boxObject);
+            _objectHolder.ChangeObjectInHand(boxObject);
+
         }
         else if (_objectHolder.GetHasObjectPicked())
         {
