@@ -15,7 +15,7 @@ public abstract class InteractableObject : MonoBehaviour
     [field: SerializeField]
     public Transform grabPivot {  get; protected set; }
     protected Collider objectCollider;
-
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
