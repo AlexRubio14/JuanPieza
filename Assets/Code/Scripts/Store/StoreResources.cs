@@ -2,12 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class StoreResources : InteractableObject
+public class StoreResources : Box
 {
-    [Header("Store Resources")]
-    [SerializeField] private ObjectSO itemBuy;
-    [SerializeField] private int price;
-    
     private ShipsManager shipsManager;
 
     private void Start()
@@ -20,10 +16,13 @@ public class StoreResources : InteractableObject
 
         foreach (Box box in boxes)
         {
-            if (box.GetItemDrop() == itemBuy)
+            if (box.GetItemDrop() == itemDropped)
             {
-                MoneyManager.Instance.SpendMoney(price);
-                box.AddItemInBox();
+                if (MoneyManager.Instance.SpendMoney(itemDropped.price))
+                {
+                    box.AddItemInBox();
+                }
+                return;
             }
         }
     }

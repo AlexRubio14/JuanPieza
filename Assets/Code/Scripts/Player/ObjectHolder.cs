@@ -106,10 +106,6 @@ public class ObjectHolder : MonoBehaviour
             item.enabled = false;
 
         _interactableObject.SetIsBeingUsed(true);
-        
-
-
-
     }
     public InteractableObject RemoveItemFromHand()
     {
