@@ -891,7 +891,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1149098179}
-  - component: {fileID: 1149098178}
   - component: {fileID: 1149098177}
   m_Layer: 0
   m_Name: MapGenerator
@@ -912,35 +911,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2a11dfdb2e1c146bacb3b21de6eee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentLevel: {fileID: 11400000, guid: a895b2e5a734cbd4da0ebff5f6ca5fc9, type: 2}
   voteTime: 6
   firstPointZ: 40
   secondPointZ: 80
   secondPointX: 15
---- !u!114 &1149098178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1149098176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f051d5e091603943a441f4aa87fb6c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manager: {fileID: 1149098177}
-  mapHeight: 4
-  percentage:
-  - 0.7
-  - 0.2
-  - 0.1
-  divider: 1.25
-  allNodes:
-  - {fileID: 11400000, guid: 163513f687bb01642b8db5303dd7292c, type: 2}
-  - {fileID: 11400000, guid: a895b2e5a734cbd4da0ebff5f6ca5fc9, type: 2}
-  - {fileID: 11400000, guid: c029401a1fdf2d54bb54cf5a207a9590, type: 2}
-  startNode: {fileID: 11400000, guid: a895b2e5a734cbd4da0ebff5f6ca5fc9, type: 2}
-  boss: {fileID: 11400000, guid: e2e90ed885bca674694a9c597a976ac1, type: 2}
 --- !u!4 &1149098179
 Transform:
   m_ObjectHideFlags: 0
@@ -1221,7 +1196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc75f25e39573e48b5e686209a41c0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <playerShip>k__BackingField: {fileID: 1437485489}
+  <playerShip>k__BackingField: {fileID: 2037055845}
   <enemiesShips>k__BackingField: []
 --- !u!4 &1378268689
 Transform:
@@ -1538,17 +1513,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2037055850}
   m_SourcePrefab: {fileID: 100100000, guid: 535d196b498267844976a8e298d30f88, type: 3}
---- !u!114 &1437485489 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7667896435004296199, guid: 535d196b498267844976a8e298d30f88, type: 3}
-  m_PrefabInstance: {fileID: 1437485488}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2037055840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3354d4e17ee817c45b52f569b132dcf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1442705454
 GameObject:
   m_ObjectHideFlags: 0
@@ -2538,52 +2502,6 @@ MonoBehaviour:
   newY: 7
   moveSpeed: 0.5
   rotationSpeed: 1
---- !u!1 &2028224599
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2028224601}
-  - component: {fileID: 2028224600}
-  m_Layer: 0
-  m_Name: ShipManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2028224600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2028224599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cc75f25e39573e48b5e686209a41c0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <playerShip>k__BackingField: {fileID: 2037055845}
-  <enemiesShips>k__BackingField: []
---- !u!4 &2028224601
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2028224599}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.538029, y: -26.326603, z: 20.263157}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2037055840 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2418087686159776117, guid: 535d196b498267844976a8e298d30f88, type: 3}
@@ -2991,9 +2909,6 @@ SceneRoots:
   - {fileID: 1835767677}
   - {fileID: 1922463108}
   - {fileID: 2127622805}
-  - {fileID: 112924962}
   - {fileID: 871952844}
-  - {fileID: 1962177273}
-  - {fileID: 1974491555}
   - {fileID: 872387729}
   - {fileID: 1378268689}
