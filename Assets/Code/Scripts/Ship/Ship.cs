@@ -54,6 +54,15 @@ public class Ship : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    public void InitEnemyShip()
+    {
+        initY = transform.position.y;
+        currentHeight = initY;
+        currentHealth = maxHealth;
+
+        animator = GetComponent<Animator>();
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.X))
