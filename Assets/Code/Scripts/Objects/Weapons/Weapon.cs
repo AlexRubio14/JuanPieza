@@ -5,6 +5,9 @@ public abstract class Weapon : RepairObject
     [Space, Header("Weapon"), SerializeField]
     protected Transform ridingPos;
 
+    [Space, Header("Damage"), SerializeField]
+    protected float weaponDamage;
+
     [field: SerializeField]
     public float bulletForce { get; protected set; }
     public bool hasAmmo { get; protected set; }

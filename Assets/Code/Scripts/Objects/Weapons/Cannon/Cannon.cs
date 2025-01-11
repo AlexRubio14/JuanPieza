@@ -10,6 +10,7 @@ public class Cannon : Weapon
     protected override void Shoot()
     {
         GameObject newBullet = Instantiate(bulletPrefab, bulletSpawnPos.transform.position, Quaternion.identity);
+        newBullet.GetComponent<Bullet>().SetDamage(weaponDamage);
         newBullet.GetComponent<Rigidbody>().AddForce(bulletSpawnPos.forward * bulletForce, ForceMode.Impulse);
         hasAmmo = false;
     }    

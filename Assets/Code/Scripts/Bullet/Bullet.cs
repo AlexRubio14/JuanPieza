@@ -2,14 +2,18 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [Header("Damage")]
-    [SerializeField] private float damage;
+    private float damage;
 
     private bool damageDone;
 
     public void SetDamageDone(bool damageDone)
     { 
         this.damageDone = damageDone; 
+    }
+
+    public void SetDamage(float damage)
+    {
+        this.damage = damage;
     }
 
     public bool GetDamageDone()
