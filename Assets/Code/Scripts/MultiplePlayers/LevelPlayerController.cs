@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelPlayerController : MonoBehaviour
@@ -8,13 +9,22 @@ public class LevelPlayerController : MonoBehaviour
     private GameObject playerPrefab;
 
     [SerializeField]
-    private Transform[] playersSpawnPos;
+    private List<Transform> playersSpawnPos;
+
+    private List<Vector3> safeSpawnPos;
     void Start()
     {
+        GetPlayerSpawnPos();
 
         for (int i = 0; i < PlayersManager.instance.players.Count; i++)
         {
-            PlayerController controller = Instantiate(playerPrefab, playersSpawnPos[i].position, Quaternion.identity).GetComponent<PlayerController>();
+            PlayerController controller = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<PlayerController>();
+
+            if (safeSpawnPos.Count > 0)
+                controller.gameObject.transform.position = safeSpawnPos[i];
+            else
+                controller.gameObject.transform.position = playersSpawnPos[i].transform.position;
+
             controller.gameObject.name = "Player" + i;
             controller.playerInput = PlayersManager.instance.players[i].Item1.GetComponent<GameInput>();
             
@@ -35,9 +45,11 @@ public class LevelPlayerController : MonoBehaviour
             if (cameraCont)
                 cameraCont.AddPlayer(controller.gameObject);
         }
+    }
 
-        
-
-
+    public void GetPlayerSpawnPos()
+    {
+        safeSpawnPos = new List<Vector3>() { };
+        safeSpawnPos = ShipSceneManager.Instance.GetPlayersPositions();
     }
 }

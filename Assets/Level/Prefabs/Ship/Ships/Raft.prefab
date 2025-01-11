@@ -427,6 +427,7 @@ GameObject:
   - component: {fileID: 3787857318974121445}
   - component: {fileID: 2634385266736153035}
   - component: {fileID: 8365819680216379399}
+  - component: {fileID: 4521055055911896538}
   m_Layer: 8
   m_Name: Raft
   m_TagString: Untagged
@@ -443,7 +444,7 @@ Transform:
   m_GameObject: {fileID: 2418087686159776117}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6700846, y: 0.85, z: 2.4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -477,14 +478,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   heightChangeSpeed: 1
-  lowerY: 0.22
-  destroyY: 0
+  lowerY: -0.15
+  destroyY: -1.3
+  initY: 0.6
   maxWeigth: 200
   weigthDamage: 1
   damageTime: 15
   votations:
   - {fileID: 232221409706662743}
   - {fileID: 3960906928068121675}
+  idShip: 0
+  newZ: -40
+  newY: 7
   speed: 0.05
 --- !u!114 &3787857318974121445
 MonoBehaviour:
@@ -552,6 +557,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &4521055055911896538
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2418087686159776117}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0412cee73568643498fc20319c6f71a7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2469744633720590609
 GameObject:
   m_ObjectHideFlags: 0

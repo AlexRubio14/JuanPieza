@@ -16,4 +16,14 @@ public class ShipsManager : MonoBehaviour
 
         instance = this;
     }
+
+    private void Start()
+    {
+        ShipSceneManager.Instance.InstantiateShip();
+    }
+
+    public void SetShip(Ship ship)
+    {
+        playerShip = ship;
+    }
 }

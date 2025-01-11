@@ -1,11 +1,19 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShipSceneManager : MonoBehaviour
 {
     public static ShipSceneManager Instance { get; private set; }
 
+    [SerializeField] private GameObject[] ship;
+
     private List<InteractableObjectData> objectsToSpawn = new List<InteractableObjectData>();
+    private List<Vector3> playersPosition = new List<Vector3>();
+    private int shipId;
+    private float shipHealth;
+    private float shipCurrentY;
+
     
     [System.Serializable]
     public struct InteractableObjectData
@@ -30,14 +38,14 @@ public class ShipSceneManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            InstantiateObjects();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            SetObjectsToSpawn();
-        }
+        //if(Input.GetKeyDown(KeyCode.R))
+        //{
+        //    InstantiateObjects();
+        //}
+        //if (Input.GetKeyDown(KeyCode.N))
+        //{
+        //    SetObjectsToSpawn();
+        //}
     }
 
     public void SetObjectsToSpawn()
@@ -55,12 +63,48 @@ public class ShipSceneManager : MonoBehaviour
             objectsToSpawn.Add(interactableObjectData);
         }
     }
+
+    public void SetShipId(int id, float currentHealth, float currentY)
+    {
+        shipId = id;
+        shipHealth = currentHealth;
+        shipCurrentY = currentY;
+    }
+
+    public void SetPlayerPosition()
+    {
+        Ship ship = ShipsManager.instance.playerShip;
+        foreach (PlayerController player in PlayersManager.instance.ingamePlayers)
+        {
+            playersPosition.Add(player.gameObject.transform.position - ship.transform.position);
+        }
+    }
+
+    public List<Vector3> GetPlayersPositions()
+    {
+        return playersPosition;
+    }
  
     public void InstantiateObjects()
     {
         foreach(InteractableObjectData obj in objectsToSpawn) 
         {
-            Instantiate(obj.prefab, obj.offsetFromShip + ShipsManager.instance.playerShip.transform.position, obj.rotation);
+            GameObject _object = Instantiate(obj.prefab, obj.offsetFromShip + ShipsManager.instance.playerShip.transform.position, obj.rotation);
+            ShipsManager.instance.playerShip.GetComponent<Ship>().AddInteractuableObject(_object.GetComponent<InteractableObject>());
         }
+    }
+
+    public void InstantiateShip()
+    {
+        GameObject _ship;
+        if (MapManager.Instance.GetCurrentLevel().hasIsland)
+            _ship = Instantiate(ship[shipId + 1], new Vector3(0, ship[shipId].GetComponent<Ship>().GetInitY(), 0), Quaternion.identity);
+        else
+            _ship = Instantiate(ship[shipId], new Vector3(0, ship[shipId].GetComponent<Ship>().GetInitY(), 0), Quaternion.identity);
+
+        _ship.GetComponent<Ship>().SetHealth(shipHealth);
+        _ship.GetComponent<Ship>().SetHeightY(shipCurrentY);
+        ShipsManager.instance.SetShip(_ship.GetComponent<Ship>());
+        InstantiateObjects();
     }
 }
