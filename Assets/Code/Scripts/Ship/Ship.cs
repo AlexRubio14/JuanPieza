@@ -42,6 +42,8 @@ public class Ship : MonoBehaviour
 
     private Animator animator;
 
+    [SerializeField] private bool isEnemy = true;
+
     public void Initialize()
     {
         currentHeight = transform.position.y;
@@ -65,15 +67,6 @@ public class Ship : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            StartVotation();
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            SetCurrentHealth(-100);
-        }
-
         FlotationLerp();
         WeightControl();
     }
@@ -99,6 +92,12 @@ public class Ship : MonoBehaviour
         {
             currentTime = 0;
         }
+    }
+
+    public void DestroyShip()
+    {
+        ShipsManager.instance.RemoveEnemyShip(this, isEnemy);
+        Destroy(gameObject);
     }
     public void SetCurrentHealth(float amount)
     {

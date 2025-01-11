@@ -560,7 +560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <playerShip>k__BackingField: {fileID: 0}
   <enemiesShips>k__BackingField:
-  - {fileID: 0}
+  - {fileID: 1050180326}
 --- !u!4 &415519707
 Transform:
   m_ObjectHideFlags: 0
@@ -1024,6 +1024,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7a4b616d743d024f92e210e58121e9c, type: 3}
+--- !u!114 &1050180326 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8235452403105692152, guid: d7a4b616d743d024f92e210e58121e9c, type: 3}
+  m_PrefabInstance: {fileID: 715356303}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 545e131d25258c443a50685a25080760, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1072442223
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1276,7 +1287,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 404905396477301617, guid: 279e1b58b6dc117449b41eda3ae35bec, type: 3}
       propertyPath: weaponDamage
-      value: 20
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 404905396477301617, guid: 279e1b58b6dc117449b41eda3ae35bec, type: 3}
+      propertyPath: hasToBeInTheShip
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201026868603936365, guid: 279e1b58b6dc117449b41eda3ae35bec, type: 3}
+      propertyPath: m_AngularDrag
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7513048802622738015, guid: 279e1b58b6dc117449b41eda3ae35bec, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2797,6 +2816,54 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2114015573
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2114015575}
+  - component: {fileID: 2114015574}
+  m_Layer: 0
+  m_Name: MoneyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2114015574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114015573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d3989ad70ce14946bc9af31f9118fec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingMoney: 100
+  OnMoneyChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &2114015575
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114015573}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2140585390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2915,3 +2982,4 @@ SceneRoots:
   - {fileID: 442378739}
   - {fileID: 715356303}
   - {fileID: 1108613369}
+  - {fileID: 2114015575}
