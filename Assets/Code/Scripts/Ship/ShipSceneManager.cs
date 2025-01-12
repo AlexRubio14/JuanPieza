@@ -13,6 +13,7 @@ public class ShipSceneManager : MonoBehaviour
     private int shipId;
     private float shipHealth;
     private float shipCurrentY;
+    private float shipInitY;
 
     
     [System.Serializable]
@@ -57,6 +58,7 @@ public class ShipSceneManager : MonoBehaviour
         shipId = id;
         shipHealth = currentHealth;
         shipCurrentY = currentY;
+        shipInitY = ShipsManager.instance.playerShip.GetInitY();
     }
 
     public void SetPlayerPosition()
@@ -91,7 +93,7 @@ public class ShipSceneManager : MonoBehaviour
             _ship = Instantiate(ship[shipId], new Vector3(0, ship[shipId].GetComponent<Ship>().GetInitY(), 0), Quaternion.identity);
 
         _ship.GetComponent<Ship>().SetHealth(shipHealth);
-        _ship.GetComponent<Ship>().SetHeightY(shipCurrentY);
+        _ship.GetComponent<Ship>().SetHeightY(shipCurrentY, shipInitY);
         ShipsManager.instance.SetShip(_ship.GetComponent<Ship>());
         InstantiateObjects();
     }

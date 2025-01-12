@@ -28,7 +28,8 @@ public class StoreObjectSpawner : InteractableObject
     {
         if (MoneyManager.Instance.SpendMoney(randomItem.price))
         {
-            interactableObject.SetIsBeingUsed(false);
+            EnableCollisions(interactableObject, true);
+            UnparentAllChildren(gameObject);
             Destroy(gameObject);
         }
     }
@@ -40,7 +41,27 @@ public class StoreObjectSpawner : InteractableObject
         if (randomItem.prefab != null)
         {
             interactableObject = Instantiate(randomItem.prefab, transform.position, transform.rotation, transform).GetComponent<InteractableObject>();
-            interactableObject.SetIsBeingUsed(true);
+            EnableCollisions(interactableObject, false);
+            interactableObject.hasToBeInTheShip = false;
+        }
+    }
+
+    private void EnableCollisions(InteractableObject interactableObject, bool enable)
+    {
+        if (interactableObject.TryGetComponent(out Collider interactableObjectCollider))
+            interactableObjectCollider.enabled = enable;
+
+        if (interactableObject.TryGetComponent(out Rigidbody interactableObjectRigidbody))
+            interactableObjectRigidbody.isKinematic = !enable;
+    }
+
+    private void UnparentAllChildren(GameObject parentObject)
+    {
+        for (int i = parentObject.transform.childCount - 1; i >= 0; i--)
+        {
+            Transform child = parentObject.transform.GetChild(i);
+            
+            child.SetParent(null);
         }
     }
 }

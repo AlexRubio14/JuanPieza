@@ -134,7 +134,7 @@ public class Ship : MonoBehaviour
     #endregion
 
     #region Inventory
-    public void AddInteractuableObject(InteractableObject interactableObject)
+    public void AddInteractuableObject(InteractableObject interactableObject, bool setParent = true)
     {
         if (objects.Contains(interactableObject))
             return;
@@ -142,7 +142,9 @@ public class Ship : MonoBehaviour
         if (interactableObject.objectSO.objectType == ObjectSO.ObjectType.BOX)
             currentWeight += ((Box)interactableObject).GetItemsInBox() * ((Box)interactableObject).GetItemToDrop().weight;
 
-        interactableObject.transform.SetParent(transform);
+        if (setParent)
+            interactableObject.transform.SetParent(transform);
+        
         objects.Add(interactableObject);
         currentWeight += interactableObject.objectSO.weight;
     }
@@ -193,12 +195,19 @@ public class Ship : MonoBehaviour
         return initY;
     }
 
-    public void SetHeightY(float y)
+    public void SetHeightY(float y, float _initY)
     {
-        targetHeight = y;
         if (targetHeight == 0)
+        {
             targetHeight = initY;
+            return;
+        }
+
+        targetHeight = y;
+        initY = _initY;
+
     }
+
 
     public void SetHealth(float health)
     {

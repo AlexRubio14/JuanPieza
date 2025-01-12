@@ -427,6 +427,7 @@ GameObject:
   - component: {fileID: 3787857318974121445}
   - component: {fileID: 2634385266736153035}
   - component: {fileID: 8365819680216379399}
+  - component: {fileID: 8966471832915170374}
   m_Layer: 8
   m_Name: IslandRaft
   m_TagString: Untagged
@@ -477,9 +478,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   heightChangeSpeed: 1
-  lowerY: 0.22
-  destroyY: 0
-  initY: 0
+  lowerY: -0.15
+  destroyY: -1.3
+  initY: 0.6
   maxWeigth: 200
   weigthDamage: 1
   damageTime: 15
@@ -489,6 +490,7 @@ MonoBehaviour:
   idShip: 0
   newZ: -40
   newY: 7
+  isEnemy: 0
   speed: 0.05
 --- !u!114 &3787857318974121445
 MonoBehaviour:
@@ -556,6 +558,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &8966471832915170374
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2418087686159776117}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0412cee73568643498fc20319c6f71a7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2469744633720590609
 GameObject:
   m_ObjectHideFlags: 0
@@ -1451,9 +1475,10 @@ GameObject:
   - component: {fileID: 7480703944188389067}
   - component: {fileID: 8000485277416408999}
   - component: {fileID: 7943338785919342863}
-  m_Layer: 0
+  - component: {fileID: 2963070546782821057}
+  m_Layer: 9
   m_Name: Sail
-  m_TagString: Untagged
+  m_TagString: Sail
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1504,7 +1529,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7dc9f7ae71ed6534aa667e3dbd608206, type: 2}
+  - {fileID: 2100000, guid: 817949999ffc2114b8bddad58323507d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1606,6 +1631,29 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!136 &2963070546782821057
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8142981227791036680}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.37
+  m_Height: 18.602045
+  m_Direction: 1
+  m_Center: {x: -7.803031e-23, y: 9.161992, z: -1.866927e-23}
 --- !u!1 &8272551382743184040
 GameObject:
   m_ObjectHideFlags: 0

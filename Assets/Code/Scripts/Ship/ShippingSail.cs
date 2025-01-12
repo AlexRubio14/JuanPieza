@@ -25,7 +25,7 @@ public class ShippingSail : InteractableObject
         if (timerIsActive) 
         {
             currentTime -= Time.deltaTime;
-            timerText.text = currentTime.ToString("00");
+            //timerText.text = currentTime.ToString("00");
             if (currentTime <= 0f)
             {
                 timerIsActive = false;
@@ -56,7 +56,7 @@ public class ShippingSail : InteractableObject
             if (!timerIsActive)
             {
                 timerIsActive = true;
-                timerText.gameObject.SetActive(true);
+                //timerText.gameObject.SetActive(true);
             }
 
             if (players.Count == PlayersManager.instance.GetPlayers().Count)

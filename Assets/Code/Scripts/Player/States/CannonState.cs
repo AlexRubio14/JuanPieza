@@ -17,6 +17,7 @@ public class CannonState : PlayerState
     {
         MoveCannon();
         TiltCannon();
+        controller.CheckSlope(controller.slopeCheckDistance, controller.slopeOffset);
     }
     public override void ExitState()
     {
@@ -40,7 +41,7 @@ public class CannonState : PlayerState
     {
         base.OnCollisionEnter(collision);
 
-        //Te pueden golpear y hacer daño
+        //Te pueden golpear y hacer daï¿½o
     }  
 
     private void MoveCannon()
@@ -63,8 +64,6 @@ public class CannonState : PlayerState
             Quaternion.Euler(currentWeapon.maxWeaponTilt), 
             currentWeapon.tiltProcess * currentWeapon.tiltSpeed
             );
-
-
     }
     public void SetWeapon(Weapon _weapon)
     {
