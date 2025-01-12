@@ -23,7 +23,7 @@ public class Box : RepairObject
         return itemDropped;
     }
 
-    public bool HasItem()
+    public bool HasItems()
     {
         return itemsInBox > 0;
     }
@@ -61,7 +61,7 @@ public class Box : RepairObject
 
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
-        return !handObject && HasItem()
+        return !handObject && HasItems()
             || handObject && handObject.objectSO == objectToInteract;
     }
 
@@ -72,7 +72,7 @@ public class Box : RepairObject
         
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
     
-        if (!handObject && HasItem() || handObject && handObject.objectSO == objectToInteract)
+        if (!handObject && HasItems() || handObject && handObject.objectSO == objectToInteract)
         {
             return HintController.ActionType.INTERACT;
         }

@@ -342,6 +342,9 @@ public class FishingManager : MonoBehaviour
         ObjectSO itemData = fishingObjectPool.GetRandomItem();
         //Instanciarlo
         GameObject newItem = Instantiate(itemData.prefab, _fishingRod.hook.transform.position, Quaternion.identity);
+        InteractableObject currentItem = newItem.GetComponent<InteractableObject>();
+        currentItem.hasToBeInTheShip = true;
+        ShipsManager.instance.playerShip.AddInteractuableObject(currentItem);
         //Colocarlo
         newItem.transform.forward = _fishingRod.player.transform.forward;
         //Cambiar al estado de Recogida
@@ -351,6 +354,8 @@ public class FishingManager : MonoBehaviour
         newData.parabolaStartPos = _fishingRod.hook.transform.position;
         newData.parabolaEndPos = _fishingRod.player.transform.position;
         fishingData[_id] = newData;
+
+
     }
     #endregion
 

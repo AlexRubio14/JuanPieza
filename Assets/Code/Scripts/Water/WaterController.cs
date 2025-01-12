@@ -13,9 +13,7 @@ public class WaterController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Bullet") || collision.collider.CompareTag("Object"))
-        {
             Destroy(collision.gameObject);
-        }
 
         //Instanciar particulas
         Vector3 splashPosition = new Vector3(collision.transform.position.x, transform.position.y, collision.transform.position.z);

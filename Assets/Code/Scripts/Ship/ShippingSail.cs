@@ -14,8 +14,9 @@ public class ShippingSail : InteractableObject
 
     [SerializeField] private Ship ship;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         players = new List<PlayerController>();
         currentTime = sailTimer;
     }

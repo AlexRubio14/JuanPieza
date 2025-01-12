@@ -9,8 +9,9 @@ public class StoreObjectSpawner : InteractableObject
     private ObjectSO randomItem;
     private int lastChildCount;
     
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         InstanceRandomObject();
     }
 

@@ -57,7 +57,7 @@ public class ShootCannonAction : EnemyAction
         Vector3 shootPos = weapon.bulletSpawnPosition.position;
 
 
-        InteractableObject nearestObject = GetNearestObject(ShipsManager.instance.playerShip.GetAllWeapons(), shootPos);
+        InteractableObject nearestObject = GetNearestObject(ShipsManager.instance.playerShip.GetObjectOfType(ObjectSO.ObjectType.WEAPON), shootPos);
 
         if (nearestObject == null)
             nearestObject = GetNearestObject(ShipsManager.instance.playerShip.GetInventory(), shootPos);

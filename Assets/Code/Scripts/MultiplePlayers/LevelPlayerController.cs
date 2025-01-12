@@ -12,10 +12,9 @@ public class LevelPlayerController : MonoBehaviour
 
     private List<Vector3> safeSpawnPos;
 
-    [System.Obsolete]
     private void Awake()
     {
-        cameraCont = FindObjectOfType<CameraController>();
+        cameraCont = FindAnyObjectByType<CameraController>();
     }
     void Start()
     {

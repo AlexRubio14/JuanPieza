@@ -6,8 +6,9 @@ public class StoreResources : Box
 {
     private ShipsManager shipsManager;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         shipsManager = ShipsManager.instance;
     }
     public override void Interact(ObjectHolder _objectHolder)

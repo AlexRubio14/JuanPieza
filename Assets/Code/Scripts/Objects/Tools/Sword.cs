@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 public class Sword : Tool
@@ -6,15 +5,10 @@ public class Sword : Tool
     [SerializeField] protected CapsuleCollider attackCollider;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
         rb = GetComponent<Rigidbody>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public override void Interact(ObjectHolder _objectHolder)
