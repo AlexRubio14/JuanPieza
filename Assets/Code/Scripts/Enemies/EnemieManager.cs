@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class EnemieManager : MonoBehaviour
@@ -51,6 +52,15 @@ public class EnemieManager : MonoBehaviour
             enemyList.Add(newEnemy);
         }
 
+    }
+
+    private void Start()
+    {
+        NavMeshLink[] links = GetComponentsInChildren<NavMeshLink>();
+        foreach (NavMeshLink link in links)
+        {
+            link.UpdateLink();
+        }
     }
 
     private void OnEnable()
