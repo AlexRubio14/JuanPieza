@@ -22,6 +22,9 @@ public class MoneyUI : MonoBehaviour
         {
             MoneyManager.Instance.AddMoney(100);
         }
+
+        if(!(!MapManager.Instance.isVoting && gameObject.activeSelf))
+            gameObject.SetActive(false);
     }
 
     private void UpdateMoneyUI(int newMoney)

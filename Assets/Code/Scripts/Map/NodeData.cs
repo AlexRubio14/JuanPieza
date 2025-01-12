@@ -10,6 +10,7 @@ public class NodeData : ScriptableObject
     public NodeType nodeType;
     public string sceneName;
     public List<NodeData> children;
+    public int levelMoney;
     public bool hasIsland;
 
     public NodeData CretaeNode()

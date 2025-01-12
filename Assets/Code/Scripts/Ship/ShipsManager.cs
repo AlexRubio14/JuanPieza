@@ -45,6 +45,15 @@ public class ShipsManager : MonoBehaviour
     private void StartVotation()
     {
         if (enemiesShips.Count == 0)
+        {
+            if(!MapManager.Instance.GetCurrentLevel().hasIsland)
+            {
+                MoneyManager.Instance.AddMoney(MapManager.Instance.GetCurrentLevel().levelMoney);
+                VotationCanvasManager.Instance.SetMoneyText(true);
+            }
+
             playerShip.StartVotation();
+        }
+
     }
 }
