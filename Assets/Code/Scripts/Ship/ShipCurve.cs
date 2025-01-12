@@ -17,6 +17,7 @@ public class ShipCurve : Ship
     {
         rb = GetComponent<Rigidbody>();
         Initialize();
+        VotationCanvasManager.Instance.SetVotationUIState(false);
     }
 
     private void FixedUpdate()
@@ -29,6 +30,8 @@ public class ShipCurve : Ship
             {
                 startMovement = false;
                 ShipSceneManager.Instance.SetObjectsToSpawn();
+                ShipSceneManager.Instance.SetShipId(idShip, currentHealth, targetHeight);
+                ShipSceneManager.Instance.SetPlayerPosition();
                 SceneManager.LoadScene(MapManager.Instance.GetCurrentLevel().sceneName);
             }
 

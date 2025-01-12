@@ -11,6 +11,7 @@ public class Catapult : Weapon
     {
         GameObject newBullet = Instantiate(barrelPrefab, barrelSpawnPos.transform.position, Quaternion.identity);
         newBullet.GetComponent<Rigidbody>().AddForce(barrelSpawnPos.forward * bulletForce, ForceMode.Impulse);
+        newBullet.GetComponent<Bullet>().SetDamage(weaponDamage);
         hasAmmo = false;
     }
 }

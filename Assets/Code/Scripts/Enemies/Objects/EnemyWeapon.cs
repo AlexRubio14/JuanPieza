@@ -10,6 +10,10 @@ public abstract class EnemyWeapon : EnemyObject
 
     [SerializeField]
     protected GameObject bullet;
+
+    [field: SerializeField]
+    public float weaponDamage { get; protected set; }
+
     [field: SerializeField]
     public float bulletForce { get; protected set; }
     [field: SerializeField]

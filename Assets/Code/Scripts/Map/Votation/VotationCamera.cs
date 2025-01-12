@@ -2,11 +2,6 @@ using UnityEngine;
 
 public class VotationCamera : MonoBehaviour
 {
-    [Header("Ship")]
-    [SerializeField] private GameObject ship;
-    [SerializeField] private float newZ;
-    [SerializeField] private float newY;
-
     [Header("Speed")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotationSpeed;
@@ -32,7 +27,7 @@ public class VotationCamera : MonoBehaviour
     {
         if(moveXCamera)
         {
-            Vector3 targetPosition = new Vector3(ship.transform.position.x, transform.position.y, transform.position.z);
+            Vector3 targetPosition = new Vector3(ShipsManager.instance.playerShip.transform.position.x, transform.position.y, transform.position.z);
 
             transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * moveSpeed);
 
@@ -47,7 +42,8 @@ public class VotationCamera : MonoBehaviour
     {
         if (!moveXCamera)
         {
-            Vector3 targetPosition = new Vector3(transform.position.x, newY, newZ);
+            Ship _ship = ShipsManager.instance.playerShip;
+            Vector3 targetPosition = new Vector3(transform.position.x, _ship.GetNewY(), _ship.GetNewZ());
 
             transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * moveSpeed);
 

@@ -36,7 +36,6 @@ public class MapManager : MonoBehaviour
         {
             Destroy(gameObject); 
         }
-        VotationCanvasManager.Instance.SetVotationUIState(false);
         UpdateCurrentLevel(currentLevel,0);
     }
 

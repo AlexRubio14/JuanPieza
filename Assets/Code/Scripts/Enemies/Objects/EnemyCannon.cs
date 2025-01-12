@@ -5,6 +5,7 @@ public class EnemyCannon : EnemyWeapon
     {
         base.UseObject();
         Rigidbody bulletRb = Instantiate(bullet, bulletSpawnPosition.position, Quaternion.identity).GetComponent<Rigidbody>();
+        bulletRb.GetComponent<Bullet>().SetDamage(weaponDamage);
         bulletRb.AddForce(bulletSpawnPosition.forward * bulletForce, ForceMode.Impulse);
     }
 }

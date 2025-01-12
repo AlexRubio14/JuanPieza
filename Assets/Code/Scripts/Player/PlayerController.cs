@@ -210,7 +210,7 @@ public class PlayerController : MonoBehaviour
                 //Hacer otro raycast
                 if (!Physics.Raycast(currentSlopePos, slopePosition.forward, _slopeLength, slopeCheckLayer))
                 {   
-                    rb.position = hit.point + new Vector3(0, i + 0.25f, 0);
+                    rb.position = hit.point + new Vector3(0, i + 1, 0);
                     //Debug.Break();
                     return;
                 }

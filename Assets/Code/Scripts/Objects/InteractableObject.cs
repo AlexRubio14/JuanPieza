@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public abstract class InteractableObject : MonoBehaviour
@@ -15,6 +16,8 @@ public abstract class InteractableObject : MonoBehaviour
     [field: SerializeField]
     public Transform grabPivot {  get; protected set; }
     protected Collider objectCollider;
+
+    public bool hasToBeInTheShip = true;
     
     private void Awake()
     {
@@ -23,8 +26,7 @@ public abstract class InteractableObject : MonoBehaviour
     }
     private void Start()
     {
-        if(ShipsManager.instance)
-            ShipsManager.instance.playerShip.AddInteractuableObject(this);
+        StartCoroutine(AddObjectToShip());
     }
 
     public abstract void Interact(ObjectHolder _objectHolder);
@@ -52,12 +54,12 @@ public abstract class InteractableObject : MonoBehaviour
 
     private void OnEnable()
     {
-        if (ShipsManager.instance)
-            ShipsManager.instance.playerShip.AddInteractuableObject(this);
+        StartCoroutine(AddObjectToShip());
     }
     protected void OnDestroy()
     {
-        ShipsManager.instance.playerShip.RemoveInteractuableObject(this);
+        if (ShipsManager.instance && hasToBeInTheShip && ShipsManager.instance.playerShip)
+            ShipsManager.instance.playerShip.RemoveInteractuableObject(this);
     }
     public virtual HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
     {
@@ -69,6 +71,13 @@ public abstract class InteractableObject : MonoBehaviour
         }
  
         return HintController.ActionType.NONE;
+    }
+
+    IEnumerator AddObjectToShip()
+    {
+        yield return new WaitForEndOfFrame();
+        if (ShipsManager.instance && hasToBeInTheShip && ShipsManager.instance.playerShip)
+            ShipsManager.instance.playerShip.AddInteractuableObject(this);
     }
 
 }

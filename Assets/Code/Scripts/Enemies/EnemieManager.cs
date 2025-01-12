@@ -62,6 +62,16 @@ public class EnemieManager : MonoBehaviour
         enemyShip.onDamageRecieved -= OnDamageRecieved;
     }
 
+    private void OnDestroy()
+    {
+        for (int i = 0; i < enemyList.Count; i++)
+        {
+            if (enemyList[i] != null)
+                Destroy(enemyList[i].gameObject);
+        }
+
+    }
+
     private void FixedUpdate()
     {
         foreach (EnemyController enemy in enemyList)

@@ -6,14 +6,14 @@ public class Ship : MonoBehaviour
 {
     [Header("HealthVariables")]
     [SerializeField] private float maxHealth;
-    private float currentHealth;
+    protected float currentHealth;
 
     [Header("LerpValues")]
     [SerializeField] private float heightChangeSpeed;
     [SerializeField] private float lowerY;
     [SerializeField] private float destroyY;
-    private float initY;
-    private float targetHeight;
+    [SerializeField] private float initY;
+    protected float targetHeight;
     private float currentHeight;
 
     [Header("Weigth")]
@@ -33,13 +33,19 @@ public class Ship : MonoBehaviour
     [Header("Votation")]
     [SerializeField] private List<Votation> votations;
 
+    [Header("ID")]
+    [SerializeField] protected int idShip;
+
+    [Header("Camera Values")]
+    [SerializeField] private float newZ;
+    [SerializeField] private float newY;
+
     private Animator animator;
+
+    [SerializeField] private bool isEnemy = true;
 
     public void Initialize()
     {
-        currentHealth = maxHealth;
-        initY = transform.position.y;
-        targetHeight = initY;
         currentHeight = transform.position.y;
 
         foreach (Votation _votation in votations)
@@ -50,13 +56,17 @@ public class Ship : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    public void InitEnemyShip()
+    {
+        initY = transform.position.y;
+        currentHeight = initY;
+        currentHealth = maxHealth;
+
+        animator = GetComponent<Animator>();
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            StartVotation();
-        }
-
         FlotationLerp();
         WeightControl();
     }
@@ -82,6 +92,12 @@ public class Ship : MonoBehaviour
         {
             currentTime = 0;
         }
+    }
+
+    public void DestroyShip()
+    {
+        ShipsManager.instance.RemoveEnemyShip(this, isEnemy);
+        Destroy(gameObject);
     }
     public void SetCurrentHealth(float amount)
     {
@@ -170,5 +186,34 @@ public class Ship : MonoBehaviour
     public bool CheckOverweight()
     {
         return currentWeight >= maxWeigth;
+    }
+
+    public float GetInitY()
+    {
+        return initY;
+    }
+
+    public void SetHeightY(float y)
+    {
+        targetHeight = y;
+        if (targetHeight == 0)
+            targetHeight = initY;
+    }
+
+    public void SetHealth(float health)
+    {
+        currentHealth = health;
+        if (currentHealth == 0)
+            currentHealth = maxHealth;
+    }
+
+    public float GetNewZ()
+    {
+        return newZ;
+    }
+
+    public float GetNewY()
+    {
+        return newY;
     }
 }

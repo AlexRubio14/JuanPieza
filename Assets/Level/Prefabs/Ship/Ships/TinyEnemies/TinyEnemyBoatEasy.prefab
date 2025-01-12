@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 477343024127472566}
+  ship: {fileID: 8235452403105692152}
 --- !u!1 &1180070170910092008
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,7 +718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 477343024127472566}
+  ship: {fileID: 8235452403105692152}
 --- !u!1 &4086182033197049970
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,7 +870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6140746f33cef5749a6fef9a7f119698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 477343024127472566}
+  ship: {fileID: 8235452403105692152}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
   objectLayer:
     serializedVersion: 2
@@ -1088,7 +1088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 477343024127472566}
+  ship: {fileID: 8235452403105692152}
 --- !u!1 &5339860289122487734
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,7 +1183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 477343024127472566}
+  ship: {fileID: 8235452403105692152}
 --- !u!1 &6193015715972758371
 GameObject:
   m_ObjectHideFlags: 0
@@ -1279,12 +1279,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6764713892806314720}
-  - component: {fileID: 477343024127472566}
+  - component: {fileID: 8235452403105692152}
   - component: {fileID: 7670309692406009392}
   - component: {fileID: 858850382872404318}
   - component: {fileID: 2892431809410758422}
   m_Layer: 8
-  m_Name: TinyEnemyBoat
+  m_Name: TinyEnemyBoatEasy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1320,10 +1320,9 @@ Transform:
   - {fileID: 1912258903297288025}
   - {fileID: 7422575085068951180}
   - {fileID: 1024667297670221074}
-  - {fileID: 1298668517961141319}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &477343024127472566
+--- !u!114 &8235452403105692152
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1332,17 +1331,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 6245023586670514266}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3354d4e17ee817c45b52f569b132dcf4, type: 3}
+  m_Script: {fileID: 11500000, guid: 545e131d25258c443a50685a25080760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
   heightChangeSpeed: 1
-  lowerY: -1.15
-  destroyY: 0
-  maxWeigth: 300
-  weigthDamage: 1
-  damageTime: 15
+  lowerY: -3
+  destroyY: -10
+  initY: 0
+  maxWeigth: 1000
+  weigthDamage: 0
+  damageTime: 0
   votations: []
+  idShip: 0
+  newZ: 0
+  newY: 0
 --- !u!54 &7670309692406009392
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1382,12 +1385,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e4d538eee3bcd5409e63b5683dc0098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalEnemies: 2
+  totalEnemies: 1
   enemyPrefab: {fileID: 5511217913929459945, guid: 122656c0e13c21846918af65e4393fce, type: 3}
   enemySpawnPoint: {fileID: 7816651391003825222}
-  enemySpawnOffset: 2
+  enemySpawnOffset: 1
   priorityList: 0000000003000000040000000100000002000000
-  enemyShip: {fileID: 477343024127472566}
+  enemyShip: {fileID: 8235452403105692152}
   woodResource: {fileID: 5882739965672216337}
   bulletResource: {fileID: 2621371534332809875}
   hammerObject: {fileID: 5090931682371189882}
@@ -1430,7 +1433,7 @@ GameObject:
   - component: {fileID: 2955108872659230932}
   - component: {fileID: 4881278100887689140}
   - component: {fileID: 547502004850151544}
-  - component: {fileID: 7911164116761891665}
+  - component: {fileID: 1402650903134989357}
   - component: {fileID: 3828869468331380018}
   - component: {fileID: 3463888115507526012}
   m_Layer: 8
@@ -1535,8 +1538,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &7911164116761891665
-BoxCollider:
+--- !u!64 &1402650903134989357
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1553,9 +1556,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 5.228392, y: 0.16447902, z: 14.362647}
-  m_Center: {x: 0.029829264, y: 2.259503, z: 2.6127381}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6745816700161996667, guid: 52e12675979025149a72a7c63094050f, type: 3}
 --- !u!114 &3828869468331380018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1600,7 +1604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6140746f33cef5749a6fef9a7f119698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 477343024127472566}
+  ship: {fileID: 8235452403105692152}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
   objectLayer:
     serializedVersion: 2
@@ -1817,7 +1821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 477343024127472566}
+  ship: {fileID: 8235452403105692152}
 --- !u!1 &7934747415226563602
 GameObject:
   m_ObjectHideFlags: 0
@@ -1912,7 +1916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 477343024127472566}
+  ship: {fileID: 8235452403105692152}
 --- !u!1 &8220072722941503500
 GameObject:
   m_ObjectHideFlags: 0
@@ -2007,7 +2011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 477343024127472566}
+  ship: {fileID: 8235452403105692152}
 --- !u!1 &8274124109588675004
 GameObject:
   m_ObjectHideFlags: 0
@@ -2102,7 +2106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 477343024127472566}
+  ship: {fileID: 8235452403105692152}
 --- !u!1 &8937430367664960262
 GameObject:
   m_ObjectHideFlags: 0
@@ -2314,7 +2318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 477343024127472566}
+  ship: {fileID: 8235452403105692152}
 --- !u!1001 &9572504206567711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2462,72 +2466,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72c58b306dded04d95fae2e4cae2d19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &2026504919599458378
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 6764713892806314720}
-    m_Modifications:
-    - target: {fileID: 329067407376333788, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-      propertyPath: enemieManager
-      value: 
-      objectReference: {fileID: 858850382872404318}
-    - target: {fileID: 1016225125785150477, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.36
-      objectReference: {fileID: 0}
-    - target: {fileID: 1016225125785150477, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1016225125785150477, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 3.18
-      objectReference: {fileID: 0}
-    - target: {fileID: 1016225125785150477, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.6983844
-      objectReference: {fileID: 0}
-    - target: {fileID: 1016225125785150477, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1016225125785150477, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.715723
-      objectReference: {fileID: 0}
-    - target: {fileID: 1016225125785150477, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1016225125785150477, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1016225125785150477, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -91.405
-      objectReference: {fileID: 0}
-    - target: {fileID: 1016225125785150477, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4405499652462248821, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-      propertyPath: m_Name
-      value: EnemyCannon (1)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
---- !u!4 &1298668517961141319 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1016225125785150477, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-  m_PrefabInstance: {fileID: 2026504919599458378}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4589424998831333884
 PrefabInstance:
   m_ObjectHideFlags: 0
