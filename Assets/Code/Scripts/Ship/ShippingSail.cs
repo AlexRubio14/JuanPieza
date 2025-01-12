@@ -17,6 +17,7 @@ public class ShippingSail : InteractableObject
     private void Start()
     {
         players = new List<PlayerController>();
+        VotationCanvasManager.Instance.SetSailTimer(false);
         currentTime = sailTimer;
     }
 
@@ -25,11 +26,11 @@ public class ShippingSail : InteractableObject
         if (timerIsActive) 
         {
             currentTime -= Time.deltaTime;
-            //timerText.text = currentTime.ToString("00");
+            VotationCanvasManager.Instance.SetSailtText(currentTime);
             if (currentTime <= 0f)
             {
                 timerIsActive = false;
-                //zarpar
+                VotationCanvasManager.Instance.SetSailTimer(false);
                 ship.StartVotation();
             }
         }
@@ -56,12 +57,12 @@ public class ShippingSail : InteractableObject
             if (!timerIsActive)
             {
                 timerIsActive = true;
-                //timerText.gameObject.SetActive(true);
+                VotationCanvasManager.Instance.SetSailTimer(true);
             }
 
             if (players.Count == PlayersManager.instance.GetPlayers().Count)
             {
-                //zarpar
+                VotationCanvasManager.Instance.SetSailTimer(false);
                 ship.StartVotation();
             }
         }
@@ -76,7 +77,7 @@ public class ShippingSail : InteractableObject
     private void ResetTimer()
     {
         currentTime = sailTimer;
-        timerText.gameObject.SetActive(false);
+        VotationCanvasManager.Instance.SetSailTimer(false);
         timerIsActive = false;
     }
 }

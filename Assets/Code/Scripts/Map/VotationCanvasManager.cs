@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class VotationCanvasManager : MonoBehaviour
@@ -8,6 +10,8 @@ public class VotationCanvasManager : MonoBehaviour
     [Header("Votation")]
     [SerializeField] private List<VotationUI> ui;
     [SerializeField] private VotationTimer timer;
+    [SerializeField] private TextMeshProUGUI sailTimer;
+    [SerializeField] private TextMeshProUGUI moneyText;
 
     private void Awake()
     {
@@ -55,4 +59,32 @@ public class VotationCanvasManager : MonoBehaviour
     {
         timer.SetTimerUi(time, maxTime);
     }
+
+    public void SetSailTimer(bool state)
+    {
+        sailTimer.gameObject.SetActive(state);
+    }
+
+    public void SetSailtText(float time)
+    {
+        sailTimer.text = time.ToString("00");
+    }
+
+    public void SetMoneyText(bool state)
+    {
+        moneyText.transform.parent.gameObject.SetActive(state);
+        moneyText.text = "+" + MapManager.Instance.GetCurrentLevel().levelMoney.ToString();
+
+        if(state)
+            StartCoroutine(DesactiveMoneyText());
+    }
+
+    private IEnumerator DesactiveMoneyText()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        SetMoneyText(false);
+    }
+
+
 }
