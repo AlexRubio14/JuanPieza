@@ -193,12 +193,19 @@ public class Ship : MonoBehaviour
         return initY;
     }
 
-    public void SetHeightY(float y)
+    public void SetHeightY(float y, float _initY)
     {
-        targetHeight = y;
         if (targetHeight == 0)
+        {
             targetHeight = initY;
+            return;
+        }
+
+        targetHeight = y;
+        initY = _initY;
+
     }
+
 
     public void SetHealth(float health)
     {
