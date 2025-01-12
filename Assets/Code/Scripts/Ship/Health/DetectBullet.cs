@@ -5,21 +5,20 @@ public class DetectBullet : MonoBehaviour
     [Header("ShipInformation")]
     [SerializeField] protected Ship ship;
 
-    protected Bullet bullet { get; private set; }
+    
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Bullet") && !collision.gameObject.GetComponent<Bullet>().GetDamageDone())
+        if (collision.gameObject.CompareTag("Bullet") && collision.gameObject.TryGetComponent(out Bullet bullet) && !bullet.GetDamageDone())
         {
-            DetectCollision(collision);
+            DetectCollision(collision, bullet);
         }
     }
 
-    protected virtual void DetectCollision(Collision collision)
+    protected virtual void DetectCollision(Collision collision, Bullet _bullet)
     {
-        bullet = collision.gameObject.GetComponent<Bullet>();
-        bullet.SetDamageDone(true);
-        ship.SetCurrentHealth(-bullet.GetDamage());
+        _bullet.SetDamageDone(true);
+        ship.SetCurrentHealth(-_bullet.GetDamage());
         Destroy(collision.gameObject);
     }
 

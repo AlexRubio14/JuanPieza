@@ -5,6 +5,8 @@ public class EnemieManager : MonoBehaviour
 {
     //Los objetos cuando se rompen llaman a las funciones del manager para ser añadidos a la toDoList
 
+    private CameraController cameraController;
+
     [SerializeField]
     private int totalEnemies;
     [SerializeField]
@@ -41,6 +43,7 @@ public class EnemieManager : MonoBehaviour
 
     private void Awake()
     {
+        cameraController = FindAnyObjectByType<CameraController>();
         toDoList = new List<EnemyAction>();
         enemyList = new List<EnemyController>();
         for (int i = 0; i < totalEnemies; i++)
@@ -49,6 +52,7 @@ public class EnemieManager : MonoBehaviour
             EnemyController newEnemy = Instantiate(enemyPrefab, enemySpawnPoint.position, Quaternion.identity).GetComponent<EnemyController>();
             newEnemy.enemieManager = this;
             enemyList.Add(newEnemy);
+            cameraController.AddObject(newEnemy.gameObject);
         }
 
     }

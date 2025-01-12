@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     private CameraMovement camState = CameraMovement.NONE;
 
     [Header("Players"), SerializeField]
-    private List<Collider> playerColliders;
+    private List<Collider> followColliders;
     private List<PlayerStateMachine> playerStates = new List<PlayerStateMachine>();
 
     [Header("Players Variables"), SerializeField]
@@ -22,7 +22,6 @@ public class CameraController : MonoBehaviour
     private Camera insideCamera;
     [SerializeField]
     private Camera externalCamera;
-    private bool defaultCamera;
 
     [Header("Cameras Variables"), SerializeField, Range(0, 1)]
     private float movementSpeed;
@@ -33,40 +32,57 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float XZSpeed;
     
-    private void Start()
+    private void Awake()
     {
         playerStates = new List<PlayerStateMachine>();
-        defaultCamera = true;
 
         //Guardamos la Y del primer Player
         //Seteamos todos los players con la misma posicion en Y
-        foreach (Collider item in playerColliders)
-        {
+        foreach (Collider item in followColliders)
             playerStates.Add(item.GetComponent<PlayerStateMachine>());
-        }
+        
         
         //colocar la camara a la distancia minima
         zOffset = transform.position.z - GetMiddlePointBetweenPlayers().z;
     }
 
+    private void Start()
+    {
+        if (ShipsManager.instance.playerShip.TryGetComponent(out Collider playerShipColl))
+            AddObject(playerShipColl.gameObject);
+
+        foreach (Ship ship in ShipsManager.instance.enemiesShips)
+        {
+            if (ship.TryGetComponent(out Collider enemyShipCol))
+                AddObject(enemyShipCol.gameObject);
+        }
+
+       
+    }
+
     public void AddPlayer(GameObject _newPlayer)
     {
-        playerColliders.Add(_newPlayer.GetComponent<CapsuleCollider>());
+        followColliders.Add(_newPlayer.GetComponent<CapsuleCollider>());
         playerStates.Add(_newPlayer.GetComponent<PlayerStateMachine>());
     }
+
+    public void AddObject(GameObject _objectToAdd)
+    {
+        followColliders.Add(_objectToAdd.GetComponent<Collider>());
+        playerStates.Add(null);
+
+    }
+
     public void RemovePlayer(GameObject _removablePlayer)
     {
-        playerColliders.Remove(_removablePlayer.GetComponent<CapsuleCollider>());
+        followColliders.Remove(_removablePlayer.GetComponent<CapsuleCollider>());
         playerStates.Remove(_removablePlayer.GetComponent<PlayerStateMachine>());
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (defaultCamera)
-        {
-            CheckCamDistance();
-            MoveCamera();
-        }
+        CheckCamDistance();
+        MoveCamera();
     }
 
     private void CheckCamDistance()
@@ -74,11 +90,11 @@ public class CameraController : MonoBehaviour
         bool zoomIn = true;
         bool zoomOut = false;
         List<Collider> activePlayers = new List<Collider>();
-        for (int i = 0; i < playerColliders.Count; i++)
+        for (int i = 0; i < followColliders.Count; i++)
         {
-            if (playerColliders[i] != null && playerStates != null && (playerStates[i] == null || playerStates[i].currentState != playerStates[i].deathState))
+            if (followColliders[i] != null && playerStates != null && (playerStates[i] == null || playerStates[i].currentState != playerStates[i].deathState))
             {
-                activePlayers.Add(playerColliders[i]);
+                activePlayers.Add(followColliders[i]);
 
             }
         }
@@ -87,7 +103,9 @@ public class CameraController : MonoBehaviour
         {
             //Obtenemos los planos que utiliza el fustrum de la camara externa
             Plane[] camFrustrum = GeometryUtility.CalculateFrustumPlanes(externalCamera);
-            
+
+            Debug.DrawLine(item.bounds.min, item.bounds.max);
+
             //Comprobamos si el player esta dentro del frustrum
             if (GeometryUtility.TestPlanesAABB(camFrustrum, item.bounds)) //Si esta dentro de la camara
             {
@@ -162,11 +180,11 @@ public class CameraController : MonoBehaviour
     {
         Vector3 middlePoint = Vector3.zero;
 
-        for (int i = 0; i < playerColliders.Count; i++)
+        for (int i = 0; i < followColliders.Count; i++)
         {
-            if (playerColliders[i] != null && playerStates.Count > 0 && (playerStates[i] == null || playerStates[i].currentState != playerStates[i].deathState))
+            if (followColliders[i] != null && playerStates.Count > 0 && (playerStates[i] == null || playerStates[i].currentState != playerStates[i].deathState))
             {
-                middlePoint += playerColliders[i].transform.position;
+                middlePoint += followColliders[i].transform.position;
 
             }
         }
@@ -174,7 +192,7 @@ public class CameraController : MonoBehaviour
         if (middlePoint == Vector3.zero)
             return Vector3.zero;
 
-        middlePoint /= playerColliders.Count;
+        middlePoint /= followColliders.Count;
         return middlePoint;
     }
 
@@ -182,11 +200,6 @@ public class CameraController : MonoBehaviour
     {
         Gizmos.color = Color.magenta;
         Gizmos.DrawSphere(GetMiddlePointBetweenPlayers(),0.4f);
-    }
-
-    public void SetDefaultCamera(bool value)
-    {
-        defaultCamera = value;
     }
     
 }

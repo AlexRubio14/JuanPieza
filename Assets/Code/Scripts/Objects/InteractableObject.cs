@@ -19,12 +19,12 @@ public abstract class InteractableObject : MonoBehaviour
 
     public bool hasToBeInTheShip = true;
     
-    private void Awake()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
         isBeingUsed = false;
     }
-    private void Start()
+    protected virtual void Start()
     {
         StartCoroutine(AddObjectToShip());
     }
@@ -52,11 +52,11 @@ public abstract class InteractableObject : MonoBehaviour
             !_objectHolder.GetHandInteractableObject() && !objectToInteract;
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         StartCoroutine(AddObjectToShip());
     }
-    protected void OnDestroy()
+    protected virtual void OnDestroy()
     {
         if (ShipsManager.instance && hasToBeInTheShip && ShipsManager.instance.playerShip)
             ShipsManager.instance.playerShip.RemoveInteractuableObject(this);
@@ -73,7 +73,7 @@ public abstract class InteractableObject : MonoBehaviour
         return HintController.ActionType.NONE;
     }
 
-    IEnumerator AddObjectToShip()
+    protected IEnumerator AddObjectToShip()
     {
         yield return new WaitForEndOfFrame();
         if (ShipsManager.instance && hasToBeInTheShip && ShipsManager.instance.playerShip)

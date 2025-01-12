@@ -9,9 +9,16 @@ public class Repair : InteractableObject
     [SerializeField] private float repairDuration;
     private float currentRepairTime;
     private List<PlayerController> players = new List<PlayerController>();
+    [SerializeField]
+    private ParticleSystem repairParticles;
 
+    protected override void Start()
+    {
+        base.Start();
+        repairParticles.Stop(true);
+    }
 
-    private void Update()
+    protected virtual void Update()
     {
         RepairObject();
     }
@@ -60,6 +67,8 @@ public class Repair : InteractableObject
     {
         if (players.Count > 0)
         {
+            if (repairParticles.isStopped)
+                repairParticles.Play(true);
             currentRepairTime += players.Count * Time.deltaTime;
             if (currentRepairTime >= repairDuration)
             {
@@ -68,12 +77,14 @@ public class Repair : InteractableObject
             }
 
             foreach (PlayerController player in players)
-            {
                 player.progressBar.SetProgress(currentRepairTime, repairDuration);
-            }
+            
         }
         else
         {
+            if (repairParticles.isPlaying)
+                repairParticles.Stop(true);
+
             currentRepairTime = 0;
         }
     }

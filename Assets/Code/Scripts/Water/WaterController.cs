@@ -18,8 +18,8 @@ public class WaterController : MonoBehaviour
         }
 
         //Instanciar particulas
-        //Vector3 splashPosition = new Vector3(collision.transform.position.x, transform.position.y, collision.transform.position.z);
-        //Instantiate(waterSplashParticles, splashPosition, Quaternion.identity);
+        Vector3 splashPosition = new Vector3(collision.transform.position.x, transform.position.y, collision.transform.position.z);
+        Instantiate(waterSplashParticles, splashPosition, Quaternion.identity);
     }
 }
 

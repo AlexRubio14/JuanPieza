@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Weapon : RepairObject
 {
     [Space, Header("Weapon"), SerializeField]
     protected Transform ridingPos;
+    
 
     [Space, Header("Damage"), SerializeField]
     protected float weaponDamage;
@@ -27,16 +29,23 @@ public abstract class Weapon : RepairObject
     protected Animator animator;
     protected int mountedPlayerId = -1;
 
+    [Space, Header("Particles"), SerializeField]
+    protected GameObject shootParticles;
+    [SerializeField]
+    protected GameObject loadParticlesPrefab;
+    protected List<ParticleSystem> loadParticles = new List<ParticleSystem>();
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         animator = GetComponent<Animator>();
 
         hasAmmo = false;
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         tiltProcess = 0;
         tiltObject.localRotation = Quaternion.Euler(minWeaponTilt);
     }
@@ -62,9 +71,12 @@ public abstract class Weapon : RepairObject
     {
         if (!hasAmmo)
             return;
-        Shoot();
+        Shoot();            
         animator.SetTrigger("Shoot");
         animator.SetBool("HasAmmo", false);
+
+        foreach (ParticleSystem item in loadParticles)
+            item.Stop(true);
     }
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
@@ -141,16 +153,35 @@ public abstract class Weapon : RepairObject
 
         animator.SetBool("HasAmmo", true);
 
+        foreach (ParticleSystem item in loadParticles)
+            item.Play(true);
+        
+
+    }
+
+    protected void AddLoadParticle(Transform _parent)
+    {
+        ParticleSystem loadParticleSystem = Instantiate(loadParticlesPrefab, _parent.position, Quaternion.identity).GetComponent<ParticleSystem>();
+        loadParticleSystem.transform.SetParent(_parent);
+        loadParticleSystem.transform.position = _parent.position;
+        loadParticleSystem.transform.forward = _parent.forward;
+        loadParticles.Add(loadParticleSystem);
+        loadParticleSystem.Stop(true);
     }
 
     public override void OnBreakObject()
     {
+        base.OnBreakObject();
         if (mountedPlayerId == -1)
             return;
 
         PlayerController currentPlayer = PlayersManager.instance.ingamePlayers[mountedPlayerId];
         UnMount(currentPlayer, currentPlayer.objectHolder);
         currentPlayer.animator.SetBool("Pick", false);
+        hasAmmo = false;
+        animator.SetBool("HasAmmo", false);
+        foreach (ParticleSystem item in loadParticles)
+            item.Stop(true);
     }
 
     protected abstract void Shoot();
