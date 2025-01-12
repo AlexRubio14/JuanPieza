@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class VotationCamera : MonoBehaviour
 {
-    [SerializeField] private float newZ;
-    [SerializeField] private float newY;
-
     [Header("Speed")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotationSpeed;

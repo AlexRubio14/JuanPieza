@@ -17,6 +17,7 @@ public class ShipCurve : Ship
     {
         rb = GetComponent<Rigidbody>();
         Initialize();
+        VotationCanvasManager.Instance.SetVotationUIState(false);
     }
 
     private void FixedUpdate()

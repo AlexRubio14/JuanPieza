@@ -36,18 +36,6 @@ public class ShipSceneManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        //if(Input.GetKeyDown(KeyCode.R))
-        //{
-        //    InstantiateObjects();
-        //}
-        //if (Input.GetKeyDown(KeyCode.N))
-        //{
-        //    SetObjectsToSpawn();
-        //}
-    }
-
     public void SetObjectsToSpawn()
     {
         objectsToSpawn.Clear();
