@@ -3,7 +3,7 @@ public abstract class EnemyWeapon : EnemyObject
 {
     public bool isLoaded {  get; private set; }
 
-    [field: SerializeField]
+    [field: Space, Header("Weapon"), SerializeField]
     public Transform shooterPosition {  get; protected set; }
     [field: SerializeField]
     public Transform bulletSpawnPosition {  get; protected set; }
