@@ -13,7 +13,7 @@ public class StoreObjectPool : MonoBehaviour
     [SerializedDictionary("Rarity", "Percentage")] public SerializedDictionary<ObjectSO.ItemRarity, float> rarityPercentages;
     
     private float totalPercentage;
-    private void Start()
+    private void Awake()
     {
         totalPercentage = 0;
         foreach (KeyValuePair<ObjectSO.ItemRarity, float> item in rarityPercentages)
@@ -35,33 +35,37 @@ public class StoreObjectPool : MonoBehaviour
 
     public ObjectSO GetRandomItem(ObjectSO[] itemList)
     {
-        ObjectSO.ItemRarity currentRarity = ObjectSO.ItemRarity.BASIC;
-
-        float randNum = UnityEngine.Random.Range(0, totalPercentage);
-        float currentPercentage = 0;
-        foreach (KeyValuePair<ObjectSO.ItemRarity, float> item in rarityPercentages)
+        while (true)
         {
-            if (randNum <= currentPercentage + item.Value)
-            {
-                currentRarity = item.Key;
-                break;
-            }
-
-            currentPercentage += item.Value;
-        }
-
-        List<ObjectSO> currentRarityItems = new List<ObjectSO>();
-
-        foreach (ObjectSO item in itemList)
-        {
-            if (item.rarity == currentRarity)
-            {
-                currentRarityItems.Add(item);
-            }
-        }
-
-        int randomItem = UnityEngine.Random.Range(0, currentRarityItems.Count);
+            ObjectSO.ItemRarity currentRarity = ObjectSO.ItemRarity.BASIC;
+            float randNum = UnityEngine.Random.Range(0, totalPercentage);
+            float currentPercentage = 0;
         
-        return currentRarityItems[randomItem];
+            foreach (KeyValuePair<ObjectSO.ItemRarity, float> item in rarityPercentages)
+            {
+                if (randNum <= currentPercentage + item.Value)
+                {
+                    currentRarity = item.Key;
+                    break;
+                }
+
+                currentPercentage += item.Value;
+            }
+
+            List<ObjectSO> currentRarityItems = new List<ObjectSO>();
+            foreach (ObjectSO item in itemList)
+            {
+                if (item.rarity == currentRarity)
+                {
+                    currentRarityItems.Add(item);
+                }
+            }
+
+            if (currentRarityItems.Count > 0)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, currentRarityItems.Count);
+                return currentRarityItems[randomIndex];
+            }
+        }
     }
 }

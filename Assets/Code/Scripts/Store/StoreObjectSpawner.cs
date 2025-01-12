@@ -29,6 +29,7 @@ public class StoreObjectSpawner : InteractableObject
         if (MoneyManager.Instance.SpendMoney(randomItem.price))
         {
             EnableCollisions(interactableObject, true);
+            UnparentAllChildren(gameObject);
             Destroy(gameObject);
         }
     }
@@ -52,5 +53,15 @@ public class StoreObjectSpawner : InteractableObject
 
         if (interactableObject.TryGetComponent(out Rigidbody interactableObjectRigidbody))
             interactableObjectRigidbody.isKinematic = !enable;
+    }
+
+    private void UnparentAllChildren(GameObject parentObject)
+    {
+        for (int i = parentObject.transform.childCount - 1; i >= 0; i--)
+        {
+            Transform child = parentObject.transform.GetChild(i);
+            
+            child.SetParent(null);
+        }
     }
 }

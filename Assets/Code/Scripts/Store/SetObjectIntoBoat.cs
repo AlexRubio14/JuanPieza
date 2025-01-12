@@ -17,10 +17,13 @@ public class SetObjectIntoBoat : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out InteractableObject interactableObject))
+        if (!MapManager.Instance.isVoting)
         {
-            interactableObject.hasToBeInTheShip = false;
-            ShipsManager.instance.playerShip.RemoveInteractuableObject(interactableObject);
+            if (other.TryGetComponent(out InteractableObject interactableObject))
+            {
+                interactableObject.hasToBeInTheShip = false;
+                ShipsManager.instance.playerShip.RemoveInteractuableObject(interactableObject);
+            }
         }
     }
 }
