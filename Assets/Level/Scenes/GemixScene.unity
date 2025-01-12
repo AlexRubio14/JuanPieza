@@ -2184,6 +2184,7 @@ MonoBehaviour:
   selectedVisual: {fileID: 1042921303}
   rb: {fileID: 1042921307}
   <grabPivot>k__BackingField: {fileID: 0}
+  hasToBeInTheShip: 1
 --- !u!54 &1042921307
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4848,6 +4849,54 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9085212229171415441, guid: 28aa9362f6307b5479de93e4b9e2765b, type: 3}
+      propertyPath: itemPool.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085212229171415441, guid: 28aa9362f6307b5479de93e4b9e2765b, type: 3}
+      propertyPath: 'itemPool.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: eac69d6c61e34504596fbd6cc72b6e96, type: 2}
+    - target: {fileID: 9085212229171415441, guid: 28aa9362f6307b5479de93e4b9e2765b, type: 3}
+      propertyPath: otherItemPool.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085212229171415441, guid: 28aa9362f6307b5479de93e4b9e2765b, type: 3}
+      propertyPath: 'otherItemPool.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: eac69d6c61e34504596fbd6cc72b6e96, type: 2}
+    - target: {fileID: 9085212229171415441, guid: 28aa9362f6307b5479de93e4b9e2765b, type: 3}
+      propertyPath: rarityPercentages._serializedList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085212229171415441, guid: 28aa9362f6307b5479de93e4b9e2765b, type: 3}
+      propertyPath: rarityPercentages._serializedList.Array.data[0].Key
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085212229171415441, guid: 28aa9362f6307b5479de93e4b9e2765b, type: 3}
+      propertyPath: rarityPercentages._serializedList.Array.data[1].Key
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085212229171415441, guid: 28aa9362f6307b5479de93e4b9e2765b, type: 3}
+      propertyPath: rarityPercentages._serializedList.Array.data[2].Key
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085212229171415441, guid: 28aa9362f6307b5479de93e4b9e2765b, type: 3}
+      propertyPath: rarityPercentages._serializedList.Array.data[3].Key
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085212229171415441, guid: 28aa9362f6307b5479de93e4b9e2765b, type: 3}
+      propertyPath: rarityPercentages._serializedList.Array.data[1].Value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085212229171415441, guid: 28aa9362f6307b5479de93e4b9e2765b, type: 3}
+      propertyPath: rarityPercentages._serializedList.Array.data[2].Value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085212229171415441, guid: 28aa9362f6307b5479de93e4b9e2765b, type: 3}
+      propertyPath: rarityPercentages._serializedList.Array.data[3].Value
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5380,6 +5429,7 @@ MonoBehaviour:
   selectedVisual: {fileID: 5229392248314916273}
   rb: {fileID: 5229392248314916276}
   <grabPivot>k__BackingField: {fileID: 0}
+  hasToBeInTheShip: 1
   repairItem: {fileID: 0}
   state: {fileID: 5229392248314916277}
   repairDuration: 0
@@ -5498,6 +5548,7 @@ MonoBehaviour:
   selectedVisual: {fileID: 3683029110478485667}
   rb: {fileID: 5970686518569809968}
   <grabPivot>k__BackingField: {fileID: 0}
+  hasToBeInTheShip: 1
   repairItem: {fileID: 0}
   state: {fileID: 5970686518569809969}
   repairDuration: 0
@@ -5857,6 +5908,7 @@ MonoBehaviour:
   selectedVisual: {fileID: 7150603932546401104}
   rb: {fileID: 7986250307955603517}
   <grabPivot>k__BackingField: {fileID: 0}
+  hasToBeInTheShip: 1
   repairItem: {fileID: 0}
   state: {fileID: 7986250307955603518}
   repairDuration: 0

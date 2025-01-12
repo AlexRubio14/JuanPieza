@@ -13,7 +13,12 @@ public class StoreObjectPool : MonoBehaviour
     [SerializedDictionary("Rarity", "Percentage")] public SerializedDictionary<ObjectSO.ItemRarity, float> rarityPercentages;
     
     private float totalPercentage;
-    
+    private void Start()
+    {
+        totalPercentage = 0;
+        foreach (KeyValuePair<ObjectSO.ItemRarity, float> item in rarityPercentages)
+            totalPercentage += item.Value;
+    }
     public ObjectSO[] GetItemPool()
     {
         return itemPool;
