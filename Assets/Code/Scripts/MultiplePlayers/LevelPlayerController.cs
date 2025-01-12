@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class LevelPlayerController : MonoBehaviour
 {
-    [SerializeField]
     private CameraController cameraCont;
     [SerializeField]
     private GameObject playerPrefab;
@@ -12,6 +11,12 @@ public class LevelPlayerController : MonoBehaviour
     private List<Transform> playersSpawnPos;
 
     private List<Vector3> safeSpawnPos;
+
+    [System.Obsolete]
+    private void Awake()
+    {
+        cameraCont = FindObjectOfType<CameraController>();
+    }
     void Start()
     {
         GetPlayerSpawnPos();
