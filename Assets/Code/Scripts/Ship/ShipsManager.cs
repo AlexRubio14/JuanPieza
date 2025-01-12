@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ShipsManager : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class ShipsManager : MonoBehaviour
         }
         else
         {
-            //Llamar a otra escena
+            SceneManager.LoadScene("MainMenu");
         }
     }
 

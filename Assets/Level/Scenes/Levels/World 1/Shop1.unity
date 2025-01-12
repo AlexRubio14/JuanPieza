@@ -799,6 +799,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 20, y: 1, z: 20}
   m_Center: {x: 0, y: -0.32, z: 0}
+--- !u!198 &190131262 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6300717128283190289, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
+  m_PrefabInstance: {fileID: 1878321905}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &191504006
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1825,6 +1830,7 @@ MonoBehaviour:
   repairItem: {fileID: 0}
   state: {fileID: 498684462}
   repairDuration: 0
+  repairParticles: {fileID: 190131262}
   itemDropped: {fileID: 11400000, guid: d1a4f89d8d9efee4db14633f515fcdee, type: 2}
   itemsInBox: 200
 --- !u!114 &498684465
@@ -5216,6 +5222,7 @@ MonoBehaviour:
   repairItem: {fileID: 0}
   state: {fileID: 1532454781}
   repairDuration: 0
+  repairParticles: {fileID: 190131262}
   itemDropped: {fileID: 11400000, guid: dffcfb1857ced7d4fb477cee9121a908, type: 2}
   itemsInBox: 200
 --- !u!114 &1532454784
@@ -5354,6 +5361,7 @@ MonoBehaviour:
   repairItem: {fileID: 0}
   state: {fileID: 1582456477}
   repairDuration: 0
+  repairParticles: {fileID: 190131262}
   itemDropped: {fileID: 11400000, guid: f7ef454cecb748d4e96323e6b241d203, type: 2}
   itemsInBox: 200
 --- !u!114 &1582456480
@@ -6167,6 +6175,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5238506259310301806, guid: b753a6b094becda438661aa6b106ab4c, type: 3}
   m_PrefabInstance: {fileID: 1845032216}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1878321905
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4036418579442813153, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 35.747097
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036418579442813153, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5899992
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036418579442813153, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.273162
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036418579442813153, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036418579442813153, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036418579442813153, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036418579442813153, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036418579442813153, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036418579442813153, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036418579442813153, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8487402871801164198, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
+      propertyPath: m_Name
+      value: RepairParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 8487402871801164198, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
 --- !u!1 &1926696505
 GameObject:
   m_ObjectHideFlags: 0
@@ -6621,3 +6690,4 @@ SceneRoots:
   - {fileID: 724001725}
   - {fileID: 1100847562}
   - {fileID: 49597906}
+  - {fileID: 1878321905}

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapManager : MonoBehaviour
 {
@@ -164,9 +165,9 @@ public class MapManager : MonoBehaviour
     public void InitVotations()
     {
         CameraManager.Instance.SetSailCamera(false);
-        if (currentLevel.children.Count == 1)
+        if (currentLevel.children.Count == 0)
         {
-            UpdateCurrentLevel(currentLevel.children[0], 2);
+            SceneManager.LoadScene("FinalScene");
             return;
         }
 
