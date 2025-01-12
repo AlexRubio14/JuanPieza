@@ -6,6 +6,8 @@ public class Beer : Resource
     {
         //playear animacion player
 
-        Destroy(this.gameObject);
+        _objectHolder.RemoveItemFromHand();
+        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
+        Destroy(gameObject);
     }
 }

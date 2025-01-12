@@ -7,6 +7,12 @@ public class CannonDouble : Weapon
     [SerializeField] private Transform bulletSpawnPosRight;
     [SerializeField] private Transform bulletSpawnPosLeft;
 
+    protected override void Start()
+    {
+        base.Start();
+        AddLoadParticle(bulletSpawnPosRight);
+        AddLoadParticle(bulletSpawnPosLeft);
+    }
     protected override void Shoot()
     {
         GameObject newBulletRight = Instantiate(bulletPrefab, bulletSpawnPosRight.transform.position, Quaternion.identity);
@@ -17,5 +23,7 @@ public class CannonDouble : Weapon
         newBulletLeft.GetComponent<Bullet>().SetDamage(weaponDamage);
 
         hasAmmo = false;
+        Instantiate(shootParticles, bulletSpawnPosRight.position, Quaternion.identity);
+        Instantiate(shootParticles, bulletSpawnPosLeft.position, Quaternion.identity);
     }
 }

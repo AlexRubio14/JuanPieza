@@ -182,7 +182,7 @@ public class FishingManager : MonoBehaviour
 
             //Dejar la caña anclada en el suelo
             fishingData[_id].fishingRod.DropItem(fishingData[_id].fishingRod.player.objectHolder);
-
+            fishingData[_id].fishingRod.rb.isKinematic = true;
             //Poner el objeto en la mano                                                        
             fishingData[_id].fishedObject.GetComponent<InteractableObject>().Interact(fishingData[_id].fishingRod.player.objectHolder);
         }
@@ -343,7 +343,7 @@ public class FishingManager : MonoBehaviour
         //Instanciarlo
         GameObject newItem = Instantiate(itemData.prefab, _fishingRod.hook.transform.position, Quaternion.identity);
         //Colocarlo
-        newItem.transform.forward = -_fishingRod.player.transform.forward;
+        newItem.transform.forward = _fishingRod.player.transform.forward;
         //Cambiar al estado de Recogida
         FishingData newData = fishingData[_id];
         newData.fishingState = FishingState.HOOKED_OBJECT;

@@ -42,6 +42,7 @@ public class WoodShelf : Box
 
     public override void OnBreakObject()
     {
+        base.OnBreakObject();
         switch (itemsInBox)
         {
             case 0:

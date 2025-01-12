@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [field: SerializeField]
+    public GameObject hitParticles;
+
     private float damage;
 
     private bool damageDone;
