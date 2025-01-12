@@ -6,8 +6,9 @@ public class Cigarrette : Resource
     private float currentTime;
     private bool isSmoking;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         isSmoking = false;
         currentTime = smokeTime;
     }

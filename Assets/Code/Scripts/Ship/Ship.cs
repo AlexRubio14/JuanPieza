@@ -166,18 +166,28 @@ public class Ship : MonoBehaviour
         currentWeight -= _weight;
     }
 
-    public List<InteractableObject> GetAllWeapons()
+    public List<InteractableObject> GetObjectOfType(ObjectSO.ObjectType _type)
     {
-        List<InteractableObject> weaponList = new List<InteractableObject>();
+        List<InteractableObject> objectList = new List<InteractableObject>();
 
         foreach (InteractableObject item in objects)
         {
-            if(item is Weapon)
-                weaponList.Add(item);
+            if(item.objectSO.objectType == _type)
+                objectList.Add(item);
         }
 
-        return weaponList;
+        return objectList;
+    }
+    public bool ItemExist(ObjectSO _object)
+    {
+        foreach (InteractableObject item in objects)
+        {
+            if (item.objectSO == _object)
+                return true;
+            
+        }
 
+        return false;
     }
     public List<InteractableObject> GetInventory()
     {

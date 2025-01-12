@@ -1,13 +1,15 @@
 using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
+using Unity.Jobs;
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
     [SerializeField]
     private ObjectSO[] itemPool;
-    [SerializeField]
-    private int[] priorityList;
+
+    [Space, Header("Priority List"), SerializeField]
+    private ObjectSO[] priorityList;
     
     [SerializedDictionary("Rarity", "Percentage")]
     public SerializedDictionary<ObjectSO.ItemRarity, float> rarityPercentages;
@@ -44,9 +46,14 @@ public class ObjectPool : MonoBehaviour
 
     public ObjectSO GetRandomItem()
     {
+        ObjectSO priorityObject = GetObjectFromPriorityList();
+        if (priorityObject != null)
+            return priorityObject;
+
+
         ObjectSO.ItemRarity currentRarity = ObjectSO.ItemRarity.BASIC;
 
-        float randNum = UnityEngine.Random.Range(0, totalPercentage);
+        float randNum = Random.Range(0, totalPercentage);
         float currentPercentage = 0;
         foreach (KeyValuePair<ObjectSO.ItemRarity, float> item in rarityPercentages)
         {
@@ -67,7 +74,7 @@ public class ObjectPool : MonoBehaviour
                 currentRarityItems.Add(item);
         }
 
-        int randomItem = UnityEngine.Random.Range(0, currentRarityItems.Count);
+        int randomItem = Random.Range(0, currentRarityItems.Count);
 
         switch (currentRarityItems[randomItem].rarity)
         {
@@ -91,5 +98,48 @@ public class ObjectPool : MonoBehaviour
         return currentRarityItems[randomItem];
     }
 
+    private ObjectSO GetObjectFromPriorityList()
+    {
+        //Comprobar uno a uno los objetos 
 
+        /*Comprobar madera
+         * Buscar la caja de madera y ver los objetos que tiene
+         * Ver si hay madera suelta por el barco
+         * Si no hay nada de madera en la caja ni en el barco devolver la madera
+         */
+        if (!CheckObjectInsideBox(priorityList[0]) && !ShipsManager.instance.playerShip.ItemExist(priorityList[0]))
+            return priorityList[0];
+        /* Cañones
+         * Si no hay ninguna arma en el barco devolver un cañon
+         */
+        if (!CheckObjectByType(priorityList[1]))
+            return priorityList[1];
+
+        /* Balas
+         * Buscar la caja de balas y ver los objetos que tiene
+         * Ver si hay balas suelta por el barco
+         * Si no hay nada de balas ni en la caja ni en el barco devolver la bala
+         */
+        if (!CheckObjectInsideBox(priorityList[2]) && !ShipsManager.instance.playerShip.ItemExist(priorityList[2]))
+            return priorityList[2];
+
+        return null;
+    }
+    private bool CheckObjectInsideBox(ObjectSO _object)
+    {
+        List<InteractableObject> objectList = ShipsManager.instance.playerShip.GetObjectOfType(ObjectSO.ObjectType.BOX);
+
+        foreach (InteractableObject item in objectList)
+        {
+            Box currentBox = item as Box;
+            if (currentBox.GetItemToDrop() == _object && currentBox.HasItems())
+                return true;
+        }
+
+        return false;
+    }
+    private bool CheckObjectByType(ObjectSO _object)
+    {
+        return ShipsManager.instance.playerShip.GetObjectOfType(_object.objectType).Count > 0;
+    }
 }

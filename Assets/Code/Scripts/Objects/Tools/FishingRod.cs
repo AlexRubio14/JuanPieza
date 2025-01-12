@@ -24,8 +24,9 @@ public class FishingRod : Tool
 
     public PlayerController player { get; private set; }
     public PlayerStateMachine playerSM { get; private set; }
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
 
         if (FishingManager.instance && !fishingRodAdded)
         {
@@ -117,8 +118,9 @@ public class FishingRod : Tool
 
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         if (FishingManager.instance)
         {
             FishingManager.instance.AddFishingRod(this);

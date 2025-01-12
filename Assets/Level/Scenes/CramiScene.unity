@@ -633,6 +633,10 @@ PrefabInstance:
       value: 'CanonBox '
       objectReference: {fileID: 0}
     - target: {fileID: 6036797146210223406, guid: 1b04e7ce2409d1e40a8ebc589fcef529, type: 3}
+      propertyPath: itemsInBox
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036797146210223406, guid: 1b04e7ce2409d1e40a8ebc589fcef529, type: 3}
       propertyPath: hasToBeInTheShip
       value: 1
       objectReference: {fileID: 0}
@@ -757,6 +761,10 @@ PrefabInstance:
       value: WoodBox
       objectReference: {fileID: 0}
     - target: {fileID: 6036797146210223406, guid: 120ad1961838cad419dec25ea1640fc0, type: 3}
+      propertyPath: itemsInBox
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036797146210223406, guid: 120ad1961838cad419dec25ea1640fc0, type: 3}
       propertyPath: hasToBeInTheShip
       value: 1
       objectReference: {fileID: 0}
@@ -818,14 +826,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1301786794}
     m_Modifications:
-    - target: {fileID: 210622050369948143, guid: d448d01e81359114eaad0c045e827948, type: 3}
-      propertyPath: rarityPercentages._serializedList.Array.data[2].Value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 210622050369948143, guid: d448d01e81359114eaad0c045e827948, type: 3}
-      propertyPath: rarityPercentages._serializedList.Array.data[3].Value
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7356194627300511325, guid: d448d01e81359114eaad0c045e827948, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1044,11 +1044,15 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1260044290}
     m_Modifications:
     - target: {fileID: 1687742630878781227, guid: 78df7070c1a53ba469f6105cf2dea62f, type: 3}
       propertyPath: m_Name
       value: CannonDouble
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687742630878781227, guid: 78df7070c1a53ba469f6105cf2dea62f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3527029587255982843, guid: 78df7070c1a53ba469f6105cf2dea62f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1068,15 +1072,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3527029587255982843, guid: 78df7070c1a53ba469f6105cf2dea62f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3527029587255982843, guid: 78df7070c1a53ba469f6105cf2dea62f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3527029587255982843, guid: 78df7070c1a53ba469f6105cf2dea62f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3527029587255982843, guid: 78df7070c1a53ba469f6105cf2dea62f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1447,6 +1451,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cannon
       objectReference: {fileID: 0}
+    - target: {fileID: 8849408466616681510, guid: 279e1b58b6dc117449b41eda3ae35bec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1712,6 +1720,7 @@ Transform:
   - {fileID: 428191335}
   - {fileID: 1072442224}
   - {fileID: 1108613370}
+  - {fileID: 1846661031}
   - {fileID: 2018602521}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2428,6 +2437,11 @@ Transform:
   - {fileID: 248619829}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1846661031 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3527029587255982843, guid: 78df7070c1a53ba469f6105cf2dea62f, type: 3}
+  m_PrefabInstance: {fileID: 683605981}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1968356546
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2816,4 +2830,3 @@ SceneRoots:
   - {fileID: 1445898211}
   - {fileID: 2114015575}
   - {fileID: 1534582616}
-  - {fileID: 683605981}

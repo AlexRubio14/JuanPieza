@@ -10,8 +10,9 @@ public class WoodShelf : Box
     [Header("Force")]
     [SerializeField] private float forceMultiplier;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         currentDecorationInShelf = 4;
 
         while(currentDecorationInShelf != itemsInBox)
