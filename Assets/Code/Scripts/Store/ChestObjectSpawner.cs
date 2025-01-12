@@ -45,8 +45,7 @@ public class ChestObjectSpawner : InteractableObject
 
             if (randomItem.prefab != null)
             {
-                Instantiate(randomItem.prefab, transform.position, transform.rotation);
-                Destroy(gameObject);
+                SpawnObject(randomItem);
             }
         }
     }
@@ -59,9 +58,15 @@ public class ChestObjectSpawner : InteractableObject
 
             if (randomItem.prefab != null)
             {
-                Instantiate(randomItem.prefab, transform.position, transform.rotation);
-                Destroy(gameObject);
+                SpawnObject(randomItem);
             }
         }
+    }
+
+    private void SpawnObject(ObjectSO _item)
+    {
+        InteractableObject interactableObject = Instantiate(_item.prefab, transform.position, transform.rotation).GetComponent<InteractableObject>();
+        interactableObject.hasToBeInTheShip = false;
+        Destroy(gameObject);
     }
 }

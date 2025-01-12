@@ -25,6 +25,8 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float secondPointZ;
     [SerializeField] private float secondPointX;
 
+    public bool isVoting;
+
     private void Awake()
     {
         if (Instance == null)
@@ -148,7 +150,8 @@ public class MapManager : MonoBehaviour
     {
         CameraManager.Instance.SetSailCamera(true);
         CameraManager.Instance.SetSimpleCamera(false);
-
+        
+        isVoting = true;
         votations = _votations;
     }
 

@@ -28,6 +28,7 @@ public class ShipCurve : Ship
 
             if (t > 0.5f)
             {
+                MapManager.Instance.isVoting = false;
                 startMovement = false;
                 ShipSceneManager.Instance.SetObjectsToSpawn();
                 ShipSceneManager.Instance.SetShipId(idShip, currentHealth, targetHeight);
