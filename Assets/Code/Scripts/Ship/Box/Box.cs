@@ -73,9 +73,7 @@ public class Box : RepairObject
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
     
         if (!handObject && HasItems() || handObject && handObject.objectSO == objectToInteract)
-        {
             return HintController.ActionType.INTERACT;
-        }
         
         return HintController.ActionType.NONE;
     }

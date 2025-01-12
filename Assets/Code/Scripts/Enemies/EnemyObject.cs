@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class EnemyObject : MonoBehaviour
 {
-    [SerializeField]
+    [Header("Base Object"), SerializeField]
     public EnemieManager enemieManager;
 
     public bool isBroken;
