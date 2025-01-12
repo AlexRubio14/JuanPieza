@@ -383,12 +383,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7731135145869046553, guid: b753a6b094becda438661aa6b106ab4c, type: 3}
       propertyPath: followColliders.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7731135145869046553, guid: b753a6b094becda438661aa6b106ab4c, type: 3}
       propertyPath: 'followColliders.Array.data[0]'
       value: 
       objectReference: {fileID: 1137574847}
+    - target: {fileID: 7731135145869046553, guid: b753a6b094becda438661aa6b106ab4c, type: 3}
+      propertyPath: 'followColliders.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1301712228}
+    - target: {fileID: 7731135145869046553, guid: b753a6b094becda438661aa6b106ab4c, type: 3}
+      propertyPath: 'followColliders.Array.data[2]'
+      value: 
+      objectReference: {fileID: 828756543}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1293,6 +1301,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6764713892806314720, guid: d7a4b616d743d024f92e210e58121e9c, type: 3}
   m_PrefabInstance: {fileID: 715356303}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &828756543 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 7661529991447553728, guid: d7a4b616d743d024f92e210e58121e9c, type: 3}
+  m_PrefabInstance: {fileID: 715356303}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1050180326 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8235452403105692152, guid: d7a4b616d743d024f92e210e58121e9c, type: 3}
@@ -1776,6 +1789,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2640195164968152856, guid: 171ae1f2bae127d43bfe7e2c8f8ce37a, type: 3}
   m_PrefabInstance: {fileID: 1281034607}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &1301712228 stripped
+MeshCollider:
+  m_CorrespondingSourceObject: {fileID: 1402650903134989357, guid: d7a4b616d743d024f92e210e58121e9c, type: 3}
+  m_PrefabInstance: {fileID: 715356303}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1301786793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1845,6 +1863,7 @@ MonoBehaviour:
   firstPointZ: 40
   secondPointZ: 80
   secondPointX: 25
+  isVoting: 0
 --- !u!4 &1445898211
 Transform:
   m_ObjectHideFlags: 0
