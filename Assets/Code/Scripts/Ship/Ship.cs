@@ -235,4 +235,9 @@ public class Ship : MonoBehaviour
     {
         return newY;
     }
+
+    public bool GetIsEnemy()
+    {
+        return isEnemy;
+    }
 }

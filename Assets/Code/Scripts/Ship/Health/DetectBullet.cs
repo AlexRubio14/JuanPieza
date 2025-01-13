@@ -19,6 +19,8 @@ public class DetectBullet : MonoBehaviour
     {
         _bullet.SetDamageDone(true);
         ship.SetCurrentHealth(-_bullet.GetDamage());
+        if (!ship.GetIsEnemy())
+            Camera.main.GetComponent<CameraShaker>().TriggerShake(1);
         Destroy(collision.gameObject);
     }
 
