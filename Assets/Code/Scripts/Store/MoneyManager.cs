@@ -8,6 +8,10 @@ public class MoneyManager : MonoBehaviour
     [SerializeField] private int startingMoney = 100;
     private int currentMoney;
 
+    [Space, Header("Audio")]
+    [SerializeField] private AudioClip spendMoneyClip;
+    [SerializeField] private AudioClip gainMoneyClip;
+
     public UnityEvent<int> OnMoneyChanged;
 
     private void Awake()

@@ -8,7 +8,7 @@ public class MenuHandler : MonoBehaviour
 
     private void Awake()
     {
-        audioSource = AudioManager.instance.Play2dLoop(AudioManager.instance.musicClip, "Music");
+        audioSource = AudioManager.instance.Play2dLoop(AudioManager.instance.musicClip, "Music", 1, 1, 1);
     }
 
     public void PlayButton()
