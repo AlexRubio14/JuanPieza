@@ -11,7 +11,7 @@ public class ObjectHolder : MonoBehaviour
     private InteractableObject interactableObject;
 
     [SerializeField] private Transform[] objectPickedPos;
-    private HintController hintController;
+    public HintController hintController { private set;  get; }
 
     private bool hasPickedObject = false;
 
@@ -139,7 +139,10 @@ public class ObjectHolder : MonoBehaviour
             if (!_nearestObject)
             {
                 nearestInteractableObject = _nearestObject;
-                hintController.UpdateActionType(HintController.ActionType.NONE);
+                if (interactableObject)
+                    hintController.UpdateActionType(interactableObject.ShowNeededInputHint(this));
+                else
+                    hintController.UpdateActionType(HintController.ActionType.NONE);
                 return;
             }
 
@@ -153,8 +156,8 @@ public class ObjectHolder : MonoBehaviour
 
             nearestInteractableObject = _nearestObject;
             
-           
-            hintController.UpdateActionType(nearestInteractableObject.ShowNeededInputHint(this));
+           if(!interactableObject || interactableObject  && interactableObject.objectToInteract == _nearestObject)
+                hintController.UpdateActionType(nearestInteractableObject.ShowNeededInputHint(this));
         }
     }
 

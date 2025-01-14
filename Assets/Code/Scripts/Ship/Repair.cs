@@ -31,6 +31,7 @@ public class Repair : InteractableObject
             playerCont.animator.SetBool("Interacting", true);
             playerCont.progressBar.EnableProgressBar(true);
             players.Add(playerCont);
+            playerCont.stateMachine.ChangeState(playerCont.stateMachine.repairState);
         }
     }
     public override void StopInteract(ObjectHolder _objectHolder)
@@ -39,6 +40,7 @@ public class Repair : InteractableObject
         playerCont.animator.SetBool("Interacting", false);
         playerCont.progressBar.EnableProgressBar(false);
         players.Remove(playerCont);
+        playerCont.stateMachine.ChangeState(playerCont.stateMachine.idleState);
     }
     public override void UseItem(ObjectHolder _objectHolder)
     {
@@ -106,10 +108,10 @@ public class Repair : InteractableObject
     }
     public ObjectState GetObjectState() { return state; }
 
+    public virtual void OnBreakObject() { }
     protected virtual void RepairEnded(ObjectHolder _objectHolder)
     {
-
+        _objectHolder.hintController.UpdateActionType(HintController.ActionType.NONE);
     }
 
-    public virtual void OnBreakObject() { }
 }

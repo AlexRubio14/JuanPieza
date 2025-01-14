@@ -10,6 +10,7 @@ public class PlayerStateMachine : MonoBehaviour
     public PushState pushState { get; private set; }
     public FishingState fishingState { get; private set; }
     public CannonState cannonState { get; private set; }
+    public RepairState repairState { get; private set; }
     public DeathState deathState { get; private set; }
     
 
@@ -27,6 +28,8 @@ public class PlayerStateMachine : MonoBehaviour
         fishingState.InitializeState(_controller, this);
         cannonState = new CannonState();
         cannonState.InitializeState(_controller, this);
+        repairState = new RepairState();
+        repairState.InitializeState(_controller, this);
         deathState = new DeathState();
         deathState.InitializeState(_controller, this);
 

@@ -92,18 +92,15 @@ public abstract class Weapon : RepairObject
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
-        if (!handObject || isBeingUsed && !hasAmmo)
+        if (!handObject && !isBeingUsed //No tiene nada en la mano y no hay nadie montado
+            || isBeingUsed && !hasAmmo //Si lo esta utilizando y no esta cargado
+            || !hasAmmo && !isBeingUsed && handObject && handObject.objectSO == objectToInteract //Si no esta cargado y tiene la bala en la mano
+            )
         {
             return HintController.ActionType.INTERACT;
-        }
-        if (hasAmmo)
+        }else if (hasAmmo)
         {
             return HintController.ActionType.USE;
-        }
-        if (!hasAmmo && handObject && handObject.objectSO == objectToInteract)
-        {
-            return HintController.ActionType.INTERACT;
-            //return HintController.ActionType.HOLD;
         }
 
         return HintController.ActionType.NONE;
@@ -172,17 +169,25 @@ public abstract class Weapon : RepairObject
     public override void OnBreakObject()
     {
         base.OnBreakObject();
+
+        hasAmmo = false;
+        animator.SetBool("HasAmmo", false);
+        foreach (ParticleSystem item in loadParticles)
+            item.Stop(true);
+        
         if (mountedPlayerId == -1)
             return;
 
         PlayerController currentPlayer = PlayersManager.instance.ingamePlayers[mountedPlayerId];
         UnMount(currentPlayer, currentPlayer.objectHolder);
         currentPlayer.animator.SetBool("Pick", false);
-        hasAmmo = false;
-        animator.SetBool("HasAmmo", false);
+        
+    }
+    protected override void RepairEnded(ObjectHolder _objectHolder)
+    {
+        base.RepairEnded(_objectHolder);
         foreach (ParticleSystem item in loadParticles)
             item.Stop(true);
     }
-
     protected abstract void Shoot();
 }

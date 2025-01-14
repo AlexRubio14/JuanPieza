@@ -142,6 +142,7 @@ GameObject:
   - component: {fileID: 3496142784780330206}
   - component: {fileID: 7731135145869046553}
   - component: {fileID: 2794290285723518631}
+  - component: {fileID: 2418781259822060767}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -282,7 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camState: 0
-  playerColliders: []
+  followColliders: []
   minYDistance: 13
   maxZDistance: 100
   insideCamera: {fileID: 2842666792115895197}
@@ -303,10 +304,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edd31aaf2b405664ca5d823c4d1657bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newZ: -40
-  newY: 7
   moveSpeed: 0.5
   rotationSpeed: 1
+--- !u!114 &2418781259822060767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3501125521386863006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b09a2c82576187c4880c631b01d1f9a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeDuration: 0.5
+  shakeMagnitude: 0.2
+  dampingSpeed: 1
 --- !u!1 &8684740041016006207
 GameObject:
   m_ObjectHideFlags: 0
