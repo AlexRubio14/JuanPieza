@@ -25,10 +25,38 @@ public class Cigarrette : Resource
         }
     }
 
+
+    public override bool CanInteract(ObjectHolder _objectHolder)
+    {
+        return !_objectHolder.GetHasObjectPicked();
+    }
+
+    public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        if (!_objectHolder.GetHasObjectPicked())
+            return HintController.ActionType.INTERACT;
+        else if (_objectHolder.GetHandInteractableObject() == this)
+            return HintController.ActionType.USE;
+
+        return HintController.ActionType.NONE;
+    }
+
+    public override void Interact(ObjectHolder _objectHolder)
+    {
+        base.Interact(_objectHolder);
+        _objectHolder.hintController.UpdateActionType(HintController.ActionType.USE);
+    }
+
     public override void UseItem(ObjectHolder _objectHolder)
     {
         //playear animacion player
         _objectHolder.GetComponentInParent<CigarretteController>().ActivateCigarrette();
+        _objectHolder.RemoveItemFromHand();
+        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
+
+        _objectHolder.hintController.UpdateActionType(HintController.ActionType.NONE);
+
+        Destroy(gameObject);
         
     }
 }

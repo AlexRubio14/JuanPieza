@@ -182,7 +182,6 @@ public class FishingManager : MonoBehaviour
 
             //Dejar la caña anclada en el suelo
             fishingData[_id].fishingRod.DropItem(fishingData[_id].fishingRod.player.objectHolder);
-            fishingData[_id].fishingRod.rb.isKinematic = true;
             //Poner el objeto en la mano                                                        
             fishingData[_id].fishedObject.GetComponent<InteractableObject>().Interact(fishingData[_id].fishingRod.player.objectHolder);
         }
