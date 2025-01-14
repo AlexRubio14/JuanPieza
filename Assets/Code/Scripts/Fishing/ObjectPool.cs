@@ -127,16 +127,7 @@ public class ObjectPool : MonoBehaviour
     }
     private bool CheckObjectInsideBox(ObjectSO _object)
     {
-        List<InteractableObject> objectList = ShipsManager.instance.playerShip.GetObjectOfType(ObjectSO.ObjectType.BOX);
-
-        foreach (InteractableObject item in objectList)
-        {
-            Box currentBox = item as Box;
-            if (currentBox.GetItemToDrop() == _object && currentBox.HasItems())
-                return true;
-        }
-
-        return false;
+        return ShipsManager.instance.playerShip.GetObjectBoxByObject(_object).HasItems();
     }
     private bool CheckObjectByType(ObjectSO _object)
     {

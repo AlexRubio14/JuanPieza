@@ -189,6 +189,19 @@ public class Ship : MonoBehaviour
 
         return false;
     }
+    public Box GetObjectBoxByObject(ObjectSO _object)
+    {
+        List<InteractableObject> objectList = ShipsManager.instance.playerShip.GetObjectOfType(ObjectSO.ObjectType.BOX);
+
+        foreach (InteractableObject item in objectList)
+        {
+            Box currentBox = item as Box;
+            if (currentBox.GetItemToDrop() == _object)
+                return currentBox;
+        }
+
+        return null;
+    }
     public List<InteractableObject> GetInventory()
     {
         return objects;
