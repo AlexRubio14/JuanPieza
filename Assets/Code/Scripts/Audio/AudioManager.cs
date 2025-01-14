@@ -21,6 +21,11 @@ public class AudioManager : MonoBehaviour
     GameObject actions3dASObj;
     private AudioSource[] actions3dAS;
 
+    [SerializeField] public AudioClip seagullClip;
+    [SerializeField] public AudioClip musicClip;
+    [HideInInspector] public AudioSource seagullAs;
+
+
     private void Awake()
     {
         if (instance != null && instance != this)

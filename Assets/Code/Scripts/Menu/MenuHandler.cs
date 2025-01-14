@@ -3,8 +3,17 @@ using UnityEngine.SceneManagement;
 
 public class MenuHandler : MonoBehaviour
 {
+
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = AudioManager.instance.Play2dLoop(AudioManager.instance.musicClip, "Music");
+    }
+
     public void PlayButton()
     {
+        AudioManager.instance.seagullAs = AudioManager.instance.Play2dLoop(AudioManager.instance.seagullClip, "Music", 1, 1, 1);
         SceneManager.LoadScene("Battle0");
     }
 
