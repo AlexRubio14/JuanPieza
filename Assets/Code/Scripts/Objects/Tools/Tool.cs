@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Tool : InteractableObject
 {
     public override void Interact(ObjectHolder _objectHolder)
@@ -27,7 +29,11 @@ public class Tool : InteractableObject
     protected override void OnDestroy()
     {
         base.OnDestroy();
+        Box box = ShipsManager.instance.playerShip.GetObjectBoxByObject(objectSO);
 
-        ShipsManager.instance.playerShip.GetObjectBoxByObject(objectSO).AddItemInBox();
+        if (box != null)
+            box.AddItemInBox();
+        
+
     }
 }

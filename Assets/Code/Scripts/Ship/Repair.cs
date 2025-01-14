@@ -108,10 +108,10 @@ public class Repair : InteractableObject
     }
     public ObjectState GetObjectState() { return state; }
 
+    public virtual void OnBreakObject() { }
     protected virtual void RepairEnded(ObjectHolder _objectHolder)
     {
-
+        _objectHolder.hintController.UpdateActionType(HintController.ActionType.NONE);
     }
 
-    public virtual void OnBreakObject() { }
 }
