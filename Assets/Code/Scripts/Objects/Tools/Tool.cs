@@ -23,4 +23,11 @@ public class Tool : InteractableObject
         _objectHolder.RemoveItemFromHand();
     }
     public override void UseItem(ObjectHolder _objectHolder) { }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        ShipsManager.instance.playerShip.GetObjectBoxByObject(objectSO).AddItemInBox();
+    }
 }
