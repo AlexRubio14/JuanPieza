@@ -16,6 +16,8 @@ public abstract class Resource : InteractableObject
         _objectHolder.ChangeObjectInHand(this);
         
         selectedVisual.Hide();
+
+        AudioManager.instance.Play2dOneShotSound(_objectHolder.pickUpClip, "Objects");
     }
     private void DropItem(ObjectHolder _objectHolder)
     {

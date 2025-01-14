@@ -30,6 +30,8 @@ public class DeathState : PlayerState
 
         controller.animator.SetTrigger("Dead");
         controller.animator.SetBool("Swimming", true);
+
+        AudioManager.instance.Play2dOneShotSound(controller.dieClip, "Objects");
     }
     public override void UpdateState()
     {

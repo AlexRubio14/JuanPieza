@@ -19,6 +19,7 @@ public abstract class InteractableObject : MonoBehaviour
 
     public bool hasToBeInTheShip = true;
     
+    
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();

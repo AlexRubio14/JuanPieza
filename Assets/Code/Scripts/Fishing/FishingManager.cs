@@ -43,6 +43,9 @@ public class FishingManager : MonoBehaviour
     [field: SerializeField]
     public float deathZPos { get; private set; }
 
+    [field: Space, Header("audio"), SerializeField]
+    private AudioClip revivePlayerClip;
+
     private void Awake()
     {
         if (instance)
@@ -143,6 +146,7 @@ public class FishingManager : MonoBehaviour
             StopFishing(fishingData[_id].fishingRod);
             //Cambiar el estado del player muerto
             fishingData[_id].currentPlayer.Item1.deathStateMachine.ChangeState(fishingData[_id].currentPlayer.Item1.deathStateMachine.idleState);
+            AudioManager.instance.Play2dOneShotSound(revivePlayerClip, "Objects");
         }
     }
 

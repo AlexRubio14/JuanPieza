@@ -7,6 +7,7 @@ public class ObjectState : MonoBehaviour
     [SerializeField] private GameObject brokenSibling;
 
     [SerializeField] private bool isBroken;
+    [SerializeField] private AudioClip brokeClip;
 
     public void SetIsBroke(bool state)
     {
@@ -18,6 +19,11 @@ public class ObjectState : MonoBehaviour
             fixedSibling.SetActive(!state);
         if(brokenSibling)
             brokenSibling.SetActive(state);
+
+        if(state)
+        {
+            AudioManager.instance.Play2dOneShotSound(brokeClip, "Objects");
+        }
     }
 
     public bool GetIsBroken()

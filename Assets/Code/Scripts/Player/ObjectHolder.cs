@@ -5,7 +5,11 @@ public class ObjectHolder : MonoBehaviour
     [SerializeField] private float sphereCastRadius;
     [SerializeField] private LayerMask itemsLayerMask;
     [SerializeField] private Transform sphereCastTransform;
-    
+
+    [field: Space, Header("Audio"), SerializeField]
+    public AudioClip pickUpClip;
+
+
     private InteractableObject nearestInteractableObject;
 
     private InteractableObject interactableObject;
@@ -171,6 +175,7 @@ public class ObjectHolder : MonoBehaviour
         item.transform.SetParent(transform.parent, true);
         item.transform.position = objectPickedPos[(int)_interactableObject.objectSize].position;
         ChangeObjectInHand(item);
+        AudioManager.instance.Play2dOneShotSound(pickUpClip, "Objects");
         return item;
     }
     private void OnDrawGizmos()

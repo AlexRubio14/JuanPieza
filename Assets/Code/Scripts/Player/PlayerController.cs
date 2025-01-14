@@ -71,6 +71,8 @@ public class PlayerController : MonoBehaviour
     public float cannonRotationSpeed { get; private set; }
     public float cannonTilt {  get; private set; }
 
+    [field: Space, Header("Audio"), SerializeField]
+    public AudioClip dieClip;
 
     public Animator animator { get; private set; }
     

@@ -8,5 +8,6 @@ public class EnemyCannon : EnemyWeapon
         bulletRb.GetComponent<Bullet>().SetDamage(weaponDamage);
         bulletRb.AddForce(bulletSpawnPosition.forward * bulletForce, ForceMode.Impulse);
         Instantiate(shootParticles, bulletSpawnPosition.position, Quaternion.identity);
+        AudioManager.instance.Play2dOneShotSound(shootClip, "Objects");
     }
 }
