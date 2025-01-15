@@ -17,7 +17,8 @@ public class CannonState : PlayerState
     {
         MoveCannon();
         TiltCannon();
-        controller.CheckSlope(controller.slopeCheckDistance, controller.slopeOffset);
+        if(controller.movementInput != Vector2.zero)
+            controller.CheckSlope(controller.slopeCheckDistance, controller.slopeOffset);
     }
     public override void ExitState()
     {
