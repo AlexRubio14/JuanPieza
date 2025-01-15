@@ -31,7 +31,7 @@ public class ShipCurve : Ship
                 MapManager.Instance.isVoting = false;
                 startMovement = false;
                 ShipSceneManager.Instance.SetObjectsToSpawn();
-                ShipSceneManager.Instance.SetShipId(idShip, currentHealth, targetHeight);
+                ShipSceneManager.Instance.SetShipId(idShip, currentHealth, targetHeight, isBarrelBoxActive);
                 ShipSceneManager.Instance.SetPlayerPosition();
                 SceneManager.LoadScene(MapManager.Instance.GetCurrentLevel().sceneName);
             }

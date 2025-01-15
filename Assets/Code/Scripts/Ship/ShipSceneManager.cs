@@ -13,7 +13,8 @@ public class ShipSceneManager : MonoBehaviour
     private float shipHealth;
     private float shipCurrentY;
     private float shipInitY;
-    
+    private bool shipHasCatapult;
+
     public Dictionary<ObjectSO, int> shipBoxes = new Dictionary<ObjectSO, int>();
     
     [Header("Delete post Alp")]
@@ -78,11 +79,12 @@ public class ShipSceneManager : MonoBehaviour
         shipBoxes[objectSo] = box.GetItemsInBox();
     }
 
-    public void SetShipId(int id, float currentHealth, float currentY)
+    public void SetShipId(int id, float currentHealth, float currentY, bool currentHasCatapult)
     {
         shipId = id;
         shipHealth = currentHealth;
         shipCurrentY = currentY;
+        shipHasCatapult = currentHasCatapult;
         shipInitY = ShipsManager.instance.playerShip.GetInitY();
     }
 
@@ -124,6 +126,7 @@ public class ShipSceneManager : MonoBehaviour
         ShipsManager.instance.SetShip(_ship.GetComponent<Ship>());
         ShipsManager.instance.playerShip.SetHealth(shipHealth);
         ShipsManager.instance.playerShip.SetHeightY(shipCurrentY, shipInitY);
+        ShipsManager.instance.playerShip.SetBarrelBox(shipHasCatapult);
         InstantiateObjects();
         SetBoxesItem();
     }

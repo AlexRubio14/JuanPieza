@@ -570,6 +570,8 @@ MonoBehaviour:
   newZ: -40
   newY: 7
   isEnemy: 0
+  barrelBox: {fileID: 1136983717902948880}
+  isBarrelBoxActive: 0
   speed: 0.05
 --- !u!114 &3787857318974121445
 MonoBehaviour:
@@ -2066,7 +2068,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2125427756097205554, guid: b7520769d6888d64eafef75ab221592a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5100047750367461396, guid: b7520769d6888d64eafef75ab221592a, type: 3}
       propertyPath: m_Enabled
@@ -2137,6 +2139,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7520769d6888d64eafef75ab221592a, type: 3}
+--- !u!1 &1136983717902948880 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2125427756097205554, guid: b7520769d6888d64eafef75ab221592a, type: 3}
+  m_PrefabInstance: {fileID: 1348944510481067810}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7201022905924297206 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8167073194016919252, guid: b7520769d6888d64eafef75ab221592a, type: 3}

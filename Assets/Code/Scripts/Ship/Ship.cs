@@ -46,6 +46,8 @@ public class Ship : MonoBehaviour
     private Animator animator;
 
     [SerializeField] private bool isEnemy = true;
+    [SerializeField] private GameObject barrelBox;
+    [SerializeField] protected bool isBarrelBoxActive;
 
     public void Initialize()
     {
@@ -57,6 +59,9 @@ public class Ship : MonoBehaviour
         }
 
         animator = GetComponent<Animator>();
+
+        if(barrelBox != null)
+            barrelBox.SetActive(isBarrelBoxActive);
     }
 
     public void InitEnemyShip()
@@ -70,6 +75,9 @@ public class Ship : MonoBehaviour
 
     private void Update()
     {
+        if(barrelBox != null)
+            barrelBox.SetActive(isBarrelBoxActive);
+
         FlotationLerp();
         WeightControl();
     }
@@ -279,5 +287,10 @@ public class Ship : MonoBehaviour
     public List<Transform> GetSpawnPoints()
     {
         return playersSpawnPos;
+    }
+
+    public void SetBarrelBox(bool value)
+    {
+        isBarrelBoxActive = value;
     }
 }

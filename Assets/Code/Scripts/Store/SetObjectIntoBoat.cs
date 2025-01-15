@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class SetObjectIntoBoat : MonoBehaviour
@@ -12,6 +11,11 @@ public class SetObjectIntoBoat : MonoBehaviour
         {
             interactableObject.hasToBeInTheShip = true;
             ShipsManager.instance.playerShip.AddInteractuableObject(interactableObject, false);
+
+            if(other.TryGetComponent(out Catapult catapult))
+            {
+                ShipsManager.instance.playerShip.SetBarrelBox(true);
+            }
         }
     }
 
@@ -23,6 +27,11 @@ public class SetObjectIntoBoat : MonoBehaviour
             {
                 interactableObject.hasToBeInTheShip = false;
                 ShipsManager.instance.playerShip.RemoveInteractuableObject(interactableObject);
+
+                if (other.TryGetComponent(out Catapult catapult))
+                {
+                    ShipsManager.instance.playerShip.SetBarrelBox(false);
+                }
             }
         }
     }
