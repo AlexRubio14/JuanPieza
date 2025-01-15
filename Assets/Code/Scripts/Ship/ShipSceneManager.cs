@@ -70,9 +70,14 @@ public class ShipSceneManager : MonoBehaviour
             }
             else
             {
-                shipBoxes[obj.objectSO] = (obj as Box).GetItemsInBox();
+                SaveBoxData(obj.objectSO, obj as Box);
             }
         }
+    }
+
+    public void SaveBoxData(ObjectSO objectSo, Box box)
+    {
+        shipBoxes[objectSo] = box.GetItemsInBox();
     }
 
     public void SetShipId(int id, float currentHealth, float currentY)

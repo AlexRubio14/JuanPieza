@@ -27,12 +27,26 @@ public class UpgradeNPC : InteractableObject
         
         foreach (InteractableObject interactableObject in currentInteractableObject)
         {
-            interactableObject.transform.SetParent(newBoat.transform);
-            interactableObject.transform.position = new Vector3(interactableObject.transform.position.x, 30,
-                interactableObject.transform.position.z);
+            if (interactableObject.objectSO.objectType != ObjectSO.ObjectType.BOX)
+            {
+                interactableObject.transform.SetParent(newBoat.transform);
+                interactableObject.transform.position = new Vector3(interactableObject.transform.position.x, 10, interactableObject.transform.position.z);
+                ShipsManager.instance.playerShip.AddInteractuableObject(interactableObject);
+                if (interactableObject.hasToBeInTheShip)
+                {
+                    interactableObject.rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                }
+            }
+            else
+            {
+                ShipSceneManager.Instance.SaveBoxData(interactableObject.objectSO, interactableObject as Box);
+            }
         }
+        
+        
         
         Destroy(currentShip.gameObject);
 
+        ShipSceneManager.Instance.SetBoxesItem();
     }
 }
