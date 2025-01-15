@@ -79,7 +79,6 @@ public class Box : RepairObject
         
         return HintController.ActionType.NONE;
     }
-
     public ObjectSO GetItemDrop()
     {
         return itemDropped;

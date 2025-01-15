@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,7 +15,12 @@ public class ShipSceneManager : MonoBehaviour
     private float shipHealth;
     private float shipCurrentY;
     private float shipInitY;
-
+    
+    public Dictionary<ObjectSO, int> shipBoxes = new Dictionary<ObjectSO, int>();
+    
+    [Header("Delete post Alp")]
+    [SerializeField] private ObjectSO[] boxesDefaultKey;
+    [SerializeField] private int[] boxesDefaultValue;
     
     [System.Serializable]
     public struct InteractableObjectData
@@ -37,6 +43,14 @@ public class ShipSceneManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        for (int i = 0; i < boxesDefaultKey.Length; i++)
+        {
+            shipBoxes.Add(boxesDefaultKey[i], boxesDefaultValue[i]);
+        }
+    }
+
     public void SetObjectsToSpawn()
     {
         objectsToSpawn.Clear();
@@ -46,10 +60,18 @@ public class ShipSceneManager : MonoBehaviour
 
         foreach (InteractableObject obj in ship.GetInventory())
         {
-            interactableObjectData.prefab = obj.objectSO.prefab;
-            interactableObjectData.offsetFromShip = obj.transform.position - ship.transform.position;
-            interactableObjectData.rotation = obj.transform.rotation;
-            objectsToSpawn.Add(interactableObjectData);
+            // Quitar los if despues de la entrega
+            if (obj.objectSO.objectType != ObjectSO.ObjectType.BOX)
+            {
+                interactableObjectData.prefab = obj.objectSO.prefab;
+                interactableObjectData.offsetFromShip = obj.transform.position - ship.transform.position;
+                interactableObjectData.rotation = obj.transform.rotation;
+                objectsToSpawn.Add(interactableObjectData);
+            }
+            else
+            {
+                shipBoxes[obj.objectSO] = (obj as Box).GetItemsInBox();
+            }
         }
     }
 
@@ -82,6 +104,7 @@ public class ShipSceneManager : MonoBehaviour
             GameObject _object = Instantiate(obj.prefab, obj.offsetFromShip + ShipsManager.instance.playerShip.transform.position, obj.rotation);
             ShipsManager.instance.playerShip.GetComponent<Ship>().AddInteractuableObject(_object.GetComponent<InteractableObject>());
         }
+        
     }
 
     public void InstantiateShip()
@@ -95,6 +118,21 @@ public class ShipSceneManager : MonoBehaviour
         _ship.GetComponent<Ship>().SetHealth(shipHealth);
         _ship.GetComponent<Ship>().SetHeightY(shipCurrentY, shipInitY);
         ShipsManager.instance.SetShip(_ship.GetComponent<Ship>());
+        SetBoxesItem();
         InstantiateObjects();
     }
+
+    // Borrar despues de la entrega
+    public void SetBoxesItem()
+    {
+        Box[] boxes = ShipsManager.instance.playerShip.GetComponentsInChildren<Box>();
+        foreach (Box box in boxes)
+        {
+            for (int i = 0; i < shipBoxes[box.objectSO]; i++)
+            {
+                box.AddItemInBox();
+            }
+        }
+    }
+    
 }
