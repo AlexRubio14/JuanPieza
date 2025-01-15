@@ -6,7 +6,6 @@ public class FishingState : PlayerState
     
     public override void EnterState()
     {
-        controller.rb.constraints = RigidbodyConstraints.FreezeAll;
     }
     public override void UpdateState()
     {
@@ -16,7 +15,6 @@ public class FishingState : PlayerState
     }
     public override void ExitState()
     {
-        controller.rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     public override void RollAction()
@@ -34,7 +32,6 @@ public class FishingState : PlayerState
 
     public override void OnHit(Vector3 _hitPosition)
     {
-        controller.rb.constraints = RigidbodyConstraints.FreezeRotation;
         UseAction();
         base.OnHit(_hitPosition);
     }
