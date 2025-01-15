@@ -24,6 +24,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioClip seagullClip;
     [SerializeField] public AudioClip musicClip;
     [HideInInspector] public AudioSource seagullAs;
+    [HideInInspector] public AudioSource musicAs;
 
 
     private void Awake()

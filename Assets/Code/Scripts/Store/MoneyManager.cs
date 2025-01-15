@@ -45,6 +45,7 @@ public class MoneyManager : MonoBehaviour
         {
             currentMoney -= amount;
             OnMoneyChanged?.Invoke(currentMoney);
+            AudioManager.instance.Play2dOneShotSound(spendMoneyClip, "Objects");
             return true;
         }
         else
@@ -64,5 +65,6 @@ public class MoneyManager : MonoBehaviour
 
         currentMoney += amount;
         OnMoneyChanged?.Invoke(currentMoney);
+        AudioManager.instance.Play2dOneShotSound(gainMoneyClip, "Objects");
     }
 }
