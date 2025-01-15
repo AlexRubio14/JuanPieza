@@ -10,9 +10,9 @@ public class PlayerWeaponTrace : WeaponTracer
 
     void FixedUpdate()
     {
-        if (weapon.isBeingUsed)
+        if (weapon.isPlayerMounted())
             PredictTrajectory(weapon.bulletForce);
 
-        lineRenderer.enabled = weapon.isBeingUsed;
+        lineRenderer.enabled = weapon.isPlayerMounted();
     }
 }

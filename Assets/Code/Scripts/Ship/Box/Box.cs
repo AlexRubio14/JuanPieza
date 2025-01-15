@@ -63,8 +63,8 @@ public class Box : RepairObject
 
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
-        return !handObject && HasItems()
-            || handObject && handObject.objectSO == objectToInteract;
+        return !handObject && HasItems() //Si no tengo objetos en las manos y la caja tiene items
+            || handObject && handObject.objectSO == objectToInteract; //Si tengo un objeto en la mano y es del mismo tipo que el que dropea
     }
 
     public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)

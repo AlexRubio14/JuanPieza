@@ -65,11 +65,11 @@ public abstract class Weapon : RepairObject
         PlayerController player = _objectHolder.transform.parent.gameObject.GetComponent<PlayerController>();
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
-        if (isBeingUsed) //Desmontarse
+        if (isPlayerMounted() && player.playerInput.playerReference == mountedPlayerId) //Desmontarse
             UnMount(player, _objectHolder);
         else if (!hasAmmo && handObject && handObject.objectSO == objectToInteract) //Si no tiene municion agregar la bala al ca�on
             Reload(_objectHolder);
-        else if (!handObject) //Montarse al arma
+        else if (!isPlayerMounted() && !handObject) //Montarse al arma
             Mount(player, _objectHolder);
     }
     public override void UseItem(ObjectHolder _objectHolder)
@@ -89,21 +89,22 @@ public abstract class Weapon : RepairObject
             return base.CanInteract(_objectHolder);
 
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+        PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
 
-        return !handObject /*Montarse*/ || isBeingUsed /*Bajarse*/ || !hasAmmo && handObject && handObject.objectSO == objectToInteract /*Recargar*/ ;
+        return !isPlayerMounted() && !handObject /*Montarse*/ || isPlayerMounted() && playerCont.playerInput.playerReference == mountedPlayerId /*Bajarse*/ || !hasAmmo && handObject && handObject.objectSO == objectToInteract /*Recargar*/ ;
     }
 
     public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-
-        if (!handObject && !isBeingUsed //No tiene nada en la mano y no hay nadie montado
-            || isBeingUsed && !hasAmmo //Si lo esta utilizando y no esta cargado
-            || !hasAmmo && !isBeingUsed && handObject && handObject.objectSO == objectToInteract //Si no esta cargado y tiene la bala en la mano
+        PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
+        if (!handObject && !isPlayerMounted() //No tiene nada en la mano y no hay nadie montado
+            || isPlayerMounted() && !hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId //Si lo esta utilizando y no esta cargado
+            || !hasAmmo && handObject && handObject.objectSO == objectToInteract //Si no esta cargado y tiene la bala en la mano
             )
         {
             return HintController.ActionType.INTERACT;
-        }else if (hasAmmo)
+        }else if (hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId)
         {
             return HintController.ActionType.USE;
         }
@@ -128,7 +129,6 @@ public abstract class Weapon : RepairObject
         //El padre del arma sera el player 
         transform.SetParent(_player.transform);
 
-        isBeingUsed = true;
         selectedVisual.Hide();
     }
     protected void UnMount(PlayerController _player, ObjectHolder _objectHolder)
@@ -195,4 +195,9 @@ public abstract class Weapon : RepairObject
             item.Stop(true);
     }
     protected abstract void Shoot();
+
+    public bool isPlayerMounted()
+    {
+        return mountedPlayerId != -1;
+    }
 }

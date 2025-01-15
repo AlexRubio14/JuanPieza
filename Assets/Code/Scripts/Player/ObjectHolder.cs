@@ -12,7 +12,7 @@ public class ObjectHolder : MonoBehaviour
 
     private InteractableObject nearestInteractableObject;
 
-    private InteractableObject interactableObject;
+    private InteractableObject handObject;
 
     [SerializeField] private Transform[] objectPickedPos;
     public HintController hintController { private set;  get; }
@@ -71,7 +71,7 @@ public class ObjectHolder : MonoBehaviour
     }
     public InteractableObject GetHandInteractableObject()
     {
-        return interactableObject;
+        return handObject;
     }
     public InteractableObject GetNearestInteractableObject()
     {
@@ -83,11 +83,11 @@ public class ObjectHolder : MonoBehaviour
     #region Setters
     public void ChangeObjectInHand(InteractableObject _interactableObject, bool _setParent = true)
     {
-        if (interactableObject)
+        if (handObject)
             RemoveItemFromHand();
 
         hasPickedObject = true;
-        interactableObject = _interactableObject;
+        handObject = _interactableObject;
 
         if (!_interactableObject)
             return;
@@ -113,10 +113,10 @@ public class ObjectHolder : MonoBehaviour
     }
     public InteractableObject RemoveItemFromHand()
     {
-        InteractableObject currentIO = interactableObject;
+        InteractableObject currentIO = handObject;
 
         hasPickedObject = false;
-        interactableObject = null;
+        handObject = null;
 
         if (currentIO)
         {
@@ -135,34 +135,40 @@ public class ObjectHolder : MonoBehaviour
     }
     public void ChangeNearestInteractableObject(InteractableObject _nearestObject)
     {
-        if (_nearestObject != nearestInteractableObject)
+        if (handObject && _nearestObject == handObject)
         {
-            if (nearestInteractableObject)
-                nearestInteractableObject.GetSelectedVisual().Hide();
-
-            if (!_nearestObject)
-            {
-                nearestInteractableObject = _nearestObject;
-                if (interactableObject)
-                    hintController.UpdateActionType(interactableObject.ShowNeededInputHint(this));
-                else
-                    hintController.UpdateActionType(HintController.ActionType.NONE);
-                return;
-            }
-
-            if (_nearestObject.CanInteract(this))
-                _nearestObject.GetSelectedVisual().Show();
-            else
-            {
-                //Mostrar el interactable object que necesita
-
-            }
-
-            nearestInteractableObject = _nearestObject;
-            
-           if(!interactableObject || interactableObject  && interactableObject.objectToInteract == _nearestObject)
-                hintController.UpdateActionType(nearestInteractableObject.ShowNeededInputHint(this));
+            nearestInteractableObject = null;
+            return;
         }
+
+        if(nearestInteractableObject == _nearestObject)
+            return;
+
+        if (nearestInteractableObject)
+            nearestInteractableObject.GetSelectedVisual().Hide();
+
+        if (!_nearestObject)
+        {
+            nearestInteractableObject = _nearestObject;
+            if (handObject)
+                hintController.UpdateActionType(handObject.ShowNeededInputHint(this));
+            else
+                hintController.UpdateActionType(HintController.ActionType.NONE);
+            return;
+        }
+
+        if (_nearestObject.CanInteract(this))
+            _nearestObject.GetSelectedVisual().Show();
+        else
+        {
+            //Mostrar el interactable object que necesita
+
+        }
+
+        nearestInteractableObject = _nearestObject;
+
+        if (!handObject || handObject && handObject.objectSO == _nearestObject.objectToInteract)
+            hintController.UpdateActionType(nearestInteractableObject.ShowNeededInputHint(this));
     }
 
     #endregion
