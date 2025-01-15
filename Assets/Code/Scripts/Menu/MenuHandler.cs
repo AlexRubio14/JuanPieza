@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class MenuHandler : MonoBehaviour
 {
 
-    private void Awake()
+    private void Start()
     {
         AudioManager.instance.musicAs = AudioManager.instance.Play2dLoop(AudioManager.instance.musicClip, "Music", 1, 1, 1);
     }

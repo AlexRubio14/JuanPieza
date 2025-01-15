@@ -34,8 +34,8 @@ public enum DeviceType { KEYBOARD = 0, GAMEPAD = 1}
     private void Start()
     {
         canvas.worldCamera = Camera.main;
-
-        PlayerInput input = PlayersManager.instance.players[GetComponent<PlayerController>().playerInput.playerReference].Item1; 
+        PlayerController playerCont = GetComponent<PlayerController>();
+        PlayerInput input = PlayersManager.instance.players[playerCont.playerInput.playerReference].Item1; 
         InputDevice device = input.devices[0];  // En este caso, tomamos el primer dispositivo de la lista
 
         if (device is Gamepad)

@@ -24,7 +24,7 @@ public class LevelPlayerController : MonoBehaviour
         {
             PlayerController controller = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<PlayerController>();
 
-            if (safeSpawnPos.Count > 0 || safeSpawnPos[i] != Vector3.zero)
+            if (safeSpawnPos.Count > 0 && safeSpawnPos[i] != Vector3.zero)
             {
                 safeSpawnPos[i] = new Vector3(safeSpawnPos[i].x, safeSpawnPos[i].y + 5, safeSpawnPos[i].z);
                 controller.gameObject.transform.position = safeSpawnPos[i];

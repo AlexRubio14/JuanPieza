@@ -123,9 +123,9 @@ public class ShipSceneManager : MonoBehaviour
         else
             _ship = Instantiate(ship[shipId], new Vector3(0, ship[shipId].GetComponent<Ship>().GetInitY(), 0), Quaternion.identity);
 
-        _ship.GetComponent<Ship>().SetHealth(shipHealth);
-        _ship.GetComponent<Ship>().SetHeightY(shipCurrentY, shipInitY);
         ShipsManager.instance.SetShip(_ship.GetComponent<Ship>());
+        ShipsManager.instance.playerShip.SetHealth(shipHealth);
+        ShipsManager.instance.playerShip.SetHeightY(shipCurrentY, shipInitY);
         SetBoxesItem();
         InstantiateObjects();
     }

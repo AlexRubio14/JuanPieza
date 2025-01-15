@@ -4,6 +4,7 @@ public class Tool : InteractableObject
 {
     [SerializeField] protected AudioClip dropItemClip;
 
+    public bool addToolAtDestroy = true;
     public override void Interact(ObjectHolder _objectHolder)
     {
         if (_objectHolder.GetHasObjectPicked())
@@ -34,7 +35,7 @@ public class Tool : InteractableObject
         base.OnDestroy();
         Box box = ShipsManager.instance.playerShip.GetObjectBoxByObject(objectSO);
 
-        if (box != null)
+        if (box != null && addToolAtDestroy)
             box.AddItemInBox();
         
 
