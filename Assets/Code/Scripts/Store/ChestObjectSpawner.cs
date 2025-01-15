@@ -39,7 +39,7 @@ public class ChestObjectSpawner : InteractableObject
     
     public void InstanceRandomWeapon()
     {
-        if (MoneyManager.Instance.SpendMoney(chestWeaponPrice))
+        if (MoneyManager.Instance.SpendMoney(chestWeaponPrice) || chestWeaponPrice == 0)
         {
             ObjectSO randomItem = storeObjectPool.GetRandomItem(storeObjectPool.GetWeaponPool());
 
@@ -52,7 +52,7 @@ public class ChestObjectSpawner : InteractableObject
     
     public void InstanceRandomOther()
     {
-        if (MoneyManager.Instance.SpendMoney(chestOtherPrice))
+        if (MoneyManager.Instance.SpendMoney(chestOtherPrice)|| chestOtherPrice == 0)
         {
             ObjectSO randomItem = storeObjectPool.GetRandomItem(storeObjectPool.GetOtherPool());
 
