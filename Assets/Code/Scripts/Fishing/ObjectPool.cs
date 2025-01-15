@@ -1,6 +1,5 @@
 using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
-using Unity.Jobs;
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
@@ -13,6 +12,8 @@ public class ObjectPool : MonoBehaviour
     
     [SerializedDictionary("Rarity", "Percentage")]
     public SerializedDictionary<ObjectSO.ItemRarity, float> rarityPercentages;
+    [SerializeField]
+    private List<float> realPercentages;
 
     private float totalPercentage;
 
@@ -132,5 +133,20 @@ public class ObjectPool : MonoBehaviour
     private bool CheckObjectByType(ObjectSO _object)
     {
         return ShipsManager.instance.playerShip.GetObjectOfType(_object.objectType).Count > 0;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        realPercentages = new List<float>();
+        totalPercentage = 0;
+        foreach (var item in rarityPercentages)
+        {
+            totalPercentage += item.Value;
+        }
+
+        foreach (var item in rarityPercentages)
+        {
+            realPercentages.Add((item.Value / totalPercentage) * 100);
+        }
     }
 }
