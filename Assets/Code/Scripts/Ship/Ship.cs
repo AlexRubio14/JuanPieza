@@ -158,6 +158,7 @@ public class Ship : MonoBehaviour
         
         objects.Add(interactableObject);
         currentWeight += interactableObject.objectSO.weight;
+        VotationCanvasManager.Instance.SetWeightText(currentWeight, maxWeigth);
     }
     public void RemoveInteractuableObject(InteractableObject interactableObject)
     {
@@ -165,6 +166,7 @@ public class Ship : MonoBehaviour
             return;
 
         currentWeight -= interactableObject.objectSO.weight;
+        VotationCanvasManager.Instance.SetWeightText(currentWeight, maxWeigth);
         objects.Remove(interactableObject);
     }
     
