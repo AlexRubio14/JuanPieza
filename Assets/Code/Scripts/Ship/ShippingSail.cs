@@ -13,6 +13,7 @@ public class ShippingSail : InteractableObject
     private bool timerIsActive;
 
     [SerializeField] private Ship ship;
+    [SerializeField] private GameObject[] bridge;
 
     protected override void Start()
     {
@@ -32,6 +33,8 @@ public class ShippingSail : InteractableObject
             {
                 timerIsActive = false;
                 VotationCanvasManager.Instance.SetSailTimer(false);
+                foreach(GameObject _bridge in bridge) 
+                    _bridge.SetActive(false);
                 ship.StartVotation();
             }
         }
