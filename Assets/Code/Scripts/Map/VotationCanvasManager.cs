@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VotationCanvasManager : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class VotationCanvasManager : MonoBehaviour
     [SerializeField] private VotationTimer timer;
     [SerializeField] private TextMeshProUGUI sailTimer;
     [SerializeField] private TextMeshProUGUI moneyText;
+
+    [SerializeField] private Image healthImage;
+    [SerializeField] private TextMeshProUGUI weightText;
 
     private void Awake()
     {
@@ -24,6 +28,11 @@ public class VotationCanvasManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void FixedUpdate()
+    {
+        SetHealthBar();
     }
 
     public void SetVotationUIState(bool state)
@@ -86,5 +95,14 @@ public class VotationCanvasManager : MonoBehaviour
         SetMoneyText(false);
     }
 
+    public void SetHealthBar()
+    {
+        if(ShipsManager.instance.playerShip != null)
+            healthImage.fillAmount = ShipsManager.instance.playerShip.GetCurrentHealth() / ShipsManager.instance.playerShip.GetMaxHealth();
+    }
 
+    public void SetWeightText(float value, float maxValeu)
+    {
+        weightText.text = value.ToString() + " / " + maxValeu.ToString();
+    }
 }
