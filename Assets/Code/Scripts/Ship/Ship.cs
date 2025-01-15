@@ -30,6 +30,9 @@ public class Ship : MonoBehaviour
 
     public Action<GameObject> onDamageRecieved;
 
+    [Header("SpawnPoints")]
+    [SerializeField] private List<Transform> playersSpawnPos;
+
     [Header("Votation")]
     [SerializeField] private List<Votation> votations;
 
@@ -271,5 +274,10 @@ public class Ship : MonoBehaviour
     public void SetCurrentHealht(float health)
     {
         currentHealth = health;
+    }
+
+    public List<Transform> GetSpawnPoints()
+    {
+        return playersSpawnPos;
     }
 }

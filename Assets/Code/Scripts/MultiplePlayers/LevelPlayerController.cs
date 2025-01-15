@@ -16,8 +16,11 @@ public class LevelPlayerController : MonoBehaviour
     {
         cameraCont = FindAnyObjectByType<CameraController>();
     }
+
     void Start()
     {
+        playersSpawnPos = ShipsManager.instance.playerShip.GetSpawnPoints();
+
         GetPlayerSpawnPos();
 
         for (int i = 0; i < PlayersManager.instance.players.Count; i++)
