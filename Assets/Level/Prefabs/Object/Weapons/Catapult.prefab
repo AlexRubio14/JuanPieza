@@ -285,8 +285,9 @@ MonoBehaviour:
   state: {fileID: 3968191370556537233}
   repairDuration: 1.5
   repairParticles: {fileID: 2904809377459801192}
+  repairClip: {fileID: 0}
   ridingPos: {fileID: 6387550713895505024}
-  weaponDamage: 0
+  weaponDamage: 30
   <bulletForce>k__BackingField: 600
   <tiltObject>k__BackingField: {fileID: 2472425405071750603}
   <minWeaponTilt>k__BackingField: {x: -59, y: 0, z: 0}
@@ -295,6 +296,8 @@ MonoBehaviour:
   tiltProcess: 0
   shootParticles: {fileID: 0}
   loadParticlesPrefab: {fileID: 0}
+  weaponShootClip: {fileID: 0}
+  weaponReloadClip: {fileID: 0}
   barrelPrefab: {fileID: 9052637822518565095, guid: 1e91394582eb7564d856e84672ae811f, type: 3}
   barrelSpawnPos: {fileID: 2472425405071750603}
 --- !u!114 &807546827017697251
@@ -331,6 +334,7 @@ MonoBehaviour:
   fixedSibling: {fileID: 2126665274163272856}
   brokenSibling: {fileID: 1630159911037286008}
   isBroken: 0
+  brokeClip: {fileID: 0}
 --- !u!54 &4986079673123290112
 Rigidbody:
   m_ObjectHideFlags: 0

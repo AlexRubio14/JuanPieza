@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static ObjectSO;
 
 public class ShipSceneManager : MonoBehaviour
 {
@@ -61,14 +63,14 @@ public class ShipSceneManager : MonoBehaviour
         foreach (InteractableObject obj in ship.GetInventory())
         {
             // Quitar los if despues de la entrega
-            if (obj.objectSO.objectType != ObjectSO.ObjectType.BOX)
+            if (obj.objectSO.objectType != ObjectSO.ObjectType.BOX && obj.objectSO.objectType != ObjectSO.ObjectType.TOOL)
             {
                 interactableObjectData.prefab = obj.objectSO.prefab;
                 interactableObjectData.offsetFromShip = obj.transform.position - ship.transform.position;
                 interactableObjectData.rotation = obj.transform.rotation;
                 objectsToSpawn.Add(interactableObjectData);
             }
-            else
+            else if(obj.objectSO.objectType == ObjectSO.ObjectType.BOX)
             {
                 SaveBoxData(obj.objectSO, obj as Box);
             }
@@ -126,8 +128,8 @@ public class ShipSceneManager : MonoBehaviour
         ShipsManager.instance.SetShip(_ship.GetComponent<Ship>());
         ShipsManager.instance.playerShip.SetHealth(shipHealth);
         ShipsManager.instance.playerShip.SetHeightY(shipCurrentY, shipInitY);
-        SetBoxesItem();
         InstantiateObjects();
+        SetBoxesItem();
     }
 
     // Borrar despues de la entrega
@@ -136,10 +138,22 @@ public class ShipSceneManager : MonoBehaviour
         Box[] boxes = ShipsManager.instance.playerShip.GetComponentsInChildren<Box>();
         foreach (Box box in boxes)
         {
-            for (int i = 0; i < shipBoxes[box.objectSO]; i++)
+            if(box.GetItemDrop().objectType == ObjectSO.ObjectType.TOOL)
             {
-                box.AddItemInBox();
+                PutItemsInBox(4, box);
             }
+            else
+            {
+                PutItemsInBox(shipBoxes[box.objectSO], box);
+            }
+        }
+    }
+
+    private void PutItemsInBox(int cuantity, Box box)
+    {
+        for (int i = 0; i < cuantity; i++)
+        {
+            box.AddItemInBox();
         }
     }
     

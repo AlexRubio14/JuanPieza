@@ -13,14 +13,6 @@ public class WoodShelf : Box
     protected override void Start()
     {
         base.Start();
-        currentDecorationInShelf = 4;
-
-        while(currentDecorationInShelf != itemsInBox)
-        {
-            currentDecorationInShelf--;
-            decorations[currentDecorationInShelf].SetActive(false);
-        }
-
     }
 
     public override void Interact(ObjectHolder _objectHolder)
