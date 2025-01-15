@@ -20,8 +20,10 @@ public class UpgradeNPC : InteractableObject
     {
         Ship currentShip = ShipsManager.instance.playerShip;
         List<InteractableObject> currentInteractableObject = currentShip.GetInventory();
+
+        Vector3 boatPosition = new Vector3(currentShip.transform.position.x, boatUpgrade.GetComponent<Ship>().GetInitY(), currentShip.transform.position.z);
         
-        GameObject newBoat = Instantiate(boatUpgrade, currentShip.transform.position, Quaternion.identity);
+        GameObject newBoat = Instantiate(boatUpgrade, boatPosition, Quaternion.identity);
 
         ShipsManager.instance.SetShip(newBoat.GetComponent<Ship>());
         
@@ -42,9 +44,11 @@ public class UpgradeNPC : InteractableObject
                 ShipSceneManager.Instance.SaveBoxData(interactableObject.objectSO, interactableObject as Box);
             }
         }
-        
-        
-        
+        Ship newShip = newBoat.GetComponent<Ship>();
+
+        newShip.SetCurrentHealht(newShip.GetMaxHealth());
+        newShip.SetDeafultTargetHeight();
+
         Destroy(currentShip.gameObject);
 
         ShipSceneManager.Instance.SetBoxesItem();
