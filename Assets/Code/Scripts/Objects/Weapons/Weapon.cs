@@ -35,6 +35,11 @@ public abstract class Weapon : RepairObject
     protected GameObject loadParticlesPrefab;
     protected List<ParticleSystem> loadParticles = new List<ParticleSystem>();
 
+    [Space, Header("Weapon Audio"), SerializeField]
+    protected AudioClip weaponShootClip;
+    [SerializeField] protected AudioClip weaponReloadClip;
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -152,8 +157,8 @@ public abstract class Weapon : RepairObject
 
         foreach (ParticleSystem item in loadParticles)
             item.Play(true);
-        
 
+        AudioManager.instance.Play2dOneShotSound(weaponReloadClip, "Objects");
     }
 
     protected void AddLoadParticle(Transform _parent)

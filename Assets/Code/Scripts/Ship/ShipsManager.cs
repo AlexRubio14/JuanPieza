@@ -38,6 +38,7 @@ public class ShipsManager : MonoBehaviour
         }
         else
         {
+            AudioManager.instance.StopLoopSound(AudioManager.instance.seagullAs);
             SceneManager.LoadScene("MainMenu");
         }
     }

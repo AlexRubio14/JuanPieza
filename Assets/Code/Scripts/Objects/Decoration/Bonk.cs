@@ -3,6 +3,7 @@ using UnityEngine;
 public class Bonk : RepairObject
 {
     private Animation animationController;
+    [SerializeField] private AudioClip bonkClip;
 
     protected override void Awake()
     {
@@ -22,6 +23,7 @@ public class Bonk : RepairObject
         animationController.Play();
 
         //Sonido
+        AudioManager.instance.Play2dOneShotSound(bonkClip, "Objects",1,0.9f,1.1f);
     }
 
     public override bool CanInteract(ObjectHolder _objectHolder)

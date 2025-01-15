@@ -11,6 +11,10 @@ public class Repair : InteractableObject
     private List<PlayerController> players = new List<PlayerController>();
     [SerializeField]
     private ParticleSystem repairParticles;
+    private AudioSource repairAudioSource;
+    private bool clipIsPlaying = false;
+
+    [SerializeField] protected AudioClip repairClip;
 
     protected override void Start()
     {
@@ -32,6 +36,12 @@ public class Repair : InteractableObject
             playerCont.progressBar.EnableProgressBar(true);
             players.Add(playerCont);
             playerCont.stateMachine.ChangeState(playerCont.stateMachine.repairState);
+
+            if(!clipIsPlaying) 
+            {
+                repairAudioSource = AudioManager.instance.Play2dLoop(repairClip, "Objects");
+                clipIsPlaying = true;
+            }
         }
     }
     public override void StopInteract(ObjectHolder _objectHolder)
@@ -41,11 +51,18 @@ public class Repair : InteractableObject
         playerCont.progressBar.EnableProgressBar(false);
         players.Remove(playerCont);
         playerCont.stateMachine.ChangeState(playerCont.stateMachine.idleState);
+
+        if(players.Count == 0)
+        {
+            AudioManager.instance.StopLoopSound(repairAudioSource);
+            clipIsPlaying = false;
+        }
     }
     public override void UseItem(ObjectHolder _objectHolder)
     {
 
     }
+
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();

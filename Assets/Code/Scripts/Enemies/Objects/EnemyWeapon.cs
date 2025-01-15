@@ -23,6 +23,11 @@ public abstract class EnemyWeapon : EnemyObject
     [SerializeField]
     protected GameObject shootParticles;
 
+    [Space, Header("Weapon Audio"), SerializeField]
+    protected AudioClip reloadClip;
+    [SerializeField] protected AudioClip shootClip;
+
+
     private void Start()
     {
         isLoaded = false;
@@ -48,5 +53,6 @@ public abstract class EnemyWeapon : EnemyObject
     {
         isLoaded = true;
         enemieManager.AddShootCannonAction(this);
+        AudioManager.instance.Play2dOneShotSound(reloadClip, "Objects");
     }
 }

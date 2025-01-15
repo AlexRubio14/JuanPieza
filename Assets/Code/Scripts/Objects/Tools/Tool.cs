@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Tool : InteractableObject
 {
+    [SerializeField] protected AudioClip dropItemClip;
+
     public override void Interact(ObjectHolder _objectHolder)
     {
         if (_objectHolder.GetHasObjectPicked())
@@ -23,6 +25,7 @@ public class Tool : InteractableObject
     public void DropItem(ObjectHolder _objectHolder)
     {
         _objectHolder.RemoveItemFromHand();
+        AudioManager.instance.Play2dOneShotSound(dropItemClip, "Objects");
     }
     public override void UseItem(ObjectHolder _objectHolder) { }
 

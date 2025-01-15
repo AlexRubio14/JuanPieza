@@ -4,10 +4,12 @@ public class Box : RepairObject
 {
     [Space, Header("Item"), SerializeField] protected ObjectSO itemDropped;
     [SerializeField] protected int itemsInBox;
+    [SerializeField] protected AudioClip dropItemClip;
     public virtual void AddItemInBox()
     {
         itemsInBox++;
         ShipsManager.instance.playerShip.AddWeight(itemDropped.weight);
+        AudioManager.instance.Play2dOneShotSound(dropItemClip, "Objects");
     }
     public virtual void RemoveItemInBox()
     {

@@ -11,6 +11,7 @@ public class DetectBullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet") && collision.gameObject.TryGetComponent(out Bullet bullet) && !bullet.GetDamageDone())
         {
+            AudioManager.instance.Play2dOneShotSound(bullet.hitClip, "Objects");
             DetectCollision(collision, bullet);
         }
     }
