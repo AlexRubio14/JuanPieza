@@ -93,7 +93,10 @@ public class ShipSceneManager : MonoBehaviour
         Ship ship = ShipsManager.instance.playerShip;
         foreach (PlayerController player in PlayersManager.instance.ingamePlayers)
         {
-            playersPosition.Add(player.gameObject.transform.position - ship.transform.position);
+            if (player.stateMachine.currentState is not DeathState)
+                playersPosition.Add(player.gameObject.transform.position - ship.transform.position);
+            else
+                playersPosition.Add(Vector3.zero);
         }
     }
 
