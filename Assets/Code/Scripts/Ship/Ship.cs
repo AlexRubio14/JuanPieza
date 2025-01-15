@@ -222,13 +222,12 @@ public class Ship : MonoBehaviour
     {
         if (targetHeight == 0)
         {
-            targetHeight = initY;
+            SetDeafultTargetHeight();
             return;
         }
 
         targetHeight = y;
         initY = _initY;
-
     }
 
 
@@ -252,5 +251,25 @@ public class Ship : MonoBehaviour
     public bool GetIsEnemy()
     {
         return isEnemy;
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public void SetDeafultTargetHeight()
+    {
+        targetHeight = initY;
+    }
+
+    public void SetCurrentHealht(float health)
+    {
+        currentHealth = health;
     }
 }

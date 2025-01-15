@@ -53,11 +53,12 @@ public class CameraController : MonoBehaviour
 
         foreach (Ship ship in ShipsManager.instance.enemiesShips)
         {
-            if (ship.TryGetComponent(out Collider enemyShipCol))
-                AddObject(enemyShipCol.gameObject);
+            if (ship != null)
+            {
+                if (ship.TryGetComponent(out Collider enemyShipCol))
+                    AddObject(enemyShipCol.gameObject);
+            }
         }
-
-       
     }
 
     public void AddPlayer(GameObject _newPlayer)
