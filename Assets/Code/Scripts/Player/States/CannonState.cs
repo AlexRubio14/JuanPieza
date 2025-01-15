@@ -38,6 +38,12 @@ public class CannonState : PlayerState
         controller.Use();
         controller.animator.SetTrigger("Shoot");
     }
+    public override void OnHit(Vector3 _hitPosition)
+    {
+        //controller.Interact(); // Bajarse del cañon
+        base.OnHit(_hitPosition);
+    }
+
     public override void OnCollisionEnter(Collision collision)
     {
         base.OnCollisionEnter(collision);

@@ -301,10 +301,9 @@ public class FishingManager : MonoBehaviour
     }
     private void StopFishing(FishingRod _fishingRod)
     {
-        _fishingRod.playerSM.ChangeState(_fishingRod.playerSM.idleState);
+        _fishingRod.player.stateMachine.ChangeState(_fishingRod.player.stateMachine.idleState);
         _fishingRod.isFishing = false;
         _fishingRod.player.interactCanvasObject.SetActive(false);
-
     }
 
     public void AddFishingRod(FishingRod _fishingRod)
@@ -313,6 +312,21 @@ public class FishingManager : MonoBehaviour
         data.fishingRod = _fishingRod;
         data.fishingState = FishingState.IDLE;
         fishingData.Add(data);
+    }
+    public void ResetFishingRodData(FishingRod _fishingRod)
+    {
+        int rodId = GetFisingRodId(_fishingRod);
+        FishingData newData = fishingData[rodId];
+        newData.fishingState = FishingState.IDLE;
+        newData.fishedObject = null;
+        newData.currentPlayer = (null, Side.LEFT);
+        newData.starterTime = 0;
+        newData.parabolaProcess = 0;
+        newData.parabolaStartPos = Vector3.zero;
+        newData.parabolaEndPos = Vector3.zero;
+
+        fishingData[rodId] = newData;
+
     }
     public void RemoveFishingRod(FishingRod _fishingRod)
     {

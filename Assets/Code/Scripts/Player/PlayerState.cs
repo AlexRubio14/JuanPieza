@@ -20,6 +20,15 @@ public abstract class PlayerState
     public abstract void InteractAction();
     public abstract void StopInteractAction();
     public abstract void UseAction();
+    public virtual void OnHit(Vector3 _hitPosition)
+    {
+        Vector3 knockbackDirection = (controller.transform.position - _hitPosition).normalized;
+
+        Vector3 knockbackForce = knockbackDirection * controller.bounceForce.x + Vector3.up * controller.bounceForce.y;
+
+        controller.AddImpulse(knockbackForce, controller.rollSpeed);
+        controller.animator.SetTrigger("Hitted");
+    }
     public virtual void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Water"))

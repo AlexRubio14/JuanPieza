@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -184,6 +185,11 @@ public class PlayerController : MonoBehaviour
     private void CannonTiltAction(float _axis)
     {
         cannonTilt = _axis;
+    }
+
+    public void PlayerHitted(Vector3 _hitPosition)
+    {
+        stateMachine.currentState.OnHit(_hitPosition);
     }
     #endregion
 

@@ -63,6 +63,7 @@ public class DeathState : PlayerState
     public override void StopInteractAction() { /*No hace nada*/ }
     public override void UseAction() { /*No puedes usar ningun objeto*/ }
 
+    public override void OnHit(Vector3 _hitPosition) { /*No puedes ser golpeado */ }
     public override void OnCollisionEnter(Collision collision)
     {
     }

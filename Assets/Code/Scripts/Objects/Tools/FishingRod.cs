@@ -23,7 +23,6 @@ public class FishingRod : Tool
     public HookController hook { get; private set; }
 
     public PlayerController player { get; private set; }
-    public PlayerStateMachine playerSM { get; private set; }
     protected override void Start()
     {
         base.Start();
@@ -39,14 +38,6 @@ public class FishingRod : Tool
         hook.gameObject.SetActive(false);
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            UseItem(null);
-        }
-    }
-
     public override void UseItem(ObjectHolder _objectHolder)
     {
         if (!isFishing && !hookThrowed) //Tirar anzuelo
@@ -57,21 +48,26 @@ public class FishingRod : Tool
     public override void Interact(ObjectHolder _objectHolder)
     {
         base.Interact(_objectHolder);
-        if (!player)
-        {
-            playerSM = _objectHolder.GetComponentInParent<PlayerStateMachine>();
-            player = _objectHolder.GetComponentInParent<PlayerController>();
-            playerSM.fishingState.fishingRod = this;
-        }
+
+        FishingManager.instance.ResetFishingRodData(this);
+
+        PlayerController currentPlayer = _objectHolder.GetComponentInParent<PlayerController>();
+        if (player == currentPlayer)
+            return;
+
+        player = currentPlayer;
+        player.stateMachine.fishingState.fishingRod = this;
     }
 
     private void ThrowHook(ObjectHolder _objectHolder)
     {
-        if (!player)
+        PlayerController currentPlayer = _objectHolder.GetComponentInParent<PlayerController>();
+            
+        if (!player || player != currentPlayer)
         {
-            playerSM = _objectHolder.GetComponentInParent<PlayerStateMachine>();
-            player = _objectHolder.GetComponentInParent<PlayerController>();
-            playerSM.fishingState.fishingRod = this;
+
+            player = currentPlayer;
+            player.stateMachine.fishingState.fishingRod = this;
         }
         hook.gameObject.SetActive(true);
         hook.transform.position = hookSpawnPoint.position;
@@ -82,7 +78,7 @@ public class FishingRod : Tool
         Vector3 throwDirection = hookSpawnPoint.forward * throwForce.x + Vector3.up * throwForce.y;
         hook.rb.AddForce(throwDirection, ForceMode.Impulse);
 
-        playerSM.ChangeState(playerSM.fishingState);
+        player.stateMachine.ChangeState(player.stateMachine.fishingState);
 
         hookThrowed = true;
 
@@ -106,7 +102,7 @@ public class FishingRod : Tool
 
         if (!hook.onWater)
         {
-            playerSM.ChangeState(playerSM.idleState);
+            player.stateMachine.ChangeState(player.stateMachine.idleState);
             isFishing = false;
         }
         hook.gameObject.SetActive(false);
@@ -120,8 +116,9 @@ public class FishingRod : Tool
 
     protected override void OnEnable()
     {
-        base.OnEnable();
-        if (FishingManager.instance)
+        ShipsManager.instance.playerShip.AddInteractuableObject(this);
+        
+        if (FishingManager.instance && !fishingRodAdded)
         {
             FishingManager.instance.AddFishingRod(this);
             fishingRodAdded = true;

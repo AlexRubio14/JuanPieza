@@ -7,9 +7,7 @@ public class CreateHole : DetectBullet
     [SerializeField] private GameObject hole;
 
     [SerializeField]
-    private LayerMask objectLayer;
-    [SerializeField]
-    private LayerMask playerLayer;
+    private LayerMask hitLayer;
     [SerializeField]
     private float holeRadius = 2;
     protected override void DetectCollision(Collision collision, Bullet _bullet)
@@ -35,8 +33,7 @@ public class CreateHole : DetectBullet
     }
     private void BreakNearbyObjects(Vector3 _position)
     {
-        RaycastHit[] hits = Physics.SphereCastAll(_position, holeRadius, Vector3.forward, 0, objectLayer);
-        RaycastHit[] players = Physics.SphereCastAll(_position, holeRadius, Vector3.forward, 0, playerLayer);
+        RaycastHit[] hits = Physics.SphereCastAll(_position, holeRadius, Vector3.forward, 0, hitLayer);
 
         foreach (RaycastHit hit in hits) 
         {
@@ -46,20 +43,11 @@ public class CreateHole : DetectBullet
             {
                 _objectToRepair.GetObjectState().SetIsBroke(true);
                 _objectToRepair.OnBreakObject();
-            }
-
-        }
-        foreach (RaycastHit player in players)
-        {
-            if (player.collider.TryGetComponent(out PlayerController _player))
+            }else if (hit.collider.TryGetComponent(out PlayerController player))
             {
-                Vector3 knockbackDirection = (player.collider.transform.position - _position).normalized;
-
-                Vector3 knockbackForce = knockbackDirection * _player.bounceForce.x + Vector3.up * _player.bounceForce.y;
-
-                _player.AddImpulse(knockbackForce, _player.rollSpeed);
-                _player.animator.SetTrigger("Roll");
+                player.PlayerHitted(_position);
             }
+
         }
 
     }

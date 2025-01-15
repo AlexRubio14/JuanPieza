@@ -35,7 +35,10 @@ public class IdleState : PlayerState
 
     public override void UseAction()
     {
-        controller.Use();
+        if (controller.objectHolder.GetHandInteractableObject())
+            controller.Use();
+        else
+            stateMachine.ChangeState(stateMachine.pushState);
     }
 
     public override void OnCollisionEnter(Collision collision)
