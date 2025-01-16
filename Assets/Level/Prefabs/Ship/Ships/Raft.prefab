@@ -485,6 +485,7 @@ MonoBehaviour:
   maxWeigth: 200
   weigthDamage: 1
   damageTime: 15
+  playersSpawnPos: []
   votations:
   - {fileID: 232221409706662743}
   - {fileID: 3960906928068121675}
@@ -492,6 +493,8 @@ MonoBehaviour:
   newZ: -40
   newY: 7
   isEnemy: 0
+  barrelBox: {fileID: 0}
+  isBarrelBoxActive: 0
   speed: 0.05
 --- !u!114 &3787857318974121445
 MonoBehaviour:
@@ -507,12 +510,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 1798300188017550894}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  objectLayer:
+  hitLayer:
     serializedVersion: 2
-    m_Bits: 512
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   holeRadius: 2
 --- !u!65 &2634385266736153035
 BoxCollider:

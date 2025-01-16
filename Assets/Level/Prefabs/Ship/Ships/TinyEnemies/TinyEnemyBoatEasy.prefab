@@ -993,12 +993,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 8235452403105692152}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  objectLayer:
+  hitLayer:
     serializedVersion: 2
-    m_Bits: 512
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   holeRadius: 2
 --- !u!114 &7689443985849982933
 MonoBehaviour:
@@ -1475,6 +1472,8 @@ MonoBehaviour:
   newZ: 0
   newY: 0
   isEnemy: 1
+  barrelBox: {fileID: 0}
+  isBarrelBoxActive: 0
 --- !u!54 &7670309692406009392
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1735,12 +1734,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 8235452403105692152}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  objectLayer:
+  hitLayer:
     serializedVersion: 2
-    m_Bits: 512
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   holeRadius: 2
 --- !u!1 &6612920496985839305
 GameObject:
