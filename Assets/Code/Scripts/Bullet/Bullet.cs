@@ -3,7 +3,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [field: SerializeField]
-    public GameObject hitParticles;
+    public GameObject hitParticles { private set; get; }
     [SerializeField] public AudioClip hitClip;
 
     private float damage;

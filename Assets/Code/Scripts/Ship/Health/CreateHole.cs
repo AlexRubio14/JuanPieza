@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 public class CreateHole : DetectBullet
 {
@@ -24,9 +23,6 @@ public class CreateHole : DetectBullet
         _hole.GetComponent<Hole>().SetShipInformation(ship);
         _hole.GetComponentInChildren<RepairHole>().SetbulletInformation(ship, _bullet.GetDamage());
         _hole.transform.SetParent(transform, true);
-
-        Instantiate(_bullet.hitParticles , position, Quaternion.identity);
-
 
         if(ship.onDamageRecieved != null)
             ship.onDamageRecieved(_hole);

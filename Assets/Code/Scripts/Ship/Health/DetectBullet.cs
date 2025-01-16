@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DetectBullet : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class DetectBullet : MonoBehaviour
 
     protected virtual void DetectCollision(Collision collision, Bullet _bullet)
     {
+        Instantiate(_bullet.hitParticles, collision.contacts[0].point, Quaternion.identity);
         _bullet.SetDamageDone(true);
         ship.SetCurrentHealth(-_bullet.GetDamage());
         if (!ship.GetIsEnemy())
