@@ -12,7 +12,7 @@ public class ShippingSail : InteractableObject
     private float currentTime;
     private bool timerIsActive;
 
-    [SerializeField] private Ship ship;
+    [SerializeField] private AllyShip ship;
     [SerializeField] private GameObject[] bridge;
 
     protected override void Start()
