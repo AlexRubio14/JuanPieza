@@ -33,7 +33,7 @@ public class ShipCurve : AllyShip
                 ShipSceneManager.Instance.SetObjectsToSpawn();
                 ShipSceneManager.Instance.SetShipId(idShip, currentHealth, targetHeight, isBarrelBoxActive);
                 ShipSceneManager.Instance.SetPlayerPosition();
-                SceneManager.LoadScene(MapManager.Instance.GetCurrentLevel()._node.sceneName);
+                SceneManager.LoadScene(MapManager.Instance.GetCurrentLevel().sceneName);
             }
 
             rb.MovePosition(CalculateQuadraticBezierPoint(t, points[0], points[1], points[2]));

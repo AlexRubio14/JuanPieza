@@ -118,7 +118,7 @@ public class ShipSceneManager : MonoBehaviour
     public void InstantiateShip()
     {
         GameObject _ship;
-        if (MapManager.Instance.GetCurrentLevel()._node.hasIsland)
+        if (MapManager.Instance.GetCurrentLevel().hasIsland)
             _ship = Instantiate(ship[shipId + 1], new Vector3(0, ship[shipId].GetComponent<Ship>().GetInitY(), 0), Quaternion.identity);
         else
             _ship = Instantiate(ship[shipId], new Vector3(0, ship[shipId].GetComponent<Ship>().GetInitY(), 0), Quaternion.identity);

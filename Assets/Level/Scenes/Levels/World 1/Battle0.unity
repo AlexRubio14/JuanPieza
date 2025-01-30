@@ -336,7 +336,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 231561562}
-  - component: {fileID: 231561563}
   m_Layer: 0
   m_Name: MapGenerator
   m_TagString: Untagged
@@ -359,30 +358,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1301786794}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &231561563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 231561561}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f051d5e091603943a441f4aa87fb6c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapHeight: 8
-  percentage:
-  - 0.7
-  - 0.2
-  - 0.1
-  divider: 1.3
-  allNodes:
-  - {fileID: 11400000, guid: 17953b7f741886d48a41316560bab71a, type: 2}
-  - {fileID: 11400000, guid: dd7a37b6975c1a64091b1dc1b3f03bbc, type: 2}
-  - {fileID: 11400000, guid: f44acd3a3ff1e334eaaeff6c1a5d5aba, type: 2}
-  startNode: {fileID: 11400000, guid: a895b2e5a734cbd4da0ebff5f6ca5fc9, type: 2}
-  boss: {fileID: 11400000, guid: 35d62a1c37ae6234fb201471ead675c6, type: 2}
 --- !u!114 &402938533 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7731135145869046553, guid: b753a6b094becda438661aa6b106ab4c, type: 3}
@@ -447,7 +422,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1301786794}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7356194627300511325, guid: d448d01e81359114eaad0c045e827948, type: 3}
       propertyPath: m_LocalPosition.x
@@ -498,11 +473,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d448d01e81359114eaad0c045e827948, type: 3}
---- !u!4 &442378740 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7356194627300511325, guid: d448d01e81359114eaad0c045e827948, type: 3}
-  m_PrefabInstance: {fileID: 442378739}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &474174434
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1071,7 +1041,6 @@ Transform:
   m_Children:
   - {fileID: 533938662}
   - {fileID: 415519707}
-  - {fileID: 442378740}
   - {fileID: 474174435}
   - {fileID: 231561562}
   m_Father: {fileID: 0}
@@ -1105,6 +1074,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2a11dfdb2e1c146bacb3b21de6eee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firtLevel: {fileID: 11400000, guid: a895b2e5a734cbd4da0ebff5f6ca5fc9, type: 2}
+  bossLevel: {fileID: 11400000, guid: 35d62a1c37ae6234fb201471ead675c6, type: 2}
+  battleLevels:
+  - {fileID: 11400000, guid: 17953b7f741886d48a41316560bab71a, type: 2}
+  shopLevels:
+  - {fileID: 11400000, guid: dd7a37b6975c1a64091b1dc1b3f03bbc, type: 2}
+  eventLevels:
+  - {fileID: 11400000, guid: f44acd3a3ff1e334eaaeff6c1a5d5aba, type: 2}
+  battleInitPercentage: 0.8
+  shopInitPercentage: 0.15
+  eventInitPercentage: 0.05
+  mapMaxHeight: 20
   voteTime: 6
   firstPointZ: 40
   secondPointZ: 80
@@ -1727,3 +1708,4 @@ SceneRoots:
   - {fileID: 1534582616}
   - {fileID: 795562691628828613}
   - {fileID: 2043230840}
+  - {fileID: 442378739}

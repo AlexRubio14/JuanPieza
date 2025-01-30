@@ -44,12 +44,12 @@ public class VotationCanvasManager : MonoBehaviour
         timer.gameObject.SetActive(state);
     }
 
-    public void SetInformationDestination(LevelNode node)
+    public void SetInformationDestination(List<NodeData> node)
     {
         int i = 0;
         foreach (var _ui in ui)
         {
-            _ui.SetDestinationText(node._nodeChildren[i]._node.nodeType.ToString());
+            _ui.SetDestinationText(node[i].nodeType.ToString());
             i++;
         }
     }
@@ -82,7 +82,7 @@ public class VotationCanvasManager : MonoBehaviour
     public void SetMoneyText(bool state)
     {
         moneyText.transform.parent.gameObject.SetActive(state);
-        moneyText.text = "+" + MapManager.Instance.GetCurrentLevel()._node.levelMoney.ToString();
+        moneyText.text = "+" + MapManager.Instance.GetCurrentLevel().levelMoney.ToString();
 
         if(state)
             StartCoroutine(DesactiveMoneyText());

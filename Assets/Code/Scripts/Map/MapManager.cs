@@ -7,18 +7,34 @@ public class MapManager : MonoBehaviour
 {
     public static MapManager Instance { get; private set; }
 
-    private LevelNode currentLevel;
-    private List<LevelNode> childrenLevel = new List<LevelNode>();
-    private Dictionary<int, List<LevelNode>> map = new Dictionary<int, List<LevelNode>>();
+    [Header("Level")]
+    [SerializeField] private NodeData firtLevel;
+    [SerializeField] private NodeData bossLevel;
+    [SerializeField] private List<NodeData> battleLevels;
+    [SerializeField] private List<NodeData> shopLevels;
+    [SerializeField] private List<NodeData> eventLevels;
+    private NodeData currentLevel;
+    private List<NodeData> levelChilds;
+
+    [Header("percentage")]
+    [SerializeField] private float battleInitPercentage;
+    [SerializeField] private float shopInitPercentage;
+    [SerializeField] private float eventInitPercentage;
+    private float battlePercentage;
+    private float shopPercentage;
+    private float eventPercentage;
+
+    [Header("Height")]
+    [SerializeField] private int mapMaxHeight;
     private int mapHeight;
 
     List<Votation> votations = new List<Votation>();
+    private int choosenChild;
 
     [Header("Votation Timer")]
     [SerializeField] private float voteTime;
     private float currentTime;
     private bool startVoteTimer;
-    private int choosenChild;
 
     [Header("Votation Direction")]
     [SerializeField] private float firstPointZ;
@@ -27,12 +43,15 @@ public class MapManager : MonoBehaviour
 
     public bool isVoting;
 
+
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); 
+            DontDestroyOnLoad(gameObject);
+            InitMap();
         }
         else
         {
@@ -40,9 +59,25 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    private void InitMap()
+    {
+        mapMaxHeight = 0;
+        UpdateCurrentLevel(firtLevel, 0);
+        levelChilds = new List<NodeData>();
+
+        battlePercentage = battleInitPercentage;
+        shopPercentage = shopInitPercentage;
+        eventPercentage = eventInitPercentage;
+    }
+
     private void Update()
     {
         Timer();
+        if(Input.GetKeyUp(KeyCode.X)) 
+        {
+            RandomChild();
+            Debug.Log(levelChilds[0].name + "    " + levelChilds[1].name);
+        }
     }
 
     private void Timer()
@@ -122,42 +157,74 @@ public class MapManager : MonoBehaviour
     private void UpdateLevelCondition(bool state)
     {
         if (state)
-            UpdateCurrentLevel(currentLevel._nodeChildren[votations[0].GetDirecctionValue()], 0);
+            UpdateCurrentLevel(levelChilds[votations[0].GetDirecctionValue()], 0);
         else
-            UpdateCurrentLevel(currentLevel._nodeChildren[votations[1].GetDirecctionValue()], 1);
+            UpdateCurrentLevel(levelChilds[votations[1].GetDirecctionValue()], 1);
     }
 
-    private void UpdateCurrentLevel(LevelNode _currentLevel, int index)
+    private void UpdateCurrentLevel(NodeData _currentLevel, int index)
     {
         currentLevel = _currentLevel;
-        childrenLevel = currentLevel._nodeChildren;
         choosenChild = index;
+        mapHeight++;
     }
 
-    public void SetMap(Dictionary<int, List<LevelNode>> _map)
+    private void RandomChild()
     {
-        map = _map;
+        levelChilds = new List<NodeData>();
+        NodeData.NodeType firstChildType = GetRandomNodeType(null);
+        NodeData.NodeType secondChildType = GetRandomNodeType(firstChildType); 
 
-        //foreach (var kvp in map)
-        //{
-        //    int height = kvp.Key;
-        //    List<LevelNode> nodesAtHeight = kvp.Value;
+        levelChilds.Add(GetRandomNode(firstChildType));
+        levelChilds.Add(GetRandomNode(secondChildType));
+    }
+    private NodeData.NodeType GetRandomNodeType(NodeData.NodeType? excludedType)
+    {
+        float battleWeight = battlePercentage;
+        float shopWeight = shopPercentage;
+        float eventWeight = eventPercentage;
 
-        //    foreach (var node in nodesAtHeight)
-        //    {
-        //        if(node._nodeChildren.Count > 1)
-        //            Debug.Log($" → Nodo: {node._node.sceneName}, Altura: {node._nodeHeigth}, Hijos: {node._nodeChildren.Count}, Hijos1: {node._nodeChildren[0]._node.sceneName},Hijos2: {node._nodeChildren[1]._node.sceneName}");
-        //        else if (node._nodeChildren.Count > 0)
-        //            Debug.Log($" → Nodo: {node._node.sceneName}, Altura: {node._nodeHeigth}, Hijos: {node._nodeChildren.Count}, Hijos1: {node._nodeChildren[0]._node.sceneName}");
+        if (currentLevel.nodeType == NodeData.NodeType.SHOP || excludedType == NodeData.NodeType.SHOP)
+            shopWeight = 0f;  
 
-        //    }
-        //}
+        if (currentLevel.nodeType == NodeData.NodeType.EVENT || excludedType == NodeData.NodeType.EVENT)
+            eventWeight = 0f; 
 
-        List<LevelNode> levelZeroNodes = map[0];
-        foreach (var node in levelZeroNodes)
+        float totalWeight = battleWeight + shopWeight + eventWeight;
+        float randomValue = Random.value * totalWeight;
+
+        if (randomValue < battleWeight)
+            return NodeData.NodeType.BATTLE;
+        else if (randomValue < battleWeight + shopWeight)
+            return NodeData.NodeType.SHOP;
+        else
+            return NodeData.NodeType.EVENT;
+    }
+
+
+    private NodeData GetRandomNode(NodeData.NodeType type)
+    {
+        if (type == NodeData.NodeType.BATTLE)
         {
-            UpdateCurrentLevel(node, 0);
+            battlePercentage -= 0.1f;
+            shopPercentage += 0.07f;
+            eventPercentage += 0.03f;
+            return battleLevels[Random.Range(0, battleLevels.Count)];
+        }       
+        if (type == NodeData.NodeType.SHOP)
+        {
+            ResetPercentageValues();
+            return shopLevels[Random.Range(0, shopLevels.Count)];
         }
+        ResetPercentageValues();
+        return eventLevels[Random.Range(0, eventLevels.Count)];
+    }
+
+    private void ResetPercentageValues()
+    {
+        battlePercentage = battleInitPercentage;
+        shopPercentage = shopInitPercentage;
+        eventPercentage = eventInitPercentage;
     }
 
     public void SetVotations(List<Votation> _votations)
@@ -172,15 +239,18 @@ public class MapManager : MonoBehaviour
     private void ActiveUI()
     {
         VotationCanvasManager.Instance.SetVotationUIState(true);
-        VotationCanvasManager.Instance.SetInformationDestination(currentLevel);
+        VotationCanvasManager.Instance.SetInformationDestination(levelChilds);
     }
 
     public void InitVotations()
     {
         CameraManager.Instance.SetSailCamera(false);
-        if (currentLevel._nodeChildren.Count == 0)
+
+        RandomChild();
+
+        if (mapHeight == mapMaxHeight)
         {
-            SceneManager.LoadScene("FinalScene");
+            UpdateCurrentLevel(bossLevel, 3);
             return;
         }
 
@@ -194,7 +264,7 @@ public class MapManager : MonoBehaviour
         startVoteTimer = true;
     }
 
-    public LevelNode GetCurrentLevel()
+    public NodeData GetCurrentLevel()
     {
         return currentLevel;
     }

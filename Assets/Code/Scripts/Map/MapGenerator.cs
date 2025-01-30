@@ -59,7 +59,6 @@ public class MapGenerator : MonoBehaviour
         LevelNode _startNode = CreateNodeMap(startNode, currentHeight, probabilites);
 
         SetRandomChildrens(_startNode, currentHeight, bossNode);
-        MapManager.Instance.SetMap(map);
     }
 
     private void SetRandomChildrens(LevelNode node, int nodeHeight, LevelNode boss)

@@ -45,9 +45,9 @@ public class ShipsManager : MonoBehaviour
     {
         if (enemiesShips.Count == 0)
         {
-            if(!MapManager.Instance.GetCurrentLevel()._node.hasIsland)
+            if(!MapManager.Instance.GetCurrentLevel().hasIsland)
             {
-                MoneyManager.Instance.AddMoney(MapManager.Instance.GetCurrentLevel()._node.levelMoney);
+                MoneyManager.Instance.AddMoney(MapManager.Instance.GetCurrentLevel().levelMoney);
                 VotationCanvasManager.Instance.SetMoneyText(true);
             }
 
