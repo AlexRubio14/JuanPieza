@@ -28,9 +28,6 @@ public class LevelNode
 
 public class MapGenerator : MonoBehaviour
 {
-    [Header("Manager")]
-    [SerializeField] private MapManager manager;
-
     [Header("Map Parameters")]
     [SerializeField] private int mapHeight;
     [SerializeField] private List<float> percentage; 
@@ -62,7 +59,7 @@ public class MapGenerator : MonoBehaviour
         LevelNode _startNode = CreateNodeMap(startNode, currentHeight, probabilites);
 
         SetRandomChildrens(_startNode, currentHeight, bossNode);
-        manager.SetMap(map);
+        MapManager.Instance.SetMap(map);
     }
 
     private void SetRandomChildrens(LevelNode node, int nodeHeight, LevelNode boss)

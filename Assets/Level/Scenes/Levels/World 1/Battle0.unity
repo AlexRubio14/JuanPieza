@@ -327,6 +327,62 @@ RectTransform:
   m_AnchoredPosition: {x: -90, y: -20}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &231561561
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 231561562}
+  - component: {fileID: 231561563}
+  m_Layer: 0
+  m_Name: MapGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &231561562
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231561561}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.5950146, y: -5.077999, z: 6.6550617}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1301786794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &231561563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231561561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f051d5e091603943a441f4aa87fb6c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapHeight: 8
+  percentage:
+  - 0.7
+  - 0.2
+  - 0.1
+  divider: 1.3
+  allNodes:
+  - {fileID: 11400000, guid: 17953b7f741886d48a41316560bab71a, type: 2}
+  - {fileID: 11400000, guid: dd7a37b6975c1a64091b1dc1b3f03bbc, type: 2}
+  - {fileID: 11400000, guid: f44acd3a3ff1e334eaaeff6c1a5d5aba, type: 2}
+  startNode: {fileID: 11400000, guid: a895b2e5a734cbd4da0ebff5f6ca5fc9, type: 2}
+  boss: {fileID: 11400000, guid: 35d62a1c37ae6234fb201471ead675c6, type: 2}
 --- !u!114 &402938533 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7731135145869046553, guid: b753a6b094becda438661aa6b106ab4c, type: 3}
@@ -698,6 +754,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TinyEnemyBoatEasy
       objectReference: {fileID: 0}
+    - target: {fileID: 6245023586670514266, guid: d7a4b616d743d024f92e210e58121e9c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6764713892806314720, guid: d7a4b616d743d024f92e210e58121e9c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -20
@@ -1013,6 +1073,7 @@ Transform:
   - {fileID: 415519707}
   - {fileID: 442378740}
   - {fileID: 474174435}
+  - {fileID: 231561562}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1445898209
@@ -1026,7 +1087,7 @@ GameObject:
   - component: {fileID: 1445898211}
   - component: {fileID: 1445898210}
   m_Layer: 0
-  m_Name: MapGenerator
+  m_Name: MapManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1044,7 +1105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2a11dfdb2e1c146bacb3b21de6eee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: {fileID: 11400000, guid: a895b2e5a734cbd4da0ebff5f6ca5fc9, type: 2}
   voteTime: 6
   firstPointZ: 40
   secondPointZ: 80

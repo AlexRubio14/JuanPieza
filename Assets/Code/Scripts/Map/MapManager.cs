@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,8 +7,8 @@ public class MapManager : MonoBehaviour
 {
     public static MapManager Instance { get; private set; }
 
-    [SerializeField] private NodeData currentLevel;
-    private List<NodeData> childrenLevel = new List<NodeData>();
+    private LevelNode currentLevel;
+    private List<LevelNode> childrenLevel = new List<LevelNode>();
     private Dictionary<int, List<LevelNode>> map = new Dictionary<int, List<LevelNode>>();
     private int mapHeight;
 
@@ -38,7 +38,6 @@ public class MapManager : MonoBehaviour
         {
             Destroy(gameObject); 
         }
-        UpdateCurrentLevel(currentLevel,0);
     }
 
     private void Update()
@@ -123,27 +122,42 @@ public class MapManager : MonoBehaviour
     private void UpdateLevelCondition(bool state)
     {
         if (state)
-            UpdateCurrentLevel(currentLevel.children[votations[0].GetDirecctionValue()], 0);
+            UpdateCurrentLevel(currentLevel._nodeChildren[votations[0].GetDirecctionValue()], 0);
         else
-            UpdateCurrentLevel(currentLevel.children[votations[1].GetDirecctionValue()], 1);
+            UpdateCurrentLevel(currentLevel._nodeChildren[votations[1].GetDirecctionValue()], 1);
     }
 
-    private void UpdateCurrentLevel(NodeData _currentLevel, int index)
+    private void UpdateCurrentLevel(LevelNode _currentLevel, int index)
     {
         currentLevel = _currentLevel;
-        childrenLevel = currentLevel.children;
+        childrenLevel = currentLevel._nodeChildren;
         choosenChild = index;
     }
 
     public void SetMap(Dictionary<int, List<LevelNode>> _map)
     {
-        //map = _map;
+        map = _map;
 
-        //List<LevelNode> levelZeroNodes = map[0];
-        //foreach (var node in levelZeroNodes)
+        //foreach (var kvp in map)
         //{
-        //    UpdateCurrentLevel(node, 0);
+        //    int height = kvp.Key;
+        //    List<LevelNode> nodesAtHeight = kvp.Value;
+
+        //    foreach (var node in nodesAtHeight)
+        //    {
+        //        if(node._nodeChildren.Count > 1)
+        //            Debug.Log($" → Nodo: {node._node.sceneName}, Altura: {node._nodeHeigth}, Hijos: {node._nodeChildren.Count}, Hijos1: {node._nodeChildren[0]._node.sceneName},Hijos2: {node._nodeChildren[1]._node.sceneName}");
+        //        else if (node._nodeChildren.Count > 0)
+        //            Debug.Log($" → Nodo: {node._node.sceneName}, Altura: {node._nodeHeigth}, Hijos: {node._nodeChildren.Count}, Hijos1: {node._nodeChildren[0]._node.sceneName}");
+
+        //    }
         //}
+
+        List<LevelNode> levelZeroNodes = map[0];
+        foreach (var node in levelZeroNodes)
+        {
+            UpdateCurrentLevel(node, 0);
+        }
     }
 
     public void SetVotations(List<Votation> _votations)
@@ -164,7 +178,7 @@ public class MapManager : MonoBehaviour
     public void InitVotations()
     {
         CameraManager.Instance.SetSailCamera(false);
-        if (currentLevel.children.Count == 0)
+        if (currentLevel._nodeChildren.Count == 0)
         {
             SceneManager.LoadScene("FinalScene");
             return;
@@ -180,7 +194,7 @@ public class MapManager : MonoBehaviour
         startVoteTimer = true;
     }
 
-    public NodeData GetCurrentLevel()
+    public LevelNode GetCurrentLevel()
     {
         return currentLevel;
     }
