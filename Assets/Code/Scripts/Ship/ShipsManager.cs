@@ -7,7 +7,7 @@ public class ShipsManager : MonoBehaviour
     public static ShipsManager instance;
 
     [field: SerializeField]
-    public Ship playerShip {  get; private set; }
+    public AllyShip playerShip {  get; private set; }
     [field: SerializeField]
     public List<Ship> enemiesShips { get; private set; }
 
@@ -17,30 +17,36 @@ public class ShipsManager : MonoBehaviour
             Destroy(instance.gameObject);
 
         instance = this;
+
+        enemiesShips = new List<Ship>();
     }
 
     private void Start()
     {
         ShipSceneManager.Instance.InstantiateShip();
+        GenerateEnemyShip.instance.GenerateEnemiesShip();
     }
 
-    public void SetShip(Ship ship)
+    public void AddEnemyShip(Ship _ship)
+    {
+        enemiesShips.Add(_ship);
+    }
+
+    public void SetShip(AllyShip ship)
     {
         playerShip = ship;
     }
 
-    public void RemoveEnemyShip(Ship ship, bool isEnemy)
+    public void RemoveEnemyShip(Ship ship)
     {
-        if(isEnemy)
-        {
-            enemiesShips.Remove(ship);
-            StartVotation();
-        }
-        else
-        {
-            AudioManager.instance.StopLoopSound(AudioManager.instance.seagullAs);
-            SceneManager.LoadScene("MainMenu");
-        }
+        enemiesShips.Remove(ship);
+        StartVotation();
+    }
+
+    public void RemoveAllyShip()
+    {
+        AudioManager.instance.StopLoopSound(AudioManager.instance.seagullAs);
+        SceneManager.LoadScene("MainMenu");
     }
 
     private void StartVotation()

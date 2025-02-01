@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ShipCurve : Ship
+public class ShipCurve : AllyShip
 {
     private List<Vector3> points;
 
@@ -16,7 +16,7 @@ public class ShipCurve : Ship
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        Initialize();
+        base.InitAllyBoat();
         VotationCanvasManager.Instance.SetVotationUIState(false);
     }
 

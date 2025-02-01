@@ -6,7 +6,7 @@ public class RepairHole : Repair
     private float damageDeal;
     protected override void RepairEnded(ObjectHolder _objectHolder)
     {
-        ship.RemoveInteractuableObject(_objectHolder.GetHandInteractableObject());
+        //ship.RemoveInteractuableObject(_objectHolder.GetHandInteractableObject());
         ship.SetCurrentHealth(damageDeal);
         InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
         _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);

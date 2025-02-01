@@ -42,7 +42,16 @@ public class EnemieManager : MonoBehaviour
     [SerializeField]
     private float timeToShoot;
 
-    private void Awake()
+    private void Start()
+    {
+        NavMeshLink[] links = GetComponentsInChildren<NavMeshLink>();
+        foreach (NavMeshLink link in links)
+        {
+            link.UpdateLink();
+        }
+    }
+
+    public void GenerateEnemies()
     {
         cameraController = FindAnyObjectByType<CameraController>();
         toDoList = new List<EnemyAction>();
@@ -54,16 +63,6 @@ public class EnemieManager : MonoBehaviour
             newEnemy.enemieManager = this;
             enemyList.Add(newEnemy);
             cameraController.AddObject(newEnemy.gameObject);
-        }
-
-    }
-
-    private void Start()
-    {
-        NavMeshLink[] links = GetComponentsInChildren<NavMeshLink>();
-        foreach (NavMeshLink link in links)
-        {
-            link.UpdateLink();
         }
     }
 
@@ -192,5 +191,9 @@ public class EnemieManager : MonoBehaviour
     }
     #endregion
 
+    public void SetTotalEnemies(int _totalEnemies)
+    {
+        totalEnemies = _totalEnemies;
+    }
     
 }

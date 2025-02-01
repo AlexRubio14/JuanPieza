@@ -42,7 +42,7 @@ public class VotationCamera : MonoBehaviour
     {
         if (!moveXCamera)
         {
-            Ship _ship = ShipsManager.instance.playerShip;
+            AllyShip _ship = ShipsManager.instance.playerShip;
             Vector3 targetPosition = new Vector3(transform.position.x, _ship.GetNewY(), _ship.GetNewZ());
 
             transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * moveSpeed);

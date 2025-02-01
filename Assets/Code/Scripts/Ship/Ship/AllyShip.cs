@@ -2,33 +2,19 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ship : MonoBehaviour
+public class AllyShip : Ship
 {
-    [Header("HealthVariables")]
-    [SerializeField] private float maxHealth;
-    protected float currentHealth;
-
-    [Header("LerpValues")]
-    [SerializeField] private float heightChangeSpeed;
-    [SerializeField] private float lowerY;
-    [SerializeField] private float destroyY;
-    [SerializeField] private float initY;
-    protected float targetHeight;
-    private float currentHeight;
-
     [Header("Weigth")]
     [SerializeField] private float maxWeigth;
     private List<InteractableObject> objects = new List<InteractableObject>();
     private float currentWeight;
 
-    [Header("WeigthDamage")]
-    [SerializeField] private float weigthDamage;
-
     [Header("Timer")]
     [SerializeField] private float damageTime;
     private float currentTime;
 
-    public Action<GameObject> onDamageRecieved;
+    [Header("WeigthDamage")]
+    [SerializeField] private float weigthDamage;
 
     [Header("SpawnPoints")]
     [SerializeField] private List<Transform> playersSpawnPos;
@@ -43,51 +29,39 @@ public class Ship : MonoBehaviour
     [SerializeField] private float newZ;
     [SerializeField] private float newY;
 
-    private Animator animator;
-
-    [SerializeField] private bool isEnemy = true;
     [SerializeField] private GameObject barrelBox;
     [SerializeField] protected bool isBarrelBoxActive;
-
-    public void Initialize()
+    protected void InitAllyBoat()
     {
-        currentHeight = transform.position.y;
-
         foreach (Votation _votation in votations)
         {
             _votation.gameObject.SetActive(false);
         }
 
-        animator = GetComponent<Animator>();
-
-        if(barrelBox != null)
+        if (barrelBox != null)
             barrelBox.SetActive(isBarrelBoxActive);
-    }
-
-    public void InitEnemyShip()
-    {
-        initY = transform.position.y;
-        currentHeight = initY;
-        currentHealth = maxHealth;
 
         animator = GetComponent<Animator>();
+
+        if (currentHealth == GetMaxHealth())
+            base.Initialize();
     }
 
     private void Update()
     {
-        if(barrelBox != null)
+        if (barrelBox != null)
             barrelBox.SetActive(isBarrelBoxActive);
 
-        FlotationLerp();
         WeightControl();
+        base.Update();
     }
 
-    #region Health Flotation
-    private void FlotationLerp()
+    public override void DestroyShip()
     {
-        currentHeight = Mathf.Lerp(currentHeight, targetHeight, Time.deltaTime * heightChangeSpeed);
-        transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
+        ShipsManager.instance.RemoveAllyShip();
+        Destroy(gameObject);
     }
+
     private void WeightControl()
     {
         if (currentWeight >= maxWeigth)
@@ -105,44 +79,10 @@ public class Ship : MonoBehaviour
         }
     }
 
-    public void DestroyShip()
-    {
-        ShipsManager.instance.RemoveEnemyShip(this, isEnemy);
-        Destroy(gameObject);
-    }
-    public void SetCurrentHealth(float amount)
-    {
-        currentHealth += amount;
-        targetHeight = Mathf.Lerp(lowerY, initY, currentHealth / maxHealth);
-        CheckHealth();
-    }
-
-    public void SetMaxHealth()
-    {
-        currentHealth = maxHealth;
-    }
-    private void CheckHealth()
-    {
-        if (currentHealth < 0)
-        {
-            currentHealth = 0;
-            targetHeight = destroyY;
-            if (animator)
-                animator.SetBool("Dead", true);
-        }
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-    }
-    #endregion
-
-    #region Votation
     public void StartVotation()
     {
         MapManager.Instance.SetVotations(votations);
     }
-    #endregion
 
     #region Inventory
     public void AddInteractuableObject(InteractableObject interactableObject, bool setParent = true)
@@ -155,7 +95,7 @@ public class Ship : MonoBehaviour
 
         if (setParent)
             interactableObject.transform.SetParent(transform);
-        
+
         objects.Add(interactableObject);
         currentWeight += interactableObject.objectSO.weight;
         VotationCanvasManager.Instance.SetWeightText(currentWeight, maxWeigth);
@@ -169,7 +109,7 @@ public class Ship : MonoBehaviour
         VotationCanvasManager.Instance.SetWeightText(currentWeight, maxWeigth);
         objects.Remove(interactableObject);
     }
-    
+
     public void AddWeight(float _weight)
     {
         currentWeight += _weight;
@@ -185,7 +125,7 @@ public class Ship : MonoBehaviour
 
         foreach (InteractableObject item in objects)
         {
-            if(item.objectSO.objectType == _type)
+            if (item.objectSO.objectType == _type)
                 objectList.Add(item);
         }
 
@@ -197,7 +137,7 @@ public class Ship : MonoBehaviour
         {
             if (item.objectSO == _object)
                 return true;
-            
+
         }
 
         return false;
@@ -226,31 +166,6 @@ public class Ship : MonoBehaviour
         return currentWeight >= maxWeigth;
     }
 
-    public float GetInitY()
-    {
-        return initY;
-    }
-
-    public void SetHeightY(float y, float _initY)
-    {
-        if (targetHeight == 0)
-        {
-            SetDeafultTargetHeight();
-            return;
-        }
-
-        targetHeight = y;
-        initY = _initY;
-    }
-
-
-    public void SetHealth(float health)
-    {
-        currentHealth = health;
-        if (currentHealth == 0)
-            currentHealth = maxHealth;
-    }
-
     public float GetNewZ()
     {
         return newZ;
@@ -259,31 +174,6 @@ public class Ship : MonoBehaviour
     public float GetNewY()
     {
         return newY;
-    }
-
-    public bool GetIsEnemy()
-    {
-        return isEnemy;
-    }
-
-    public float GetCurrentHealth()
-    {
-        return currentHealth;
-    }
-
-    public float GetMaxHealth()
-    {
-        return maxHealth;
-    }
-
-    public void SetDeafultTargetHeight()
-    {
-        targetHeight = initY;
-    }
-
-    public void SetCurrentHealht(float health)
-    {
-        currentHealth = health;
     }
 
     public List<Transform> GetSpawnPoints()
@@ -295,4 +185,6 @@ public class Ship : MonoBehaviour
     {
         isBarrelBoxActive = value;
     }
+
+
 }

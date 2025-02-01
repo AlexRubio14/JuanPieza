@@ -55,7 +55,7 @@ public class ShipSceneManager : MonoBehaviour
         objectsToSpawn.Clear();
 
         InteractableObjectData interactableObjectData = new InteractableObjectData();
-        Ship ship = ShipsManager.instance.playerShip;
+        AllyShip ship = ShipsManager.instance.playerShip;
 
         foreach (InteractableObject obj in ship.GetInventory())
         {
@@ -110,7 +110,7 @@ public class ShipSceneManager : MonoBehaviour
         foreach(InteractableObjectData obj in objectsToSpawn) 
         {
             GameObject _object = Instantiate(obj.prefab, obj.offsetFromShip + ShipsManager.instance.playerShip.transform.position, obj.rotation);
-            ShipsManager.instance.playerShip.GetComponent<Ship>().AddInteractuableObject(_object.GetComponent<InteractableObject>());
+            ShipsManager.instance.playerShip.GetComponent<AllyShip>().AddInteractuableObject(_object.GetComponent<InteractableObject>());
         }
         
     }
@@ -123,7 +123,7 @@ public class ShipSceneManager : MonoBehaviour
         else
             _ship = Instantiate(ship[shipId], new Vector3(0, ship[shipId].GetComponent<Ship>().GetInitY(), 0), Quaternion.identity);
 
-        ShipsManager.instance.SetShip(_ship.GetComponent<Ship>());
+        ShipsManager.instance.SetShip(_ship.GetComponent<AllyShip>());
         ShipsManager.instance.playerShip.SetHealth(shipHealth);
         ShipsManager.instance.playerShip.SetHeightY(shipCurrentY, shipInitY);
         ShipsManager.instance.playerShip.SetBarrelBox(shipHasCatapult);

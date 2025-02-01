@@ -44,12 +44,12 @@ public class VotationCanvasManager : MonoBehaviour
         timer.gameObject.SetActive(state);
     }
 
-    public void SetInformationDestination(NodeData node)
+    public void SetInformationDestination(List<NodeData> node)
     {
         int i = 0;
         foreach (var _ui in ui)
         {
-            _ui.SetDestinationText(node.children[i].nodeType.ToString());
+            _ui.SetDestinationText(node[i].nodeType.ToString());
             i++;
         }
     }

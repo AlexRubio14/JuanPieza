@@ -6,8 +6,6 @@ public class DetectBullet : MonoBehaviour
     [Header("ShipInformation")]
     [SerializeField] protected Ship ship;
 
-    
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet") && collision.gameObject.TryGetComponent(out Bullet bullet) && !bullet.GetDamageDone())
@@ -22,7 +20,7 @@ public class DetectBullet : MonoBehaviour
         Instantiate(_bullet.hitParticles, collision.contacts[0].point, Quaternion.identity);
         _bullet.SetDamageDone(true);
         ship.SetCurrentHealth(-_bullet.GetDamage());
-        if (!ship.GetIsEnemy())
+        if (ship.name == ShipsManager.instance.playerShip.name)
             Camera.main.GetComponent<CameraShaker>().TriggerShake(1);
         Destroy(collision.gameObject);
     }
