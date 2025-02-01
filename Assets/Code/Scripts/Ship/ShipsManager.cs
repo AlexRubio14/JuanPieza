@@ -17,11 +17,19 @@ public class ShipsManager : MonoBehaviour
             Destroy(instance.gameObject);
 
         instance = this;
+
+        enemiesShips = new List<Ship>();
     }
 
     private void Start()
     {
         ShipSceneManager.Instance.InstantiateShip();
+        GenerateEnemyShip.instance.GenerateEnemiesShip();
+    }
+
+    public void AddEnemyShip(Ship _ship)
+    {
+        enemiesShips.Add(_ship);
     }
 
     public void SetShip(AllyShip ship)

@@ -24,6 +24,12 @@ public class MapManager : MonoBehaviour
     private float shopPercentage;
     private float eventPercentage;
 
+    [Header("RepeatLevelValues")]
+    [SerializeField] private int resetLastBattleValue;
+    [SerializeField] private int resetLastEventValue;
+    private List<NodeData> battlesDones;
+    private List<NodeData> eventsDones;
+
     [Header("Height")]
     [SerializeField] private int mapMaxHeight;
     private int mapHeight;
@@ -43,8 +49,6 @@ public class MapManager : MonoBehaviour
 
     public bool isVoting;
 
-
-
     private void Awake()
     {
         if (Instance == null)
@@ -61,13 +65,13 @@ public class MapManager : MonoBehaviour
 
     private void InitMap()
     {
-        mapMaxHeight = 0;
+        mapHeight = 0;
         UpdateCurrentLevel(firtLevel, 0);
         levelChilds = new List<NodeData>();
 
-        battlePercentage = battleInitPercentage;
-        shopPercentage = shopInitPercentage;
-        eventPercentage = eventInitPercentage;
+        ResetPercentageValues();
+        battlesDones = new List<NodeData>();
+        eventsDones = new List<NodeData>();
     }
 
     private void Update()
@@ -204,20 +208,42 @@ public class MapManager : MonoBehaviour
 
     private NodeData GetRandomNode(NodeData.NodeType type)
     {
+        NodeData newNodeDate;
         if (type == NodeData.NodeType.BATTLE)
         {
-            battlePercentage -= 0.1f;
-            shopPercentage += 0.07f;
-            eventPercentage += 0.03f;
-            return battleLevels[Random.Range(0, battleLevels.Count)];
+            SetNewPercentagesValues();
+            do
+            {
+                newNodeDate = battleLevels[Random.Range(0, battleLevels.Count)];
+            }
+            while (battlesDones.Any(level => level.sceneName == newNodeDate.sceneName));
+
+            DeleteLastNewNodeAdded(battlesDones, resetLastBattleValue);
         }       
-        if (type == NodeData.NodeType.SHOP)
+        else if (type == NodeData.NodeType.SHOP)
         {
             ResetPercentageValues();
-            return shopLevels[Random.Range(0, shopLevels.Count)];
+            newNodeDate = shopLevels[Random.Range(0, shopLevels.Count)];
         }
-        ResetPercentageValues();
-        return eventLevels[Random.Range(0, eventLevels.Count)];
+        else
+        {
+            ResetPercentageValues();
+            do
+            {
+                newNodeDate = eventLevels[Random.Range(0, eventLevels.Count)];
+            }
+            while (eventsDones.Any(level => level.sceneName == newNodeDate.sceneName));
+
+            DeleteLastNewNodeAdded(eventsDones, resetLastEventValue);
+        }
+
+        return newNodeDate;
+    }
+
+    private void DeleteLastNewNodeAdded(List<NodeData> currentList, int maxValue)
+    {
+        if(currentList.Count > maxValue)
+            currentList.RemoveAt(0);
     }
 
     private void ResetPercentageValues()
@@ -225,6 +251,13 @@ public class MapManager : MonoBehaviour
         battlePercentage = battleInitPercentage;
         shopPercentage = shopInitPercentage;
         eventPercentage = eventInitPercentage;
+    }
+
+    private void SetNewPercentagesValues()
+    {
+        battlePercentage -= 0.1f;
+        shopPercentage += 0.05f;
+        eventPercentage += 0.05f;
     }
 
     public void SetVotations(List<Votation> _votations)
@@ -246,12 +279,14 @@ public class MapManager : MonoBehaviour
     {
         CameraManager.Instance.SetSailCamera(false);
 
-        RandomChild();
-
         if (mapHeight == mapMaxHeight)
         {
             UpdateCurrentLevel(bossLevel, 3);
             return;
+        }
+        else
+        {
+            RandomChild();
         }
 
         foreach (var vot in votations)
