@@ -121,8 +121,6 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnUseAction += UseAction;
 
-        playerInput.OnWeaponMoveAction += CannonMovementAction;
-
         playerInput.OnWeaponTiltAction += CannonTiltAction;
     }
 
@@ -137,8 +135,6 @@ public class PlayerController : MonoBehaviour
         playerInput.OnStopInteractAction -= StopInteractAction;
 
         playerInput.OnUseAction -= UseAction;
-
-        playerInput.OnWeaponMoveAction -= CannonMovementAction;
 
         playerInput.OnWeaponTiltAction -= CannonTiltAction;
 
@@ -172,16 +168,6 @@ public class PlayerController : MonoBehaviour
         stateMachine.currentState.UseAction();        
     }
 
-    private void CannonMovementAction(bool _isForward, float _axis)
-    {
-        Vector2 newInput = movementInput;
-        if(_isForward)
-            newInput.x = _axis;
-        else
-            newInput.y = _axis;
-
-        movementInput = newInput;
-    }
     private void CannonTiltAction(float _axis)
     {
         cannonTilt = _axis;

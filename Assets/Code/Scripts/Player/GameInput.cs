@@ -12,7 +12,6 @@ public class GameInput : MonoBehaviour
     public Action OnRollAction;
     public Action OnThrowAction;
 
-    public Action<bool, float> OnWeaponMoveAction;
     public Action<float> OnWeaponTiltAction;
     public int playerReference { get;  set; }
 
@@ -60,16 +59,6 @@ public class GameInput : MonoBehaviour
         }
     }
 
-    public void ReadCannonForwardMovement(InputAction.CallbackContext obj)
-    {
-        if (OnWeaponMoveAction != null)
-            OnWeaponMoveAction(true, obj.ReadValue<float>());
-    }
-    public void ReadCannonSideMovement(InputAction.CallbackContext obj)
-    {
-        if (OnWeaponMoveAction != null)
-            OnWeaponMoveAction(false, obj.ReadValue<float>());
-    }
     public void TiltCannon(InputAction.CallbackContext obj)
     {
         if (OnWeaponTiltAction != null)

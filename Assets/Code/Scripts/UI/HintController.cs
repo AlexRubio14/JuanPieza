@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class HintController : MonoBehaviour
 {
-public enum DeviceType { KEYBOARD = 0, GAMEPAD = 1}
+    public enum DeviceType { KEYBOARD = 0, GAMEPAD = 1}
     public enum ActionType { 
         NONE, 
         USE, 
