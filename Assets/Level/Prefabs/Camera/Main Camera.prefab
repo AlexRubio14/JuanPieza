@@ -66,7 +66,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 40
+  field of view: 30
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -284,14 +284,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camState: 0
   followColliders: []
-  minYDistance: 13
-  maxZDistance: 100
+  minYDistance: 3
+  maxZDistance: 60
+  zOffset: 0.7
+  deadPlayerDistance: -20
   insideCamera: {fileID: 2842666792115895197}
   externalCamera: {fileID: 3244462809995230726}
   movementSpeed: 0.2
-  zoomOutSpeed: 25
+  zoomOutSpeed: 10
   zoomInSpeed: 6
-  XZSpeed: 7
+  XZSpeed: 15
 --- !u!114 &2794290285723518631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,7 +389,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 30
+  field of view: 26
   orthographic: 0
   orthographic size: 5
   m_Depth: 0

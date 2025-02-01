@@ -53,12 +53,33 @@ public class CannonState : PlayerState
 
     private void MoveCannon()
     {
-        controller.animator.SetBool("Moving", controller.movementInput.x != 0);
+        
 
-        if (controller.movementInput.x != 0)
-            controller.Movement(controller.transform.forward, controller.cannonSpeed * controller.movementInput.x);
-        if (controller.movementInput.y != 0)
-            controller.Rotate(controller.transform.right * controller.movementInput.y, controller.cannonRotationSpeed);
+        if(controller.objectHolder.hintController.deviceType == HintController.DeviceType.KEYBOARD)
+        {
+            controller.animator.SetBool("Moving", controller.movementInput.y != 0);
+
+            Debug.Log(controller.movementInput.y);
+            if (controller.movementInput.y != 0)
+                controller.Movement(controller.transform.forward, controller.cannonSpeed * controller.movementInput.y);
+            else if (controller.movementInput.x != 0)
+                controller.Rotate(controller.transform.right * controller.movementInput.x, controller.cannonRotationSpeed);
+        }
+        else
+        {
+
+            if (Mathf.Abs(controller.movementInput.y) > Mathf.Abs(controller.movementInput.x))
+            {
+                controller.Movement(controller.transform.forward, controller.cannonSpeed * controller.movementInput.y);
+                controller.animator.SetBool("Moving", true);
+            }
+            else if (Mathf.Abs(controller.movementInput.y) < Mathf.Abs(controller.movementInput.x))
+            {
+                controller.Rotate(controller.transform.right * controller.movementInput.x, controller.cannonRotationSpeed);
+                controller.animator.SetBool("Moving", false);
+            }
+
+        }
     }
     private void TiltCannon()
     {

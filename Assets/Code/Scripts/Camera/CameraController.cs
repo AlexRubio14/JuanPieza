@@ -12,11 +12,15 @@ public class CameraController : MonoBehaviour
     private List<Collider> followColliders;
     private List<PlayerStateMachine> playerStates = new List<PlayerStateMachine>();
 
-    [Header("Players Variables"), SerializeField]
+    [Header("Position Adjustments"), SerializeField]
     private float minYDistance;
     [SerializeField]
     private float maxZDistance;
+    private float zPosition;
+    [SerializeField]
     private float zOffset;
+    [SerializeField]
+    private float deadPlayerDistance;
 
     [Space, Header("Cameras"), SerializeField]
     private Camera insideCamera;
@@ -43,22 +47,22 @@ public class CameraController : MonoBehaviour
         
         
         //colocar la camara a la distancia minima
-        zOffset = transform.position.z - GetMiddlePointBetweenPlayers().z;
+        zPosition = transform.position.z - GetMiddlePointBetweenPlayers().z;
     }
 
     private void Start()
     {
-        if (ShipsManager.instance.playerShip.TryGetComponent(out Collider playerShipColl))
-            AddObject(playerShipColl.gameObject);
+        //if (ShipsManager.instance.playerShip.TryGetComponent(out Collider playerShipColl))
+        //    AddObject(playerShipColl.gameObject);
 
-        foreach (Ship ship in ShipsManager.instance.enemiesShips)
-        {
-            if (ship != null)
-            {
-                if (ship.TryGetComponent(out Collider enemyShipCol))
-                    AddObject(enemyShipCol.gameObject);
-            }
-        }
+        //foreach (Ship ship in ShipsManager.instance.enemiesShips)
+        //{
+        //    if (ship != null)
+        //    {
+        //        if (ship.TryGetComponent(out Collider enemyShipCol))
+        //            AddObject(enemyShipCol.gameObject);
+        //    }
+        //}
     }
 
     public void AddPlayer(GameObject _newPlayer)
@@ -76,8 +80,10 @@ public class CameraController : MonoBehaviour
 
     public void RemovePlayer(GameObject _removablePlayer)
     {
-        followColliders.Remove(_removablePlayer.GetComponent<CapsuleCollider>());
-        playerStates.Remove(_removablePlayer.GetComponent<PlayerStateMachine>());
+        CapsuleCollider currentCollider = _removablePlayer.GetComponent<CapsuleCollider>();
+        int collisionIndex = followColliders.IndexOf(currentCollider);
+        followColliders.RemoveAt(collisionIndex);
+        playerStates.RemoveAt(collisionIndex);
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -144,7 +150,7 @@ public class CameraController : MonoBehaviour
             (
             middlePos.x - transform.position.x,
             0,
-            (middlePos.z + zOffset / 2) - transform.position.z
+            (middlePos.z + zPosition / 2) - transform.position.z
             );
         destinyPos += XZDir * XZSpeed;
 
@@ -163,7 +169,7 @@ public class CameraController : MonoBehaviour
                     break;
             }
             destinyPos += -transform.forward * zoomSpeed;
-            zOffset = Mathf.Clamp(zOffset - zoomSpeed * Time.fixedDeltaTime, -maxZDistance, maxZDistance);
+            zPosition = Mathf.Clamp(zPosition - zoomSpeed * Time.fixedDeltaTime, -maxZDistance, maxZDistance);
         }
 
         Vector3 finalPos = Vector3.Lerp
@@ -173,9 +179,9 @@ public class CameraController : MonoBehaviour
             movementSpeed * Time.fixedDeltaTime
             );
         finalPos.y = Mathf.Clamp(finalPos.y, minYDistance, Mathf.Infinity);
+        finalPos.z -= zOffset;
 
         transform.position = finalPos;
-        
     }
     private Vector3 GetMiddlePointBetweenPlayers()
     {
@@ -183,10 +189,10 @@ public class CameraController : MonoBehaviour
 
         for (int i = 0; i < followColliders.Count; i++)
         {
-            if (followColliders[i] != null && playerStates.Count > 0 && (playerStates[i] == null || playerStates[i].currentState != playerStates[i].deathState))
+            if (followColliders[i] != null && playerStates.Count > 0 
+                && (playerStates[i] == null || playerStates[i].currentState != playerStates[i].deathState || playerStates[i].transform.position.z >= deadPlayerDistance))
             {
                 middlePoint += followColliders[i].transform.position;
-
             }
         }
 
@@ -194,6 +200,7 @@ public class CameraController : MonoBehaviour
             return Vector3.zero;
 
         middlePoint /= followColliders.Count;
+
         return middlePoint;
     }
 
