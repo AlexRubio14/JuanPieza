@@ -33,6 +33,7 @@ public class MapManager : MonoBehaviour
     [Header("Height")]
     [SerializeField] private int mapMaxHeight;
     private int mapHeight;
+    private int currentHeightDifficult;
 
     List<Votation> votations = new List<Votation>();
     private int choosenChild;
@@ -72,6 +73,8 @@ public class MapManager : MonoBehaviour
         ResetPercentageValues();
         battlesDones = new List<NodeData>();
         eventsDones = new List<NodeData>();
+
+        currentHeightDifficult = GetRange();
     }
 
     private void Update()
@@ -79,8 +82,8 @@ public class MapManager : MonoBehaviour
         Timer();
         if(Input.GetKeyUp(KeyCode.X)) 
         {
-            RandomChild();
-            Debug.Log(levelChilds[0].name + "    " + levelChilds[1].name);
+            foreach (var ships in ShipsManager.instance.enemiesShips)
+                ships.SetCurrentHealth(-10000);
         }
     }
 
@@ -209,6 +212,8 @@ public class MapManager : MonoBehaviour
     private NodeData GetRandomNode(NodeData.NodeType type)
     {
         NodeData newNodeDate;
+        currentHeightDifficult = GetRange();
+
         if (type == NodeData.NodeType.BATTLE)
         {
             SetNewPercentagesValues();
@@ -216,9 +221,7 @@ public class MapManager : MonoBehaviour
             {
                 newNodeDate = battleLevels[Random.Range(0, battleLevels.Count)];
             }
-            while (battlesDones.Any(level => level.sceneName == newNodeDate.sceneName));
-
-            DeleteLastNewNodeAdded(battlesDones, resetLastBattleValue);
+            while (battlesDones.Any(level => level.sceneName == newNodeDate.sceneName) || newNodeDate.difficult != currentHeightDifficult);
         }       
         else if (type == NodeData.NodeType.SHOP)
         {
@@ -233,11 +236,21 @@ public class MapManager : MonoBehaviour
                 newNodeDate = eventLevels[Random.Range(0, eventLevels.Count)];
             }
             while (eventsDones.Any(level => level.sceneName == newNodeDate.sceneName));
-
-            DeleteLastNewNodeAdded(eventsDones, resetLastEventValue);
         }
+        DeleteLastNewNodeAdded(eventsDones, resetLastEventValue);
+        DeleteLastNewNodeAdded(battlesDones, resetLastBattleValue);
 
         return newNodeDate;
+    }
+
+    private int GetRange()
+    {
+        int rangeSize = mapMaxHeight / 4;
+
+        if (mapHeight <= rangeSize) return 1;
+        if (mapHeight <= rangeSize * 2) return 2;
+        if (mapHeight <= rangeSize * 3) return 3;
+        return 4;
     }
 
     private void DeleteLastNewNodeAdded(List<NodeData> currentList, int maxValue)
@@ -279,15 +292,17 @@ public class MapManager : MonoBehaviour
     {
         CameraManager.Instance.SetSailCamera(false);
 
+        if (currentLevel.nodeType == NodeData.NodeType.BATTLE)
+            battlesDones.Add(currentLevel);
+        else if (currentLevel.nodeType == NodeData.NodeType.EVENT)
+            eventsDones.Add(currentLevel);
+
         if (mapHeight == mapMaxHeight)
         {
             UpdateCurrentLevel(bossLevel, 3);
             return;
         }
-        else
-        {
-            RandomChild();
-        }
+        RandomChild();
 
         foreach (var vot in votations)
         {

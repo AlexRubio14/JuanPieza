@@ -24,7 +24,8 @@ public class ShipsManager : MonoBehaviour
     private void Start()
     {
         ShipSceneManager.Instance.InstantiateShip();
-        GenerateEnemyShip.instance.GenerateEnemiesShip();
+        if(!MapManager.Instance.GetCurrentLevel().hasIsland)
+            GenerateEnemyShip.instance.GenerateEnemiesShip();
     }
 
     public void AddEnemyShip(Ship _ship)
