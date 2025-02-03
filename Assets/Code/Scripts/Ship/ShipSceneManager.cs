@@ -20,6 +20,8 @@ public class ShipSceneManager : MonoBehaviour
     [Header("Delete post Alp")]
     [SerializeField] private ObjectSO[] boxesDefaultKey;
     [SerializeField] private int[] boxesDefaultValue;
+
+    [SerializeField] private float islandArriveDistance;
     
     [System.Serializable]
     public struct InteractableObjectData
@@ -119,7 +121,11 @@ public class ShipSceneManager : MonoBehaviour
     {
         GameObject _ship;
         if (MapManager.Instance.GetCurrentLevel().hasIsland)
-            _ship = Instantiate(ship[shipId + 1], new Vector3(0, ship[shipId].GetComponent<Ship>().GetInitY(), 0), Quaternion.identity);
+        {
+            _ship = Instantiate(ship[shipId + 1], new Vector3(0, ship[shipId].GetComponent<Ship>().GetInitY(), -islandArriveDistance), Quaternion.identity);
+            CameraManager.Instance.SetArriveCamera(true);
+            CameraManager.Instance.SetSimpleCamera(false);
+        }
         else
             _ship = Instantiate(ship[shipId], new Vector3(0, ship[shipId].GetComponent<Ship>().GetInitY(), 0), Quaternion.identity);
 

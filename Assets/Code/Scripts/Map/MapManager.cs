@@ -235,7 +235,7 @@ public class MapManager : MonoBehaviour
             {
                 newNodeDate = eventLevels[Random.Range(0, eventLevels.Count)];
             }
-            while (eventsDones.Any(level => level.sceneName == newNodeDate.sceneName));
+            while (eventsDones.Any(level => level.sceneName == newNodeDate.sceneName) || newNodeDate.difficult >= currentHeightDifficult);
         }
         DeleteLastNewNodeAdded(eventsDones, resetLastEventValue);
         DeleteLastNewNodeAdded(battlesDones, resetLastBattleValue);
