@@ -100,8 +100,14 @@ public class DeathState : PlayerState
         rb.position = Vector3.Lerp(startPosition, endPosition, lerpProcess / controller.timeToDie);
 
         if (lerpProcess / controller.timeToDie >= 1)
-            Debug.Log("Ha muerto");
+            Respawn();
         
+    }
+
+    private void Respawn()
+    {
+        transform.position = ShipsManager.instance.playerShip.transform.position + new Vector3(0f, 2f, 0f);
+        stateMachine.ChangeState(stateMachine.idleState);
     }
 
     private void WaitToGetRescued()
