@@ -134,7 +134,7 @@ public class MapManager : MonoBehaviour
                 break;
         }
 
-        shipCurve.SetStartMovement(true, positions);
+        shipCurve.SetStartMovementCurve(true, positions);
     }
 
     private void UpdateUIPlayerText()

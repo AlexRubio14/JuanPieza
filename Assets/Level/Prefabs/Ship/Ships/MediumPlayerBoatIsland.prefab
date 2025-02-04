@@ -308,7 +308,7 @@ Transform:
   m_GameObject: {fileID: 417119987358337537}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 6, z: -3}
+  m_LocalPosition: {x: -2, y: 6, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2091,12 +2091,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 26038164116221456}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  objectLayer:
+  hitLayer:
     serializedVersion: 2
-    m_Bits: 512
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   holeRadius: 2
 --- !u!1 &5553340199960713543
 GameObject:
@@ -2242,7 +2239,7 @@ Transform:
   m_GameObject: {fileID: 5776284151296792146}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 6, z: -3}
+  m_LocalPosition: {x: 2, y: 6, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2359,7 +2356,7 @@ Transform:
   m_GameObject: {fileID: 7234486034398760698}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 6, z: 3}
+  m_LocalPosition: {x: -2, y: 6, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2476,7 +2473,7 @@ Transform:
   m_GameObject: {fileID: 7741767894578094187}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 6, z: 3}
+  m_LocalPosition: {x: 2, y: 6, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2793,12 +2790,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 26038164116221456}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
-  objectLayer:
+  hitLayer:
     serializedVersion: 2
-    m_Bits: 512
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   holeRadius: 2
 --- !u!1 &8682344190508449631
 GameObject:
@@ -2877,8 +2871,8 @@ MonoBehaviour:
   destroyY: -15
   initY: -0.8
   maxWeigth: 400
-  weigthDamage: 1
   damageTime: 15
+  weigthDamage: 1
   playersSpawnPos:
   - {fileID: 3203514168245746182}
   - {fileID: 7813941180048577112}
@@ -2890,10 +2884,10 @@ MonoBehaviour:
   idShip: 2
   newZ: -27
   newY: 12
-  isEnemy: 0
   barrelBox: {fileID: 9214200767550919338}
   isBarrelBoxActive: 0
   speed: 0.05
+  speedArriveIsland: 0.1
 --- !u!54 &7144551275326272565
 Rigidbody:
   m_ObjectHideFlags: 0

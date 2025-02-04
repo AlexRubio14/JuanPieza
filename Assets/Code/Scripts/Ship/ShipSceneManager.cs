@@ -89,23 +89,6 @@ public class ShipSceneManager : MonoBehaviour
         shipHasCatapult = currentHasCatapult;
         shipInitY = ShipsManager.instance.playerShip.GetInitY();
     }
-
-    public void SetPlayerPosition()
-    {
-        Ship ship = ShipsManager.instance.playerShip;
-        foreach (PlayerController player in PlayersManager.instance.ingamePlayers)
-        {
-            if (player.stateMachine.currentState is not DeathState)
-                playersPosition.Add(player.gameObject.transform.position - ship.transform.position);
-            else
-                playersPosition.Add(Vector3.zero);
-        }
-    }
-
-    public List<Vector3> GetPlayersPositions()
-    {
-        return playersPosition;
-    }
  
     public void InstantiateObjects()
     {

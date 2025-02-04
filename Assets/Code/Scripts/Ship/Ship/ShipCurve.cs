@@ -8,10 +8,12 @@ public class ShipCurve : AllyShip
 
     [Header("Movement")]
     [SerializeField] private float speed;
+    [SerializeField] private float speedArriveIsland;
 
     private Rigidbody rb;
     private float t;
-    private bool startMovement;
+    private bool startMovementCurve;
+    private bool startMovementToIsland;
 
     private void Start()
     {
@@ -22,21 +24,32 @@ public class ShipCurve : AllyShip
 
     private void FixedUpdate()
     {
-        if(startMovement)
+        if(startMovementCurve)
         {
             t += Time.fixedDeltaTime * speed;
 
-            if (t > 0.5f)
+            if (t > 0.1f)
             {
                 MapManager.Instance.isVoting = false;
-                startMovement = false;
+                startMovementCurve = false;
                 ShipSceneManager.Instance.SetObjectsToSpawn();
                 ShipSceneManager.Instance.SetShipId(idShip, currentHealth, targetHeight, isBarrelBoxActive);
-                ShipSceneManager.Instance.SetPlayerPosition();
                 SceneManager.LoadScene(MapManager.Instance.GetCurrentLevel().sceneName);
             }
 
             rb.MovePosition(CalculateQuadraticBezierPoint(t, points[0], points[1], points[2]));
+        }
+        if(startMovementToIsland)
+        {
+            transform.position = Vector3.Lerp(transform.position, new Vector3(0, transform.position.y, 10), Time.fixedDeltaTime * speedArriveIsland);
+
+            if (transform.position.z >= 0)
+            {
+                SetStartMovementToIsland(false);
+                CameraManager.Instance.SetArriveCamera(false);
+                CameraManager.Instance.SetSimpleCamera(true);
+            }
+
         }
     }
 
@@ -46,9 +59,14 @@ public class ShipCurve : AllyShip
         return (u * u * p0) + (2 * u * t * p1) + (t * t * p2);
     }
 
-    public void SetStartMovement(bool state, List<Vector3> _points)
+    public void SetStartMovementCurve(bool state, List<Vector3> _points)
     {
-        startMovement = state;
+        startMovementCurve = state;
         points = _points;
+    }
+
+    public void SetStartMovementToIsland(bool state)
+    {
+        startMovementToIsland = state;
     }
 }
