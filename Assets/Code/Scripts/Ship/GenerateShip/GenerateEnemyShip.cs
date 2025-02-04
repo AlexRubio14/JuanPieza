@@ -22,6 +22,7 @@ public class GenerateEnemyShip : MonoBehaviour
 
     [Header("Enemy Ships")]
     public List<EnemyShip> enemyShipInformation;
+    [SerializeField] private LayerMask hitLayer;
 
     private void Awake()
     {
@@ -66,20 +67,34 @@ public class GenerateEnemyShip : MonoBehaviour
             float randomZ = cannonZPosition[Random.Range(0, cannonZPosition.Count)];
             cannonZPosition.Remove(randomZ);
 
+            float yPosition = GetGroundYPosition(new Vector3(ship.transform.position.x, 0, ship.transform.position.z), ship.transform);
             if (isLeft)
             {
-                newCannon.transform.localPosition = new Vector3(enemy.initCannonPosition.x, enemy.initCannonPosition.y,randomZ);
+                newCannon.transform.localPosition = new Vector3(enemy.initCannonPosition.x, yPosition, randomZ);
                 newCannon.transform.Rotate(0, 90, 0);
             }
             else
             {
-                newCannon.transform.localPosition = new Vector3(-enemy.initCannonPosition.x, enemy.initCannonPosition.y,randomZ);
+                newCannon.transform.localPosition = new Vector3(-enemy.initCannonPosition.x, yPosition, randomZ);
                 newCannon.transform.Rotate(0, -90, 0);
             }
 
             newCannon.GetComponent<EnemyObject>().enemieManager = ship.GetComponent<EnemieManager>();
         }
+    }
 
+    private float GetGroundYPosition(Vector3 startPosition, Transform parentTransform)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(startPosition, Vector3.up, out hit, Mathf.Infinity, hitLayer))
+        {
+            if (hit.collider.CompareTag("Floor"))
+            {
+                Vector3 localHitPosition = parentTransform.InverseTransformPoint(hit.point);
+                return localHitPosition.y + 0.13f;
+            }
+        }
 
+        return 0f;
     }
 }

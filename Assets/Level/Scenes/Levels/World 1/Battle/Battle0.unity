@@ -401,23 +401,15 @@ MonoBehaviour:
   enemyShipInformation:
   - _ship: {fileID: 6245023586670514266, guid: d7a4b616d743d024f92e210e58121e9c, type: 3}
     initShipPosition: {x: -20, y: 1.3, z: -3}
-    enemiesCuantity: 2
+    enemiesCuantity: 1
     cannonCuantity:
-    - {fileID: 4405499652462248821, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
     - {fileID: 4405499652462248821, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
     cannonOffset: 1
     cannonPossiblePosition: 3
     initCannonPosition: {x: -1.5, y: 2.3, z: 2}
-  - _ship: {fileID: 6245023586670514266, guid: d7a4b616d743d024f92e210e58121e9c, type: 3}
-    initShipPosition: {x: 20, y: 1.3, z: -3}
-    enemiesCuantity: 4
-    cannonCuantity:
-    - {fileID: 4405499652462248821, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-    - {fileID: 4405499652462248821, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-    - {fileID: 4405499652462248821, guid: 83d0d50905c071e499298c8358175d2b, type: 3}
-    cannonOffset: 1
-    cannonPossiblePosition: 3
-    initCannonPosition: {x: -1.5, y: 2.3, z: 2}
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1001 &442378739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -580,7 +572,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1223391957443327058, guid: dc4060638be39684b83848779d53f86c, type: 3}
+    - {fileID: 579679299397883587, guid: dc4060638be39684b83848779d53f86c, type: 3}
+    - {fileID: 1292639919915644239, guid: dc4060638be39684b83848779d53f86c, type: 3}
+    - {fileID: 3016087752064383328, guid: dc4060638be39684b83848779d53f86c, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc4060638be39684b83848779d53f86c, type: 3}
@@ -722,10 +718,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1260044290}
     m_Modifications:
-    - target: {fileID: 404905396477301617, guid: 279e1b58b6dc117449b41eda3ae35bec, type: 3}
-      propertyPath: weaponDamage
-      value: 110
-      objectReference: {fileID: 0}
     - target: {fileID: 7513048802622738015, guid: 279e1b58b6dc117449b41eda3ae35bec, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.11
@@ -1001,15 +993,38 @@ MonoBehaviour:
   bossLevel: {fileID: 11400000, guid: 35d62a1c37ae6234fb201471ead675c6, type: 2}
   battleLevels:
   - {fileID: 11400000, guid: 17953b7f741886d48a41316560bab71a, type: 2}
+  - {fileID: 11400000, guid: ce09979c8547fa74989915aac26e5ea3, type: 2}
+  - {fileID: 11400000, guid: f9e20ae2a420a12408db67158b41debb, type: 2}
+  - {fileID: 11400000, guid: e9fb0616a52c42a45b2a994667879567, type: 2}
+  - {fileID: 11400000, guid: 47c3c13d972ccaa4e8e02a9a866aaec0, type: 2}
+  - {fileID: 11400000, guid: 265a22048aa0c7a4b9bbe714deba00c0, type: 2}
+  - {fileID: 11400000, guid: 73f136fcafac5a64b9f454b8fabb4716, type: 2}
+  - {fileID: 11400000, guid: bf953256e494c0d4cbf88a56c3c91af0, type: 2}
+  - {fileID: 11400000, guid: 6e4a6583df175574f9f0489db5aacee7, type: 2}
+  - {fileID: 11400000, guid: 73d917083b865d54e88fc5689936516f, type: 2}
+  - {fileID: 11400000, guid: 6c160ea5f4146a64583c345480b7fcb8, type: 2}
+  - {fileID: 11400000, guid: eb12bac7464dac340bdbc2533e025b27, type: 2}
+  - {fileID: 11400000, guid: ef31aaea047360d499eaa92cd6d4e063, type: 2}
+  - {fileID: 11400000, guid: 51d49bedbea3d3048ac86171e2e0e10f, type: 2}
+  - {fileID: 11400000, guid: 51916a9d8544d634fa3520db334bc764, type: 2}
+  - {fileID: 11400000, guid: a7e5b738e66abd54ea516b18fc370c9e, type: 2}
+  - {fileID: 11400000, guid: 4ad67d1954c247f499f08302e4d92ffa, type: 2}
+  - {fileID: 11400000, guid: 29f72b8b9a6c7ae459760d5d1db2dc31, type: 2}
+  - {fileID: 11400000, guid: d195956061efa7b4da5a828f5c1372c6, type: 2}
+  - {fileID: 11400000, guid: 1d55ec9686d9a124f848da2015bff8c8, type: 2}
   shopLevels:
   - {fileID: 11400000, guid: dd7a37b6975c1a64091b1dc1b3f03bbc, type: 2}
   eventLevels:
   - {fileID: 11400000, guid: f44acd3a3ff1e334eaaeff6c1a5d5aba, type: 2}
-  battleInitPercentage: 0.8
-  shopInitPercentage: 0.15
-  eventInitPercentage: 0.05
-  resetLastBattleValue: 0
-  resetLastEventValue: 0
+  - {fileID: 11400000, guid: 0c88530f3f12c214187a2c956a98667d, type: 2}
+  - {fileID: 11400000, guid: 7f0f65685631e1b43b6f0950a950f1ba, type: 2}
+  - {fileID: 11400000, guid: f57c91fc06fb20a48acc81913f049be2, type: 2}
+  - {fileID: 11400000, guid: e1f40b6e42ddb584e9d252c17d3862a0, type: 2}
+  battleInitPercentage: 0
+  shopInitPercentage: 1
+  eventInitPercentage: 0
+  resetLastBattleValue: 3
+  resetLastEventValue: 2
   mapMaxHeight: 20
   voteTime: 6
   firstPointZ: 40
@@ -1073,6 +1088,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 561693e55fcd822459ac20c3a10b9b54, type: 2}
   - {fileID: 11400000, guid: c787f09f9af215041a21c8b6f8f90f4d, type: 2}
   boxesDefaultValue: 0a0000000a0000000a000000040000000400000000000000
+  islandArriveDistance: 50
 --- !u!4 &1534582616
 Transform:
   m_ObjectHideFlags: 0

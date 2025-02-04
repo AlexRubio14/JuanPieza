@@ -11,6 +11,7 @@ public class NodeData : ScriptableObject
     public string sceneName;
     public int levelMoney;
     public bool hasIsland;
+    public int difficult;
 
     public NodeData CretaeNode()
     {

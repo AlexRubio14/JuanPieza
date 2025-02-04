@@ -21,6 +21,8 @@ public class ShippingSail : InteractableObject
         players = new List<PlayerController>();
         VotationCanvasManager.Instance.SetSailTimer(false);
         currentTime = sailTimer;
+        foreach (GameObject _bridge in bridge)
+            _bridge.SetActive(false);
     }
 
     private void Update()
@@ -83,5 +85,11 @@ public class ShippingSail : InteractableObject
         currentTime = sailTimer;
         VotationCanvasManager.Instance.SetSailTimer(false);
         timerIsActive = false;
+    }
+
+    public void ActiveBridge()
+    {
+        foreach (GameObject _bridge in bridge)
+            _bridge.SetActive(true);
     }
 }

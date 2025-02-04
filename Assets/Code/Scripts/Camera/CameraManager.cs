@@ -7,6 +7,7 @@ public class CameraManager : MonoBehaviour
 
     private CameraController simpleCamera;
     private VotationCamera sailCamera;
+    private ArriveIslandCamera arriveCamera;
 
     private void Awake()
     {
@@ -21,9 +22,11 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Start()
     {
-        SetScripts();
+        simpleCamera = Camera.main.GetComponent<CameraController>();
+        sailCamera = Camera.main.GetComponent<VotationCamera>();
+        arriveCamera = Camera.main.GetComponent<ArriveIslandCamera>();
     }
 
     public void SetSailCamera(bool state)
@@ -37,13 +40,9 @@ public class CameraManager : MonoBehaviour
         simpleCamera.enabled = state;
     }
 
-    private void SetScripts()
+    public void SetArriveCamera(bool state)
     {
-        if (simpleCamera == null)
-        {
-            simpleCamera = Camera.main.GetComponent<CameraController>();
-            sailCamera = Camera.main.GetComponent<VotationCamera>();
-        }
-
+        arriveCamera.enabled = state;
+        arriveCamera.SetMoveCamera(state);
     }
 }

@@ -7,10 +7,7 @@ public class LevelPlayerController : MonoBehaviour
     [SerializeField]
     private GameObject playerPrefab;
 
-    [SerializeField]
     private List<Transform> playersSpawnPos;
-
-    private List<Vector3> safeSpawnPos;
 
     private void Awake()
     {
@@ -21,22 +18,14 @@ public class LevelPlayerController : MonoBehaviour
     {
         playersSpawnPos = ShipsManager.instance.playerShip.GetSpawnPoints();
 
-        GetPlayerSpawnPos();
-
         for (int i = 0; i < PlayersManager.instance.players.Count; i++)
         {
             PlayerController controller = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<PlayerController>();
-
-            if (safeSpawnPos.Count > 0 && safeSpawnPos[i] != Vector3.zero)
-            {
-                safeSpawnPos[i] = new Vector3(safeSpawnPos[i].x, safeSpawnPos[i].y + 5, safeSpawnPos[i].z);
-                controller.gameObject.transform.position = safeSpawnPos[i];
-            }
-            else
-                controller.gameObject.transform.position = playersSpawnPos[i].transform.position;
+            controller.gameObject.transform.position = playersSpawnPos[i].transform.position;
 
             controller.gameObject.name = "Player" + i;
             controller.playerInput = PlayersManager.instance.players[i].Item1.GetComponent<GameInput>();
+            controller.transform.SetParent(ShipsManager.instance.playerShip.gameObject.transform, true);
             
             PlayersManager.instance.players[i].Item1.actions.FindActionMap("PlayerSelectMenu").Disable();
             PlayersManager.instance.players[i].Item1.actions.FindActionMap("Gameplay").Enable();
@@ -55,10 +44,5 @@ public class LevelPlayerController : MonoBehaviour
             if (cameraCont)
                 cameraCont.AddPlayer(controller.gameObject);
         }
-    }
-
-    public void GetPlayerSpawnPos()
-    {
-        safeSpawnPos = ShipSceneManager.Instance.GetPlayersPositions();
     }
 }
