@@ -61,6 +61,7 @@ public class EnemieManager : MonoBehaviour
             Vector3 spawnPos = enemySpawnPoint.position + new Vector3(Random.Range(-enemySpawnOffset, enemySpawnOffset), 0, Random.Range(-enemySpawnOffset, enemySpawnOffset));
             EnemyController newEnemy = Instantiate(enemyPrefab, enemySpawnPoint.position, Quaternion.identity).GetComponent<EnemyController>();
             newEnemy.enemieManager = this;
+            newEnemy.gameObject.transform.SetParent(transform, true);
             enemyList.Add(newEnemy);
             cameraController.AddObject(newEnemy.gameObject);
         }

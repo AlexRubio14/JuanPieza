@@ -25,6 +25,7 @@ public class LevelPlayerController : MonoBehaviour
 
             controller.gameObject.name = "Player" + i;
             controller.playerInput = PlayersManager.instance.players[i].Item1.GetComponent<GameInput>();
+            controller.transform.SetParent(ShipsManager.instance.playerShip.gameObject.transform, true);
             
             PlayersManager.instance.players[i].Item1.actions.FindActionMap("PlayerSelectMenu").Disable();
             PlayersManager.instance.players[i].Item1.actions.FindActionMap("Gameplay").Enable();

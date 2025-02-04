@@ -9,11 +9,13 @@ public class ShipCurve : AllyShip
     [Header("Movement")]
     [SerializeField] private float speed;
     [SerializeField] private float speedArriveIsland;
+    [SerializeField] private float rotationSpeed;
 
     private Rigidbody rb;
     private float t;
     private bool startMovementCurve;
     private bool startMovementToIsland;
+    private bool rotateCamenra;
 
     private void Start()
     {
@@ -24,7 +26,13 @@ public class ShipCurve : AllyShip
 
     private void FixedUpdate()
     {
-        if(startMovementCurve)
+        MoveCurve();
+        MoveToIsland();
+    }
+
+    private void MoveCurve()
+    {
+        if (startMovementCurve)
         {
             t += Time.fixedDeltaTime * speed;
 
@@ -39,15 +47,32 @@ public class ShipCurve : AllyShip
 
             rb.MovePosition(CalculateQuadraticBezierPoint(t, points[0], points[1], points[2]));
         }
-        if(startMovementToIsland)
+    }
+
+    private void MoveToIsland()
+    {
+        if (startMovementToIsland)
         {
             transform.position = Vector3.Lerp(transform.position, new Vector3(0, transform.position.y, 10), Time.fixedDeltaTime * speedArriveIsland);
 
             if (transform.position.z >= 0)
             {
+                rotateCamenra = true;
                 SetStartMovementToIsland(false);
                 CameraManager.Instance.SetArriveCamera(false);
                 CameraManager.Instance.SetSimpleCamera(true);
+                transform.Find("Sail").GetComponentInChildren<ShippingSail>().ActiveBridge();
+            }
+
+        }
+        if (rotateCamenra)
+        {
+            Quaternion targetRotation = Quaternion.Euler(40, 0, 0);
+            Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+
+            if (Quaternion.Angle(Camera.main.transform.rotation, targetRotation) < 0.1f)
+            {
+                rotateCamenra = false;
             }
 
         }

@@ -17,6 +17,7 @@ public class ArriveIslandCamera : MonoBehaviour
     public void SetMoveCamera(bool state)
     {
         moveCamera = state;
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        if(state)
+            transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 }
