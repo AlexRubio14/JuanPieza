@@ -49,6 +49,9 @@ public class UpgradeNPC : InteractableObject
         newShip.SetCurrentHealht(newShip.GetMaxHealth());
         newShip.SetDeafultTargetHeight();
 
+        foreach (var players in PlayersManager.instance.ingamePlayers)
+            players.gameObject.transform.SetParent(null, true);
+
         Destroy(currentShip.gameObject);
 
         ShipSceneManager.Instance.SetBoxesItem();

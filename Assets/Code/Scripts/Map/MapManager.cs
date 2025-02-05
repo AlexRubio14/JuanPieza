@@ -318,4 +318,9 @@ public class MapManager : MonoBehaviour
     {
         return currentLevel;
     }
+
+    public bool GetIsVoting() 
+    { 
+        return isVoting;
+    }
 }
