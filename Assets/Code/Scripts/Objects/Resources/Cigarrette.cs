@@ -47,7 +47,7 @@ public class Cigarrette : Resource
         _objectHolder.hintController.UpdateActionType(HintController.ActionType.USE);
     }
 
-    public override void UseItem(ObjectHolder _objectHolder)
+    public override void Use(ObjectHolder _objectHolder)
     {
         //playear animacion player
         _objectHolder.GetComponentInParent<CigarretteController>().ActivateCigarrette();

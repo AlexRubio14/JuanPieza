@@ -7,13 +7,25 @@ public class Tool : InteractableObject
     public bool addToolAtDestroy = true;
     public override void Interact(ObjectHolder _objectHolder)
     {
-        if (_objectHolder.GetHasObjectPicked())
+
+        if(!_objectHolder.GetHasObjectPicked())
         {
-            DropItem(_objectHolder);
+            PickItem(_objectHolder);
             return;
         }
 
-        PickItem(_objectHolder);
+        InteractableObject nearObj = _objectHolder.GetNearestInteractableObject();
+
+        if (nearObj && nearObj is WoodShelf && nearObj.CanInteract(_objectHolder))
+        {
+            addToolAtDestroy = false;
+            (nearObj as Box).AddItemInBox();
+            InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
+            Destroy(currentObject.gameObject);
+        }
+        else
+            DropItem(_objectHolder);
+
     }
 
     private void PickItem(ObjectHolder _objectHolder)
@@ -28,7 +40,7 @@ public class Tool : InteractableObject
         _objectHolder.RemoveItemFromHand();
         AudioManager.instance.Play2dOneShotSound(dropItemClip, "Objects");
     }
-    public override void UseItem(ObjectHolder _objectHolder) { }
+    public override void Use(ObjectHolder _objectHolder) { }
 
     protected override void OnDestroy()
     {

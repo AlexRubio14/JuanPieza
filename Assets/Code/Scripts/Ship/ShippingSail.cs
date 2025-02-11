@@ -76,7 +76,7 @@ public class ShippingSail : InteractableObject
         }
     }
 
-    public override void UseItem(ObjectHolder _objectHolder)
+    public override void Use(ObjectHolder _objectHolder)
     {
         
     }

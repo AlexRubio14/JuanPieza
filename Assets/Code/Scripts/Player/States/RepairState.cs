@@ -17,7 +17,10 @@ public class RepairState : PlayerState
         Debug.Log("Deja de reparar");
     }
     public override void UseAction() { /*No puedes usar ningun objeto*/ }
-
+    public override void StopUseAction()
+    {
+        controller.StopUse();
+    }
     public override void OnHit(Vector3 _hitPosition)
     {
         StopInteractAction();
@@ -28,6 +31,5 @@ public class RepairState : PlayerState
         //Si te golpea algo llamar al controller.StopInteract();
     }
 
-
-
+   
 }

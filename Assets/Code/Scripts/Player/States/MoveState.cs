@@ -43,6 +43,10 @@ public class MoveState : PlayerState
         else
             stateMachine.ChangeState(stateMachine.pushState);
     }
+    public override void StopUseAction() 
+    { 
+        controller.StopUse();
+    }
 
     public override void OnCollisionEnter(Collision collision)
     {

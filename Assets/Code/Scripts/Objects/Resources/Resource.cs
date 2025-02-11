@@ -6,15 +6,24 @@ public abstract class Resource : InteractableObject
     [SerializeField] protected AudioClip dropItemClip;
     public override void Interact(ObjectHolder _objectHolder)
     {
-        if (_objectHolder.GetHasObjectPicked())
+        if(!_objectHolder.GetHasObjectPicked())
         {
-            DropItem(_objectHolder);
+            PickItem(_objectHolder);
             return;
         }
 
-        PickItem(_objectHolder);
-    }
+        InteractableObject nearObj = _objectHolder.GetNearestInteractableObject();
 
+        if (nearObj && nearObj is Box && nearObj.CanInteract(_objectHolder))
+        {
+            (nearObj as Box).AddItemInBox();
+            InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
+            Destroy(currentObject.gameObject);
+        }
+        else
+            DropItem(_objectHolder);
+
+    }
     private void PickItem(ObjectHolder _objectHolder)
     {
         _objectHolder.ChangeObjectInHand(this);

@@ -9,7 +9,7 @@ public class RepairNPC : InteractableObject
             ShipsManager.instance.playerShip.SetMaxHealth();
     }
 
-    public override void UseItem(ObjectHolder _objectHolder)
+    public override void Use(ObjectHolder _objectHolder)
     {
         
     }
