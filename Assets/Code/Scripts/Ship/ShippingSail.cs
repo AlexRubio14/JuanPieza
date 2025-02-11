@@ -100,4 +100,9 @@ public class ShippingSail : InteractableObject
     {
         isMainShip = state;
     }
+
+    public bool GetIsBridgeActive()
+    {
+        return bridge[0].activeSelf;
+    }
 }

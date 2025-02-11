@@ -36,7 +36,7 @@ public class ShipCurve : AllyShip
         {
             t += Time.fixedDeltaTime * speed;
 
-            if (t > 0.1f)
+            if (t > 0.5f)
             {
                 MapManager.Instance.isVoting = false;
                 startMovementCurve = false;
