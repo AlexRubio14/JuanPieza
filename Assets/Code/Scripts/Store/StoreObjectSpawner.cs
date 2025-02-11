@@ -20,7 +20,7 @@ public class StoreObjectSpawner : InteractableObject
         OnItemPickedUp();
     }
 
-    public override void UseItem(ObjectHolder _objectHolder)
+    public override void Use(ObjectHolder _objectHolder)
     {
         
     }

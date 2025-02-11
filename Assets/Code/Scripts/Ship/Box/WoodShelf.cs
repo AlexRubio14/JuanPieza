@@ -14,14 +14,6 @@ public class WoodShelf : Box
     {
         base.Start();
     }
-
-    public override void Interact(ObjectHolder _objectHolder)
-    {
-        Tool currentTool = _objectHolder.GetHandInteractableObject() as Tool;
-        if (currentTool)
-            currentTool.addToolAtDestroy = false;
-        base.Interact(_objectHolder);
-    }
     public override void AddItemInBox()
     {
         base.AddItemInBox();

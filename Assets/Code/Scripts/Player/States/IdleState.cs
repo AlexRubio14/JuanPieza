@@ -40,6 +40,11 @@ public class IdleState : PlayerState
         else
             stateMachine.ChangeState(stateMachine.pushState);
     }
+    public override void StopUseAction() 
+    {
+        controller.StopUse();
+    }
+
 
     public override void OnCollisionEnter(Collision collision)
     {

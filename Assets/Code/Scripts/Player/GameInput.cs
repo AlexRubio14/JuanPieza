@@ -8,6 +8,7 @@ public class GameInput : MonoBehaviour
     public Action OnInteractAction;
     public Action OnStopInteractAction;
     public Action OnUseAction;
+    public Action OnStopUseAction;
     public Action OnPushAction;
     public Action OnRollAction;
     public Action OnThrowAction;
@@ -40,6 +41,11 @@ public class GameInput : MonoBehaviour
         {
             if (OnUseAction != null)
                 OnUseAction();
+        }
+        else if (obj.canceled)
+        {
+            if(OnStopUseAction != null)
+                OnStopUseAction();
         }
     }
     public void RollAction(InputAction.CallbackContext obj)

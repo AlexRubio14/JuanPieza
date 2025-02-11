@@ -167,7 +167,7 @@ public class ObjectHolder : MonoBehaviour
 
         nearestInteractableObject = _nearestObject;
 
-        if (!handObject || handObject && handObject.objectSO == _nearestObject.objectToInteract)
+        if (!handObject || handObject && nearestInteractableObject.CanInteract(this))
             hintController.UpdateActionType(nearestInteractableObject.ShowNeededInputHint(this));
     }
 

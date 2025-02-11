@@ -28,7 +28,7 @@ public class StoreResources : Box
         }
     }
 
-    public override void UseItem(ObjectHolder _objectHolder)
+    public override void Use(ObjectHolder _objectHolder)
     {
         
     }

@@ -121,6 +121,8 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnUseAction += UseAction;
 
+        playerInput.OnStopUseAction += StopUseAction;
+
         playerInput.OnWeaponTiltAction += CannonTiltAction;
     }
 
@@ -167,7 +169,10 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.currentState.UseAction();        
     }
-
+    private void StopUseAction()
+    {
+        stateMachine.currentState.StopUseAction();
+    }
     private void CannonTiltAction(float _axis)
     {
         cannonTilt = _axis;
@@ -238,16 +243,15 @@ public class PlayerController : MonoBehaviour
         if (!handObject && (!nearestObject || nearestObject && !nearestObject.CanInteract(objectHolder)))
             return;
 
-        if (nearestObject && nearestObject.CanInteract(objectHolder))
+        if(handObject)
+        {
+            handObject.Interact(objectHolder);
+            hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));
+        }else if (nearestObject && nearestObject.CanInteract(objectHolder))
         {
             nearestObject.Interact(objectHolder);
             objectHolder.ChangeNearestInteractableObject(null);
             hintController.UpdateActionType(nearestObject.ShowNeededInputHint(objectHolder));
-        }        
-        else
-        {
-            handObject.Interact(objectHolder);
-            hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));
         }
         
         animator.SetBool("Pick", objectHolder.GetHandInteractableObject());
@@ -255,13 +259,15 @@ public class PlayerController : MonoBehaviour
     }
     public void StopInteract()
     {
-        InteractableObject nearObject = objectHolder.GetNearestInteractableObject();
+        InteractableObject currentObject = objectHolder.GetHandInteractableObject();
+        
+        if(currentObject == null)
+            currentObject = objectHolder.GetNearestInteractableObject();
 
-        if (nearObject as Repair)
+        if (currentObject as Repair)
         {
-            if (((Repair)nearObject).IsPlayerReparing(this))
-                nearObject.StopInteract(objectHolder);
-
+            if (((Repair)currentObject).IsPlayerReparing(this))
+                currentObject.StopInteract(objectHolder);
         }
     }
     public void Use()
@@ -270,7 +276,7 @@ public class PlayerController : MonoBehaviour
 
         if (handObject)
         {
-            handObject.UseItem(objectHolder);
+            handObject.Use(objectHolder);
             InteractableObject newHandObject = objectHolder.GetHandInteractableObject();
             InteractableObject nearestObj = objectHolder.GetNearestInteractableObject();
             if (handObject == newHandObject)
@@ -285,6 +291,15 @@ public class PlayerController : MonoBehaviour
             else
                 hintController.UpdateActionType(HintController.ActionType.NONE);
         }
+    }
+    public void StopUse()
+    {
+        InteractableObject currentObject = objectHolder.GetHandInteractableObject();
+
+        if (currentObject == null)
+            currentObject = objectHolder.GetNearestInteractableObject();
+
+        currentObject.StopUse(objectHolder);
     }
     #endregion
 

@@ -16,7 +16,7 @@ public class Sword : Tool
         base.Interact(_objectHolder);
     }
 
-    public override void UseItem(ObjectHolder _objectHolder)
+    public override void Use(ObjectHolder _objectHolder)
     {
         Debug.Log("Corte con la espada");
         //empezar funcion de ataque

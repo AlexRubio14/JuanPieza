@@ -67,12 +67,10 @@ public abstract class Weapon : RepairObject
 
         if (isPlayerMounted() && player.playerInput.playerReference == mountedPlayerId) //Desmontarse
             UnMount(player, _objectHolder);
-        else if (!hasAmmo && handObject && handObject.objectSO == objectToInteract) //Si no tiene municion agregar la bala al ca�on
-            Reload(_objectHolder);
-        else if (!isPlayerMounted() && !handObject) //Montarse al arma
+        else if (!isPlayerMounted()) //Montarse al arma
             Mount(player, _objectHolder);
     }
-    public override void UseItem(ObjectHolder _objectHolder)
+    public override void Use(ObjectHolder _objectHolder)
     {
         if (!hasAmmo)
             return;
@@ -96,6 +94,9 @@ public abstract class Weapon : RepairObject
 
     public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
     {
+        if(state.GetIsBroken())
+            return base.ShowNeededInputHint(_objectHolder);
+
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
         if (!handObject && !isPlayerMounted() //No tiene nada en la mano y no hay nadie montado
@@ -145,7 +146,7 @@ public abstract class Weapon : RepairObject
 
         mountedPlayerId = -1;
     }
-    protected void Reload(ObjectHolder _objectHolder)
+    public void Reload(ObjectHolder _objectHolder)
     {
         //Settear a true la municion
         hasAmmo = true;

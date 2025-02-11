@@ -10,8 +10,8 @@ public class HintController : MonoBehaviour
     public enum ActionType { 
         NONE, 
         USE, 
-        INTERACT, 
         HOLD_USE,
+        INTERACT, 
         HOLD_INTERACT
     }
     

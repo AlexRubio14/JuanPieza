@@ -4,7 +4,7 @@ using UnityEngine;
 public class Repair : InteractableObject
 {
     [Space, Header("Repair Item")]
-    [SerializeField] private ObjectSO repairItem;
+    [SerializeField] protected ObjectSO repairItem;
     [SerializeField] protected ObjectState state;
     [SerializeField] private float repairDuration;
     private float currentRepairTime;
@@ -27,29 +27,37 @@ public class Repair : InteractableObject
         RepairObject();
     }
 
-    public void AddRepairPlayer(ObjectHolder _objectHolder)
+    #region Object Fuctions
+    public override void Interact(ObjectHolder _objectHolder) { }
+    public override void Use(ObjectHolder _objectHolder) { }
+    public override bool CanInteract(ObjectHolder _objectHolder)
     {
-        if (state.GetIsBroken() && CanInteract(_objectHolder))
-        {
-            PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
-            playerCont.animator.SetBool("Interacting", true);
-            playerCont.progressBar.EnableProgressBar(true);
-            players.Add(playerCont);
-            playerCont.stateMachine.ChangeState(playerCont.stateMachine.repairState);
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
-            if (!clipIsPlaying)
-            {
-                repairAudioSource = AudioManager.instance.Play2dLoop(repairClip, "Objects");
-                clipIsPlaying = true;
-            }
+        return handObject && handObject.objectSO == repairItem;
+    }
+    #endregion
+
+    #region Repair Functions
+    public void AddPlayer(ObjectHolder _objectHolder)
+    {
+        if (!state.GetIsBroken() || !CanInteract(_objectHolder))
+            return;
+
+        PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
+        playerCont.animator.SetBool("Interacting", true);
+        playerCont.progressBar.EnableProgressBar(true);
+        players.Add(playerCont);
+        playerCont.stateMachine.ChangeState(playerCont.stateMachine.repairState);
+
+        if (!clipIsPlaying)
+        {
+            repairAudioSource = AudioManager.instance.Play2dLoop(repairClip, "Objects");
+            clipIsPlaying = true;
         }
 
     }
-    public override void Interact(ObjectHolder _objectHolder)
-    {
-        
-    }
-    public override void StopInteract(ObjectHolder _objectHolder)
+    public void RemovePlayer(ObjectHolder _objectHolder)
     {
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
         playerCont.animator.SetBool("Interacting", false);
@@ -57,35 +65,12 @@ public class Repair : InteractableObject
         players.Remove(playerCont);
         playerCont.stateMachine.ChangeState(playerCont.stateMachine.idleState);
 
-        if(players.Count == 0)
+        if (players.Count == 0)
         {
             AudioManager.instance.StopLoopSound(repairAudioSource);
             clipIsPlaying = false;
         }
     }
-    public override void UseItem(ObjectHolder _objectHolder)
-    {
-
-    }
-
-    public override bool CanInteract(ObjectHolder _objectHolder)
-    {
-        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-
-        return handObject && handObject.objectSO == repairItem;
-    }
-
-    public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-        
-        if (handObject && handObject.objectSO == repairItem)
-            return HintController.ActionType.HOLD_USE;
-        
-
-        return HintController.ActionType.NONE;
-    }
-
     private void RepairObject()
     {
         if (players.Count > 0)
@@ -101,7 +86,7 @@ public class Repair : InteractableObject
 
             foreach (PlayerController player in players)
                 player.progressBar.SetProgress(currentRepairTime, repairDuration);
-            
+
         }
         else
         {
@@ -115,24 +100,32 @@ public class Repair : InteractableObject
     {
         for (int i = players.Count - 1; i >= 0; i--)
         {
-            RepairEnded(players[i].objectHolder);
-            StopInteract(players[i].objectHolder);
+            ObjectHolder objHolder = players[i].objectHolder;
+            InteractableObject handObject = objHolder.GetHandInteractableObject();
+
+            StopInteract(objHolder);
+            StopUse(objHolder);
+            if (handObject)
+            {
+                handObject.StopInteract(objHolder);
+                handObject.StopUse(objHolder);
+            }
+            RepairEnded(objHolder);
         }
     }
-
     public bool IsPlayerReparing(PlayerController _playerController)
     {
-        if(players.Count <= 0) 
+        if (players.Count <= 0)
             return false;
 
         return players.Contains(_playerController);
     }
     public ObjectState GetObjectState() { return state; }
-
     public virtual void OnBreakObject() { }
     protected virtual void RepairEnded(ObjectHolder _objectHolder)
     {
         _objectHolder.hintController.UpdateActionType(HintController.ActionType.NONE);
     }
+    #endregion
 
 }
