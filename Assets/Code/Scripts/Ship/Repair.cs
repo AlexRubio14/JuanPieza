@@ -27,9 +27,9 @@ public class Repair : InteractableObject
         RepairObject();
     }
 
-    public override void Interact(ObjectHolder _objectHolder)
+    public void AddRepairPlayer(ObjectHolder _objectHolder)
     {
-        if(state.GetIsBroken() && CanInteract(_objectHolder))
+        if (state.GetIsBroken() && CanInteract(_objectHolder))
         {
             PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
             playerCont.animator.SetBool("Interacting", true);
@@ -37,12 +37,17 @@ public class Repair : InteractableObject
             players.Add(playerCont);
             playerCont.stateMachine.ChangeState(playerCont.stateMachine.repairState);
 
-            if(!clipIsPlaying) 
+            if (!clipIsPlaying)
             {
                 repairAudioSource = AudioManager.instance.Play2dLoop(repairClip, "Objects");
                 clipIsPlaying = true;
             }
         }
+
+    }
+    public override void Interact(ObjectHolder _objectHolder)
+    {
+        
     }
     public override void StopInteract(ObjectHolder _objectHolder)
     {
@@ -75,9 +80,8 @@ public class Repair : InteractableObject
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         
         if (handObject && handObject.objectSO == repairItem)
-        {
-            return HintController.ActionType.HOLD;
-        }
+            return HintController.ActionType.HOLD_USE;
+        
 
         return HintController.ActionType.NONE;
     }

@@ -1,5 +1,4 @@
 using AYellowpaper.SerializedCollections;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,14 +11,16 @@ public class HintController : MonoBehaviour
         NONE, 
         USE, 
         INTERACT, 
-        HOLD 
+        HOLD_USE,
+        HOLD_INTERACT
     }
     
     [field: SerializeField]
     public DeviceType deviceType {  get; private set; }
 
     [Space]
-    [SerializeField, SerializedDictionary("Action", "Device Sprites")] private SerializedDictionary<ActionType, List<Sprite>> ActionSprites;
+    [SerializeField, SerializedDictionary("Action", "Device Sprites")] 
+    private SerializedDictionary<ActionType, List<Sprite>> ActionSprites;
     [Space, SerializeField] private Canvas canvas;
     [SerializeField] private Image hintImage;
     [SerializeField] private float hintOffset;
