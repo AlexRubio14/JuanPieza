@@ -13,9 +13,9 @@ public class ShipCurve : AllyShip
 
     private Rigidbody rb;
     private float t;
-    private bool startMovementCurve;
-    private bool startMovementToIsland;
-    private bool rotateCamenra;
+    private bool startMovementCurve = false;
+    private bool startMovementToIsland = false;
+    private bool rotateCamenra = false;
 
     private void Start()
     {
@@ -36,7 +36,7 @@ public class ShipCurve : AllyShip
         {
             t += Time.fixedDeltaTime * speed;
 
-            if (t > 0.1f)
+            if (t > 0.5f)
             {
                 MapManager.Instance.isVoting = false;
                 startMovementCurve = false;
@@ -61,11 +61,11 @@ public class ShipCurve : AllyShip
                 SetStartMovementToIsland(false);
                 CameraManager.Instance.SetArriveCamera(false);
                 CameraManager.Instance.SetSimpleCamera(true);
-                transform.Find("Sail").GetComponentInChildren<ShippingSail>().ActiveBridge();
+                ActiveBridge(true);
             }
 
         }
-        if (rotateCamenra)
+        if (rotateCamenra && !MapManager.Instance.GetIsVoting())
         {
             Quaternion targetRotation = Quaternion.Euler(40, 0, 0);
             Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
@@ -93,5 +93,15 @@ public class ShipCurve : AllyShip
     public void SetStartMovementToIsland(bool state)
     {
         startMovementToIsland = state;
+    }
+
+    public void ActiveBridge(bool state)
+    {
+        transform.Find("Sail").GetComponentInChildren<ShippingSail>().ActiveBridge(state);
+    }
+
+    public void SetIsMainShip(bool state)
+    {
+        transform.Find("Sail").GetComponentInChildren<ShippingSail>().SetIsMainShip(state);
     }
 }
