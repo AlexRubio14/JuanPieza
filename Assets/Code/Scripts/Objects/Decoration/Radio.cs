@@ -1,14 +1,23 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Bonk : RepairObject
+public class Radio : RepairObject
 {
-    private Animation animationController;
-    [SerializeField] private AudioClip bonkClip;
+    [SerializeField] private List<AudioClip> musicsList;
+    [SerializeField] public AudioSource audioSource;
+
+    private bool isPlaying;
 
     protected override void Awake()
     {
         base.Awake();
-        animationController = GetComponent<Animation>();
+        isPlaying = false;
+
+        //audioSource.outputAudioMixerGroup = ;
+        audioSource.loop = true;
+        audioSource.pitch = 1;
+        audioSource.volume = 1;
     }
 
     public override void Interact(ObjectHolder _objectHolder)
@@ -18,12 +27,11 @@ public class Bonk : RepairObject
         if (!CanInteract(_objectHolder) || state.GetIsBroken())
             return;
 
-        //Bong
-        animationController.Stop();
-        animationController.Play();
-
         //Sonido
-        AudioManager.instance.Play2dOneShotSound(bonkClip, "Objects",1,0.9f,1.1f);
+        if (isPlaying)
+            StopPlaying();
+        else
+            Play();
     }
 
     public override bool CanInteract(ObjectHolder _objectHolder)
@@ -45,5 +53,19 @@ public class Bonk : RepairObject
 
 
         return HintController.ActionType.NONE;
+    }
+
+    private void Play()
+    {
+        int randomMusic = Random.Range(0, musicsList.Count);
+        Debug.Log(randomMusic);
+        Debug.Log(musicsList.Count);
+        audioSource.clip = musicsList[randomMusic];
+        audioSource.Play();
+    }
+    private void StopPlaying()
+    {
+        audioSource.clip = null; 
+        audioSource.Stop();
     }
 }
