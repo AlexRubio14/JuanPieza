@@ -116,6 +116,8 @@ public abstract class SteppedAction : EnemyAction
         agent.SetDestination(targetPos);
         if (IsNearToDestiny(targetPos))
         {
+            enemyController.interactParticles.Play(true);
+
             currentState = ActionState.INTERACTING;
             agent.isStopped = true;
             //Empezar animacion de reparar
@@ -124,6 +126,11 @@ public abstract class SteppedAction : EnemyAction
             //Animacion moverse false
             animator.SetBool("Moving", false);
             agent.isStopped = true;
+
+            targetPos.y = 0;
+            Vector3 finalDirection = targetPos - new Vector3(agent.transform.position.x, 0, agent.transform.position.z);
+            agent.transform.forward = finalDirection.normalized;
+
             //Activar particulas de reparar
             onEnableResource(resouceType, false);
         }
@@ -138,6 +145,7 @@ public abstract class SteppedAction : EnemyAction
             //Parar animacion de interactuar
             animator.SetBool("Interacting", false);
             agent.isStopped = false;
+            enemyController.interactParticles.Stop(true);
 
             //Reparar
             Interact();
