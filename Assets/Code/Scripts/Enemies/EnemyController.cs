@@ -12,6 +12,9 @@ public class EnemyController : MonoBehaviour
 
     public EnemyAction currentAction;
 
+    [field: SerializeField]
+    public ParticleSystem interactParticles {  get; private set; }
+
     [SerializeField]
     private float linkSpeed;
     private float baseSpeed;
@@ -26,6 +29,8 @@ public class EnemyController : MonoBehaviour
 
         foreach (KeyValuePair<SteppedAction.ResourceType, GameObject> item in resourcesMeshes)
             item.Value.SetActive(false);
+
+        interactParticles.Stop(true);
     }
 
     private void Start()

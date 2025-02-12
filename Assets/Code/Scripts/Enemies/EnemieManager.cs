@@ -46,9 +46,7 @@ public class EnemieManager : MonoBehaviour
     {
         NavMeshLink[] links = GetComponentsInChildren<NavMeshLink>();
         foreach (NavMeshLink link in links)
-        {
             link.UpdateLink();
-        }
     }
 
     public void GenerateEnemies()
@@ -151,6 +149,7 @@ public class EnemieManager : MonoBehaviour
         if(_action is SteppedAction)
             ((SteppedAction)_action).onEnableResource += _enemy.EnableResource;
 
+        _action.SetEnemyController(_enemy);
         _action.SetAgent(_enemy.agent);
         _action.SetAnimator(_enemy.animator);
         _action.SetTransform(_enemy.transform);

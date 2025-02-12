@@ -64,10 +64,10 @@ public class CannonState : PlayerState
         {
             controller.animator.SetBool("Moving", controller.movementInput.y != 0);
 
-            Debug.Log(controller.movementInput.y);
             if (controller.movementInput.y != 0)
                 controller.Movement(controller.transform.forward, controller.cannonSpeed * controller.movementInput.y);
-            else if (controller.movementInput.x != 0)
+            
+            if (controller.movementInput.x != 0)
                 controller.Rotate(controller.transform.right * controller.movementInput.x, controller.cannonRotationSpeed);
         }
         else

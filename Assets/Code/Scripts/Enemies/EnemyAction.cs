@@ -6,6 +6,8 @@ public abstract class EnemyAction
     public enum ActionType { REPAIR_SHIP, SHOOT_CANNON, RELOAD_CANNON, REPAIR_CANNON, REPAIR_BULLET_SPAWN }
     public ActionType currentAction;
     
+    protected EnemyController enemyController;
+
     protected NavMeshAgent agent;
     protected Animator animator;
 
@@ -28,6 +30,11 @@ public abstract class EnemyAction
         //Debug.Log(Vector3.Distance(transform.position,_destiny));
         _destiny.y = transform.position.y;
         return Vector3.Distance(transform.position, _destiny) <= distanceToInteract;
+    }
+
+    public void SetEnemyController(EnemyController _enemyController)
+    {
+        enemyController = _enemyController;
     }
     public void SetAgent(NavMeshAgent _agent)
     {
