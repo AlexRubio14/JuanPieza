@@ -13,7 +13,10 @@ public class BulletsResource : Resource
 
             if (!nearestWeapon.hasAmmo)
                 nearestWeapon.Reload(_objectHolder);
-
+        }
+        else
+        {
+            base.Interact(_objectHolder);
         }
 
     }

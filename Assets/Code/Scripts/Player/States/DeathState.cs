@@ -31,6 +31,8 @@ public class DeathState : PlayerState
         controller.animator.SetTrigger("Dead");
         controller.animator.SetBool("Swimming", true);
 
+        controller.transform.SetParent(null);
+
         AudioManager.instance.Play2dOneShotSound(controller.dieClip, "Objects");
     }
     public override void UpdateState()
@@ -55,6 +57,7 @@ public class DeathState : PlayerState
         FishingManager.instance.RemoveDeadPlayer(this);
         rb.isKinematic = false;
         controller.animator.SetBool("Swimming", false);
+        controller.transform.SetParent(ShipsManager.instance.playerShip.transform);
     }
 
     public override void RollAction() { /*No puedes rodar*/ }
@@ -105,6 +108,7 @@ public class DeathState : PlayerState
 
     private void Respawn()
     {
+        lerpProcess = 0;
         transform.position = ShipsManager.instance.playerShip.transform.position + new Vector3(0f, 2f, 0f);
         stateMachine.ChangeState(stateMachine.idleState);
     }
