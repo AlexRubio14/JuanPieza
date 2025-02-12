@@ -49,6 +49,10 @@ public class AudioManager : MonoBehaviour
             actions2dAS[i].outputAudioMixerGroup = mixerGroup;
         }
 
+        musicAs = actions2dASObj.AddComponent<AudioSource>();
+        musicAs.playOnAwake = false;
+        musicAs.outputAudioMixerGroup = mixerGroup;
+
         for (int i = 0; i < total3DAS; i++)
         {
             actions3dAS[i] = actions3dASObj.AddComponent<AudioSource>();
@@ -156,7 +160,6 @@ public class AudioManager : MonoBehaviour
         PlayLoopSound(_as, _clip, mixerGroup, _minPitch, _maxPitch, _volume);
         return _as;
     }
-
 
     public void PlayLoopSound(AudioSource _as, AudioClip _clip, string mixerGroup, float _minPitch = 0.75f, float _maxPitch = 1.25f, float _volume = 0.4f)
     {   
