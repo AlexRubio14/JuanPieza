@@ -14,5 +14,6 @@ public class PlayerWeaponTrace : WeaponTracer
             PredictTrajectory(weapon.bulletForce);
 
         lineRenderer.enabled = weapon.isPlayerMounted();
+        decal.SetActive(weapon.isPlayerMounted());
     }
 }
