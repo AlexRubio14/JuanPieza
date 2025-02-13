@@ -4,7 +4,8 @@ public class Bullet : MonoBehaviour
 {
     [field: SerializeField]
     public GameObject hitParticles { private set; get; }
-    [SerializeField] public AudioClip hitClip;
+    public AudioClip hitClip;
+    public float explosionRadius;
 
     private float damage;
 

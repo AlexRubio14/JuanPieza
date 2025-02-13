@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     public Animator animator { get; private set; }
 
     public EnemyAction currentAction;
+    private Rigidbody rb;
 
     [field: SerializeField]
     public ParticleSystem interactParticles {  get; private set; }
@@ -22,10 +23,15 @@ public class EnemyController : MonoBehaviour
     [Space, SerializedDictionary("Resource", "Mesh")]
     public SerializedDictionary<SteppedAction.ResourceType, GameObject> resourcesMeshes;
 
+    [Space]
+    [SerializeField] private LayerMask floorLayer;
+
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
+        rb = GetComponent<Rigidbody>();
 
         foreach (KeyValuePair<SteppedAction.ResourceType, GameObject> item in resourcesMeshes)
             item.Value.SetActive(false);
@@ -41,10 +47,20 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetNavLinkSpeed();
-        
-        if (currentAction != null)
-            currentAction.StateUpdate();
+        if(agent.enabled)
+        {
+            SetNavLinkSpeed();
+
+            if (currentAction != null)
+                currentAction.StateUpdate();
+        }
+
+        if(!rb.isKinematic && Physics.Raycast(transform.position, Vector3.down, 1.5f, floorLayer))
+        {
+            rb.isKinematic = true;
+            agent.enabled = true;
+            Debug.Log("ME ESTAS PICOTEANDO");
+        }
 
     }
 
@@ -68,5 +84,22 @@ public class EnemyController : MonoBehaviour
     private void SetNavLinkSpeed()
     {
         agent.speed = !agent.isOnOffMeshLink ? baseSpeed : linkSpeed;
+    }
+
+    public void Knockback(Vector2 _force, Vector2 _direction)
+    {
+        agent.enabled = false;
+        rb.isKinematic = false;
+        Vector3 pushForward = _direction * _force.x;
+        Vector3 pushUp = Vector3.up * _force.y;
+        transform.position += Vector3.up * 0.5f;
+        rb.AddForce((pushForward + pushUp), ForceMode.Impulse);
+        Debug.Log(rb.linearVelocity);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, transform.position - transform.up * 1.5f);
     }
 }
