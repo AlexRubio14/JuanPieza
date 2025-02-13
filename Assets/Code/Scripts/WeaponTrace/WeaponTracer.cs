@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class WeaponTracer : MonoBehaviour
 {
-
     [SerializeField]
+    protected GameObject decalPrefab;
+    protected GameObject decal;
+    [Space, SerializeField]
     protected LayerMask hitLayers;
     [SerializeField]
     protected Rigidbody rb;
@@ -21,6 +23,8 @@ public class WeaponTracer : MonoBehaviour
     protected virtual void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
+
+        decal = Instantiate(decalPrefab);
     }
 
     protected void PredictTrajectory(float _force)
@@ -37,6 +41,9 @@ public class WeaponTracer : MonoBehaviour
             {
                 if(i != 0)
                     UpdateLineRenderer(i, (i - 1, hit.point));
+                 
+                decal.transform.position = hit.point;
+
                 break;
             }
 

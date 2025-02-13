@@ -45,16 +45,10 @@ public class Box : RepairObject
             _objectHolder.ChangeObjectInHand(boxObject);
 
         }
-        else if (_objectHolder.GetHasObjectPicked())
-        {
-            AddItemInBox();
-            InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
-            Destroy(currentObject.gameObject);
-        }
 
     }
 
-    public override void UseItem(ObjectHolder _objectHolder) { }
+    public override void Use(ObjectHolder _objectHolder) { }
 
     public override bool CanInteract(ObjectHolder _objectHolder)
     {

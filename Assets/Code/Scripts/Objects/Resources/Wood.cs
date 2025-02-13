@@ -1,18 +1,21 @@
-using UnityEngine;
-
 public class Wood : Resource
 {
-    public override void UseItem(ObjectHolder _objectHolder)
+    public override void Use(ObjectHolder _objectHolder)
     {
-        //Repair objectRepair = _objectHolder.GetInteractableObject().GetComponent<Repair>();
-        //if (objectRepair == null || objectRepair.GetItemNeeded().GetObjectName() != objectName)
-        //    return;
+        InteractableObject nearObject = _objectHolder.GetNearestInteractableObject();
 
-        //objectRepair.Interact(_objectHolder);
+        if(!nearObject || nearObject is not RepairHole)
+            return;
 
-        //Debug.Log("Uso madera");
+        (nearObject as RepairHole).AddPlayer(_objectHolder);        
     }
+    public override void StopUse(ObjectHolder _objectHolder)
+    {
+        InteractableObject nearObject = _objectHolder.GetNearestInteractableObject();
 
+        if (!nearObject || nearObject is not RepairHole)
+            return;
 
-    
+        (nearObject as RepairHole).RemovePlayer(_objectHolder);
+    }
 }

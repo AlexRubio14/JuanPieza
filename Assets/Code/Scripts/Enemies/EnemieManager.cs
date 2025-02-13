@@ -46,9 +46,7 @@ public class EnemieManager : MonoBehaviour
     {
         NavMeshLink[] links = GetComponentsInChildren<NavMeshLink>();
         foreach (NavMeshLink link in links)
-        {
             link.UpdateLink();
-        }
     }
 
     public void GenerateEnemies()
@@ -61,6 +59,7 @@ public class EnemieManager : MonoBehaviour
             Vector3 spawnPos = enemySpawnPoint.position + new Vector3(Random.Range(-enemySpawnOffset, enemySpawnOffset), 0, Random.Range(-enemySpawnOffset, enemySpawnOffset));
             EnemyController newEnemy = Instantiate(enemyPrefab, enemySpawnPoint.position, Quaternion.identity).GetComponent<EnemyController>();
             newEnemy.enemieManager = this;
+            newEnemy.gameObject.transform.SetParent(transform, true);
             enemyList.Add(newEnemy);
             cameraController.AddObject(newEnemy.gameObject);
         }
@@ -150,6 +149,7 @@ public class EnemieManager : MonoBehaviour
         if(_action is SteppedAction)
             ((SteppedAction)_action).onEnableResource += _enemy.EnableResource;
 
+        _action.SetEnemyController(_enemy);
         _action.SetAgent(_enemy.agent);
         _action.SetAnimator(_enemy.animator);
         _action.SetTransform(_enemy.transform);

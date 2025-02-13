@@ -335,7 +335,7 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 3
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ef108dd1c5a1a6d428b00814f8963e29, type: 2}
@@ -385,7 +385,7 @@ Transform:
   m_GameObject: {fileID: 1877063703858101569}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 4, z: -4}
+  m_LocalPosition: {x: 3, y: 2, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -556,8 +556,8 @@ MonoBehaviour:
   destroyY: -1.3
   initY: 0.6
   maxWeigth: 200
-  weigthDamage: 1
   damageTime: 15
+  weigthDamage: 1
   playersSpawnPos:
   - {fileID: 3484732061700912472}
   - {fileID: 5802678920399674566}
@@ -569,10 +569,11 @@ MonoBehaviour:
   idShip: 0
   newZ: -40
   newY: 7
-  isEnemy: 0
   barrelBox: {fileID: 1136983717902948880}
   isBarrelBoxActive: 0
   speed: 0.05
+  speedArriveIsland: 0
+  rotationSpeed: 0
 --- !u!114 &3787857318974121445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -719,7 +720,7 @@ Transform:
   m_GameObject: {fileID: 2928076678448988041}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 4, z: -4}
+  m_LocalPosition: {x: -2, y: 2, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -786,7 +787,7 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 3
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ef108dd1c5a1a6d428b00814f8963e29, type: 2}
@@ -872,7 +873,7 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 3
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ef108dd1c5a1a6d428b00814f8963e29, type: 2}
@@ -1161,7 +1162,7 @@ Transform:
   m_GameObject: {fileID: 5976773470061827618}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 4, z: 0}
+  m_LocalPosition: {x: 2, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1317,7 +1318,7 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 3
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ef108dd1c5a1a6d428b00814f8963e29, type: 2}
@@ -1489,7 +1490,7 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 3
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ef108dd1c5a1a6d428b00814f8963e29, type: 2}
@@ -1575,7 +1576,7 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 3
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ef108dd1c5a1a6d428b00814f8963e29, type: 2}
@@ -1803,7 +1804,7 @@ Transform:
   m_GameObject: {fileID: 8613356421788767711}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 4, z: 0}
+  m_LocalPosition: {x: -2, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

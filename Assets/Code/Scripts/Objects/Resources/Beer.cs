@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Beer : Resource
 {
-    public override void UseItem(ObjectHolder _objectHolder)
+    public override void Use(ObjectHolder _objectHolder)
     {
         //playear animacion player
 

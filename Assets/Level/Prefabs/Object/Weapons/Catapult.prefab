@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f265b468066763a42b2769fca2a0b02a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  decalPrefab: {fileID: 4497878162552067928, guid: 519c9257b7bacfa408e067e5d6434b7e, type: 3}
   hitLayers:
     serializedVersion: 2
     m_Bits: 272
@@ -214,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 7868943883534197803}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.24, y: 1, z: -1.609}
+  m_LocalPosition: {x: -1.24, y: 1.12, z: -1.609}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -253,8 +254,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.029, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1641771383771448866}
   - {fileID: 2149533557553753282}
@@ -289,7 +290,7 @@ MonoBehaviour:
   repairClip: {fileID: 8300000, guid: 1e4e3078b3cd9f042ac17029ed429788, type: 3}
   ridingPos: {fileID: 6387550713895505024}
   weaponDamage: 30
-  <bulletForce>k__BackingField: 600
+  <bulletForce>k__BackingField: 500
   <tiltObject>k__BackingField: {fileID: 2472425405071750603}
   <minWeaponTilt>k__BackingField: {x: -59, y: 0, z: 0}
   <maxWeaponTilt>k__BackingField: {x: -79, y: 0, z: 0}
@@ -301,6 +302,7 @@ MonoBehaviour:
   weaponReloadClip: {fileID: 8300000, guid: 95dc95a248d1b8247a7b3e46e9dae157, type: 3}
   barrelPrefab: {fileID: 9052637822518565095, guid: 1e91394582eb7564d856e84672ae811f, type: 3}
   barrelSpawnPos: {fileID: 2472425405071750603}
+  barrelRotationSpeed: 3
 --- !u!114 &807546827017697251
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,9 +15,14 @@ public class ShippingSail : InteractableObject
     [SerializeField] private AllyShip ship;
     [SerializeField] private GameObject[] bridge;
 
+    private bool canInteract;
+    private bool isMainShip;
+
     protected override void Start()
     {
         base.Start();
+        if(!isMainShip)
+            ActiveBridge(true);
         players = new List<PlayerController>();
         VotationCanvasManager.Instance.SetSailTimer(false);
         currentTime = sailTimer;
@@ -33,8 +38,7 @@ public class ShippingSail : InteractableObject
             {
                 timerIsActive = false;
                 VotationCanvasManager.Instance.SetSailTimer(false);
-                foreach(GameObject _bridge in bridge) 
-                    _bridge.SetActive(false);
+                ActiveBridge(false);
                 ship.StartVotation();
             }
         }
@@ -42,7 +46,7 @@ public class ShippingSail : InteractableObject
 
     public override void Interact(ObjectHolder _objectHolder)
     {
-        if (ship.CheckOverweight())
+        if (ship.CheckOverweight() || !canInteract)
             return;
 
         PlayerController interactingPlayer = _objectHolder.GetComponentInParent<PlayerController>();
@@ -72,7 +76,7 @@ public class ShippingSail : InteractableObject
         }
     }
 
-    public override void UseItem(ObjectHolder _objectHolder)
+    public override void Use(ObjectHolder _objectHolder)
     {
         
     }
@@ -83,5 +87,22 @@ public class ShippingSail : InteractableObject
         currentTime = sailTimer;
         VotationCanvasManager.Instance.SetSailTimer(false);
         timerIsActive = false;
+    }
+
+    public void ActiveBridge(bool state)
+    {
+        foreach (GameObject _bridge in bridge)
+            _bridge.SetActive(state);
+        canInteract = state;
+    }
+
+    public void SetIsMainShip(bool state)
+    {
+        isMainShip = state;
+    }
+
+    public bool GetIsBridgeActive()
+    {
+        return bridge[0].activeSelf;
     }
 }

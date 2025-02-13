@@ -11,7 +11,7 @@ public class UpgradeNPC : InteractableObject
             UpgradeShip();
     }
 
-    public override void UseItem(ObjectHolder _objectHolder)
+    public override void Use(ObjectHolder _objectHolder)
     {
         
     }
@@ -48,6 +48,10 @@ public class UpgradeNPC : InteractableObject
 
         newShip.SetCurrentHealht(newShip.GetMaxHealth());
         newShip.SetDeafultTargetHeight();
+
+
+        foreach (var players in PlayersManager.instance.ingamePlayers)
+            players.gameObject.transform.SetParent(null, true);
 
         Destroy(currentShip.gameObject);
 

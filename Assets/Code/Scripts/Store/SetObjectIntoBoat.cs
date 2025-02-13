@@ -17,6 +17,10 @@ public class SetObjectIntoBoat : MonoBehaviour
                 ShipsManager.instance.playerShip.SetBarrelBox(true);
             }
         }
+
+        if (other.CompareTag("Player") && ShipsManager.instance.playerShip.gameObject.transform.Find("Sail").GetComponentInChildren<ShippingSail>().GetIsBridgeActive())
+            other.gameObject.transform.SetParent(ShipsManager.instance.playerShip.gameObject.transform, true);
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -34,5 +38,8 @@ public class SetObjectIntoBoat : MonoBehaviour
                 }
             }
         }
+
+        if (other.CompareTag("Player") && ShipsManager.instance.playerShip.gameObject.transform.Find("Sail").GetComponentInChildren<ShippingSail>().GetIsBridgeActive())
+            other.gameObject.transform.SetParent(null, true);
     }
 }

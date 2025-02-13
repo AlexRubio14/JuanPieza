@@ -34,6 +34,7 @@ public class Bonk : RepairObject
 
         return !_objectHolder.GetHandInteractableObject();
     }
+    
     public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         if (state.GetIsBroken())

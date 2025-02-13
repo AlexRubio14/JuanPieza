@@ -29,6 +29,10 @@ public class FishingState : PlayerState
         //Aqui deberias tener la caña asi que puedes usarla
         controller.Use();
     }
+    public override void StopUseAction() 
+    {
+        controller.StopUse();    
+    }
 
     public override void OnHit(Vector3 _hitPosition)
     {

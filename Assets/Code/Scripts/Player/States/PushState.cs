@@ -46,7 +46,7 @@ public class PushState : PlayerState
     public override void InteractAction() { /*No puede interactuar aqui*/ }
     public override void StopInteractAction() { /*No hace nada*/ }
     public override void UseAction() { /*No puede usar nada aqui*/ }
-
+    public override void StopUseAction() { /*No hace nada*/ }
 
     public override void OnCollisionEnter(Collision collision)
     {

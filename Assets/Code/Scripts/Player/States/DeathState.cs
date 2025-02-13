@@ -31,6 +31,8 @@ public class DeathState : PlayerState
         controller.animator.SetTrigger("Dead");
         controller.animator.SetBool("Swimming", true);
 
+        controller.transform.SetParent(null);
+
         AudioManager.instance.Play2dOneShotSound(controller.dieClip, "Objects");
     }
     public override void UpdateState()
@@ -55,6 +57,7 @@ public class DeathState : PlayerState
         FishingManager.instance.RemoveDeadPlayer(this);
         rb.isKinematic = false;
         controller.animator.SetBool("Swimming", false);
+        controller.transform.SetParent(ShipsManager.instance.playerShip.transform);
     }
 
     public override void RollAction() { /*No puedes rodar*/ }
@@ -62,11 +65,10 @@ public class DeathState : PlayerState
     public override void InteractAction() { /*No puedes interactuar*/ }
     public override void StopInteractAction() { /*No hace nada*/ }
     public override void UseAction() { /*No puedes usar ningun objeto*/ }
+    public override void StopUseAction() { /*No hace nada*/ }
 
     public override void OnHit(Vector3 _hitPosition) { /*No puedes ser golpeado */ }
-    public override void OnCollisionEnter(Collision collision)
-    {
-    }
+    public override void OnCollisionEnter(Collision collision) { }
 
     public void CalculateDeathPos()
     {
@@ -100,8 +102,15 @@ public class DeathState : PlayerState
         rb.position = Vector3.Lerp(startPosition, endPosition, lerpProcess / controller.timeToDie);
 
         if (lerpProcess / controller.timeToDie >= 1)
-            Debug.Log("Ha muerto");
+            Respawn();
         
+    }
+
+    private void Respawn()
+    {
+        lerpProcess = 0;
+        transform.position = ShipsManager.instance.playerShip.transform.position + new Vector3(0f, 2f, 0f);
+        stateMachine.ChangeState(stateMachine.idleState);
     }
 
     private void WaitToGetRescued()

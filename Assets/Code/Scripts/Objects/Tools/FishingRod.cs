@@ -38,7 +38,7 @@ public class FishingRod : Tool
         hook.gameObject.SetActive(false);
     }
 
-    public override void UseItem(ObjectHolder _objectHolder)
+    public override void Use(ObjectHolder _objectHolder)
     {
         if (!isFishing && !hookThrowed) //Tirar anzuelo
             ThrowHook(_objectHolder);
@@ -47,11 +47,13 @@ public class FishingRod : Tool
     }
     public override void Interact(ObjectHolder _objectHolder)
     {
-        base.Interact(_objectHolder);
 
         FishingManager.instance.ResetFishingRodData(this);
 
         PlayerController currentPlayer = _objectHolder.GetComponentInParent<PlayerController>();
+        
+        base.Interact(_objectHolder);
+
         if (player == currentPlayer)
             return;
 

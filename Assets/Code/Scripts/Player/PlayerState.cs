@@ -20,6 +20,7 @@ public abstract class PlayerState
     public abstract void InteractAction();
     public abstract void StopInteractAction();
     public abstract void UseAction();
+    public abstract void StopUseAction();
     public virtual void OnHit(Vector3 _hitPosition)
     {
         Vector3 knockbackDirection = (controller.transform.position - _hitPosition).normalized;

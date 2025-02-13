@@ -663,7 +663,7 @@ Transform:
   m_GameObject: {fileID: 1871210189189747042}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 6, z: -3}
+  m_LocalPosition: {x: -2, y: 6, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -694,7 +694,7 @@ Transform:
   m_GameObject: {fileID: 1928459665282004450}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 6, z: -3}
+  m_LocalPosition: {x: 2, y: 6, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -985,7 +985,7 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 2
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 7dc9f7ae71ed6534aa667e3dbd608206, type: 2}
@@ -1536,7 +1536,7 @@ Transform:
   m_GameObject: {fileID: 3808071594037829202}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 6, z: 3}
+  m_LocalPosition: {x: 2, y: 6, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2259,7 +2259,7 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 2
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 7dc9f7ae71ed6534aa667e3dbd608206, type: 2}
@@ -2376,7 +2376,7 @@ Transform:
   m_GameObject: {fileID: 5081697110422642769}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 6, z: 3}
+  m_LocalPosition: {x: -2, y: 6, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3033,7 +3033,7 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 2
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 7dc9f7ae71ed6534aa667e3dbd608206, type: 2}
@@ -3200,8 +3200,8 @@ MonoBehaviour:
   destroyY: -15
   initY: -0.8
   maxWeigth: 400
-  weigthDamage: 1
   damageTime: 15
+  weigthDamage: 1
   playersSpawnPos:
   - {fileID: 3930452274239897319}
   - {fileID: 4156283763728023835}
@@ -3213,10 +3213,11 @@ MonoBehaviour:
   idShip: 2
   newZ: -27
   newY: 12
-  isEnemy: 0
   barrelBox: {fileID: 9214200767550919338}
   isBarrelBoxActive: 0
   speed: 0.05
+  speedArriveIsland: 0
+  rotationSpeed: 0
 --- !u!54 &7144551275326272565
 Rigidbody:
   m_ObjectHideFlags: 0

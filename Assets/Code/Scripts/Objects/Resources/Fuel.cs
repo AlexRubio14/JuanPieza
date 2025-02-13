@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Fuel : Resource
 {
-    public override void UseItem(ObjectHolder _objectHolder)
+    public override void Use(ObjectHolder _objectHolder)
     {
         //Comprobar si el objeto de delante es un arma de combustible
         

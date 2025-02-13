@@ -19,6 +19,7 @@ public class EnemyWeaponTrace : WeaponTracer
             PredictTrajectory(weapon.bulletForce);
 
         lineRenderer.enabled = weapon.isLoaded;
+        decal.SetActive(weapon.isLoaded);
     }
 
     private void OnDrawGizmos()
