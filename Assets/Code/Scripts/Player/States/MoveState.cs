@@ -14,9 +14,27 @@ public class MoveState : PlayerState
     }
     public override void FixedUpdateState()
     {
+        controller.rb.constraints = RigidbodyConstraints.FreezeRotation;
+
+
         controller.Rotate(controller.movementDirection, controller.rotationSpeed);
-        controller.CheckSlope(controller.slopeCheckDistance, controller.slopeOffset);
-        controller.Movement(controller.movementDirection, controller.baseMovementSpeed);
+        
+        controller.rb.useGravity = true;
+
+        Vector3 moveDir;
+        if (controller.CheckSlope())
+        {
+            moveDir = controller.GetSlopeMoveDir(controller.movementDirection);
+            if (moveDir.y == 0)
+            {
+                controller.rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+                moveDir /= 2;
+            }
+        }
+        else
+            moveDir = controller.movementDirection;
+
+        controller.Movement(moveDir, controller.baseMovementSpeed);
         
     }
     public override void ExitState()

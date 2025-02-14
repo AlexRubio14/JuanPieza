@@ -17,8 +17,6 @@ public class CannonState : PlayerState
     {
         MoveCannon();
         TiltCannon();
-        if(controller.movementInput != Vector2.zero)
-            controller.CheckSlope(controller.slopeCheckDistance, controller.slopeOffset);
     }
     public override void ExitState()
     {
@@ -58,34 +56,53 @@ public class CannonState : PlayerState
 
     private void MoveCannon()
     {
-        
 
-        if(controller.objectHolder.hintController.deviceType == HintController.DeviceType.KEYBOARD)
-        {
-            controller.animator.SetBool("Moving", controller.movementInput.y != 0);
-
-            if (controller.movementInput.y != 0)
-                controller.Movement(controller.transform.forward, controller.cannonSpeed * controller.movementInput.y);
-            
-            if (controller.movementInput.x != 0)
-                controller.Rotate(controller.transform.right * controller.movementInput.x, controller.cannonRotationSpeed);
-        }
+        if (controller.objectHolder.hintController.deviceType == HintController.DeviceType.KEYBOARD)
+            KeyboardCannonMovement();
         else
+            GamepadCannonMovement();
+    }
+
+    private void KeyboardCannonMovement()
+    {
+        Vector3 moveDir;
+
+        controller.animator.SetBool("Moving", controller.movementInput.y != 0);
+
+        if (controller.movementInput.y != 0)
         {
+            if (controller.CheckSlope())
+                moveDir = controller.GetSlopeMoveDir(controller.transform.forward);
+            else
+                moveDir = controller.transform.forward;
 
-            if (Mathf.Abs(controller.movementInput.y) > Mathf.Abs(controller.movementInput.x))
-            {
-                controller.Movement(controller.transform.forward, controller.cannonSpeed * controller.movementInput.y);
-                controller.animator.SetBool("Moving", true);
-            }
-            else if (Mathf.Abs(controller.movementInput.y) < Mathf.Abs(controller.movementInput.x))
-            {
-                controller.Rotate(controller.transform.right * controller.movementInput.x, controller.cannonRotationSpeed);
-                controller.animator.SetBool("Moving", false);
-            }
+            controller.Movement(moveDir, controller.cannonSpeed * controller.movementInput.y);
+        }
 
+        if (controller.movementInput.x != 0)
+            controller.Rotate(controller.transform.right * controller.movementInput.x, controller.cannonRotationSpeed);
+    }
+    private void GamepadCannonMovement()
+    {
+
+        if (Mathf.Abs(controller.movementInput.y) > Mathf.Abs(controller.movementInput.x))
+        {
+            Vector3 moveDir;
+            if (controller.CheckSlope())
+                moveDir = controller.GetSlopeMoveDir(controller.transform.forward);
+            else
+                moveDir = controller.transform.forward;
+
+            controller.Movement(moveDir, controller.cannonSpeed * controller.movementInput.y);
+            controller.animator.SetBool("Moving", true);
+        }
+        else if (Mathf.Abs(controller.movementInput.y) < Mathf.Abs(controller.movementInput.x))
+        {
+            controller.Rotate(controller.transform.right * controller.movementInput.x, controller.cannonRotationSpeed);
+            controller.animator.SetBool("Moving", false);
         }
     }
+
     private void TiltCannon()
     {
         if (controller.cannonTilt == 0)

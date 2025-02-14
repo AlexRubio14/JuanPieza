@@ -1,3 +1,4 @@
+using System.IO.Compression;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -17,15 +18,13 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed {  get; private set; }
 
     [Space, Header("Slope"), SerializeField]
-    private Transform[] slopePositions;
+    public float maxSlopeAngle;
     [SerializeField]
-    public float maxSlopeHeight;
-    [field: SerializeField]
-    public float slopeCheckDistance { get; private set; }
-    [field: SerializeField]
-    public float slopeOffset {  get; private set; }
+    private float slopeCheckDistance;
     [SerializeField]
     private LayerMask slopeCheckLayer;
+    private RaycastHit slopeHit;
+
 
     [field: Space, Header("Roll"), SerializeField]
     public float rollSpeed { get; private set; }
@@ -36,10 +35,7 @@ public class PlayerController : MonoBehaviour
     private bool canRoll;
     [field: SerializeField]
     public Vector2 bounceForce { get; private set; }
-    [field: SerializeField]
-    public float rollSlopeDistance {  get; private set; }
-    [field: SerializeField]
-    public float rollSlopeOffset {  get; private set; }
+
 
     [field: Space, Header("Push"), SerializeField]
     public float pushRadius { get; private set; }
@@ -81,13 +77,16 @@ public class PlayerController : MonoBehaviour
 
     [field: SerializeField]
     public ProgressBarController progressBar { get; private set; }
-    
+    private CapsuleCollider capsuleCollider;
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         hintController = GetComponent<HintController>();
-        
+        capsuleCollider = GetComponent<CapsuleCollider>();
+
         stateMachine = GetComponent<PlayerStateMachine>();
         stateMachine.InitializeStates(this);
     }
@@ -189,34 +188,24 @@ public class PlayerController : MonoBehaviour
     {
         rb.AddForce(_direction * _speed, ForceMode.Force);
     }
-    public void CheckSlope(float _slopeLength, float _slopeOffset)
+    public bool CheckSlope()
     {
-        //Hacer Raycast en las tres direcciones
-        foreach (Transform slopePosition in slopePositions)
-        {
-            RaycastHit hit;
-            Physics.Raycast(slopePosition.position, slopePosition.forward, out hit, _slopeLength, slopeCheckLayer);
-            if (!hit.collider)
-                continue;
-            
-            //Si choca 
-            //Hacer otro raycast mas arriba
-            for (float i = _slopeOffset; i < maxSlopeHeight; i += _slopeOffset)
-            {
-                Vector3 currentSlopePos = slopePosition.position;
-                currentSlopePos.y += i;
+        float angle = 0;
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, capsuleCollider.height / 2 + slopeCheckDistance, slopeCheckLayer))
+            angle = Vector3.Angle(Vector3.up, slopeHit.normal);
 
-                //Hacer otro raycast
-                if (!Physics.Raycast(currentSlopePos, slopePosition.forward, _slopeLength, slopeCheckLayer))
-                {   
-                    rb.position = hit.point + new Vector3(0, i + 1, 0);
-                    //Debug.Break();
-                    return;
-                }
-            }
-        }
-       
-        
+        if( angle == 0 && 
+            Physics.Raycast(transform.position + transform.forward * capsuleCollider.radius, Vector3.down, out slopeHit, capsuleCollider.height / 2 + slopeCheckDistance, slopeCheckLayer))
+            angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+        return angle < maxSlopeAngle && angle != 0;
+    }
+    public Vector3 GetSlopeMoveDir(Vector3 _movementDir)
+    {
+        Vector3 slopeDir = Vector3.ProjectOnPlane(_movementDir, slopeHit.normal).normalized;
+        if (slopeDir.y < 0)
+            slopeDir /= 2;
+        Debug.DrawLine(transform.position, transform.position +  slopeDir * 2);
+        return slopeDir;
     }
     public void Rotate(Vector3 _desiredRotation, float _speed)
     {
@@ -324,28 +313,16 @@ public class PlayerController : MonoBehaviour
         Vector3 endPos = startPos + transform.forward * 2;
         Gizmos.DrawLine(startPos, endPos);
 
-
-        //Gizmos de los raycast que hace para subir escalones
-        foreach (Transform slopePosition in slopePositions)
+        if (capsuleCollider)
         {
-            Gizmos.color = Color.red;
-            startPos = slopePosition.position;
-            endPos = startPos + slopePosition.forward * slopeCheckDistance;
-            Gizmos.DrawLine(startPos, endPos);
-
-            Gizmos.color = Color.yellow;
-            for (float i = slopeOffset; i < maxSlopeHeight; i += slopeOffset)
-            {
-                startPos = slopePosition.position + new Vector3(0, i, 0);
-                endPos = startPos + slopePosition.forward * slopeCheckDistance;
-                Gizmos.DrawLine(startPos, endPos);
-            }
-
             Gizmos.color = Color.green;
-            startPos = slopePosition.position + new Vector3(0, maxSlopeHeight, 0);
-            endPos = startPos + slopePosition.forward * slopeCheckDistance;
+            endPos = transform.position + (Vector3.down * (capsuleCollider.height / 2 + slopeCheckDistance));
+            Gizmos.DrawLine(startPos, endPos);
+            startPos = transform.position + transform.forward * capsuleCollider.radius;
+            endPos = startPos + (Vector3.down * (capsuleCollider.height / 2 + slopeCheckDistance));
             Gizmos.DrawLine(startPos, endPos);
         }
+
     }
 
 }
