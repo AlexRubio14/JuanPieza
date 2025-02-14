@@ -27,7 +27,12 @@ public class RollState : PlayerState
     }
     public override void FixedUpdateState()
     {
-        controller.CheckSlope(controller.rollSlopeDistance, controller.rollSlopeOffset);
+        if (controller.CheckSlope())
+        {
+            Vector3 slopeDir = controller.GetSlopeMoveDir(controller.rb.linearVelocity);
+
+            controller.rb.linearVelocity = slopeDir * controller.rb.linearVelocity.magnitude;
+        }
     }
     public override void ExitState()
     {

@@ -481,13 +481,8 @@ MonoBehaviour:
   playerInput: {fileID: 0}
   <baseMovementSpeed>k__BackingField: 1500
   <rotationSpeed>k__BackingField: 20
-  slopePositions:
-  - {fileID: 2088938688770358206}
-  - {fileID: 3565532938692520715}
-  - {fileID: 930236819224305488}
-  maxSlopeHeight: 0.6
-  <slopeCheckDistance>k__BackingField: 0.3
-  <slopeOffset>k__BackingField: 0.15
+  maxSlopeAngle: 45
+  slopeCheckDistance: 0.3
   slopeCheckLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -495,8 +490,6 @@ MonoBehaviour:
   <rollDuration>k__BackingField: 0.15
   rollCD: 2
   <bounceForce>k__BackingField: {x: 1.3, y: 0.4}
-  <rollSlopeDistance>k__BackingField: 1
-  <rollSlopeOffset>k__BackingField: 0.0001
   <pushRadius>k__BackingField: 0.5
   <pushOffset>k__BackingField: 1
   <pushLayers>k__BackingField:
