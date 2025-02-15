@@ -1,14 +1,15 @@
 using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
     [SerializeField]
-    private ObjectSO[] itemPool;
+    private List<ObjectSO> itemPool;
 
     [Space, Header("Priority List"), SerializeField]
-    private ObjectSO[] priorityList;
+    private List<ObjectSO> priorityList;
     
     [SerializedDictionary("Rarity", "Percentage")]
     public SerializedDictionary<ObjectSO.ItemRarity, float> rarityPercentages;
@@ -31,7 +32,7 @@ public class ObjectPool : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             for (int i = 0; i < 100; i++)
             {
@@ -108,12 +109,12 @@ public class ObjectPool : MonoBehaviour
          * Ver si hay madera suelta por el barco
          * Si no hay nada de madera en la caja ni en el barco devolver la madera
          */
-        if (!CheckObjectInsideBox(priorityList[0]) && !ShipsManager.instance.playerShip.ItemExist(priorityList[0]))
+        if (priorityList.Count >= 1 && !CheckObjectInsideBox(priorityList[0]) && !ShipsManager.instance.playerShip.ItemExist(priorityList[0]))
             return priorityList[0];
         /* Cañones
          * Si no hay ninguna arma en el barco devolver un cañon
          */
-        if (!CheckObjectByType(priorityList[1]))
+        if (priorityList.Count >= 2 && !CheckObjectByType(priorityList[1]))
             return priorityList[1];
 
         /* Balas
@@ -121,13 +122,15 @@ public class ObjectPool : MonoBehaviour
          * Ver si hay balas suelta por el barco
          * Si no hay nada de balas ni en la caja ni en el barco devolver la bala
          */
-        if (!CheckObjectInsideBox(priorityList[2]) && !ShipsManager.instance.playerShip.ItemExist(priorityList[2]))
+        if (priorityList.Count >= 3 && !CheckObjectInsideBox(priorityList[2]) && !ShipsManager.instance.playerShip.ItemExist(priorityList[2]))
             return priorityList[2];
 
         return null;
     }
     private bool CheckObjectInsideBox(ObjectSO _object)
     {
+        Box currentBox = ShipsManager.instance.playerShip.GetObjectBoxByObject(_object);
+        if (currentBox == null) return true;
         return ShipsManager.instance.playerShip.GetObjectBoxByObject(_object).HasItems();
     }
     private bool CheckObjectByType(ObjectSO _object)
@@ -135,6 +138,22 @@ public class ObjectPool : MonoBehaviour
         return ShipsManager.instance.playerShip.GetObjectOfType(_object.objectType).Count > 0;
     }
 
+    public void AddItemToItemPool(ObjectSO _item)
+    {
+        itemPool.Add(_item);
+    }
+    public void RemoveItemFromPool(ObjectSO _item)
+    {
+        itemPool.Remove(_item);
+    }
+    public void AddItemToPriorityList(ObjectSO _item)
+    {
+        priorityList.Add(_item);
+    }
+    public void RemoveItemFromPriorityList(ObjectSO _item)
+    {
+        priorityList.Remove(_item);
+    }    
     private void OnDrawGizmosSelected()
     {
         realPercentages = new List<float>();

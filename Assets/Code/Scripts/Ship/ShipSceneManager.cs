@@ -103,7 +103,13 @@ public class ShipSceneManager : MonoBehaviour
     public void InstantiateShip()
     {
         GameObject _ship;
-        if (MapManager.Instance.GetCurrentLevel().hasIsland)
+        if (MapManager.Instance.GetCurrentLevel().nodeType == NodeData.NodeType.TUTORIAL)
+        {
+            _ship = Instantiate(ship[1], new Vector3(0, ship[shipId].GetComponent<Ship>().GetInitY(), 0), Quaternion.identity);
+            _ship.GetComponent<ShipCurve>().SetIsMainShip(true);
+            _ship.GetComponent<ShipCurve>().ActiveBridge(false);
+        }
+        else if (MapManager.Instance.GetCurrentLevel().hasIsland)
         {
             _ship = Instantiate(ship[shipId + 1], new Vector3(0, ship[shipId].GetComponent<Ship>().GetInitY(), -islandArriveDistance), Quaternion.identity);
             CameraManager.Instance.SetArriveCamera(true);
