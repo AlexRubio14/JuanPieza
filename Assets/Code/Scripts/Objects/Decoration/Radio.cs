@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Radio : Resource
 {
-    [SerializeField] private List<AudioClip> musicsList;
-    [SerializeField] public AudioSource audioSource;
+    [Space, Header("Radio"), SerializeField] private List<AudioClip> musicsList;
+    private AudioSource audioSource;
 
     private bool isPlaying;
 
@@ -12,10 +12,6 @@ public class Radio : Resource
     {
         base.Awake();
         isPlaying = false;
-
-        audioSource.loop = true;
-        audioSource.pitch = 1;
-        audioSource.volume = 1;
     }
 
     public override bool CanInteract(ObjectHolder _objectHolder)

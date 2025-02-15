@@ -202,7 +202,8 @@ public class PlayerController : MonoBehaviour
     public Vector3 GetSlopeMoveDir(Vector3 _movementDir)
     {
         Vector3 slopeDir = Vector3.ProjectOnPlane(_movementDir, slopeHit.normal).normalized;
-        if (slopeDir.y < 0)
+        Debug.Log(slopeDir);
+        if (slopeDir.y < -0.1)
             slopeDir /= 2;
         Debug.DrawLine(transform.position, transform.position +  slopeDir * 2);
         return slopeDir;
@@ -285,10 +286,11 @@ public class PlayerController : MonoBehaviour
     {
         InteractableObject currentObject = objectHolder.GetHandInteractableObject();
 
-        if (currentObject == null)
+        if (!currentObject)
             currentObject = objectHolder.GetNearestInteractableObject();
 
-        currentObject.StopUse(objectHolder);
+        if (currentObject)
+            currentObject.StopUse(objectHolder);
     }
     #endregion
 

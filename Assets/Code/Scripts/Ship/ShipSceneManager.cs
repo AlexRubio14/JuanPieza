@@ -143,7 +143,7 @@ public class ShipSceneManager : MonoBehaviour
     {
         for (int i = 0; i < cuantity; i++)
         {
-            box.AddItemInBox();
+            box.AddItemInBox(false);
         }
     }
     

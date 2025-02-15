@@ -27,8 +27,9 @@ public class MoveState : PlayerState
             moveDir = controller.GetSlopeMoveDir(controller.movementDirection);
             if (moveDir.y == 0)
             {
-                controller.rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
-                moveDir /= 2;
+                //Esto soluciona el problema de cuando te mueves en horizontal por encima de una rampa la gravedad te empuja hacia abajo
+                controller.rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY; 
+                moveDir /= 2; //Lo divido entre 2 para que el movimiento en horizontal en medio de la rampa no vaya tan rapido
             }
         }
         else
@@ -40,6 +41,7 @@ public class MoveState : PlayerState
     public override void ExitState()
     {
         controller.animator.SetBool("Moving", false);
+        controller.rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     public override void RollAction()
