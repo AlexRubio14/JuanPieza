@@ -1213,54 +1213,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 43a5795a363253f479398260a44c562a, type: 3}
   m_PrefabInstance: {fileID: 693776933}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &721927266
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 721927268}
-  - component: {fileID: 721927267}
-  m_Layer: 0
-  m_Name: MoneyManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &721927267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 721927266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d3989ad70ce14946bc9af31f9118fec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingMoney: 100
-  OnMoneyChanged:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!4 &721927268
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 721927266}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &724140148
 GameObject:
   m_ObjectHideFlags: 0
@@ -5433,8 +5385,11 @@ MonoBehaviour:
   repairItem: {fileID: 0}
   state: {fileID: 5229392248314916277}
   repairDuration: 0
+  repairParticles: {fileID: 0}
+  repairClip: {fileID: 0}
   itemDropped: {fileID: 11400000, guid: dffcfb1857ced7d4fb477cee9121a908, type: 2}
   itemsInBox: 200
+  dropItemClip: {fileID: 0}
 --- !u!54 &5229392248314916276
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5477,6 +5432,7 @@ MonoBehaviour:
   fixedSibling: {fileID: 0}
   brokenSibling: {fileID: 0}
   isBroken: 0
+  brokeClip: {fileID: 0}
 --- !u!4 &5739471594621782509
 Transform:
   m_ObjectHideFlags: 0
@@ -5552,8 +5508,11 @@ MonoBehaviour:
   repairItem: {fileID: 0}
   state: {fileID: 5970686518569809969}
   repairDuration: 0
+  repairParticles: {fileID: 0}
+  repairClip: {fileID: 0}
   itemDropped: {fileID: 11400000, guid: d1a4f89d8d9efee4db14633f515fcdee, type: 2}
   itemsInBox: 200
+  dropItemClip: {fileID: 0}
 --- !u!54 &5970686518569809968
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5596,6 +5555,7 @@ MonoBehaviour:
   fixedSibling: {fileID: 0}
   brokenSibling: {fileID: 0}
   isBroken: 0
+  brokeClip: {fileID: 0}
 --- !u!65 &6432437637664782075
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5912,8 +5872,11 @@ MonoBehaviour:
   repairItem: {fileID: 0}
   state: {fileID: 7986250307955603518}
   repairDuration: 0
+  repairParticles: {fileID: 0}
+  repairClip: {fileID: 0}
   itemDropped: {fileID: 11400000, guid: f7ef454cecb748d4e96323e6b241d203, type: 2}
   itemsInBox: 200
+  dropItemClip: {fileID: 0}
 --- !u!54 &7986250307955603517
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5956,6 +5919,7 @@ MonoBehaviour:
   fixedSibling: {fileID: 0}
   brokenSibling: {fileID: 0}
   isBroken: 0
+  brokeClip: {fileID: 0}
 --- !u!4 &8607393025611336416
 Transform:
   m_ObjectHideFlags: 0
@@ -6037,7 +6001,6 @@ SceneRoots:
   - {fileID: 1068485254}
   - {fileID: 1378418976}
   - {fileID: 1576529587}
-  - {fileID: 721927268}
   - {fileID: 724140152}
   - {fileID: 1209275069}
   - {fileID: 970380435}

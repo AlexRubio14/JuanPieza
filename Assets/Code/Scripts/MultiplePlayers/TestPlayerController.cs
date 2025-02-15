@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class TestPlayerController : MonoBehaviour
 {
+    private const string BOOTSTRAP_SCENE_NAME = "Bootstrapper";
+
     public static TestPlayerController Instance;
     [HideInInspector]
     public string lastSceneActive;
@@ -10,21 +12,30 @@ public class TestPlayerController : MonoBehaviour
     private void Awake()
     {
         if (Instance != null)
-            Destroy(Instance);
-
-        if (PlayersManager.instance != null)
         {
-            Destroy(this);
+            Destroy(Instance);
             return;
         }
 
-
+        if (PlayersManager.instance != null)
+        {
+            Debug.Log("Destroy Instance");
+            Destroy(this);
+            return;
+        }
+        
         Instance = this;
-
-        lastSceneActive = SceneManager.GetActiveScene().name;
-
         DontDestroyOnLoad(gameObject);
         
-        SceneManager.LoadScene("PlayerSelector");
+        if (SceneManager.GetActiveScene().name != BOOTSTRAP_SCENE_NAME && SceneManager.GetActiveScene().name != "")
+        {
+            lastSceneActive = SceneManager.GetActiveScene().name;
+            Debug.Log("Last Scene Active: " + lastSceneActive);
+        }
+        if (SceneManager.GetActiveScene().name != "PlayerSelector")
+        {
+            SceneManager.LoadScene("PlayerSelector");
+        }
     }
+
 }
