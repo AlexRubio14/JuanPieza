@@ -15,68 +15,72 @@ public class ShipCurve : AllyShip
     private float t;
     private bool startMovementCurve = false;
     private bool startMovementToIsland = false;
-    private bool rotateCamenra = false;
-
+    private bool rotateCamera = false;
+    private Vector3 ingameCameraPos;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        base.InitAllyBoat();
+        InitAllyBoat();
         VotationCanvasManager.Instance.SetVotationUIState(false);
     }
 
     private void FixedUpdate()
     {
-        MoveCurve();
-        MoveToIsland();
+        CurveBehaviour();
     }
 
-    private void MoveCurve()
+
+    private void CurveBehaviour() 
     {
         if (startMovementCurve)
-        {
-            t += Time.fixedDeltaTime * speed;
-
-            if (t > 0.5f)
-            {
-                MapManager.Instance.isVoting = false;
-                startMovementCurve = false;
-                ShipSceneManager.Instance.SetObjectsToSpawn();
-                ShipSceneManager.Instance.SetShipId(idShip, currentHealth, targetHeight, isBarrelBoxActive);
-                SceneManager.LoadScene(MapManager.Instance.GetCurrentLevel().sceneName);
-            }
-
-            rb.MovePosition(CalculateQuadraticBezierPoint(t, points[0], points[1], points[2]));
-        }
+            MoveCurve();
+        else if (startMovementToIsland)
+            MoveToIsland();
+        else if (rotateCamera && !MapManager.Instance.GetIsVoting())
+            SetIngameCamera();
     }
+    private void MoveCurve()
+    {
+        t += Time.fixedDeltaTime * speed;
 
+        rb.MovePosition(CalculateQuadraticBezierPoint(t, points[0], points[1], points[2]));
+
+        if (t > 0.5f)
+            FinishCurve();
+    }
+    private void FinishCurve()
+    {
+        MapManager.Instance.isVoting = false;
+        startMovementCurve = false;
+        ShipSceneManager.Instance.SetObjectsToSpawn();
+        ShipSceneManager.Instance.SetShipId(idShip, currentHealth, targetHeight, isBarrelBoxActive);
+        SceneManager.LoadScene(MapManager.Instance.GetCurrentLevel().sceneName);
+    }
     private void MoveToIsland()
     {
-        if (startMovementToIsland)
+        transform.position = Vector3.Lerp(transform.position, new Vector3(0, transform.position.y, 10), Time.fixedDeltaTime * speedArriveIsland);
+
+        if (transform.position.z >= 0)
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(0, transform.position.y, 10), Time.fixedDeltaTime * speedArriveIsland);
-
-            if (transform.position.z >= 0)
-            {
-                rotateCamenra = true;
-                SetStartMovementToIsland(false);
-                CameraManager.Instance.SetArriveCamera(false);
-                CameraManager.Instance.SetSimpleCamera(true);
-                ActiveBridge(true);
-            }
-
-        }
-        if (rotateCamenra && !MapManager.Instance.GetIsVoting())
-        {
-            Quaternion targetRotation = Quaternion.Euler(40, 0, 0);
-            Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-
-            if (Quaternion.Angle(Camera.main.transform.rotation, targetRotation) < 0.1f)
-            {
-                rotateCamenra = false;
-            }
-
+            rotateCamera = true;
+            ingameCameraPos = transform.position;
+            ingameCameraPos.y = 20;
+            SetStartMovementToIsland(false);
+            CameraManager.Instance.SetArriveCamera(false);
+            CameraManager.Instance.SetSimpleCamera(true);
+            ActiveBridge(true);
         }
     }
+    private void SetIngameCamera()
+    {
+        Quaternion targetRotation = Quaternion.Euler(40, 0, 0);
+        Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        transform.position = Vector3.Lerp(transform.position, ingameCameraPos, Time.deltaTime * rotationSpeed);
+
+        if (Quaternion.Angle(Camera.main.transform.rotation, targetRotation) < 0.1f)
+            rotateCamera = false;
+    }
+
 
     private Vector3 CalculateQuadraticBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2)
     {
