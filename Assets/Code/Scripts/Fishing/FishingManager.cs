@@ -306,6 +306,9 @@ public class FishingManager : MonoBehaviour
     public void ResetFishingRodData(FishingRod _fishingRod)
     {
         int rodId = GetFisingRodId(_fishingRod);
+        if (rodId == -1)
+            return;
+
         FishingData newData = fishingData[rodId];
         newData.fishingState = FishingState.IDLE;
         newData.fishedObject = null;

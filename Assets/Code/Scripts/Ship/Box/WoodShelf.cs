@@ -14,9 +14,9 @@ public class WoodShelf : Box
     {
         base.Start();
     }
-    public override void AddItemInBox()
+    public override void AddItemInBox(bool _makeSound)
     {
-        base.AddItemInBox();
+        base.AddItemInBox(_makeSound);
         if(currentDecorationInShelf < 4)
         {
             currentDecorationInShelf++;
