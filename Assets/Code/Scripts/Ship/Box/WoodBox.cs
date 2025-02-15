@@ -12,9 +12,9 @@ public class ItemBox : Box
         base.Start();
         UpdateDecorations();
     }
-    public override void AddItemInBox()
+    public override void AddItemInBox(bool _makeSound = true)
     {
-        base.AddItemInBox();
+        base.AddItemInBox(_makeSound);
         UpdateDecorations();
     }
 
