@@ -36,7 +36,7 @@ public class ShipCurve : AllyShip
         {
             t += Time.fixedDeltaTime * speed;
 
-            if (t > 0.5f)
+            if (t > 0.1f)
             {
                 MapManager.Instance.isVoting = false;
                 startMovementCurve = false;
@@ -88,6 +88,11 @@ public class ShipCurve : AllyShip
     {
         startMovementCurve = state;
         points = _points;
+    }
+
+    public bool IsMoving()
+    {
+        return startMovementCurve;
     }
 
     public void SetStartMovementToIsland(bool state)

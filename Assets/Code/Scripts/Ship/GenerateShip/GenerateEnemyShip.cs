@@ -11,9 +11,12 @@ public class EnemyShip
     public Vector3 initShipPosition;
     public int enemiesCuantity;
     public List<GameObject> cannonCuantity;
-    public float cannonOffset;
-    public int cannonPossiblePosition;
-    public Vector3 initCannonPosition;
+    private List<Vector3> cannonPossiblePosition = new List<Vector3>();
+
+    public List<Vector3> GetCannonPosition()
+    {
+        return cannonPossiblePosition;
+    }
 }
 
 public class GenerateEnemyShip : MonoBehaviour
@@ -48,53 +51,37 @@ public class GenerateEnemyShip : MonoBehaviour
 
     private void GenerateCannons(bool isLeft, EnemyShip enemy, GameObject ship)
     {
-        List<float> cannonZPosition = new List<float>();
+        Transform cannonPositionsHolder = ship.transform.Find("CannonPositions");
 
-        for (int i = 0; i < enemy.cannonPossiblePosition; i++)
+        if (cannonPositionsHolder != null)
         {
-            cannonZPosition.Add(enemy.initCannonPosition.z + enemy.cannonOffset);
-            cannonZPosition.Add(enemy.initCannonPosition.z - enemy.cannonOffset);
-            enemy.cannonOffset += enemy.cannonOffset;
+            foreach (Transform point in cannonPositionsHolder)
+            {
+                enemy.GetCannonPosition().Add(point.localPosition);
+            }
         }
-
-        cannonZPosition.Add(enemy.initCannonPosition.z);
 
         foreach (var cannon in enemy.cannonCuantity)
         {
             GameObject newCannon = Instantiate(cannon);
             newCannon.transform.SetParent(ship.transform);
 
-            float randomZ = cannonZPosition[Random.Range(0, cannonZPosition.Count)];
-            cannonZPosition.Remove(randomZ);
+            int randomIndex = Random.Range(0, enemy.GetCannonPosition().Count);
+            Vector3 chosenPosition = enemy.GetCannonPosition()[randomIndex];
+            enemy.GetCannonPosition().Remove(chosenPosition);
 
-            float yPosition = GetGroundYPosition(new Vector3(ship.transform.position.x, 0, ship.transform.position.z), ship.transform);
             if (isLeft)
             {
-                newCannon.transform.localPosition = new Vector3(enemy.initCannonPosition.x, yPosition, randomZ);
+                newCannon.transform.localPosition = new Vector3(chosenPosition.x, chosenPosition.y, chosenPosition.z);
                 newCannon.transform.Rotate(0, 90, 0);
             }
             else
             {
-                newCannon.transform.localPosition = new Vector3(-enemy.initCannonPosition.x, yPosition, randomZ);
+                newCannon.transform.localPosition = new Vector3(-chosenPosition.x, chosenPosition.y, chosenPosition.z);
                 newCannon.transform.Rotate(0, -90, 0);
             }
 
             newCannon.GetComponent<EnemyObject>().enemieManager = ship.GetComponent<EnemieManager>();
         }
-    }
-
-    private float GetGroundYPosition(Vector3 startPosition, Transform parentTransform)
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(startPosition, Vector3.up, out hit, Mathf.Infinity, hitLayer))
-        {
-            if (hit.collider.CompareTag("Floor"))
-            {
-                Vector3 localHitPosition = parentTransform.InverseTransformPoint(hit.point);
-                return localHitPosition.y + 0.13f;
-            }
-        }
-
-        return 0f;
     }
 }

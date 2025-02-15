@@ -50,7 +50,7 @@ public class VotationCamera : MonoBehaviour
             Quaternion targetRotation = Quaternion.Euler(0, 0, 0);
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
 
-            if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
+            if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f && !ShipsManager.instance.playerShip.GetComponent<ShipCurve>().IsMoving())
             {
                 moveCamera = false;
                 MapManager.Instance.InitVotations();
