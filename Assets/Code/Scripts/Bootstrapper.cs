@@ -1,21 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Unity.Services.Core;
 
 public class Bootstrapper : MonoBehaviour
 {
     private const string BOOTSTRAP_SCENE_NAME = "Bootstrapper";
     private const string MAINSCENE_SCENE_NAME = "MainMenu";
 
-    async void Start()
+    private void Start()
     {
         Application.runInBackground = true;
-
-        if (!UnityServices.State.Equals(ServicesInitializationState.Initialized))
-        {
-            await UnityServices.InitializeAsync();
-        }
-
+        
         if (SceneManager.loadedSceneCount == 1)
         {
             SceneManager.LoadScene(MAINSCENE_SCENE_NAME, LoadSceneMode.Additive);
