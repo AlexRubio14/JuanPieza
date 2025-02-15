@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -23,11 +23,25 @@ public class PlayersReadyController : MonoBehaviour
     private GameObject[] playerUIPos;
 
     // Start is called before the first frame update
+    private string nextScene;
+    private void Awake()
+    {
+        if (TestPlayerController.Instance)
+        {
+            nextScene = TestPlayerController.Instance.lastSceneActive;
+            Debug.Log("Load last Scene");
+        }
+        else
+        {
+            nextScene = sceneToLoad;
+            Debug.Log("Load default Scene");
+        }
+    }
+
     void Start()
     {
         DisplayStartGameButton();
     }
-
 
     public void AddPlayer(PlayerInput _newPlayer)
     {
@@ -101,9 +115,12 @@ public class PlayersReadyController : MonoBehaviour
             PlayersManager.instance.players[i].Item2.currentPlayerSelectorObject.SetActive(false);
         }
 
-        if(TestPlayerController.Instance)
-            SceneManager.LoadScene(TestPlayerController.Instance.lastSceneActive);
-        else
-            SceneManager.LoadScene(sceneToLoad);
+        SceneManager.LoadScene(nextScene);
+
+    }
+
+    private void SaveScenes()
+    {
+        
     }
 }
