@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
     public GameObject hitParticles { private set; get; }
     public AudioClip hitClip;
     public float explosionRadius;
+    public bool createHole;
 
     private float damage;
 
