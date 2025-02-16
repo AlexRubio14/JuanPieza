@@ -323,4 +323,9 @@ public class MapManager : MonoBehaviour
     { 
         return isVoting;
     }
+
+    public int GetCurrentHeightLevel()
+    {
+        return currentHeightDifficult;
+    }
 }

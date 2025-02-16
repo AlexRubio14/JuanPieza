@@ -1,5 +1,3 @@
-using NUnit.Framework;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NodeData", menuName = "Scriptable Objects/NodeData")]
@@ -12,6 +10,7 @@ public class NodeData : ScriptableObject
     public int levelMoney;
     public bool hasIsland;
     public int difficult;
+    public bool hasPirateBoarding;
 
     public NodeData CretaeNode()
     {
