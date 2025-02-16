@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class ExplodedClusterBullet : Bullet
 {
-    [SerializeField] private float maxAngle;
+    [SerializeField] private Vector2 forceX;
+    [SerializeField] private Vector2 forceY;
+    [SerializeField] private Vector2 forceZ;
 
     private Rigidbody rb;
 
@@ -13,11 +15,11 @@ public class ExplodedClusterBullet : Bullet
 
     private void Start()
     {
-        float randomAngleX = Random.Range(-maxAngle, maxAngle);
-        float randomAngleY = Random.Range(0, maxAngle);
-        float randomAngleZ = Random.Range(-maxAngle, maxAngle);
-        Vector3 direction = new Vector3(randomAngleX, randomAngleY, randomAngleZ).normalized;
-        rb.AddForce(direction * 150, ForceMode.Impulse);
+        float randomAngleX = Random.Range(forceX.x, forceX.y);
+        float randomAngleY = Random.Range(forceY.x, forceY.y);
+        float randomAngleZ = Random.Range(forceZ.x, forceZ.y);
+        Vector3 force = new Vector3(randomAngleX, randomAngleY, randomAngleZ);
+        rb.AddForce(force, ForceMode.Impulse);
     }
 
     public Rigidbody GetRb()
