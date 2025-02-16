@@ -12,8 +12,11 @@ public class CreateHole : DetectBullet
     protected override void DetectCollision(Collision collision, Bullet _bullet)
     {
         base.DetectCollision(collision, _bullet);
-        GenerateHole(collision.contacts[0].point, _bullet);
-        BreakNearbyObjects(collision.contacts[0].point);
+        if(_bullet.createHole)
+        {
+            GenerateHole(collision.contacts[0].point, _bullet);
+            BreakNearbyObjects(collision.contacts[0].point);
+        }
     }
 
     protected void GenerateHole(Vector3 position, Bullet _bullet)

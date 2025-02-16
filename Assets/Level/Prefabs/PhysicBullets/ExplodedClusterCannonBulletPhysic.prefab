@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2741990928894276429}
   - component: {fileID: 8245282854442523127}
   - component: {fileID: 762032817644874531}
-  - component: {fileID: 8149108347354474729}
+  - component: {fileID: 3521400898691929168}
   m_Layer: 10
-  m_Name: CannonBulletPhysic
+  m_Name: ExplodedClusterCannonBulletPhysic
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3419537705390074741}
   m_Father: {fileID: 0}
@@ -83,7 +83,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &8149108347354474729
+--- !u!114 &3521400898691929168
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,13 +92,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1671708259023600102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83c39a76b6d5eb548a74e59c2ed88661, type: 3}
+  m_Script: {fileID: 11500000, guid: 74f4b9abe94317d47b782b50965f64be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <hitParticles>k__BackingField: {fileID: 2433282508537954060, guid: 1035be7a8ae0aa24c9d5c71792c67dbb, type: 3}
   hitClip: {fileID: 8300000, guid: 131cf6e344d650240b4feebd01036d96, type: 3}
   explosionRadius: 0
-  createHole: 1
+  maxAngle: 15
 --- !u!1001 &2953827068324416670
 PrefabInstance:
   m_ObjectHideFlags: 0
