@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class DialogueData : ScriptableObject
 {
-	public enum DialogueType { DIALOGUE, ACTION, END }
+	public enum DialogueType { START, DIALOGUE, ACTION, END }
     [Serializable]
 	public struct Dialogue
 	{
@@ -24,20 +24,12 @@ public class DialogueData : ScriptableObject
 
 	[field: SerializeField]
 	public List<Dialogue> sequence {  get; private set; }
-	[HideInInspector]
-	public int sequenceIndex = 0;
 
-	public Dialogue GetCurrentDialogue()
+
+
+	
+    public Dialogue GetDialogue(int _sequenceIndex)
 	{
-        return sequence[sequenceIndex];
-    }
-    public Dialogue GetNextDialogue()
-	{
-		sequenceIndex++;
-
-		if (sequenceIndex >= sequence.Count)
-			return new Dialogue(DialogueType.END, "", null);
-
-		return sequence[sequenceIndex];
+		return sequence[_sequenceIndex];
 	}
 }

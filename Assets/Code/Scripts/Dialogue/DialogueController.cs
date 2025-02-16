@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -8,13 +7,18 @@ using UnityEngine.InputSystem;
 public class DialogueController : MonoBehaviour
 {
     [SerializeField]
+    private InputActionReference dialogueAction;
+
+    [Space, SerializeField]
     public DialogueData dialogue;
     [SerializeField]
     private float timeBetweenLetters;
     private int letterIndex;
     private bool showingText = false;
     private bool displayingDialogue = false;
-    private Dictionary<string, Action> actionList;
+    private Dictionary<string, Action> actionList = new Dictionary<string, Action>();
+    public int sequenceIndex = -1;
+
 
     [Space, SerializeField]
     private GameObject dialogueObject;
@@ -30,10 +34,19 @@ public class DialogueController : MonoBehaviour
     private void Awake()
     {
         dialogueText = dialogueObject.GetComponentInChildren<TextMeshProUGUI>();
+        FinishDialogue();
     }
-
-    public void StartDialogue()
+    private void OnEnable()
     {
+        dialogueAction.action.started += InputPressed;
+    }
+    private void OnDisable()
+    {
+        dialogueAction.action.started -= InputPressed;
+    }
+    public void StartDialogue(DialogueData _dialogueData)
+    {
+        dialogue = _dialogueData;
         if (dialogue.sequence.Count == 0)
         {
             FinishDialogue();
@@ -42,10 +55,15 @@ public class DialogueController : MonoBehaviour
 
         //Empezar con el dialogo
         dialogueObject.SetActive(true);
+        sequenceIndex = -1;
         letterIndex = 0;
         dialogueText.maxVisibleCharacters = letterIndex;
         showingText = true;
+        foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
+            item.Item1.SwitchCurrentActionMap("Dialogue");
 
+
+        ReadDialogueType();
     }
 
     private void InputPressed(InputAction.CallbackContext obj)
@@ -55,21 +73,28 @@ public class DialogueController : MonoBehaviour
             if (displayingDialogue)
                 DisplayAllLetters();
             else
-                ReadDialogueType(dialogue.GetNextDialogue());
+                ReadDialogueType();
 
             //AudioManager.instance.Play2dOneShotSound(clickSound, "Button");
         }
     }
 
-    private void ReadDialogueType(DialogueData.Dialogue _dialogue)
+    private void ReadDialogueType()
     {
-        switch (_dialogue.type)
+        sequenceIndex++;
+        DialogueData.Dialogue currentDialogue = dialogue.GetDialogue(sequenceIndex);
+
+
+        switch (currentDialogue.type)
         {
+            case DialogueData.DialogueType.START:
+                ReadDialogueType();
+                break;
             case DialogueData.DialogueType.DIALOGUE:
-                DisplayNextDialogue(_dialogue.dialogue);
+                DisplayNextDialogue(currentDialogue.dialogue);
                 break;
             case DialogueData.DialogueType.ACTION:
-                DoAction(_dialogue.actionId);
+                DoAction(currentDialogue.actionId);
                 break;
             case DialogueData.DialogueType.END:
                 FinishDialogue();
@@ -93,15 +118,21 @@ public class DialogueController : MonoBehaviour
     private void FinishDialogue()
     {
         //Si no hay mas dialogos
+        sequenceIndex = -1;
         showingText = false;
         displayingDialogue = false;
-        gameObject.SetActive(false);
+        foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
+            item.Item1.SwitchCurrentActionMap("Gameplay");
+
+        dialogueObject.SetActive(false);
     }
 
     private void DoAction(string _actionId)
     {
         if (actionList.ContainsKey(_actionId) && actionList[_actionId] != null)
             actionList[_actionId]();
+
+        ReadDialogueType();
     }
 
     private void DisplayLetter()
@@ -109,7 +140,7 @@ public class DialogueController : MonoBehaviour
         if (displayingDialogue)
         {
 
-            if (letterIndex >= dialogue.GetCurrentDialogue().dialogue.Length)
+            if (letterIndex >= dialogue.GetDialogue(sequenceIndex).dialogue.Length)
             {
                 displayingDialogue = false;
             }
@@ -125,11 +156,12 @@ public class DialogueController : MonoBehaviour
     private void DisplayAllLetters()
     {
         displayingDialogue = false;
-        dialogueText.maxVisibleCharacters = dialogue.GetCurrentDialogue().dialogue.Length;
+        dialogueText.maxVisibleCharacters = dialogue.GetDialogue(sequenceIndex).dialogue.Length;
     }
 
     public void AddAction(string _actionId, Action _action)
     {
-
+        if(!actionList.ContainsKey(_actionId))
+            actionList.Add(_actionId, _action);
     }
 }

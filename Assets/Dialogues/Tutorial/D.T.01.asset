@@ -13,22 +13,27 @@ MonoBehaviour:
   m_Name: D.T.01
   m_EditorClassIdentifier: 
   <sequence>k__BackingField:
-  - type: 1
+  - type: 0
+    dialogue: Empieza
+    actionId: 
+  - type: 2
     dialogue: Desactivar movimiento de player
     actionId: D.T.DPM
-  - type: 0
-    dialogue: "Coge la ca\xF1a de pescar para rescatarme!"
-    actionId: 
-  - type: 0
+  - type: 1
     dialogue: Ayuda!!!!
     actionId: 
-  - type: 1
+  - type: 2
     dialogue: "Marcar la ca\xF1a de pescar"
-    actionId: D.T.SFR
-  - type: 0
-    dialogue: "Coge la ca\xF1a de pescar y rescatarme!"
+    actionId: D.T.SF
+  - type: 1
+    dialogue: "Coge la ca\xF1a de pescar para rescatarme!"
     actionId: 
-  - type: 0
+  - type: 2
+    dialogue: "Activar Ca\xF1as"
+    actionId: D.T.EF
+  - type: 2
     dialogue: Activa el movimiento de los players
-    actionId: D.T.APM
-  sequenceIndex: 0
+    actionId: D.T.EPM
+  - type: 3
+    dialogue: Acaba el texto
+    actionId: 

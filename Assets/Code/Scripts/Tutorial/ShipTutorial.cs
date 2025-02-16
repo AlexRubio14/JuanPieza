@@ -1,19 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
 public class ShipTutorial : MonoBehaviour
 {
+    [Header("Dialogue"), SerializeField]
+    private DialogueController dialogueCont;
     [SerializeField]
+    private DialogueData starterData;
+    
+    Action enablePMAction;
+    Action disablePMAction;
+    Action showFAction;
+    Action enableFAction;
+    Action disableFAction;
+    Action enableWAction;
+    Action disableWAction;
+    Action enableCAction;
+    Action disableCAction;
+
+
+
+    [Space, Header("Layers"), SerializeField]
     private int interactableLayer;
     [SerializeField]
     private int defaultLayer;
-    [SerializeField]
-    private ObjectPool fishingObjectPool;
 
     [Space, Header("Fishing"), SerializeField]
     private List<ObjectSO> fishingObjects;
+    [SerializeField]
+    private ObjectPool fishingObjectPool;
 
     [Space, Header("Wood"), SerializeField]
     private ObjectSO woodObject;
@@ -26,7 +43,6 @@ public class ShipTutorial : MonoBehaviour
     private List<ObjectSO> cannonObjects;
     [SerializeField]
     private ObjectSO bulletObject;
-
     private List<PlayerController> players;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -49,7 +65,30 @@ public class ShipTutorial : MonoBehaviour
             cannon.GetObjectState().SetIsBroke(true);
             cannon.OnBreakObject();
         }
+        enablePMAction += EnablePlayerMovement;
+        disablePMAction += DisablePlayerMovement;
+        //showFAction +=; 
+        enableFAction += EnableFishing;
+        disableFAction += DisableFishing;
+        enableWAction += EnableWoodObjects;
+        disableWAction += DisableWoodObjects;
+        enableCAction += EnableCannon;
+        disableCAction += DisableCannon;
+
+        dialogueCont.AddAction("D.T.EPM", enablePMAction);
+        dialogueCont.AddAction("D.T.DPM", disablePMAction);
+        dialogueCont.AddAction("D.T.SF", showFAction);
+        dialogueCont.AddAction("D.T.EF", enableFAction);
+        dialogueCont.AddAction("D.T.DF", disableFAction);
+        dialogueCont.AddAction("D.T.EW", enableWAction);
+        dialogueCont.AddAction("D.T.DW", disableWAction);
+        dialogueCont.AddAction("D.T.EC", enableCAction);
+        dialogueCont.AddAction("D.T.DC", disableCAction);
+
+        dialogueCont.StartDialogue(starterData);
     }
+
+
 
     private void Update()
     {
@@ -129,18 +168,18 @@ public class ShipTutorial : MonoBehaviour
 
     public void EnablePlayerMovement()
     {
-        foreach (PlayerController item in players)
-            item.enabled = true;
+        //foreach (PlayerController item in players)
+        //    item.enabled = true;
         
     }
     public void DisablePlayerMovement()
     {
-        players = new List<PlayerController>();
-        for (int i = 0; i < PlayersManager.instance.ingamePlayers.Count; i++)
-        {
-            players.Add(PlayersManager.instance.ingamePlayers[i]);
-            PlayersManager.instance.ingamePlayers[i].enabled = false;
-        }
+        //players = new List<PlayerController>();
+        //for (int i = 0; i < PlayersManager.instance.ingamePlayers.Count; i++)
+        //{
+        //    players.Add(PlayersManager.instance.ingamePlayers[i]);
+        //    PlayersManager.instance.ingamePlayers[i].enabled = false;
+        //}
 
     }
 
