@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class ShipTutorial : MonoBehaviour
 {
@@ -25,7 +26,8 @@ public class ShipTutorial : MonoBehaviour
     private List<ObjectSO> cannonObjects;
     [SerializeField]
     private ObjectSO bulletObject;
-    
+
+    private List<PlayerController> players;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -57,6 +59,14 @@ public class ShipTutorial : MonoBehaviour
             EnableFishing();
         if (Input.GetKeyDown(KeyCode.I))
             EnableWoodObjects();
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            if (PlayersManager.instance.ingamePlayers.Count > 0)
+                DisablePlayerMovement();
+            else
+                EnablePlayerMovement();                    
+        }    
+
     }
     private void SetItemTypeLayer(ObjectSO _objectType, int _layer)
     {
@@ -115,6 +125,23 @@ public class ShipTutorial : MonoBehaviour
 
         fishingObjectPool.RemoveItemFromPool(bulletObject);
         fishingObjectPool.RemoveItemFromPriorityList(bulletObject);
+    }
+
+    public void EnablePlayerMovement()
+    {
+        foreach (PlayerController item in players)
+            item.enabled = true;
+        
+    }
+    public void DisablePlayerMovement()
+    {
+        players = new List<PlayerController>();
+        for (int i = 0; i < PlayersManager.instance.ingamePlayers.Count; i++)
+        {
+            players.Add(PlayersManager.instance.ingamePlayers[i]);
+            PlayersManager.instance.ingamePlayers[i].enabled = false;
+        }
+
     }
 
 }

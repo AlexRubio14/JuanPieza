@@ -888,9 +888,17 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 1564f0a7c9304934bbe481dce456be45, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: acc77d5355200204fa467747fc19299f, type: 2}
     - target: {fileID: 919132149155446097, guid: 1564f0a7c9304934bbe481dce456be45, type: 3}
       propertyPath: m_Name
       value: Malboro
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1564f0a7c9304934bbe481dce456be45, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -899,6 +907,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1564f0a7c9304934bbe481dce456be45, type: 3}
       insertIndex: -1
       addedObject: {fileID: 976978902}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1564f0a7c9304934bbe481dce456be45, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 976978905}
   m_SourcePrefab: {fileID: 100100000, guid: 1564f0a7c9304934bbe481dce456be45, type: 3}
 --- !u!1001 &842495666
 PrefabInstance:
@@ -1044,6 +1055,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.018902311, y: 0.03825299, z: 0.0187621}
   m_Center: {x: 0.000000004488831, y: 0.018827524, z: -0.009103181}
+--- !u!114 &976978905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976978898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0db6ac2fdb36494f933438f9279bd58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ship: {fileID: 0}
+  breakParticlesPrefab: {fileID: 2433282508537954060, guid: 32d1084b1ec99d64cbaac3136c3cfdfa, type: 3}
+  rockPiecePrefab: {fileID: 710771377291001695, guid: 0de3959448764074fbdd882a4cef85f6, type: 3}
+  rockPiecesCount: 15
+  rockXThrowForce: {x: -500, y: 500}
+  rockYThrowForce: {x: 100, y: 150}
+  rockTorqueForce: {x: -100, y: 100}
 --- !u!1001 &988601920
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1052,6 +1082,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 515112809}
     m_Modifications:
+    - target: {fileID: 5484180818954097361, guid: 279e1b58b6dc117449b41eda3ae35bec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7513048802622738015, guid: 279e1b58b6dc117449b41eda3ae35bec, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.05
@@ -2409,7 +2443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2741990928894276429, guid: f9c64fba5e0cb114c88bb44850636367, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.37
+      value: -14.83
       objectReference: {fileID: 0}
     - target: {fileID: 2741990928894276429, guid: f9c64fba5e0cb114c88bb44850636367, type: 3}
       propertyPath: m_LocalRotation.w

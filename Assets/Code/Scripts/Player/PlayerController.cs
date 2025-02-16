@@ -1,6 +1,4 @@
-using System.IO.Compression;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -139,6 +137,9 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnWeaponTiltAction -= CannonTiltAction;
 
+        movementInput = Vector2.zero;
+        movementDirection = Vector3.zero;
+        stateMachine.ChangeState(stateMachine.idleState);
         PlayersManager.instance.ingamePlayers.Remove(this);
     }
 

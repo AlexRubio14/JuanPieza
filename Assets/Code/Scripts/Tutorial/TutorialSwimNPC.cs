@@ -57,6 +57,7 @@ public class TutorialSwimNPC : MonoBehaviour
     public void HookRemoved()
     {
         hookPosition = Vector3.zero;
+        isSwimming = false;
     }
     public void SetHookPosition(Vector3 _hookPos)
     {
