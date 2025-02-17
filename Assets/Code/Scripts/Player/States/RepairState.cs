@@ -3,7 +3,7 @@ using UnityEngine;
 public class RepairState : PlayerState
 {
     public override void EnterState() { }
-    public override void UpdateState() { Debug.Log("Esta reparando"); }
+    public override void UpdateState() { }
     public override void FixedUpdateState() { }
     public override void ExitState() { }
 

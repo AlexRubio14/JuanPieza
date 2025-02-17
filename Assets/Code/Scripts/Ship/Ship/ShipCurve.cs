@@ -101,11 +101,12 @@ public class ShipCurve : AllyShip
 
     public void ActiveBridge(bool state)
     {
-        transform.Find("Sail").GetComponentInChildren<ShippingSail>().ActiveBridge(state);
+        transform.GetComponentInChildren<ShippingSail>().ActiveBridge(state);
     }
 
     public void SetIsMainShip(bool state)
     {
-        transform.Find("Sail").GetComponentInChildren<ShippingSail>().SetIsMainShip(state);
+        ShippingSail sail = GetComponentInChildren<ShippingSail>();
+        sail.SetIsMainShip(state);
     }
 }

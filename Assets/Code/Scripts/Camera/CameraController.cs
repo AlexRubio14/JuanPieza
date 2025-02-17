@@ -111,7 +111,7 @@ public class CameraController : MonoBehaviour
             //Obtenemos los planos que utiliza el fustrum de la camara externa
             Plane[] camFrustrum = GeometryUtility.CalculateFrustumPlanes(externalCamera);
 
-            Debug.DrawLine(item.bounds.min, item.bounds.max);
+            //Debug.DrawLine(item.bounds.min, item.bounds.max);
 
             //Comprobamos si el player esta dentro del frustrum
             if (GeometryUtility.TestPlanesAABB(camFrustrum, item.bounds)) //Si esta dentro de la camara
