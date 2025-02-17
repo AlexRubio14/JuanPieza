@@ -11,7 +11,10 @@ public class PetrolBarrel : Bullet
 
     private void Explode()
     {
-        Instantiate(petrolDecal);
+        Vector3 offset = new Vector3(0f,2.5f,0f);
+        GameObject instantiatedDecal = Instantiate(petrolDecal, transform.position + offset, Quaternion.identity);
+        instantiatedDecal.transform.forward = Vector3.down;
+        instantiatedDecal.transform.SetParent(shipImpacted);
     }
 
 }
