@@ -391,7 +391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueAction: {fileID: -6215901120574987719, guid: ffc93929504862445aea007ebffd2001, type: 3}
   dialogue: {fileID: 0}
-  timeBetweenLetters: 0.1
+  timeBetweenLetters: 0.03
   sequenceIndex: 0
   dialogueObject: {fileID: 662675106}
   letterSpawnSound: {fileID: 0}
@@ -1449,7 +1449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52726ce33c4b20a48b8d4a1e68c5e720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rescued: 0
+  rescuedDialogue: {fileID: 11400000, guid: faefd84447526934185f9fa98444d731, type: 2}
   isSwimming: 1
 --- !u!4 &1008394205
 Transform:
@@ -1745,7 +1745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80563e59944331543b236ea8c751cd53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueCont: {fileID: 102403482}
   starterData: {fileID: 11400000, guid: d54728f46e5db28429f7aa3693310640, type: 2}
   interactableLayer: 9
   defaultLayer: 0
@@ -1758,6 +1757,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d1a4f89d8d9efee4db14633f515fcdee, type: 2}
   - {fileID: 11400000, guid: 6d79dc67fe5c811419bf1ab7ffe36aeb, type: 2}
   - {fileID: 11400000, guid: 99a98560166594a48b944a8a62302210, type: 2}
+  finishRepairDialogue: {fileID: 11400000, guid: 73dc2271a73fef34b87698c6402538c2, type: 2}
   cannon: {fileID: 421158946}
   cannonObjects:
   - {fileID: 11400000, guid: a5e70d068ca155e498b75cae1b145cda, type: 2}
@@ -1766,6 +1766,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dffcfb1857ced7d4fb477cee9121a908, type: 2}
   - {fileID: 11400000, guid: 28a9a632cf86f0c45a8da7a16225dd92, type: 2}
   bulletObject: {fileID: 11400000, guid: dffcfb1857ced7d4fb477cee9121a908, type: 2}
+  cannonBulletDialogue: {fileID: 11400000, guid: 8d09e226ac8f7994c8aaf3463272d2a0, type: 2}
 --- !u!1001 &1081569641
 PrefabInstance:
   m_ObjectHideFlags: 0

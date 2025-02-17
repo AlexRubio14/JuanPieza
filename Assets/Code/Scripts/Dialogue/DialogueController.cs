@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class DialogueController : MonoBehaviour
 {
+    public static DialogueController instance;
+
     [SerializeField]
     private InputActionReference dialogueAction;
 
@@ -33,8 +35,15 @@ public class DialogueController : MonoBehaviour
 
     private void Awake()
     {
+        if(instance != null && instance != this)
+            Destroy(instance.gameObject);
+
+        instance = this;
+
         dialogueText = dialogueObject.GetComponentInChildren<TextMeshProUGUI>();
-        FinishDialogue();
+        sequenceIndex = -1;
+        showingText = false;
+        displayingDialogue = false;
     }
     private void OnEnable()
     {
@@ -44,12 +53,16 @@ public class DialogueController : MonoBehaviour
     {
         dialogueAction.action.started -= InputPressed;
     }
+    
     public void StartDialogue(DialogueData _dialogueData)
     {
         dialogue = _dialogueData;
         if (dialogue.sequence.Count == 0)
         {
-            FinishDialogue();
+            sequenceIndex = -1;
+            showingText = false;
+            displayingDialogue = false;
+            dialogueObject.SetActive(false);
             return;
         }
 
@@ -83,7 +96,6 @@ public class DialogueController : MonoBehaviour
     {
         sequenceIndex++;
         DialogueData.Dialogue currentDialogue = dialogue.GetDialogue(sequenceIndex);
-
 
         switch (currentDialogue.type)
         {
@@ -123,7 +135,6 @@ public class DialogueController : MonoBehaviour
         displayingDialogue = false;
         foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
             item.Item1.SwitchCurrentActionMap("Gameplay");
-
         dialogueObject.SetActive(false);
     }
 

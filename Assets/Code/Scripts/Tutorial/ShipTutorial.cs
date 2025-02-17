@@ -6,8 +6,6 @@ using UnityEngine;
 public class ShipTutorial : MonoBehaviour
 {
     [Header("Dialogue"), SerializeField]
-    private DialogueController dialogueCont;
-    [SerializeField]
     private DialogueData starterData;
     
     Action enablePMAction;
@@ -36,6 +34,10 @@ public class ShipTutorial : MonoBehaviour
     private ObjectSO woodObject;
     [SerializeField]
     private List<ObjectSO> woodObjects;
+    private bool fixedShip;
+    private RepairHole[] holes;
+    [SerializeField]
+    private DialogueData finishRepairDialogue;
 
     [Space, Header("Cannon"), SerializeField]
     private Cannon cannon;
@@ -43,7 +45,9 @@ public class ShipTutorial : MonoBehaviour
     private List<ObjectSO> cannonObjects;
     [SerializeField]
     private ObjectSO bulletObject;
-    private List<PlayerController> players;
+    [SerializeField]
+    private DialogueData cannonBulletDialogue;
+    private bool cannonFixed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -64,6 +68,8 @@ public class ShipTutorial : MonoBehaviour
 
             cannon.GetObjectState().SetIsBroke(true);
             cannon.OnBreakObject();
+
+            DialogueController.instance.StartDialogue(starterData);
         }
         enablePMAction += EnablePlayerMovement;
         disablePMAction += DisablePlayerMovement;
@@ -75,37 +81,52 @@ public class ShipTutorial : MonoBehaviour
         enableCAction += EnableCannon;
         disableCAction += DisableCannon;
 
-        dialogueCont.AddAction("D.T.EPM", enablePMAction);
-        dialogueCont.AddAction("D.T.DPM", disablePMAction);
-        dialogueCont.AddAction("D.T.SF", showFAction);
-        dialogueCont.AddAction("D.T.EF", enableFAction);
-        dialogueCont.AddAction("D.T.DF", disableFAction);
-        dialogueCont.AddAction("D.T.EW", enableWAction);
-        dialogueCont.AddAction("D.T.DW", disableWAction);
-        dialogueCont.AddAction("D.T.EC", enableCAction);
-        dialogueCont.AddAction("D.T.DC", disableCAction);
+        DialogueController.instance.AddAction("D.T.EPM", enablePMAction);
+        DialogueController.instance.AddAction("D.T.DPM", disablePMAction);
+        DialogueController.instance.AddAction("D.T.SF", showFAction);
+        DialogueController.instance.AddAction("D.T.EF", enableFAction);
+        DialogueController.instance.AddAction("D.T.DF", disableFAction);
+        DialogueController.instance.AddAction("D.T.EW", enableWAction);
+        DialogueController.instance.AddAction("D.T.DW", disableWAction);
+        DialogueController.instance.AddAction("D.T.EC", enableCAction);
+        DialogueController.instance.AddAction("D.T.DC", disableCAction);
 
-        dialogueCont.StartDialogue(starterData);
+        StartCoroutine(FindHoles());
+
+        IEnumerator FindHoles()
+        {
+            yield return new WaitForSeconds(3);
+
+            holes = FindObjectsByType<RepairHole>(FindObjectsSortMode.None);
+        }
+
     }
 
-
-
-    private void Update()
+    private void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.O))
-            EnableCannon();
-        if (Input.GetKeyDown(KeyCode.P))
-            EnableFishing();
-        if (Input.GetKeyDown(KeyCode.I))
-            EnableWoodObjects();
-        if (Input.GetKeyDown(KeyCode.U))
+        if (!fixedShip && HolesRepaired())//No hay agujeros y 
         {
-            if (PlayersManager.instance.ingamePlayers.Count > 0)
-                DisablePlayerMovement();
-            else
-                EnablePlayerMovement();                    
-        }    
+            fixedShip = true;
+            //Empezar dialogo del cañon
+            DialogueController.instance.StartDialogue(finishRepairDialogue);
+        }
+        if (!cannonFixed && !cannon.GetObjectState().GetIsBroken())
+        {
+            cannonFixed = true;
+            DialogueController.instance.StartDialogue(cannonBulletDialogue);
+        }
 
+    }
+
+    private bool HolesRepaired()
+    {
+        foreach (RepairHole item in holes)
+        {
+            if (item != null)
+                return false;
+        }
+
+        return true;
     }
     private void SetItemTypeLayer(ObjectSO _objectType, int _layer)
     {
