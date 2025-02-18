@@ -19,7 +19,6 @@ public class TestPlayerController : MonoBehaviour
 
         if (PlayersManager.instance != null)
         {
-            Debug.Log("Destroy Instance");
             Destroy(this);
             return;
         }
@@ -30,7 +29,7 @@ public class TestPlayerController : MonoBehaviour
         if (SceneManager.GetActiveScene().name != BOOTSTRAP_SCENE_NAME && SceneManager.GetActiveScene().name != "")
         {
             lastSceneActive = SceneManager.GetActiveScene().name;
-            Debug.Log("Last Scene Active: " + lastSceneActive);
+            //Debug.Log("Last Scene Active: " + lastSceneActive);
         }
         if (SceneManager.GetActiveScene().name != "PlayerSelector")
         {

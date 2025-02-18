@@ -29,12 +29,12 @@ public class PlayersReadyController : MonoBehaviour
         if (TestPlayerController.Instance)
         {
             nextScene = TestPlayerController.Instance.lastSceneActive;
-            Debug.Log("Load last Scene");
+            //Debug.Log("Load last Scene");
         }
         else
         {
             nextScene = sceneToLoad;
-            Debug.Log("Load default Scene");
+            //Debug.Log("Load default Scene");
         }
     }
 
