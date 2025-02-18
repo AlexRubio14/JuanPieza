@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private LayerMask slopeCheckLayer;
     private RaycastHit slopeHit;
-
+    public float currentAngle { private set; get; }
 
     [field: Space, Header("Roll"), SerializeField]
     public float rollSpeed { get; private set; }
@@ -191,19 +191,19 @@ public class PlayerController : MonoBehaviour
     }
     public bool CheckSlope()
     {
-        float angle = 0;
+        currentAngle = 0;
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, capsuleCollider.height / 2 + slopeCheckDistance, slopeCheckLayer))
-            angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            currentAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
 
-        if( angle == 0 && 
+        if(currentAngle == 0 && 
             Physics.Raycast(transform.position + transform.forward * capsuleCollider.radius, Vector3.down, out slopeHit, capsuleCollider.height / 2 + slopeCheckDistance, slopeCheckLayer))
-            angle = Vector3.Angle(Vector3.up, slopeHit.normal);
-        return angle < maxSlopeAngle && angle != 0;
+            currentAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
+
+        return currentAngle < maxSlopeAngle && (currentAngle > 0.05 || currentAngle < -0.05);
     }
     public Vector3 GetSlopeMoveDir(Vector3 _movementDir)
     {
         Vector3 slopeDir = Vector3.ProjectOnPlane(_movementDir, slopeHit.normal).normalized;
-        Debug.Log(slopeDir);
         if (slopeDir.y < -0.1)
             slopeDir /= 2;
         Debug.DrawLine(transform.position, transform.position +  slopeDir * 2);

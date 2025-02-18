@@ -72,7 +72,14 @@ public class CannonState : PlayerState
         if (controller.movementInput.y != 0)
         {
             if (controller.CheckSlope())
+            {
                 moveDir = controller.GetSlopeMoveDir(controller.transform.forward);
+
+                float multiplyFact = 1;
+                if (Mathf.Abs(controller.currentAngle) > 15)
+                    multiplyFact = 1.7f;
+                moveDir *= multiplyFact;
+            }
             else
                 moveDir = controller.transform.forward;
 
@@ -89,7 +96,7 @@ public class CannonState : PlayerState
         {
             Vector3 moveDir;
             if (controller.CheckSlope())
-                moveDir = controller.GetSlopeMoveDir(controller.transform.forward);
+                moveDir = controller.GetSlopeMoveDir(controller.transform.forward) * 1.7f;
             else
                 moveDir = controller.transform.forward;
 
