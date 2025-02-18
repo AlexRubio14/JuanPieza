@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -49,6 +50,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float secondPointX;
 
     public bool isVoting;
+    private bool shipEventActive;
 
     private void Awake()
     {
@@ -208,11 +210,13 @@ public class MapManager : MonoBehaviour
             return NodeData.NodeType.EVENT;
     }
 
-
     private NodeData GetRandomNode(NodeData.NodeType type)
     {
         NodeData newNodeDate;
         currentHeightDifficult = GetRange();
+
+        DeleteLastNewNodeAdded(eventsDones, resetLastEventValue);
+        DeleteLastNewNodeAdded(battlesDones, resetLastBattleValue);
 
         if (type == NodeData.NodeType.BATTLE)
         {
@@ -221,7 +225,7 @@ public class MapManager : MonoBehaviour
             {
                 newNodeDate = battleLevels[Random.Range(0, battleLevels.Count)];
             }
-            while (battlesDones.Any(level => level.sceneName == newNodeDate.sceneName) || newNodeDate.difficult != currentHeightDifficult);
+            while (battlesDones.Any(level => level.name == newNodeDate.name) || ((BattleNodeData)newNodeDate).difficult != currentHeightDifficult);
         }       
         else if (type == NodeData.NodeType.SHOP)
         {
@@ -235,10 +239,8 @@ public class MapManager : MonoBehaviour
             {
                 newNodeDate = eventLevels[Random.Range(0, eventLevels.Count)];
             }
-            while (eventsDones.Any(level => level.sceneName == newNodeDate.sceneName) || newNodeDate.difficult >= currentHeightDifficult);
+            while (eventsDones.Any(level => level.name == newNodeDate.name) || ((EventNode)newNodeDate).difficult >= currentHeightDifficult);
         }
-        DeleteLastNewNodeAdded(eventsDones, resetLastEventValue);
-        DeleteLastNewNodeAdded(battlesDones, resetLastBattleValue);
 
         return newNodeDate;
     }
@@ -292,18 +294,41 @@ public class MapManager : MonoBehaviour
     {
         CameraManager.Instance.SetSailCamera(false);
 
-        if (currentLevel.nodeType == NodeData.NodeType.BATTLE)
-            battlesDones.Add(currentLevel);
-        else if (currentLevel.nodeType == NodeData.NodeType.EVENT)
-            eventsDones.Add(currentLevel);
-
         if (mapHeight == mapMaxHeight)
         {
             UpdateCurrentLevel(bossLevel, 3);
+            ShipsManager.instance.playerShip.GetComponentInChildren<ShippingSail>().ActiveBridge(false);
+            StartMovingShip();
             return;
         }
-        RandomChild();
+        else if (shipEventActive)
+        {
+            ShipsManager.instance.playerShip.GetComponentInChildren<ShippingSail>().ActiveBridge(false);
+            StartMovingShip();
+            DesactiveShipEvent();
+            return;
+        }
 
+        AddNodesDone();
+
+        RandomChild();
+        PrepareVotation();
+
+    }
+
+    public void AddNodesDone()
+    {
+        foreach (var nodes in eventsDones)
+            if (nodes.name == currentLevel.name)
+                return;
+        if (currentLevel.nodeType == NodeData.NodeType.BATTLE)
+            battlesDones.Add(currentLevel);
+        if (currentLevel.nodeType == NodeData.NodeType.EVENT)
+            eventsDones.Add(currentLevel);
+    }
+
+    private void PrepareVotation()
+    {
         foreach (var vot in votations)
         {
             vot.CleanPlayerList();
@@ -313,7 +338,6 @@ public class MapManager : MonoBehaviour
         ActiveUI();
         startVoteTimer = true;
     }
-
     public NodeData GetCurrentLevel()
     {
         return currentLevel;
@@ -322,5 +346,16 @@ public class MapManager : MonoBehaviour
     public bool GetIsVoting() 
     { 
         return isVoting;
+    }
+
+    public void ActiveShipEvent(NodeData node)
+    {
+        shipEventActive = true;
+        UpdateCurrentLevel(node, 3);
+    }
+
+    public void DesactiveShipEvent()
+    {
+        shipEventActive = false;
     }
 }

@@ -48,13 +48,33 @@ public class ShipCurve : AllyShip
         if (t > 0.5f)
             FinishCurve();
     }
+
+    private void ChangeScene()
+    {
+        switch (MapManager.Instance.GetCurrentLevel().nodeType)
+        {
+            case NodeData.NodeType.BATTLE:
+                SceneManager.LoadScene("Battle");
+                break;
+            case NodeData.NodeType.EVENT:
+                SceneManager.LoadScene("Event");
+                break;
+            case NodeData.NodeType.SHOP:
+                SceneManager.LoadScene("Shop");
+                break;
+            case NodeData.NodeType.BOSS:
+                SceneManager.LoadScene("Battle");
+                break;
+        }
+    }
+
     private void FinishCurve()
     {
         MapManager.Instance.isVoting = false;
         startMovementCurve = false;
         ShipSceneManager.Instance.SetObjectsToSpawn();
         ShipSceneManager.Instance.SetShipId(idShip, currentHealth, targetHeight, isBarrelBoxActive);
-        SceneManager.LoadScene(MapManager.Instance.GetCurrentLevel().sceneName);
+        ChangeScene();
     }
     private void MoveToIsland()
     {
@@ -92,6 +112,11 @@ public class ShipCurve : AllyShip
     {
         startMovementCurve = state;
         points = _points;
+    }
+
+    public bool IsMoving()
+    {
+        return startMovementCurve;
     }
 
     public void SetStartMovementToIsland(bool state)
