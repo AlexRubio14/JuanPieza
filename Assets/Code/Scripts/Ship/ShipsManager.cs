@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,7 +25,7 @@ public class ShipsManager : MonoBehaviour
     private void Start()
     {
         ShipSceneManager.Instance.InstantiateShip();
-        if(!MapManager.Instance.GetCurrentLevel().hasIsland)
+        if(MapManager.Instance.GetCurrentLevel().nodeType == NodeData.NodeType.BATTLE)
             GenerateEnemyShip.instance.GenerateEnemiesShip();
     }
 
@@ -54,9 +55,9 @@ public class ShipsManager : MonoBehaviour
     {
         if (enemiesShips.Count == 0)
         {
-            if(!MapManager.Instance.GetCurrentLevel().hasIsland)
+            if(MapManager.Instance.GetCurrentLevel().nodeType == NodeData.NodeType.BATTLE)
             {
-                MoneyManager.Instance.AddMoney(MapManager.Instance.GetCurrentLevel().levelMoney);
+                MoneyManager.Instance.AddMoney(((BattleNodeData)MapManager.Instance.GetCurrentLevel()).levelMoney);
                 VotationCanvasManager.Instance.SetMoneyText(true);
             }
 

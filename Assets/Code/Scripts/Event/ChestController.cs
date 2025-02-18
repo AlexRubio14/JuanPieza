@@ -9,4 +9,10 @@ public class ChestController : MonoBehaviour
         foreach (var chest in chests)
             chest.SetCanInteract(false);
     }
+
+    public void ActiveChest(bool state)
+    {
+        foreach (var chest in chests)
+            chest.gameObject.SetActive(state);
+    }
 }

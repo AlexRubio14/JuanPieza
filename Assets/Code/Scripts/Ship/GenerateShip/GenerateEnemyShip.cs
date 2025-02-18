@@ -24,8 +24,8 @@ public class GenerateEnemyShip : MonoBehaviour
     public static GenerateEnemyShip instance;
 
     [Header("Enemy Ships")]
-    public List<EnemyShip> enemyShipInformation;
     [SerializeField] private LayerMask hitLayer;
+    private List<EnemyShip> enemyShipInformation;
 
     private void Awake()
     {
@@ -34,8 +34,15 @@ public class GenerateEnemyShip : MonoBehaviour
 
         instance = this;
     }
-    public void GenerateEnemiesShip()
+
+    private void Start()
     {
+        enemyShipInformation = new List<EnemyShip>();
+    }
+    public void GenerateEnemiesShip()
+    { 
+        enemyShipInformation =((BattleNodeData)MapManager.Instance.GetCurrentLevel()).enemyShipInformation;
+
         foreach (var enemy in enemyShipInformation)
         {
             GameObject enemyShip = Instantiate(enemy._ship);

@@ -42,10 +42,29 @@ public class ShipCurve : AllyShip
                 startMovementCurve = false;
                 ShipSceneManager.Instance.SetObjectsToSpawn();
                 ShipSceneManager.Instance.SetShipId(idShip, currentHealth, targetHeight, isBarrelBoxActive);
-                SceneManager.LoadScene(MapManager.Instance.GetCurrentLevel().sceneName);
+                ChangeScene();
             }
 
             rb.MovePosition(CalculateQuadraticBezierPoint(t, points[0], points[1], points[2]));
+        }
+    }
+
+    private void ChangeScene()
+    {
+        switch (MapManager.Instance.GetCurrentLevel().nodeType)
+        {
+            case NodeData.NodeType.BATTLE:
+                SceneManager.LoadScene("Battle");
+                break;
+            case NodeData.NodeType.EVENT:
+                SceneManager.LoadScene("Event");
+                break;
+            case NodeData.NodeType.SHOP:
+                SceneManager.LoadScene("Shop");
+                break;
+            case NodeData.NodeType.BOSS:
+                SceneManager.LoadScene("Battle");
+                break;
         }
     }
 
