@@ -20,7 +20,7 @@ public class Catapult : Weapon
                 Random.Range(-barrelRotationSpeed, barrelRotationSpeed)
                 )
             , ForceMode.VelocityChange);
-        newBullet.GetComponent<Bullet>().SetDamage(weaponDamage);
+        newBullet.GetComponent<Bullet>().SetDamage(weaponDamage * BuffsManagers.Instance.GetCurrentDamageMultiplier());
         hasAmmo = false;
     }
 }

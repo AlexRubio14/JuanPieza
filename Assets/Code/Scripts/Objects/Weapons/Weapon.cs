@@ -74,6 +74,11 @@ public abstract class Weapon : RepairObject
     {
         if (!hasAmmo)
             return;
+
+        float randomValue = Random.Range(0f, 1f);
+        if (randomValue < BuffsManagers.Instance.GetCurrentExplotePercentages())
+            return; //Aqui destruir el cañon
+
         Shoot();            
         animator.SetTrigger("Shoot");
         animator.SetBool("HasAmmo", false);
