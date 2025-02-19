@@ -20,8 +20,8 @@ public class Bootstrapper : MonoBehaviour
     static void Init()
     {
 
-        if (TestPlayerController.Instance.cancelBootstrap)
-            return;
+        //if (TestPlayerController.Instance.cancelBootstrap)
+        //    return;
 #if UNITY_EDITOR
         Scene currentLoadedEditorScene = SceneManager.GetActiveScene();
 #endif
