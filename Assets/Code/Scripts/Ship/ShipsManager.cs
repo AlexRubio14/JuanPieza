@@ -57,12 +57,22 @@ public class ShipsManager : MonoBehaviour
         {
             if(MapManager.Instance.GetCurrentLevel().nodeType == NodeData.NodeType.BATTLE)
             {
-                MoneyManager.Instance.AddMoney(((BattleNodeData)MapManager.Instance.GetCurrentLevel()).levelMoney);
+                MoneyManager.Instance.AddMoney(((BattleNodeData)MapManager.Instance.GetCurrentLevel()).levelMoney * (int)BuffsManagers.Instance.GetCurrentGoldMultiplier());
                 VotationCanvasManager.Instance.SetMoneyText(true);
+                BuffsManagers.Instance.ResetBuffs();
             }
+            BuffsDesactivation();
 
             playerShip.StartVotation();
         }
 
+    }
+
+    private void BuffsDesactivation()
+    {
+        if (BuffsManagers.Instance.GetCanSteal())
+            BuffsManagers.Instance.Steal();
+        BuffsManagers.Instance.SetLoseGold(false);
+        BuffsManagers.Instance.ResetMovementSpeed();
     }
 }

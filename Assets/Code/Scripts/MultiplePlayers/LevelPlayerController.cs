@@ -44,5 +44,7 @@ public class LevelPlayerController : MonoBehaviour
             if (cameraCont)
                 cameraCont.AddPlayer(controller.gameObject);
         }
+
+        BuffsManagers.Instance.InitBuffs();
     }
 }

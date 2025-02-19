@@ -83,7 +83,7 @@ public class VotationCanvasManager : MonoBehaviour
     public void SetMoneyText(bool state)
     {
         moneyText.transform.parent.gameObject.SetActive(state);
-        moneyText.text = "+" + ((BattleNodeData)MapManager.Instance.GetCurrentLevel()).levelMoney.ToString();
+        moneyText.text = "+" + (((BattleNodeData)MapManager.Instance.GetCurrentLevel() ).levelMoney * (int)BuffsManagers.Instance.GetCurrentGoldMultiplier()).ToString();
 
         if(state)
             StartCoroutine(DesactiveMoneyText());

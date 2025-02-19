@@ -76,8 +76,11 @@ public abstract class Weapon : RepairObject
             return;
 
         float randomValue = Random.Range(0f, 1f);
-        if (randomValue < BuffsManagers.Instance.GetCurrentExplotePercentages())
-            return; //Aqui destruir el cañon
+        if (randomValue < BuffsManagers.Instance.GetCurrentExplotionPercentages())
+        {
+            Explote(_objectHolder);
+            return;
+        }
 
         Shoot();            
         animator.SetTrigger("Shoot");
@@ -86,6 +89,7 @@ public abstract class Weapon : RepairObject
         foreach (ParticleSystem item in loadParticles)
             item.Stop(true);
     }
+
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
         if(state.GetIsBroken())
@@ -201,6 +205,19 @@ public abstract class Weapon : RepairObject
             item.Stop(true);
     }
     protected abstract void Shoot();
+
+    private void Explote(ObjectHolder _objectHolder)
+    {
+        GetComponent<ObjectState>().SetIsBroke(true);
+        ShipsManager.instance.playerShip.SetCurrentHealth(BuffsManagers.Instance.GetExplosionDamage());
+
+        ParticleSystem particle = Instantiate(BuffsManagers.Instance.GetExplosionParticles(), transform.position, Quaternion.identity);
+        particle.Play();
+
+        AudioManager.instance.Play2dOneShotSound(BuffsManagers.Instance.GetExplosionAudio(), "Objects");
+        PlayerController player = _objectHolder.transform.parent.gameObject.GetComponent<PlayerController>();
+        UnMount(player, _objectHolder);
+    }
 
     public bool isPlayerMounted()
     {
