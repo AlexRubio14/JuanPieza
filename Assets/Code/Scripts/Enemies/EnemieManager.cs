@@ -47,6 +47,11 @@ public class EnemieManager : MonoBehaviour
         NavMeshLink[] links = GetComponentsInChildren<NavMeshLink>();
         foreach (NavMeshLink link in links)
             link.UpdateLink();
+
+        timeToGetResource /= ((BattleNodeData)MapManager.Instance.GetCurrentLevel()).difficult;
+        timeToRepair /= ((BattleNodeData)MapManager.Instance.GetCurrentLevel()).difficult;
+        timeToInteract /= ((BattleNodeData)MapManager.Instance.GetCurrentLevel()).difficult;
+        timeToShoot /= ((BattleNodeData)MapManager.Instance.GetCurrentLevel()).difficult;
     }
 
     public void GenerateEnemies()

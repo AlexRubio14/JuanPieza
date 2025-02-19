@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using TMPro;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,15 +10,16 @@ public class ShipCurve : AllyShip
 
     [Header("Movement")]
     [SerializeField] private float speed;
-    [SerializeField] private float speedArriveIsland;
+    [SerializeField] private float timeArrive;
     [SerializeField] private float rotationSpeed;
 
     private Rigidbody rb;
     private float t;
+    private Vector3 startPosition;
+    private Vector3 targetPosition;
     private bool startMovementCurve = false;
     private bool startMovementToIsland = false;
-    private bool rotateCamera = false;
-    private Vector3 ingameCameraPos;
+    private float step;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -36,8 +39,6 @@ public class ShipCurve : AllyShip
             MoveCurve();
         else if (startMovementToIsland)
             MoveToIsland();
-        else if (rotateCamera && !MapManager.Instance.GetIsVoting())
-            SetIngameCamera();
     }
     private void MoveCurve()
     {
@@ -45,7 +46,7 @@ public class ShipCurve : AllyShip
 
         rb.MovePosition(CalculateQuadraticBezierPoint(t, points[0], points[1], points[2]));
 
-        if (t > 0.5f)
+        if (t > 0.1f)
             FinishCurve();
     }
 
@@ -78,27 +79,17 @@ public class ShipCurve : AllyShip
     }
     private void MoveToIsland()
     {
-        transform.position = Vector3.Lerp(transform.position, new Vector3(0, transform.position.y, 10), Time.fixedDeltaTime * speedArriveIsland);
+        step = (Vector3.Distance(startPosition, targetPosition) / timeArrive) * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+
 
         if (transform.position.z >= 0)
         {
-            rotateCamera = true;
-            ingameCameraPos = transform.position;
-            ingameCameraPos.y = 20;
             SetStartMovementToIsland(false);
             CameraManager.Instance.SetArriveCamera(false);
             CameraManager.Instance.SetSimpleCamera(true);
             ActiveBridge(true);
         }
-    }
-    private void SetIngameCamera()
-    {
-        Quaternion targetRotation = Quaternion.Euler(40, 0, 0);
-        Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-        transform.position = Vector3.Lerp(transform.position, ingameCameraPos, Time.deltaTime * rotationSpeed);
-
-        if (Quaternion.Angle(Camera.main.transform.rotation, targetRotation) < 0.1f)
-            rotateCamera = false;
     }
 
 
@@ -122,6 +113,11 @@ public class ShipCurve : AllyShip
     public void SetStartMovementToIsland(bool state)
     {
         startMovementToIsland = state;
+        if(state)
+        {
+            startPosition = transform.position;
+            targetPosition = new Vector3(0, transform.position.y, 10);
+        }
     }
 
     public void ActiveBridge(bool state)
@@ -133,5 +129,15 @@ public class ShipCurve : AllyShip
     {
         ShippingSail sail = GetComponentInChildren<ShippingSail>();
         sail.SetIsMainShip(state);
+    }
+
+    public bool GetStartMovementToIsland()
+    {
+        return startMovementToIsland;
+    }
+
+    public float GetStep()
+    {
+        return step;
     }
 }

@@ -1441,15 +1441,15 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 485105f5e06e511428d36b0a56e90ef9, type: 2}
     - target: {fileID: 440581616049691148, guid: 1ac5f93109cbc8741be9c9e4b8021a63, type: 3}
       propertyPath: shopInitPercentage
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 440581616049691148, guid: 1ac5f93109cbc8741be9c9e4b8021a63, type: 3}
       propertyPath: eventInitPercentage
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 440581616049691148, guid: 1ac5f93109cbc8741be9c9e4b8021a63, type: 3}
       propertyPath: battleInitPercentage
-      value: 0.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 440581616049691148, guid: 1ac5f93109cbc8741be9c9e4b8021a63, type: 3}
       propertyPath: eventLevels.Array.size
@@ -1650,8 +1650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2320d27bcbcedb64da468c0ddea93689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentBuffs:
-  - {fileID: 0}
+  currentBuffs: []
   damageMultiplier: 2
   explotePercentages: 1
   explosionDamage: 20
