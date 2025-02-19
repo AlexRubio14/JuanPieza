@@ -19,6 +19,9 @@ public class Bootstrapper : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void Init()
     {
+
+        if (TestPlayerController.Instance.cancelBootstrap)
+            return;
 #if UNITY_EDITOR
         Scene currentLoadedEditorScene = SceneManager.GetActiveScene();
 #endif

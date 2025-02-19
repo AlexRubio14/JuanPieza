@@ -7,18 +7,23 @@ public class ShipTutorial : MonoBehaviour
 {
     [Header("Dialogue"), SerializeField]
     private DialogueData starterData;
-    
-    Action enablePMAction;
-    Action disablePMAction;
+
+    Action hideArrowsAction;
     Action showFAction;
     Action enableFAction;
     Action disableFAction;
+    Action showWAction;
     Action enableWAction;
     Action disableWAction;
+    Action showCAction;
     Action enableCAction;
     Action disableCAction;
 
 
+    [Space, Header("Show Arrow"), SerializeField]
+    private GameObject[] arrows;
+    [SerializeField]
+    private float arrowOffset;
 
     [Space, Header("Layers"), SerializeField]
     private int interactableLayer;
@@ -29,6 +34,11 @@ public class ShipTutorial : MonoBehaviour
     private List<ObjectSO> fishingObjects;
     [SerializeField]
     private ObjectPool fishingObjectPool;
+    [SerializeField]
+    private ObjectSO fishingRodSO;
+    private InteractableObject fishingRodBox;
+    [SerializeField]
+    private TutorialSwimNPC npc;
 
     [Space, Header("Wood"), SerializeField]
     private ObjectSO woodObject;
@@ -38,6 +48,7 @@ public class ShipTutorial : MonoBehaviour
     private RepairHole[] holes;
     [SerializeField]
     private DialogueData finishRepairDialogue;
+    private bool repairingShip;
 
     [Space, Header("Cannon"), SerializeField]
     private Cannon cannon;
@@ -47,12 +58,21 @@ public class ShipTutorial : MonoBehaviour
     private ObjectSO bulletObject;
     [SerializeField]
     private DialogueData cannonBulletDialogue;
+    private InteractableObject hammerBox;
     private bool cannonFixed;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartCoroutine(StartTutorial(defaultLayer));
 
+        foreach (GameObject obj in arrows)
+            obj.SetActive(false);
+
+        repairingShip = false;
+
+        StartCoroutine(StartTutorial(defaultLayer));
+        
         IEnumerator StartTutorial(LayerMask _layer)
         {
             yield return new WaitForEndOfFrame();
@@ -70,24 +90,30 @@ public class ShipTutorial : MonoBehaviour
             cannon.OnBreakObject();
 
             DialogueController.instance.StartDialogue(starterData);
+
+            fishingRodBox = ShipsManager.instance.playerShip.GetObjectBoxByObject(fishingRodSO);
+            hammerBox = ShipsManager.instance.playerShip.GetObjectBoxByObject(cannon.GetRepairItem());
         }
-        enablePMAction += EnablePlayerMovement;
-        disablePMAction += DisablePlayerMovement;
-        //showFAction +=; 
+
+        showFAction += ShowFishing; 
+        hideArrowsAction += HideArrow; 
         enableFAction += EnableFishing;
         disableFAction += DisableFishing;
+        showWAction += ShowWood;
         enableWAction += EnableWoodObjects;
         disableWAction += DisableWoodObjects;
+        showCAction += ShowCannon;
         enableCAction += EnableCannon;
         disableCAction += DisableCannon;
 
-        DialogueController.instance.AddAction("D.T.EPM", enablePMAction);
-        DialogueController.instance.AddAction("D.T.DPM", disablePMAction);
+        DialogueController.instance.AddAction("D.T.HA", hideArrowsAction);
         DialogueController.instance.AddAction("D.T.SF", showFAction);
         DialogueController.instance.AddAction("D.T.EF", enableFAction);
         DialogueController.instance.AddAction("D.T.DF", disableFAction);
+        DialogueController.instance.AddAction("D.T.SW", showWAction);
         DialogueController.instance.AddAction("D.T.EW", enableWAction);
         DialogueController.instance.AddAction("D.T.DW", disableWAction);
+        DialogueController.instance.AddAction("D.T.SC", showCAction);
         DialogueController.instance.AddAction("D.T.EC", enableCAction);
         DialogueController.instance.AddAction("D.T.DC", disableCAction);
 
@@ -104,12 +130,32 @@ public class ShipTutorial : MonoBehaviour
 
     private void FixedUpdate()
     {
+        foreach (GameObject obj in arrows)
+            obj.transform.forward = -Camera.main.transform.forward;
+
+        if (repairingShip)
+        {
+
+            for (int i = 0; i < holes.Length; i++)
+            {
+                if (holes[i] != null)
+                {
+                    arrows[i].SetActive(true);
+                    arrows[i].transform.position = holes[i].transform.position + Vector3.up * arrowOffset;
+                }
+                else
+                    arrows[i].SetActive(false);
+            }
+        }
         if (!fixedShip && HolesRepaired())//No hay agujeros y 
         {
             fixedShip = true;
             //Empezar dialogo del cañon
             DialogueController.instance.StartDialogue(finishRepairDialogue);
+            repairingShip = false;
         }
+        
+
         if (!cannonFixed && !cannon.GetObjectState().GetIsBroken())
         {
             cannonFixed = true;
@@ -142,26 +188,44 @@ public class ShipTutorial : MonoBehaviour
         _item.gameObject.layer = _layer;
     }
 
-    public void EnableFishing() 
+    private void HideArrow()
+    {
+        foreach (GameObject obj in arrows)
+            obj.SetActive(false);
+    }
+
+    private void ShowFishing()
+    {
+        arrows[0].SetActive(true);
+        arrows[0].transform.position = fishingRodBox.transform.position + Vector3.up * arrowOffset;
+        arrows[1].SetActive(true);
+        arrows[1].transform.position = npc.transform.position + Vector3.up * arrowOffset;
+    }
+    private void EnableFishing() 
     {
         foreach (ObjectSO item in fishingObjects)
             SetItemTypeLayer(item, interactableLayer);
     }
-    public void DisableFishing()
+    private void DisableFishing()
     {
         foreach (ObjectSO item in fishingObjects)
             SetItemTypeLayer(item, defaultLayer);
     }
 
-    public void EnableWoodObjects()
+    private void ShowWood()
+    {
+        repairingShip = true;
+    }
+    private void EnableWoodObjects()
     {
         foreach (ObjectSO item in woodObjects)
             SetItemTypeLayer(item, interactableLayer);
 
         fishingObjectPool.AddItemToItemPool(woodObject);
         fishingObjectPool.AddItemToPriorityList(woodObject);
+
     }
-    public void DisableWoodObjects()
+    private void DisableWoodObjects()
     {
         foreach (ObjectSO item in woodObjects)
             SetItemTypeLayer(item, interactableLayer);
@@ -170,7 +234,14 @@ public class ShipTutorial : MonoBehaviour
         fishingObjectPool.RemoveItemFromPriorityList(woodObject);
     }
 
-    public void EnableCannon()
+    private void ShowCannon()
+    {
+        arrows[0].SetActive(true);
+        arrows[0].transform.position = cannon.transform.position + Vector3.up * arrowOffset;
+        arrows[1].SetActive(true);
+        arrows[1].transform.position = hammerBox.transform.position + Vector3.up * arrowOffset;
+    }
+    private void EnableCannon()
     {
         foreach (ObjectSO item in cannonObjects)
             SetItemTypeLayer(item, interactableLayer);
@@ -178,30 +249,13 @@ public class ShipTutorial : MonoBehaviour
         fishingObjectPool.AddItemToItemPool(bulletObject);
         fishingObjectPool.AddItemToPriorityList(bulletObject);
     }
-    public void DisableCannon()
+    private void DisableCannon()
     {
         foreach (ObjectSO item in cannonObjects)
             SetItemTypeLayer(item, defaultLayer);
 
         fishingObjectPool.RemoveItemFromPool(bulletObject);
         fishingObjectPool.RemoveItemFromPriorityList(bulletObject);
-    }
-
-    public void EnablePlayerMovement()
-    {
-        //foreach (PlayerController item in players)
-        //    item.enabled = true;
-        
-    }
-    public void DisablePlayerMovement()
-    {
-        //players = new List<PlayerController>();
-        //for (int i = 0; i < PlayersManager.instance.ingamePlayers.Count; i++)
-        //{
-        //    players.Add(PlayersManager.instance.ingamePlayers[i]);
-        //    PlayersManager.instance.ingamePlayers[i].enabled = false;
-        //}
-
     }
 
 }
