@@ -138,10 +138,8 @@ public class CameraController : MonoBehaviour
         for (int i = 0; i < followObjects.Count; i++)
         {
             if (followObjects[i].collider != null && (followObjects[i].player == null || followObjects[i].player.currentState != followObjects[i].player.deathState))
-            {
                 activePlayers.Add(followObjects[i].collider);
 
-            }
         }
 
         foreach (Collider item in activePlayers)

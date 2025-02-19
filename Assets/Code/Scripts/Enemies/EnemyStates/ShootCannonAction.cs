@@ -79,6 +79,10 @@ public class ShootCannonAction : EnemyAction
     }
     private InteractableObject GetRandomObject(List<InteractableObject> _objectsToBreak)
     {
-        return _objectsToBreak[Random.Range(0, _objectsToBreak.Count)];
+        InteractableObject returnObject = _objectsToBreak[Random.Range(0, _objectsToBreak.Count)];
+        if (returnObject is RepairHole)
+            return GetRandomObject(_objectsToBreak);
+
+        return returnObject;
     }
 }
