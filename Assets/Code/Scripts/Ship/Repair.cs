@@ -77,6 +77,7 @@ public class Repair : InteractableObject
         {
             if (repairParticles.isStopped)
                 repairParticles.Play(true);
+            
             currentRepairTime += players.Count * Time.deltaTime;
             if (currentRepairTime >= repairDuration)
             {
@@ -86,7 +87,6 @@ public class Repair : InteractableObject
 
             foreach (PlayerController player in players)
                 player.progressBar.SetProgress(currentRepairTime, repairDuration);
-
         }
         else
         {
