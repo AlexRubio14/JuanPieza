@@ -9,6 +9,8 @@ public class ObjectState : MonoBehaviour
     [SerializeField] private bool isBroken;
     [SerializeField] private AudioClip brokeClip;
 
+    private bool oneHit;
+
     public void SetIsBroke(bool state)
     {
         if(isBroken == state)
@@ -23,11 +25,18 @@ public class ObjectState : MonoBehaviour
         if(state)
         {
             AudioManager.instance.Play2dOneShotSound(brokeClip, "Objects");
+            if (oneHit)
+                Destroy(gameObject);
         }
     }
 
     public bool GetIsBroken()
     {
         return isBroken;
+    }
+
+    public void SetOneHit(bool state)
+    {
+        oneHit = state;
     }
 }

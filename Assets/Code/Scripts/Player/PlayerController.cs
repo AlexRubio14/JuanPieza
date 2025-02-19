@@ -77,6 +77,8 @@ public class PlayerController : MonoBehaviour
     public ProgressBarController progressBar { get; private set; }
     private CapsuleCollider capsuleCollider;
 
+    public bool movementBuffActive;
+    public float currentKnockBackTime;
 
     private void Awake()
     {
@@ -326,6 +328,11 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawLine(startPos, endPos);
         }
 
+    }
+
+    public void SetBaseMovementSpeed(float speed)
+    {
+        baseMovementSpeed = speed;
     }
 
 }

@@ -168,4 +168,9 @@ public class ObjectPool : MonoBehaviour
             realPercentages.Add((item.Value / totalPercentage) * 100);
         }
     }
+
+    public void SetPercentages(SerializedDictionary<ObjectSO.ItemRarity, float> _rarityPercentages)
+    {
+        rarityPercentages = _rarityPercentages;
+    }
 }
