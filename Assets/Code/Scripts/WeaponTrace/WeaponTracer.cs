@@ -20,6 +20,7 @@ public class WeaponTracer : MonoBehaviour
     [SerializeField]
     protected LineRenderer lineRenderer;
 
+    protected Vector3 collisionNormal;
     protected virtual void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -43,7 +44,7 @@ public class WeaponTracer : MonoBehaviour
                     UpdateLineRenderer(i, (i - 1, hit.point));
                  
                 decal.transform.position = hit.point;
-
+                collisionNormal = hit.normal;
                 break;
             }
 
@@ -51,8 +52,6 @@ public class WeaponTracer : MonoBehaviour
 
             UpdateLineRenderer(maxSteps, (i, position));
         }
-
-        
     }
 
     protected Vector3 CalculateNewVelocity(Vector3 _velocity, float _drag, float _increment)
