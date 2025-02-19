@@ -15,5 +15,7 @@ public class PlayerWeaponTrace : WeaponTracer
 
         lineRenderer.enabled = weapon.isPlayerMounted();
         decal.SetActive(weapon.isPlayerMounted());
+        if (decal.activeInHierarchy)
+            decal.transform.forward = -collisionNormal;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,9 +9,24 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private CameraMovement camState = CameraMovement.NONE;
 
+    [Serializable]    
+    private struct ObjectFollow
+    {
+        public ObjectFollow(Collider _collider, float _weight, PlayerStateMachine _player)
+        {
+            collider = _collider;
+            weight = _weight;
+            player = _player;
+        }
+
+        public Collider collider;
+        public float weight;
+        public PlayerStateMachine player;
+    }
+
     [Header("Players"), SerializeField]
-    private List<Collider> followColliders;
-    private List<PlayerStateMachine> playerStates = new List<PlayerStateMachine>();
+    private List<ObjectFollow> followObjects;
+
 
     [Header("Position Adjustments"), SerializeField]
     private float minYDistance;
@@ -21,7 +37,10 @@ public class CameraController : MonoBehaviour
     private float zOffset;
     [SerializeField]
     private float deadPlayerDistance;
-
+    [SerializeField]
+    private float playerWeight;
+    [SerializeField]
+    private float objectWeight;
     [Space, Header("Cameras"), SerializeField]
     private Camera insideCamera;
     [SerializeField]
@@ -38,13 +57,16 @@ public class CameraController : MonoBehaviour
     
     private void Awake()
     {
-        playerStates = new List<PlayerStateMachine>();
 
         //Guardamos la Y del primer Player
         //Seteamos todos los players con la misma posicion en Y
-        foreach (Collider item in followColliders)
-            playerStates.Add(item.GetComponent<PlayerStateMachine>());
-        
+        for (int i = 0; i < followObjects.Count; i++)
+        {
+            ObjectFollow follow = followObjects[i];
+            follow.player = followObjects[i].collider.GetComponent<PlayerStateMachine>();
+            followObjects[i] = follow;
+        }
+
         
         //colocar la camara a la distancia minima
         zPosition = transform.position.z - GetMiddlePointBetweenPlayers().z;
@@ -67,23 +89,39 @@ public class CameraController : MonoBehaviour
 
     public void AddPlayer(GameObject _newPlayer)
     {
-        followColliders.Add(_newPlayer.GetComponent<CapsuleCollider>());
-        playerStates.Add(_newPlayer.GetComponent<PlayerStateMachine>());
+        followObjects.Add(new ObjectFollow(
+            _newPlayer.GetComponent<CapsuleCollider>(),
+            playerWeight,
+            _newPlayer.GetComponent<PlayerStateMachine>()
+            ));
     }
-
     public void AddObject(GameObject _objectToAdd)
     {
-        followColliders.Add(_objectToAdd.GetComponent<Collider>());
-        playerStates.Add(null);
+        followObjects.Add(new ObjectFollow(
+            _objectToAdd.GetComponent<Collider>(),
+            objectWeight,
+            null
+            ));
 
     }
 
     public void RemovePlayer(GameObject _removablePlayer)
     {
         CapsuleCollider currentCollider = _removablePlayer.GetComponent<CapsuleCollider>();
-        int collisionIndex = followColliders.IndexOf(currentCollider);
-        followColliders.RemoveAt(collisionIndex);
-        playerStates.RemoveAt(collisionIndex);
+        ObjectFollow playerToRemove = GetObjectByCollider(currentCollider);
+        if(playerToRemove.collider != null)
+        followObjects.Remove(playerToRemove);
+    }
+
+    private ObjectFollow GetObjectByCollider(Collider _collider)
+    {
+        foreach (ObjectFollow item in followObjects)
+        {
+            if(item.collider == _collider)
+                return item;
+        }
+
+        return new ObjectFollow(null, 0, null);
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -97,11 +135,11 @@ public class CameraController : MonoBehaviour
         bool zoomIn = true;
         bool zoomOut = false;
         List<Collider> activePlayers = new List<Collider>();
-        for (int i = 0; i < followColliders.Count; i++)
+        for (int i = 0; i < followObjects.Count; i++)
         {
-            if (followColliders[i] != null && playerStates != null && (playerStates[i] == null || playerStates[i].currentState != playerStates[i].deathState))
+            if (followObjects[i].collider != null && (followObjects[i].player == null || followObjects[i].player.currentState != followObjects[i].player.deathState))
             {
-                activePlayers.Add(followColliders[i]);
+                activePlayers.Add(followObjects[i].collider);
 
             }
         }
@@ -187,19 +225,19 @@ public class CameraController : MonoBehaviour
     {
         Vector3 middlePoint = Vector3.zero;
 
-        for (int i = 0; i < followColliders.Count; i++)
+        for (int i = 0; i < followObjects.Count; i++)
         {
-            if (followColliders[i] != null && playerStates.Count > 0 
-                && (playerStates[i] == null || playerStates[i].currentState != playerStates[i].deathState || playerStates[i].transform.position.z >= deadPlayerDistance))
+            if (followObjects[i].collider != null && followObjects.Count > 0 
+                && (followObjects[i].player == null || followObjects[i].player.currentState != followObjects[i].player.deathState || followObjects[i].player.transform.position.z >= deadPlayerDistance))
             {
-                middlePoint += followColliders[i].transform.position;
+                middlePoint += followObjects[i].collider.transform.position * followObjects[i].weight;
             }
         }
 
         if (middlePoint == Vector3.zero)
             return Vector3.zero;
 
-        middlePoint /= followColliders.Count;
+        middlePoint /= followObjects.Count;
 
         return middlePoint;
     }

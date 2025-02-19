@@ -102,7 +102,6 @@ public class EnemyController : MonoBehaviour
     {
         float currentSpeed = !inPetrol ? baseSpeed : petrolSpeed;
         agent.speed = !agent.isOnOffMeshLink ? currentSpeed : linkSpeed;
-        Debug.Log(agent.speed);
     }
 
     public void Knockback(Vector2 _force, Vector2 _direction)
