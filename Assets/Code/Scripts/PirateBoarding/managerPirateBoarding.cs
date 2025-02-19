@@ -150,4 +150,19 @@ public class managerPirateBoarding : MonoBehaviour
         }
     }
 
+    // Due to how rafts works, always will be a raft unused so we dont have to check if its null
+    public RaftController GetUnusedRaft()
+    {
+        RaftController raftUnused = null;
+
+        foreach (RaftController controller in raftsPool)
+        {
+            if (controller.isBoarding)
+                return null;
+
+            raftUnused = controller;
+        }
+
+        return raftUnused;
+    }
 }
