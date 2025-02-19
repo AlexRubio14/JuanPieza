@@ -120,6 +120,7 @@ public class Repair : InteractableObject
 
         return players.Contains(_playerController);
     }
+    public ObjectSO GetRepairItem() { return repairItem; }
     public ObjectState GetObjectState() { return state; }
     public virtual void OnBreakObject() { }
     protected virtual void RepairEnded(ObjectHolder _objectHolder)
