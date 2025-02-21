@@ -201,6 +201,12 @@ public class PlayerController : MonoBehaviour
 
         return currentAngle < maxSlopeAngle && (currentAngle > 0.05 || currentAngle < -0.05);
     }
+    public Vector3 GetSlopeFixedVector(Vector3 targetVelocity, Vector3 slopeNormal)
+    {
+        //float angle = Vector3.Angle(targetVelocity, slopeNormal);
+        targetVelocity += slopeNormal * targetVelocity.magnitude;
+        return targetVelocity;
+    }
     public Vector3 GetSlopeMoveDir(Vector3 _movementDir)
     {
         Vector3 slopeDir = Vector3.ProjectOnPlane(_movementDir, slopeHit.normal).normalized;
