@@ -85,7 +85,7 @@ public abstract class Weapon : RepairObject
         Shoot();            
         animator.SetTrigger("Shoot");
         animator.SetBool("HasAmmo", false);
-
+        
         foreach (ParticleSystem item in loadParticles)
             item.Stop(true);
     }
@@ -108,6 +108,11 @@ public abstract class Weapon : RepairObject
 
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
+        if (!hasAmmo)
+            tooltip.SetState(ObjectsTooltip.ObjectState.Empty);
+        else
+            tooltip.SetState(ObjectsTooltip.ObjectState.Loaded);
+        
         if (!handObject && !isPlayerMounted() //No tiene nada en la mano y no hay nadie montado
             || isPlayerMounted() && !hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId //Si lo esta utilizando y no esta cargado
             || !hasAmmo && handObject && handObject.objectSO == objectToInteract //Si no esta cargado y tiene la bala en la mano

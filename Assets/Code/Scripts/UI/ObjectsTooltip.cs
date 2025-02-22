@@ -1,10 +1,9 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ObjectsTooltip : MonoBehaviour
 {
-    public enum ObjectState { Empty, Loaded, Cooldown, Broken, Repairing }
+    public enum ObjectState { None, Empty, Loaded, Cooldown, Broken, Repairing }
     private ObjectState currentState;
     private Camera camera;
     
@@ -23,7 +22,6 @@ public class ObjectsTooltip : MonoBehaviour
     void Start()
     {
         canvas.worldCamera = Camera.main;
-
         UpdateStateDisplay();
     }
 
@@ -38,19 +36,38 @@ public class ObjectsTooltip : MonoBehaviour
         switch (currentState)
         {
             case ObjectState.Empty:
+                canvas.gameObject.SetActive(true);
                 image.sprite = emptySprite;
+                image.color = Color.green;
+                Debug.Log("Empty");
                 break;
             case ObjectState.Loaded:
+                canvas.gameObject.SetActive(true);
                 image.sprite = loadedSprite;
+                image.color = Color.blue;
+                Debug.Log("Loaded");
                 break;
             case ObjectState.Cooldown:
+                canvas.gameObject.SetActive(true);
                 image.sprite = cooldownSprite;
+                image.color = Color.red;
+                Debug.Log("Cooldown");
                 break;
             case ObjectState.Broken:
+                canvas.gameObject.SetActive(true);
                 image.sprite = brokenSprite;
+                image.color = Color.black;
+                Debug.Log("Broken");
                 break;
             case ObjectState.Repairing:
+                canvas.gameObject.SetActive(true);
                 image.sprite = repairingSprite;
+                image.color = Color.yellow;
+                Debug.Log("Repairing");
+                break;
+            default:
+                canvas.gameObject.SetActive(false);
+                Debug.Log("Default");
                 break;
         }
     }

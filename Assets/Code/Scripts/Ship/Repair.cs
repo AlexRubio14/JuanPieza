@@ -84,6 +84,7 @@ public class Repair : InteractableObject
                 FinishRepairing();
                 currentRepairTime = 0;
             }
+            tooltip.SetState(ObjectsTooltip.ObjectState.Repairing);
 
             foreach (PlayerController player in players)
                 player.progressBar.SetProgress(currentRepairTime, repairDuration);
@@ -92,7 +93,7 @@ public class Repair : InteractableObject
         {
             if (repairParticles.isPlaying)
                 repairParticles.Stop(true);
-
+            
             currentRepairTime = 0;
         }
     }
