@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ShipEnemy : Ship
 {
@@ -36,13 +37,15 @@ public class ShipEnemy : Ship
         float newZ = Mathf.Lerp(startZ, 0, t);
         transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
 
-        if (t == 1)
-            isArriving = false;
-        else if (t > startMovingEnemies && !enemiesActive)
+        if (t >= 1)
         {
             foreach (var enemies in GetComponent<EnemieManager>().GetEnemyList())
+            {
                 Camera.main.GetComponent<CameraController>().AddPlayer(enemies.gameObject);
-            enemiesActive = true;
+                enemies.GetComponent<NavMeshAgent>().enabled = true;
+            }
+
+            isArriving = false;
         }
     }
 

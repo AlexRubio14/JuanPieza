@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemieManager : MonoBehaviour
 {
     //Los objetos cuando se rompen llaman a las funciones del manager para ser añadidos a la toDoList
-
-    private CameraController cameraController;
 
     private int totalEnemies;
     [SerializeField]
@@ -46,11 +45,15 @@ public class EnemieManager : MonoBehaviour
         NavMeshLink[] links = GetComponentsInChildren<NavMeshLink>();
         foreach (NavMeshLink link in links)
             link.UpdateLink();
+
+        timeToGetResource /= NodeManager.instance.questShip.difficulty;
+        timeToRepair /= NodeManager.instance.questShip.difficulty;
+        timeToInteract /= NodeManager.instance.questShip.difficulty;
+        timeToShoot /= NodeManager.instance.questShip.difficulty;
     }
 
     public void GenerateEnemies()
     {
-        cameraController = FindAnyObjectByType<CameraController>();
         toDoList = new List<EnemyAction>();
         enemyList = new List<EnemyController>();
         for (int i = 0; i < totalEnemies; i++)
@@ -59,7 +62,8 @@ public class EnemieManager : MonoBehaviour
             EnemyController newEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity).GetComponent<EnemyController>();
             newEnemy.enemieManager = this;
             newEnemy.gameObject.transform.SetParent(transform, true);
-            //newEnemy.GetComponent<EnemyController>().currentAction.currentAction = EnemyAction.ActionType.WAIT;
+            newEnemy.GetComponent<NavMeshAgent>().enabled = false;
+
             enemyList.Add(newEnemy);
         }
     }
@@ -139,7 +143,7 @@ public class EnemieManager : MonoBehaviour
 
     private void AsignActionToEnemy(EnemyController _enemy, EnemyAction _action)
     {
-        if(_action == null || _enemy.currentAction.currentAction != EnemyAction.ActionType.WAIT)
+        if(_action == null)
             return;
 
         _enemy.currentAction = _action;

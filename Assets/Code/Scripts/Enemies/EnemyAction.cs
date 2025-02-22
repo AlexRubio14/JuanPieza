@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 public abstract class EnemyAction
 {
-    public enum ActionType { REPAIR_SHIP, SHOOT_CANNON, RELOAD_CANNON, REPAIR_CANNON, REPAIR_BULLET_SPAWN, WAIT }
+    public enum ActionType { REPAIR_SHIP, SHOOT_CANNON, RELOAD_CANNON, REPAIR_CANNON, REPAIR_BULLET_SPAWN }
     public ActionType currentAction;
     
     protected EnemyController enemyController;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -59,7 +60,7 @@ public class ShipsManager : MonoBehaviour
                 enemyShip.transform.position = enemy.initShipPosition;
                 enemiesShips.Add(enemyShip.GetComponent<Ship>());
                 enemyShip.GetComponent<EnemieManager>().GenerateEnemies();
-
+                GenerateCannons(enemy, enemyShip);
                 enemyShip.GetComponent<ShipEnemy>().SetIsArriving(true);
             }
 
@@ -67,6 +68,36 @@ public class ShipsManager : MonoBehaviour
         }  
     }
 
+    private void GenerateCannons(EnemyShip enemy, GameObject ship)
+    {
+        Transform positionsFather = ship.transform.Find("CannonPositions");
+        List<Vector3> cannonsPosition = new List<Vector3>();
+
+        foreach (Transform position in positionsFather)
+        {
+            cannonsPosition.Add(position.localPosition);
+        }
+
+        foreach (var cannons in enemy.cannons)
+        {
+            GameObject cannon = Instantiate(cannons);
+            cannon.transform.SetParent(ship.transform, true);
+            cannon.GetComponent<EnemyObject>().enemieManager = ship.GetComponent<EnemieManager>();
+            if(ship.transform.position.x < 0)
+            {
+                cannon.transform.localPosition = new Vector3(-cannonsPosition[0].x, cannonsPosition[0].y, cannonsPosition[0].z);
+                cannon.transform.Rotate(0, -90, 0);
+            }
+            else
+            {
+                cannon.transform.localPosition = cannonsPosition[0];
+                cannon.transform.Rotate(0, 90, 0);
+            }
+
+            cannonsPosition.Remove(cannonsPosition[0]);
+
+        }
+    }
 
     public void RemoveEnemyShip(Ship ship)
     {
