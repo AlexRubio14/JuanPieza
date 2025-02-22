@@ -22,6 +22,9 @@ public class RaftController : MonoBehaviour
     public RaftState currentState { get; private set; }
     public bool isBoarding { get; private set; } = false;
 
+    [SerializeField] private float radiusJump;
+
+
 
     // Update is called once per frame
     void Update()
@@ -79,12 +82,9 @@ public class RaftController : MonoBehaviour
     {
         transform.position = transform.parent.position;
 
-
         isBoarding = false;
 
-        //Temporal se borrara cuando se acaben siguientes features
         pirates.Clear();
-
     }
 
     private int CalculateRandomEnemiesToSpawn()
@@ -179,11 +179,6 @@ public class RaftController : MonoBehaviour
         currentState = newState;
     }
 
-    private void StartMovingFront()
-    {
-        ChangeState(RaftState.MOVING_FRONT);
-    }
-
     private void StartMovingBack()
     {
         ChangeState(RaftState.MOVING_BACK);
@@ -197,15 +192,17 @@ public class RaftController : MonoBehaviour
         }
 
         //Jump into playerShip and start Chasing/boarding
+        Vector3 playerShipPos = ShipsManager.instance.playerShip.transform.position;
 
+        foreach (controllerPirateBoarding controller in pirates)
+        {
+            Vector3 jumpFinalPos = playerShipPos + (Random.insideUnitSphere * radiusJump);
 
+            jumpFinalPos.y = playerShipPos.y;
 
-        //foreach (controllerPirateBoarding controller in pirates)
-        //{
-        //    controller.transform.SetParent(managerPirateBoarding.Instance.piratesHolder, true);
-        //    controller.transform.position = managerPirateBoarding.Instance.piratesHolder.transform.position;
-        //}
-
+            controller.SetPosToJump(jumpFinalPos);
+            controller.ChangeState(controllerPirateBoarding.PirateState.PARABOLA);
+        }
     }
 
     public void SetDestinyPos(Vector3 pos)

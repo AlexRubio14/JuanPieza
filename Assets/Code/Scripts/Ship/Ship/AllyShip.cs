@@ -29,6 +29,9 @@ public class AllyShip : Ship
     [SerializeField] private float newZ;
     [SerializeField] private float newY;
 
+    [Header("Boarding Points")]
+    [SerializeField] private List<Vector3> boardingPoints;
+
     [SerializeField] private GameObject barrelBox;
     [SerializeField] protected bool isBarrelBoxActive;
     protected void InitAllyBoat()

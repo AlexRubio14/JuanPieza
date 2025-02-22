@@ -63,5 +63,4 @@ public class RaftManager : MonoBehaviour
     {
         raftEventQueue.Clear();
     }
-
 }

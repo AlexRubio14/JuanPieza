@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7167085757885137941}
   - component: {fileID: 4717575353267205988}
+  - component: {fileID: 8883407295874214310}
   m_Layer: 0
   m_Name: BoardingEnemy
   m_TagString: Untagged
@@ -45,6 +46,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3c7d0bd02288e4cbd357ee8f52f684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoarding: 0
+  jumpHeigt: 4
+  rb: {fileID: 8883407295874214310}
+--- !u!54 &8883407295874214310
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8600436954467225763}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 1
 --- !u!1001 &6988200653947838540
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -139,7 +170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f01ff0f885ba024dad205a8fb628ac0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.004
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f01ff0f885ba024dad205a8fb628ac0, type: 3}
       propertyPath: m_LocalPosition.z
