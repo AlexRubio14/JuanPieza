@@ -11,6 +11,8 @@ public class EnemieManager : MonoBehaviour
     [SerializeField]
     private GameObject enemyPrefab;
     [SerializeField]
+    private GameObject falseEnemyPrefab;
+    [SerializeField]
     private Transform enemySpawnPoint;
     [SerializeField]
     private float enemySpawnOffset;
@@ -56,14 +58,25 @@ public class EnemieManager : MonoBehaviour
     {
         toDoList = new List<EnemyAction>();
         enemyList = new List<EnemyController>();
-        for (int i = 0; i < totalEnemies; i++)
+
+        if(totalEnemies > 0) 
         {
-            Vector3 spawnPos = enemySpawnPoint.position + new Vector3(Random.Range(-enemySpawnOffset, enemySpawnOffset), 0, Random.Range(-enemySpawnOffset, enemySpawnOffset));
-            EnemyController newEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity).GetComponent<EnemyController>();
+            for (int i = 0; i < totalEnemies; i++)
+            {
+                Vector3 spawnPos = enemySpawnPoint.position + new Vector3(Random.Range(-enemySpawnOffset, enemySpawnOffset), 0, Random.Range(-enemySpawnOffset, enemySpawnOffset));
+                EnemyController newEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity).GetComponent<EnemyController>();
+                newEnemy.enemieManager = this;
+                newEnemy.gameObject.transform.SetParent(transform, true);
+                newEnemy.GetComponent<NavMeshAgent>().enabled = false;
+
+                enemyList.Add(newEnemy);
+            }
+        }
+        else
+        {
+            EnemyController newEnemy = Instantiate(falseEnemyPrefab, enemySpawnPoint.position, Quaternion.identity).GetComponent<EnemyController>();
             newEnemy.enemieManager = this;
             newEnemy.gameObject.transform.SetParent(transform, true);
-            newEnemy.GetComponent<NavMeshAgent>().enabled = false;
-
             enemyList.Add(newEnemy);
         }
     }

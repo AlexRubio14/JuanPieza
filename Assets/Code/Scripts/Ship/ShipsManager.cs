@@ -8,8 +8,10 @@ public class ShipsManager : MonoBehaviour
 {
     public static ShipsManager instance;
     public AllyShip playerShip {  get; private set; }
-    public List<EnemyShip> enemiesShipsInformatio { get; private set; }
+    public List<ShipData> enemiesHordes { get; private set; }
     public List<Ship> enemiesShips { get; private set; }
+
+    private ShipData.SpawnShipCondition condition;
 
     private void Awake()
     {
@@ -18,13 +20,13 @@ public class ShipsManager : MonoBehaviour
 
         instance = this;
 
-        enemiesShipsInformatio = new List<EnemyShip>();
         enemiesShips = new List<Ship>();
     }
 
     private void Start()
     {
         GenerateAllyShip();
+        enemiesHordes = new List<ShipData>(NodeManager.instance.battleInformation.enemiesHordes);        
         GenerateEnemyShip();
     }
 
@@ -51,21 +53,19 @@ public class ShipsManager : MonoBehaviour
     }
     private void GenerateEnemyShip()
     {
-        foreach (var enemy in NodeManager.instance.battleInformation.enemyShipInformation)
+        foreach (var enemy in enemiesHordes[0].enemyShips)
         {
-            if(enemy.spawnShipCondition == EnemyShip.SpawnShipCondition.INIT)
-            {
-                GameObject enemyShip = Instantiate(enemy._ship);
-                enemyShip.GetComponent<EnemieManager>().SetTotalEnemies(enemy.enemiesCuantity);
-                enemyShip.transform.position = enemy.initShipPosition;
-                enemiesShips.Add(enemyShip.GetComponent<Ship>());
-                enemyShip.GetComponent<EnemieManager>().GenerateEnemies();
-                GenerateCannons(enemy, enemyShip);
-                enemyShip.GetComponent<ShipEnemy>().SetIsArriving(true);
-            }
+            GameObject enemyShip = Instantiate(enemy._ship);
+            enemyShip.GetComponent<EnemieManager>().SetTotalEnemies(enemy.enemiesCuantity);
+            enemyShip.transform.position = enemy.initShipPosition;
+            enemiesShips.Add(enemyShip.GetComponent<Ship>());
+            enemyShip.GetComponent<EnemieManager>().GenerateEnemies();
+            GenerateCannons(enemy, enemyShip);
+            enemyShip.GetComponent<ShipEnemy>().SetIsArriving(true);
+        }
 
-            enemiesShipsInformatio.Add(enemy);
-        }  
+        if(enemiesHordes.Count > 1) 
+            condition = enemiesHordes[1].spawnShipCondition;
     }
 
     private void GenerateCannons(EnemyShip enemy, GameObject ship)
@@ -102,6 +102,28 @@ public class ShipsManager : MonoBehaviour
     public void RemoveEnemyShip(Ship ship)
     {
         enemiesShips.Remove(ship);
+
+        if (condition != ShipData.SpawnShipCondition.DESTROY || enemiesHordes.Count <= 1)
+            return;
+
+        if (enemiesShips.Count == 0)
+        {
+            enemiesHordes.Remove(enemiesHordes[0]);
+            GenerateEnemyShip();
+        }
+    }
+
+    public void CheckLastEnemyShipHP()
+    {
+        if (condition != ShipData.SpawnShipCondition.HP || enemiesHordes.Count <= 1)
+            return;
+
+        Ship lastShip = enemiesShips[enemiesShips.Count - 1];
+        if ((lastShip.GetCurrentHealth() / lastShip.GetMaxHealth()) < enemiesHordes[1].hpPercentage)
+        {
+            enemiesHordes.Remove(enemiesHordes[0]);
+            GenerateEnemyShip();
+        }
     }
 
     public void RemoveAllyShip()

@@ -29,9 +29,14 @@ public class EnemyController : MonoBehaviour
 
     private bool inPetrol;
 
+    public bool isFalseEnemy;
+
 
     private void Awake()
     {
+        if (isFalseEnemy)
+            return;
+
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -44,6 +49,9 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
+        if (isFalseEnemy)
+            return;
+
         baseSpeed = agent.speed;
         petrolSpeed = agent.speed / 5;
     }
