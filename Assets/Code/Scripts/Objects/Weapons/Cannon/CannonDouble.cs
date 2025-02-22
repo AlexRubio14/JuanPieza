@@ -17,10 +17,10 @@ public class CannonDouble : Weapon
     {
         GameObject newBulletRight = Instantiate(bulletPrefab, bulletSpawnPosRight.transform.position, Quaternion.identity);
         newBulletRight.GetComponent<Rigidbody>().AddForce(bulletSpawnPosRight.forward * bulletForce, ForceMode.Impulse);
-        newBulletRight.GetComponent<Bullet>().SetDamage(weaponDamage * BuffsManagers.Instance.GetCurrentDamageMultiplier());
+        newBulletRight.GetComponent<Bullet>().SetDamage(weaponDamage);
         GameObject newBulletLeft = Instantiate(bulletPrefab, bulletSpawnPosLeft.transform.position, Quaternion.identity);
         newBulletLeft.GetComponent<Rigidbody>().AddForce(bulletSpawnPosLeft.forward * bulletForce, ForceMode.Impulse);
-        newBulletLeft.GetComponent<Bullet>().SetDamage(weaponDamage * BuffsManagers.Instance.GetCurrentDamageMultiplier());
+        newBulletLeft.GetComponent<Bullet>().SetDamage(weaponDamage);
 
         hasAmmo = false;
         Instantiate(shootParticles, bulletSpawnPosRight.position, Quaternion.identity);

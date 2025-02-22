@@ -1,0 +1,53 @@
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class ShipEnemy : Ship
+{
+    [Header("Velocity")]
+    [SerializeField] private float velocity;
+    private bool isArriving;
+    private float t;
+    private float startZ;
+
+    [Header("StartMoving")]
+    [Range(0f, 1f)]
+    [SerializeField] private float startMovingEnemies;
+    private bool enemiesActive;
+
+    public override void Start()
+    {
+        base.Start();
+
+        t = 0;
+        startZ = transform.position.z;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (isArriving)
+            Arrive();
+    }
+
+    private void Arrive()
+    {
+        t += Time.deltaTime * velocity;
+        float newZ = Mathf.Lerp(startZ, 0, t);
+        transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
+
+        if (t == 1)
+            isArriving = false;
+        else if (t > startMovingEnemies && !enemiesActive)
+        {
+            foreach (var enemies in GetComponent<EnemieManager>().GetEnemyList())
+                Camera.main.GetComponent<CameraController>().AddPlayer(enemies.gameObject);
+            enemiesActive = true;
+        }
+    }
+
+    public void SetIsArriving(bool state)
+    {
+        isArriving = state;
+    }
+}

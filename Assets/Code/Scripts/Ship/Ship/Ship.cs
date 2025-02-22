@@ -19,7 +19,7 @@ public class Ship : MonoBehaviour
     protected Animator animator;
     public Action<GameObject> onDamageRecieved;
 
-    private void Start()
+    public virtual void Start()
     {
         Initialize();
         animator = GetComponent<Animator>();
@@ -31,6 +31,8 @@ public class Ship : MonoBehaviour
         initY = transform.position.y;
         currentHeight = initY;
         currentHealth = maxHealth;
+
+        targetHeight = initY;
     }
 
     protected virtual void Update()

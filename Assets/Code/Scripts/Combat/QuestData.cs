@@ -1,0 +1,25 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "QuestData", menuName = "Scriptable Objects/QuestData")]
+public class QuestData : ScriptableObject
+{
+    public enum QuestType { MAIN, SECUNDARY };
+
+    public QuestType questType;
+    public PlayerShip ship;
+    public int questReward;
+}
+
+[System.Serializable]
+public class PlayerShip
+{
+    public GameObject _ship;
+    public List<ResourceQuantity> resourceCuantity;
+}
+[System.Serializable]
+public class ResourceQuantity
+{
+    public ObjectSO resource;  
+    public int quantity;
+}

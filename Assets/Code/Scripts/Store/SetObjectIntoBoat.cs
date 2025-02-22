@@ -11,11 +11,6 @@ public class SetObjectIntoBoat : MonoBehaviour
         {
             interactableObject.hasToBeInTheShip = true;
             ShipsManager.instance.playerShip.AddInteractuableObject(interactableObject, false);
-
-            if(other.TryGetComponent(out Catapult catapult))
-            {
-                ShipsManager.instance.playerShip.SetBarrelBox(true);
-            }
         }
 
         if (other.CompareTag("Player") && ShipsManager.instance.playerShip.gameObject.transform.Find("Sail").GetComponentInChildren<ShippingSail>().GetIsBridgeActive())
@@ -31,11 +26,6 @@ public class SetObjectIntoBoat : MonoBehaviour
             {
                 interactableObject.hasToBeInTheShip = false;
                 ShipsManager.instance.playerShip.RemoveInteractuableObject(interactableObject);
-
-                if (other.TryGetComponent(out Catapult catapult))
-                {
-                    ShipsManager.instance.playerShip.SetBarrelBox(false);
-                }
             }
         }
 

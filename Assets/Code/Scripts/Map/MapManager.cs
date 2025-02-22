@@ -82,11 +82,6 @@ public class MapManager : MonoBehaviour
     private void Update()
     {
         Timer();
-        if(Input.GetKeyUp(KeyCode.X)) 
-        {
-            foreach (var ships in ShipsManager.instance.enemiesShips)
-                ships.SetCurrentHealth(-10000);
-        }
     }
 
     private void Timer()
@@ -135,8 +130,6 @@ public class MapManager : MonoBehaviour
                 positions.Add(new Vector3(ship.transform.position.x, ship.transform.position.y, ship.transform.position.z + secondPointZ));
                 break;
         }
-
-        shipCurve.SetStartMovementCurve(true, positions);
     }
 
     private void UpdateUIPlayerText()
@@ -277,8 +270,6 @@ public class MapManager : MonoBehaviour
 
     public void SetVotations(List<Votation> _votations)
     {
-        CameraManager.Instance.SetSailCamera(true);
-        CameraManager.Instance.SetSimpleCamera(false);
         
         isVoting = true;
         votations = _votations;
@@ -292,7 +283,6 @@ public class MapManager : MonoBehaviour
 
     public void InitVotations()
     {
-        CameraManager.Instance.SetSailCamera(false);
 
         if (mapHeight == mapMaxHeight)
         {

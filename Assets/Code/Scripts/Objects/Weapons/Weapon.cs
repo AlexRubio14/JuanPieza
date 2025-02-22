@@ -75,13 +75,6 @@ public abstract class Weapon : RepairObject
         if (!hasAmmo)
             return;
 
-        float randomValue = Random.Range(0f, 1f);
-        if (randomValue < BuffsManagers.Instance.GetCurrentExplotionPercentages())
-        {
-            Explote(_objectHolder);
-            return;
-        }
-
         Shoot();            
         animator.SetTrigger("Shoot");
         animator.SetBool("HasAmmo", false);
@@ -205,19 +198,6 @@ public abstract class Weapon : RepairObject
             item.Stop(true);
     }
     protected abstract void Shoot();
-
-    private void Explote(ObjectHolder _objectHolder)
-    {
-        GetComponent<ObjectState>().SetIsBroke(true);
-        ShipsManager.instance.playerShip.SetCurrentHealth(BuffsManagers.Instance.GetExplosionDamage());
-
-        ParticleSystem particle = Instantiate(BuffsManagers.Instance.GetExplosionParticles(), transform.position, Quaternion.identity);
-        particle.Play();
-
-        AudioManager.instance.Play2dOneShotSound(BuffsManagers.Instance.GetExplosionAudio(), "Objects");
-        PlayerController player = _objectHolder.transform.parent.gameObject.GetComponent<PlayerController>();
-        UnMount(player, _objectHolder);
-    }
 
     public bool isPlayerMounted()
     {

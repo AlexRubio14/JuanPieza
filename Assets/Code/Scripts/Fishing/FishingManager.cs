@@ -388,8 +388,6 @@ public class FishingManager : MonoBehaviour
         ObjectSO itemData = fishingObjectPool.GetRandomItem();
         //Instanciarlo
         GameObject newItem = Instantiate(itemData.prefab, _fishingRod.hook.transform.position, Quaternion.identity);
-        if (newItem.GetComponent<ObjectState>() != null && BuffsManagers.Instance.GetIsFishingEvent())
-            newItem.GetComponent<ObjectState>().SetOneHit(true);
 
         InteractableObject currentItem = newItem.GetComponent<InteractableObject>();
         currentItem.hasToBeInTheShip = true;

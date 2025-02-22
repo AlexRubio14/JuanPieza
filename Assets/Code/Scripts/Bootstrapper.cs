@@ -16,7 +16,7 @@ public class Bootstrapper : MonoBehaviour
         }
     }
     
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    //[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void Init()
     {
 
@@ -28,7 +28,7 @@ public class Bootstrapper : MonoBehaviour
 
         if (!SceneManager.GetSceneByName(BOOTSTRAP_SCENE_NAME).isLoaded)
         {
-            SceneManager.LoadScene(BOOTSTRAP_SCENE_NAME);
+            //SceneManager.LoadScene(BOOTSTRAP_SCENE_NAME);
         }
 
 #if UNITY_EDITOR

@@ -24,8 +24,6 @@ public class UpgradeNPC : InteractableObject
         Vector3 boatPosition = new Vector3(currentShip.transform.position.x, boatUpgrade.GetComponent<Ship>().GetInitY(), currentShip.transform.position.z);
         
         GameObject newBoat = Instantiate(boatUpgrade, boatPosition, Quaternion.identity);
-
-        ShipsManager.instance.SetShip(newBoat.GetComponent<AllyShip>());
         
         foreach (InteractableObject interactableObject in currentInteractableObject)
         {

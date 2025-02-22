@@ -13,8 +13,10 @@ public class WoodShelf : Box
     protected override void Start()
     {
         base.Start();
+        for (int i = 0; i < 4; i++)
+            AddItemInBox(false);
     }
-    public override void AddItemInBox(bool _makeSound)
+    public override void AddItemInBox(bool _makeSound, int cuantity = 1)
     {
         base.AddItemInBox(_makeSound);
         if(currentDecorationInShelf < 4)

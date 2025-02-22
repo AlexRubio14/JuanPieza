@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
-[CreateAssetMenu(fileName = "BattleData", menuName = "Scriptable Objects/BattleData")]
 public class BattleNodeData : NodeData
 {
     public int levelMoney;
