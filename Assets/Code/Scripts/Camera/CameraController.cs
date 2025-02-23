@@ -36,8 +36,6 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float zOffset;
     [SerializeField]
-    private float deadPlayerDistance;
-    [SerializeField]
     private float playerWeight;
     [SerializeField]
     private float objectWeight;
@@ -226,7 +224,7 @@ public class CameraController : MonoBehaviour
         for (int i = 0; i < followObjects.Count; i++)
         {
             if (followObjects[i].collider != null && followObjects.Count > 0 
-                && (followObjects[i].player == null || followObjects[i].player.currentState != followObjects[i].player.deathState || followObjects[i].player.transform.position.z >= deadPlayerDistance))
+                && (followObjects[i].player == null || followObjects[i].player.currentState != followObjects[i].player.deathState))
             {
                 middlePoint += followObjects[i].collider.transform.position * followObjects[i].weight;
             }

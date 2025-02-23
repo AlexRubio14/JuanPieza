@@ -93,7 +93,12 @@ public class CannonState : PlayerState
             else
                 moveDir = controller.transform.forward;
 
-            controller.Movement(moveDir, controller.cannonSpeed * controller.movementInput.y);
+            float moveMagnitude = 1;
+
+            if (controller.movementInput.y < 0)
+                moveMagnitude = -1;
+
+            controller.Movement(moveDir, controller.cannonSpeed * moveMagnitude);
             controller.animator.SetBool("Moving", true);
         }
         else if (Mathf.Abs(controller.movementInput.y) < Mathf.Abs(controller.movementInput.x))
@@ -101,6 +106,8 @@ public class CannonState : PlayerState
             controller.Rotate(controller.transform.right * controller.movementInput.x, controller.cannonRotationSpeed);
             controller.animator.SetBool("Moving", false);
         }
+        else
+            controller.animator.SetBool("Moving", false);
     }
 
     private void TiltCannon()
