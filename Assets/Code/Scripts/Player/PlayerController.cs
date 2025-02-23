@@ -205,7 +205,6 @@ public class PlayerController : MonoBehaviour
     public Vector3 GetSlopeMoveDir(Vector3 _movementDir)
     {
         Vector3 slopeDir = Vector3.ProjectOnPlane(_movementDir, slopeHit.normal).normalized;
-        Debug.Log(slopeDir);
         if (slopeDir.y < -0.1)
             slopeDir /= 2;
         Debug.DrawLine(transform.position, transform.position +  slopeDir * 2);
