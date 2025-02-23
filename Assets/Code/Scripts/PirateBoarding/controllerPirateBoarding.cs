@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using UnityEngine;
-using static RaftController;
 
 public class controllerPirateBoarding : MonoBehaviour
 {
@@ -7,6 +7,11 @@ public class controllerPirateBoarding : MonoBehaviour
 
     private Vector3 posToJump;
     [SerializeField] private float jumpHeigt;
+    
+    private float parabolaProcess = 0f;
+    [SerializeField] private float parabolaSpeed;
+
+
     [SerializeField] private Rigidbody rb;
 
     public enum PirateState { IDLE, PARABOLA, BOARDING, DEAD }
@@ -28,15 +33,34 @@ public class controllerPirateBoarding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        switch (currentState)   
+        {
+            case PirateState.IDLE:
+                break;
+            case PirateState.PARABOLA:
+                JumpIntoPlayerShip();
+                break;
+            case PirateState.BOARDING:
+                break;
+            case PirateState.DEAD:
+                break;
+            default:
+                break;
+        }
     }
 
     public void JumpIntoPlayerShip()
     {
+        parabolaProcess += Time.deltaTime * parabolaSpeed;
+        FishingManager.Parabola(transform.position, posToJump, transform.position.y + 5f, parabolaProcess);
 
-        
+        if (parabolaProcess >= 1f)
+        {
+            ChangeState(PirateState.IDLE);
+        }
+
     }
-
+    
     public void ChangeState(PirateState newState)
     {
 
@@ -74,6 +98,33 @@ public class controllerPirateBoarding : MonoBehaviour
         }
 
         currentState = newState;
+    }
+
+    public void CalculateNearPointToJump()
+    {
+        List<Transform> boardingPoints = ShipsManager.instance.playerShip.boardingPoints;
+
+        Vector3 closestPoint = Vector3.zero;
+        float tempDistance = 100;
+
+        foreach (Transform boardingPoint in boardingPoints)
+        {
+            Vector3 disFromPirateToPoint = boardingPoint.position - transform.position;
+
+            if(disFromPirateToPoint.magnitude <= tempDistance)
+            {
+                closestPoint = boardingPoint.position;
+                tempDistance = disFromPirateToPoint.magnitude;
+            }
+        }
+
+        posToJump = closestPoint;
+    }
+
+    public void SetPirateToJump()
+    {
+        CalculateNearPointToJump();
+        ChangeState(PirateState.PARABOLA);
     }
 
     private void ResetPirate()

@@ -1,6 +1,6 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class RaftController : MonoBehaviour
 {
@@ -9,6 +9,8 @@ public class RaftController : MonoBehaviour
     [SerializeField] private GameObject boardingEnemy;
 
     [SerializeField] private List<controllerPirateBoarding> pirates;
+    private int pirateJumpIndex = 0;
+    [SerializeField] private float timeBetweenPirateJumps;
 
     [SerializeField] private Rigidbody rb;
 
@@ -24,7 +26,10 @@ public class RaftController : MonoBehaviour
 
     [SerializeField] private float radiusJump;
 
-
+    private void Awake()
+    {
+        ChangeState(RaftState.WAITING);
+    }
 
     // Update is called once per frame
     void Update()
@@ -58,6 +63,7 @@ public class RaftController : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public void SetUpRaft()
     {
         if (isBoarding)
@@ -85,6 +91,19 @@ public class RaftController : MonoBehaviour
         isBoarding = false;
 
         pirates.Clear();
+        pirateJumpIndex = 0;
+    }
+
+    private void SendPirateToJump(controllerPirateBoarding _controller)
+    {
+        if (pirateJumpIndex == pirates.Count)
+            return;
+
+        _controller.SetPirateToJump();
+
+        pirateJumpIndex++;
+
+        Invoke("SendPirateToJump", timeBetweenPirateJumps);
     }
 
     private int CalculateRandomEnemiesToSpawn()
@@ -137,6 +156,7 @@ public class RaftController : MonoBehaviour
     }
 
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public void ChangeState(RaftState newState)
     {
         switch (currentState)
@@ -161,11 +181,11 @@ public class RaftController : MonoBehaviour
                 break;
             case RaftState.MOVING_FRONT:
                 direction = 1;
-                rb.linearVelocity = transform.forward * speed * direction;
+                rb.linearVelocity = transform.forward * (speed * direction);
                 break;
             case RaftState.MOVING_BACK:
                 direction = -1;
-                rb.linearVelocity = transform.forward * speed * direction;
+                rb.linearVelocity = transform.forward * (speed * direction);
                 break;
             case RaftState.BOARDING:
                 rb.linearVelocity = Vector3.zero;
@@ -192,17 +212,9 @@ public class RaftController : MonoBehaviour
         }
 
         //Jump into playerShip and start Chasing/boarding
-        Vector3 playerShipPos = ShipsManager.instance.playerShip.transform.position;
+        SendPirateToJump(pirates[pirateJumpIndex]);
 
-        foreach (controllerPirateBoarding controller in pirates)
-        {
-            Vector3 jumpFinalPos = playerShipPos + (Random.insideUnitSphere * radiusJump);
 
-            jumpFinalPos.y = playerShipPos.y;
-
-            controller.SetPosToJump(jumpFinalPos);
-            controller.ChangeState(controllerPirateBoarding.PirateState.PARABOLA);
-        }
     }
 
     public void SetDestinyPos(Vector3 pos)

@@ -30,7 +30,7 @@ public class AllyShip : Ship
     [SerializeField] private float newY;
 
     [Header("Boarding Points")]
-    [SerializeField] private List<Vector3> boardingPoints;
+    [field: SerializeField] public List<Transform> boardingPoints { get; private set; }
 
     [SerializeField] private GameObject barrelBox;
     [SerializeField] protected bool isBarrelBoxActive;
@@ -67,7 +67,7 @@ public class AllyShip : Ship
 
     private void WeightControl()
     {
-        if (currentWeight >= maxWeigth)
+        if (currentWeight * BuffsManagers.Instance.GetWeightMultiplier() >= maxWeigth)
         {
             currentTime += Time.deltaTime;
             if (currentTime > damageTime)
@@ -101,7 +101,7 @@ public class AllyShip : Ship
 
         objects.Add(interactableObject);
         currentWeight += interactableObject.objectSO.weight;
-        VotationCanvasManager.Instance.SetWeightText(currentWeight, maxWeigth);
+        VotationCanvasManager.Instance.SetWeightText(currentWeight * BuffsManagers.Instance.GetWeightMultiplier(), maxWeigth);
     }
     public void RemoveInteractuableObject(InteractableObject interactableObject)
     {
@@ -109,7 +109,7 @@ public class AllyShip : Ship
             return;
 
         currentWeight -= interactableObject.objectSO.weight;
-        VotationCanvasManager.Instance.SetWeightText(currentWeight, maxWeigth);
+        VotationCanvasManager.Instance.SetWeightText(currentWeight * BuffsManagers.Instance.GetWeightMultiplier(), maxWeigth);
         objects.Remove(interactableObject);
     }
 
