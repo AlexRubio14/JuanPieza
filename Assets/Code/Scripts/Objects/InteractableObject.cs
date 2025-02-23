@@ -78,6 +78,9 @@ public abstract class InteractableObject : MonoBehaviour
 
         if (handObject && objectToInteract == handObject.objectSO || !_objectHolder.GetHandInteractableObject() && !objectToInteract)
         {
+            if (tooltip != null)
+                tooltip.SetState(ObjectsTooltip.ObjectState.Interacting);
+            
             return HintController.ActionType.INTERACT;
         }
  

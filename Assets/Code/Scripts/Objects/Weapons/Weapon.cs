@@ -5,7 +5,9 @@ public abstract class Weapon : RepairObject
 {
     [Space, Header("Weapon"), SerializeField]
     protected Transform ridingPos;
-    
+
+    [field: SerializeField] 
+    public float coolDown = 2;
 
     [Space, Header("Damage"), SerializeField]
     protected float weaponDamage;
@@ -82,18 +84,23 @@ public abstract class Weapon : RepairObject
             return;
         }
 
-        Shoot();            
+        Shoot();
+        
         animator.SetTrigger("Shoot");
         animator.SetBool("HasAmmo", false);
-        
+
         foreach (ParticleSystem item in loadParticles)
+        {
             item.Stop(true);
+        }
     }
 
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
-        if(state.GetIsBroken())
+        if (state.GetIsBroken())
+        {
             return base.CanInteract(_objectHolder);
+        }
 
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
@@ -103,11 +110,14 @@ public abstract class Weapon : RepairObject
 
     public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
     {
-        if(state.GetIsBroken())
+        if (state.GetIsBroken())
+        {
             return base.ShowNeededInputHint(_objectHolder);
+        }
 
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
+        
         if (!hasAmmo)
             tooltip.SetState(ObjectsTooltip.ObjectState.Empty);
         else
@@ -119,7 +129,8 @@ public abstract class Weapon : RepairObject
             )
         {
             return HintController.ActionType.INTERACT;
-        }else if (hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId)
+        }
+        else if (hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId)
         {
             return HintController.ActionType.USE;
         }

@@ -3,24 +3,34 @@ using UnityEngine.UI;
 
 public class ObjectsTooltip : MonoBehaviour
 {
-    public enum ObjectState { None, Empty, Loaded, Cooldown, Broken, Repairing }
+    public enum ObjectType { Weapon, Object }
+    public enum ObjectState { None, Interacting, Empty, Loaded, Cooldown, Broken, Repairing }
+    
+    [Header("Objects Tooltip")]
+    [SerializeField] private ObjectType objectType = ObjectType.Object;
+
     private ObjectState currentState;
     private Camera camera;
     
     [Header("UI")]
-    [SerializeField] private Canvas canvas;
-    [SerializeField] private Image image;
-    [SerializeField] private float offset;
+    [SerializeField] private GameObject progressBarGO;
+    [SerializeField] private float size = 2.5f;
+    [SerializeField] private float offset = 2;
+    private Canvas canvas;
+    private Image image;
+    public ProgressBarController progressBar { get; private set; }
+    
+    [Header("Object Images")]
+    [SerializeField] private Sprite interactingSprite;
+    [SerializeField] private Sprite brokenSprite;
 
     [Header("Weapon Images")] 
     [SerializeField] private Sprite emptySprite;
     [SerializeField] private Sprite loadedSprite;
-    [SerializeField] private Sprite cooldownSprite;
-    [SerializeField] private Sprite brokenSprite;
-    [SerializeField] private Sprite repairingSprite;
-
+    
     void Start()
     {
+        CreateCanvas();
         canvas.worldCamera = Camera.main;
         UpdateStateDisplay();
     }
@@ -35,39 +45,29 @@ public class ObjectsTooltip : MonoBehaviour
     {
         switch (currentState)
         {
-            case ObjectState.Empty:
-                canvas.gameObject.SetActive(true);
-                image.sprite = emptySprite;
-                image.color = Color.green;
-                Debug.Log("Empty");
-                break;
-            case ObjectState.Loaded:
-                canvas.gameObject.SetActive(true);
-                image.sprite = loadedSprite;
-                image.color = Color.blue;
-                Debug.Log("Loaded");
-                break;
-            case ObjectState.Cooldown:
-                canvas.gameObject.SetActive(true);
-                image.sprite = cooldownSprite;
-                image.color = Color.red;
-                Debug.Log("Cooldown");
+            case ObjectState.Interacting:
+                SetImage(interactingSprite);
                 break;
             case ObjectState.Broken:
-                canvas.gameObject.SetActive(true);
-                image.sprite = brokenSprite;
-                image.color = Color.black;
-                Debug.Log("Broken");
+                SetImage(brokenSprite);
                 break;
-            case ObjectState.Repairing:
-                canvas.gameObject.SetActive(true);
-                image.sprite = repairingSprite;
-                image.color = Color.yellow;
-                Debug.Log("Repairing");
+            case ObjectState.Empty:
+                SetImage(emptySprite);
+                break;
+            case ObjectState.Loaded:
+                SetImage(loadedSprite);
+                break;
+            case ObjectState.Cooldown:
+                SetProgressBar(Color.red);
+                break;
+            case ObjectState.Repairing: 
+                SetProgressBar(Color.green);
                 break;
             default:
-                canvas.gameObject.SetActive(false);
-                Debug.Log("Default");
+                if (progressBar != null)
+                    progressBar.gameObject.SetActive(false);
+                
+                image.gameObject.SetActive(false);
                 break;
         }
     }
@@ -78,7 +78,86 @@ public class ObjectsTooltip : MonoBehaviour
         {
             Vector3 tooltipPos = transform.position + new Vector3(0, offset, 0);
             image.transform.position = tooltipPos;
-
+            
+            if (progressBar != null)
+                progressBar.transform.position = tooltipPos;
         }
+    }
+
+    private void CreateCanvas()
+    {
+        GameObject canvasGO = new GameObject("Canvas");
+        canvasGO.transform.SetParent(transform);
+    
+        canvas = canvasGO.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.planeDistance = 50;
+        canvas.worldCamera = Camera.main;
+        canvas.sortingOrder = 5;
+
+        CanvasScaler scaler = canvasGO.AddComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+        scaler.referenceResolution = new Vector2(1920, 1080);
+        scaler.matchWidthOrHeight = 0.5f;
+
+        canvasGO.AddComponent<GraphicRaycaster>();
+
+        GameObject imageGO = new GameObject("HintImage");
+        imageGO.transform.SetParent(canvasGO.transform);
+
+        RectTransform rt = imageGO.AddComponent<RectTransform>();
+        rt.sizeDelta = new Vector2(size, size);
+        rt.anchoredPosition = Vector2.zero;
+        rt.localRotation = new Quaternion(0, 0, 0, 0);
+        
+        image = imageGO.AddComponent<Image>();
+        image.color = Color.white;
+        
+        imageGO.transform.SetParent(canvasGO.transform);
+
+        if (progressBarGO != null)
+            CreateProgressBar(canvasGO.transform);
+
+    }
+
+    private void CreateProgressBar(Transform parent)
+    {
+        if (progressBarGO != null)
+        {
+            GameObject progressBarInstance = Instantiate(progressBarGO, parent);
+        
+            progressBar = progressBarInstance.GetComponent<ProgressBarController>();
+        
+            RectTransform rt = progressBarInstance.GetComponent<RectTransform>();
+            rt.anchoredPosition = Vector2.zero;
+            rt.localRotation = Quaternion.identity;
+        }
+        else
+        {
+            Debug.LogWarning(gameObject.name + " no tiene progress bar");
+        }
+    }
+
+    private void SetProgressBar(Color color)
+    {
+        if (progressBar != null)
+        {
+            image.gameObject.SetActive(false);
+            progressBar.gameObject.SetActive(true);
+
+        
+            Transform child = progressBar.transform.GetChild(0);
+            Image childImage = child.GetComponent<Image>();
+            childImage.color = color;
+        }
+    }
+
+    private void SetImage(Sprite sprite)
+    {
+        image.gameObject.SetActive(true);
+        progressBar.gameObject.SetActive(false);
+        
+        image.sprite = sprite;
     }
 }

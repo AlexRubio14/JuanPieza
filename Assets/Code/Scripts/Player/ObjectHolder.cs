@@ -125,8 +125,6 @@ public class ObjectHolder : MonoBehaviour
             currentIO.rb.isKinematic = false;
             foreach (Collider item in currentIO.GetComponents<Collider>())
                 item.enabled = true;
-
-
         }
 
         return currentIO;
@@ -145,20 +143,32 @@ public class ObjectHolder : MonoBehaviour
             return;
 
         if (nearestInteractableObject)
+        {
             nearestInteractableObject.GetSelectedVisual().Hide();
+            if (nearestInteractableObject.GetTooltip() != null) 
+                nearestInteractableObject.GetTooltip().SetState(ObjectsTooltip.ObjectState.None);
+        }
 
         if (!_nearestObject)
         {
             nearestInteractableObject = _nearestObject;
             if (handObject)
+            {
                 hintController.UpdateActionType(handObject.ShowNeededInputHint(this));
+            }
             else
+            {
                 hintController.UpdateActionType(HintController.ActionType.NONE);
+            }
             return;
         }
 
         if (_nearestObject.CanInteract(this))
+        {
             _nearestObject.GetSelectedVisual().Show();
+            if (_nearestObject.GetTooltip() != null)
+                _nearestObject.GetTooltip().SetState(ObjectsTooltip.ObjectState.Interacting);
+        }
         else
         {
             //Mostrar el interactable object que necesita

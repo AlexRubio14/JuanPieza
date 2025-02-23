@@ -28,8 +28,14 @@ public class Repair : InteractableObject
     }
 
     #region Object Fuctions
-    public override void Interact(ObjectHolder _objectHolder) { }
-    public override void Use(ObjectHolder _objectHolder) { }
+
+    public override void Interact(ObjectHolder _objectHolder)
+    {
+    }
+
+    public override void Use(ObjectHolder _objectHolder)
+    {
+    }
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
@@ -85,14 +91,18 @@ public class Repair : InteractableObject
                 currentRepairTime = 0;
             }
             tooltip.SetState(ObjectsTooltip.ObjectState.Repairing);
-
-            foreach (PlayerController player in players)
-                player.progressBar.SetProgress(currentRepairTime, repairDuration);
+            tooltip.progressBar.SetProgress(currentRepairTime, repairDuration);
+            
+            //foreach (PlayerController player in players)
+                //player.progressBar.SetProgress(currentRepairTime, repairDuration);
         }
         else
         {
             if (repairParticles.isPlaying)
                 repairParticles.Stop(true);
+            
+            if (state.GetIsBroken() && tooltip != null)
+                tooltip.SetState(ObjectsTooltip.ObjectState.Broken);
             
             currentRepairTime = 0;
         }

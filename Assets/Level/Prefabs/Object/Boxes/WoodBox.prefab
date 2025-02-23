@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 7304327315729237766}
   - component: {fileID: 6036797146210223406}
   - component: {fileID: 8989068304543053247}
+  - component: {fileID: 7744204595774629083}
   m_Layer: 9
   m_Name: WoodBox
   m_TagString: Scenario
@@ -255,6 +256,7 @@ MonoBehaviour:
   <objectSO>k__BackingField: {fileID: 11400000, guid: 6d79dc67fe5c811419bf1ab7ffe36aeb, type: 2}
   <objectToInteract>k__BackingField: {fileID: 11400000, guid: d1a4f89d8d9efee4db14633f515fcdee, type: 2}
   selectedVisual: {fileID: 8989068304543053247}
+  tooltip: {fileID: 0}
   rb: {fileID: 2768330552373322967}
   <grabPivot>k__BackingField: {fileID: 0}
   hasToBeInTheShip: 1
@@ -288,6 +290,26 @@ MonoBehaviour:
   - {fileID: 3357636577468784739}
   - {fileID: 6217014781787706642}
   - {fileID: 4212401450456786957}
+--- !u!114 &7744204595774629083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125427756097205554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81df2381bb7219488602b295dd717d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 1
+  progressBarGO: {fileID: 5568467514944838423, guid: 596cd99dcbfe3b449b4556b592e9decb, type: 3}
+  size: 2.5
+  offset: 2
+  interactingSprite: {fileID: 0}
+  brokenSprite: {fileID: 21300000, guid: 3e4d24c0cb09c8e49ae1fc66d6ee86d3, type: 3}
+  emptySprite: {fileID: 0}
+  loadedSprite: {fileID: 0}
 --- !u!1 &5685332589644933593
 GameObject:
   m_ObjectHideFlags: 0
