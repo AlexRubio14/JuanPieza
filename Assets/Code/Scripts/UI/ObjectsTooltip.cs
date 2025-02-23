@@ -14,7 +14,7 @@ public class ObjectsTooltip : MonoBehaviour
     
     [Header("UI")]
     [SerializeField] private GameObject progressBarGO;
-    [SerializeField] private float size = 2.5f;
+    [SerializeField] private float size = 1.5f;
     [SerializeField] private float offset = 2;
     private Canvas canvas;
     private Image image;
@@ -27,7 +27,8 @@ public class ObjectsTooltip : MonoBehaviour
     [Header("Weapon Images")] 
     [SerializeField] private Sprite emptySprite;
     [SerializeField] private Sprite loadedSprite;
-    
+
+    private int playersInteracting = 0;
     void Start()
     {
         CreateCanvas();
@@ -84,6 +85,19 @@ public class ObjectsTooltip : MonoBehaviour
         }
     }
 
+    public void AddPlayer()
+    {
+        playersInteracting++;
+    }
+    public void RemovePlayer()
+    {
+        playersInteracting--;
+    }
+
+    public int GetTotalPlayers()
+    {
+        return playersInteracting;
+    }
     private void CreateCanvas()
     {
         GameObject canvasGO = new GameObject("Canvas");
@@ -93,7 +107,7 @@ public class ObjectsTooltip : MonoBehaviour
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
         canvas.planeDistance = 50;
         canvas.worldCamera = Camera.main;
-        canvas.sortingOrder = 5;
+        canvas.sortingOrder = 101;
 
         CanvasScaler scaler = canvasGO.AddComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
@@ -145,8 +159,7 @@ public class ObjectsTooltip : MonoBehaviour
         {
             image.gameObject.SetActive(false);
             progressBar.gameObject.SetActive(true);
-
-        
+            
             Transform child = progressBar.transform.GetChild(0);
             Image childImage = child.GetComponent<Image>();
             childImage.color = color;

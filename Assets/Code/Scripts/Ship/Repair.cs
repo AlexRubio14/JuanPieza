@@ -52,7 +52,9 @@ public class Repair : InteractableObject
 
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
         playerCont.animator.SetBool("Interacting", true);
-        playerCont.progressBar.EnableProgressBar(true);
+        //playerCont.progressBar.EnableProgressBar(true);
+        tooltip.SetState(ObjectsTooltip.ObjectState.Repairing);
+        
         players.Add(playerCont);
         playerCont.stateMachine.ChangeState(playerCont.stateMachine.repairState);
 
@@ -67,7 +69,7 @@ public class Repair : InteractableObject
     {
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
         playerCont.animator.SetBool("Interacting", false);
-        playerCont.progressBar.EnableProgressBar(false);
+        //playerCont.progressBar.EnableProgressBar(false);
         players.Remove(playerCont);
         playerCont.stateMachine.ChangeState(playerCont.stateMachine.idleState);
 
@@ -90,7 +92,6 @@ public class Repair : InteractableObject
                 FinishRepairing();
                 currentRepairTime = 0;
             }
-            tooltip.SetState(ObjectsTooltip.ObjectState.Repairing);
             tooltip.progressBar.SetProgress(currentRepairTime, repairDuration);
             
             //foreach (PlayerController player in players)
@@ -99,7 +100,10 @@ public class Repair : InteractableObject
         else
         {
             if (repairParticles.isPlaying)
+            {
                 repairParticles.Stop(true);
+                tooltip.SetState(ObjectsTooltip.ObjectState.None);
+            }
             
             if (state.GetIsBroken() && tooltip != null)
                 tooltip.SetState(ObjectsTooltip.ObjectState.Broken);
@@ -123,6 +127,9 @@ public class Repair : InteractableObject
             }
             RepairEnded(objHolder);
         }
+
+        Debug.Log("State set to none");
+        tooltip.SetState(ObjectsTooltip.ObjectState.None);
     }
     public bool IsPlayerReparing(PlayerController _playerController)
     {

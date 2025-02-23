@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
     private HintController hintController;
 
     [field: SerializeField]
-    public ProgressBarController progressBar { get; private set; }
+    //public ProgressBarController progressBar { get; private set; }
     private CapsuleCollider capsuleCollider;
 
     public bool movementBuffActive;

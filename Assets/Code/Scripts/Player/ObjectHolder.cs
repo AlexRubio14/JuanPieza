@@ -145,8 +145,12 @@ public class ObjectHolder : MonoBehaviour
         if (nearestInteractableObject)
         {
             nearestInteractableObject.GetSelectedVisual().Hide();
-            if (nearestInteractableObject.GetTooltip() != null) 
-                nearestInteractableObject.GetTooltip().SetState(ObjectsTooltip.ObjectState.None);
+            if (nearestInteractableObject.GetTooltip() != null)
+            {
+                nearestInteractableObject.GetTooltip().RemovePlayer();
+                if (nearestInteractableObject.GetTooltip().GetTotalPlayers() <= 0)
+                    nearestInteractableObject.GetTooltip().SetState(ObjectsTooltip.ObjectState.None);
+            }
         }
 
         if (!_nearestObject)
@@ -167,7 +171,12 @@ public class ObjectHolder : MonoBehaviour
         {
             _nearestObject.GetSelectedVisual().Show();
             if (_nearestObject.GetTooltip() != null)
-                _nearestObject.GetTooltip().SetState(ObjectsTooltip.ObjectState.Interacting);
+            {
+                _nearestObject.GetTooltip().AddPlayer();
+                if (_nearestObject.GetTooltip().GetTotalPlayers() > 0)
+                    _nearestObject.GetTooltip().SetState(ObjectsTooltip.ObjectState.Interacting);
+            }
+
         }
         else
         {
