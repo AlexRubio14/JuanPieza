@@ -6,7 +6,7 @@ public class ShipData : ScriptableObject
 {
     public enum SpawnShipCondition { INIT, HP, DESTROY }
     public SpawnShipCondition spawnShipCondition;
-    public float hpPercentage;
+    [Range(0,1)] public float hpPercentage;
 
     public List<EnemyShip> enemyShips;
 
@@ -34,5 +34,5 @@ public class BoardShip
     public Vector3 initShipPosition;
 
     public SpawnBoardShipCondition spawnBoardShipCondition;
-    public float hpPercentage;
+    [Range(0, 1)] public float hpPercentage;
 }

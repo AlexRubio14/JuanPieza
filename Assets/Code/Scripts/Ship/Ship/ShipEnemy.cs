@@ -10,11 +10,6 @@ public class ShipEnemy : Ship
     private float t;
     private float startZ;
 
-    [Header("StartMoving")]
-    [Range(0f, 1f)]
-    [SerializeField] private float startMovingEnemies;
-    private bool enemiesActive;
-
     public override void Start()
     {
         base.Start();

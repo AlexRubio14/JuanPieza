@@ -55,9 +55,12 @@ public class ShipsManager : MonoBehaviour
     {
         foreach (var enemy in enemiesHordes[0].enemyShips)
         {
-            GameObject enemyShip = Instantiate(enemy._ship);
+            Quaternion rotation = (enemy.initShipPosition.z > 0) ? Quaternion.Euler(0, 180, 0) : Quaternion.identity;
+            GameObject enemyShip = Instantiate(enemy._ship, enemy.initShipPosition, rotation);
+
             enemyShip.GetComponent<EnemieManager>().SetTotalEnemies(enemy.enemiesCuantity);
-            enemyShip.transform.position = enemy.initShipPosition;
+
+
             enemiesShips.Add(enemyShip.GetComponent<Ship>());
             enemyShip.GetComponent<EnemieManager>().GenerateEnemies();
             GenerateCannons(enemy, enemyShip);
@@ -83,19 +86,17 @@ public class ShipsManager : MonoBehaviour
             GameObject cannon = Instantiate(cannons);
             cannon.transform.SetParent(ship.transform, true);
             cannon.GetComponent<EnemyObject>().enemieManager = ship.GetComponent<EnemieManager>();
-            if(ship.transform.position.x < 0)
+
+            cannon.transform.localPosition = cannonsPosition[0];
+            if (Mathf.Abs(cannon.transform.position.x) > Mathf.Abs(playerShip.transform.position.x - ship.transform.position.x))
             {
-                cannon.transform.localPosition = new Vector3(-cannonsPosition[0].x, cannonsPosition[0].y, cannonsPosition[0].z);
-                cannon.transform.Rotate(0, -90, 0);
+                cannon.transform.localPosition = new Vector3(-cannon.transform.localPosition.x, cannonsPosition[0].y, cannonsPosition[0].z);
             }
-            else
-            {
-                cannon.transform.localPosition = cannonsPosition[0];
-                cannon.transform.Rotate(0, 90, 0);
-            }
+
+            Quaternion rotation = (enemy.initShipPosition.x > 0) ? Quaternion.Euler(0, 90, 0) : Quaternion.Euler(0, -90, 0);
+            cannon.transform.rotation = rotation;
 
             cannonsPosition.Remove(cannonsPosition[0]);
-
         }
     }
 

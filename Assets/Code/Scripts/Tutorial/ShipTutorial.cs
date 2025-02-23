@@ -82,10 +82,6 @@ public class ShipTutorial : MonoBehaviour
                 StartCoroutine(ChangeItemLayer(item, _layer));
             }
 
-            ShippingSail sail = ShipsManager.instance.playerShip.GetComponentInChildren<ShippingSail>();
-            sail.enabled = false;
-            sail.gameObject.layer = defaultLayer;
-
             cannon.GetObjectState().SetIsBroke(true);
             cannon.OnBreakObject();
 
