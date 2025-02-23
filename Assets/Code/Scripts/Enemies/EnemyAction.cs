@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 public abstract class EnemyAction
 {
-    public enum ActionType { REPAIR_SHIP, SHOOT_CANNON, RELOAD_CANNON, REPAIR_CANNON, REPAIR_BULLET_SPAWN }
+    public enum ActionType { REPAIR_SHIP, SHOOT_CANNON, RELOAD_CANNON, REPAIR_CANNON, REPAIR_BULLET_SPAWN, WAIT }
     public ActionType currentAction;
     
     protected EnemyController enemyController;
@@ -27,7 +27,6 @@ public abstract class EnemyAction
     
     protected bool IsNearToDestiny(Vector3 _destiny)
     {
-        //Debug.Log(Vector3.Distance(transform.position,_destiny));
         _destiny.y = transform.position.y;
         return Vector3.Distance(transform.position, _destiny) <= distanceToInteract;
     }

@@ -103,23 +103,8 @@ public class ShipSceneManager : MonoBehaviour
     public void InstantiateShip()
     {
         GameObject _ship;
-        if (MapManager.Instance.GetCurrentLevel().hasIsland)
-        {
-            _ship = Instantiate(ship[shipId + 1], new Vector3(0, ship[shipId].GetComponent<Ship>().GetInitY(), -islandArriveDistance), Quaternion.identity);
-            CameraManager.Instance.SetArriveCamera(true);
-            CameraManager.Instance.SetSimpleCamera(false);
-            _ship.GetComponent<ShipCurve>().SetIsMainShip(true);
-            _ship.GetComponent<ShipCurve>().ActiveBridge(false);
-        }
-        else
-            _ship = Instantiate(ship[shipId], new Vector3(0, ship[shipId].GetComponent<Ship>().GetInitY(), 0), Quaternion.identity);
 
-        ShipsManager.instance.SetShip(_ship.GetComponent<AllyShip>());
-        ShipsManager.instance.playerShip.SetHealth(shipHealth);
-        ShipsManager.instance.playerShip.SetHeightY(shipCurrentY, shipInitY);
-        ShipsManager.instance.playerShip.SetBarrelBox(shipHasCatapult);
-        InstantiateObjects();
-        SetBoxesItem();
+       
     }
 
     // Borrar despues de la entrega

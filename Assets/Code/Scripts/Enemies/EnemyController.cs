@@ -19,12 +19,15 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private float linkSpeed;
     private float baseSpeed;
+    private float petrolSpeed;
 
     [Space, SerializedDictionary("Resource", "Mesh")]
     public SerializedDictionary<SteppedAction.ResourceType, GameObject> resourcesMeshes;
 
     [Space]
     [SerializeField] private LayerMask floorLayer;
+
+    private bool inPetrol;
 
 
     private void Awake()
@@ -42,15 +45,14 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         baseSpeed = agent.speed;
+        petrolSpeed = agent.speed / 5;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(agent.enabled)
         {
             SetNavLinkSpeed();
-
             if (currentAction != null)
                 currentAction.StateUpdate();
         }
@@ -59,9 +61,24 @@ public class EnemyController : MonoBehaviour
         {
             rb.isKinematic = true;
             agent.enabled = true;
-            Debug.Log("ME ESTAS PICOTEANDO");
         }
 
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.CompareTag("Petrol"))
+        {
+            inPetrol = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Petrol"))
+        {
+            inPetrol = false;
+        }
     }
 
     public void EnableResource(SteppedAction.ResourceType _resource, bool _enabled)
@@ -83,7 +100,8 @@ public class EnemyController : MonoBehaviour
 
     private void SetNavLinkSpeed()
     {
-        agent.speed = !agent.isOnOffMeshLink ? baseSpeed : linkSpeed;
+        float currentSpeed = !inPetrol ? baseSpeed : petrolSpeed;
+        agent.speed = !agent.isOnOffMeshLink ? currentSpeed : linkSpeed;
     }
 
     public void Knockback(Vector2 _force, Vector2 _direction)

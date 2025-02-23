@@ -39,41 +39,13 @@ public class ShippingSail : InteractableObject
                 timerIsActive = false;
                 VotationCanvasManager.Instance.SetSailTimer(false);
                 ActiveBridge(false);
-                ship.StartVotation();
             }
         }
     }
 
     public override void Interact(ObjectHolder _objectHolder)
     {
-        if (ship.CheckOverweight() || !canInteract)
-            return;
-
-        PlayerController interactingPlayer = _objectHolder.GetComponentInParent<PlayerController>();
-        if (players.Contains(interactingPlayer))
-        {
-            players.Remove(interactingPlayer);
-            if (players.Count <= 0)
-            {
-                ResetTimer();
-            }
-        }
-        else
-        {
-            players.Add(interactingPlayer);
-
-            if (!timerIsActive)
-            {
-                timerIsActive = true;
-                VotationCanvasManager.Instance.SetSailTimer(true);
-            }
-
-            if (players.Count == PlayersManager.instance.GetPlayers().Count)
-            {
-                VotationCanvasManager.Instance.SetSailTimer(false);
-                ship.StartVotation();
-            }
-        }
+        
     }
 
     public override void Use(ObjectHolder _objectHolder)

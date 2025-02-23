@@ -8,7 +8,8 @@ public class TestPlayerController : MonoBehaviour
     public static TestPlayerController Instance;
     [HideInInspector]
     public string lastSceneActive;
-
+    [SerializeField]
+    public bool cancelBootstrap = false;
     private void Awake()
     {
         if (Instance != null)
@@ -19,7 +20,6 @@ public class TestPlayerController : MonoBehaviour
 
         if (PlayersManager.instance != null)
         {
-            Debug.Log("Destroy Instance");
             Destroy(this);
             return;
         }
@@ -30,8 +30,9 @@ public class TestPlayerController : MonoBehaviour
         if (SceneManager.GetActiveScene().name != BOOTSTRAP_SCENE_NAME && SceneManager.GetActiveScene().name != "")
         {
             lastSceneActive = SceneManager.GetActiveScene().name;
-            Debug.Log("Last Scene Active: " + lastSceneActive);
+            //Debug.Log("Last Scene Active: " + lastSceneActive);
         }
+
         if (SceneManager.GetActiveScene().name != "PlayerSelector")
         {
             SceneManager.LoadScene("PlayerSelector");

@@ -1,28 +1,12 @@
-using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-[System.Serializable]
-public class EnemyShip
-{
-    public GameObject _ship;
-    public Vector3 initShipPosition;
-    public int enemiesCuantity;
-    public List<GameObject> cannonCuantity;
-    public float cannonOffset;
-    public int cannonPossiblePosition;
-    public Vector3 initCannonPosition;
-}
 
 public class GenerateEnemyShip : MonoBehaviour
 {
     public static GenerateEnemyShip instance;
 
-    [Header("Enemy Ships")]
-    public List<EnemyShip> enemyShipInformation;
-    [SerializeField] private LayerMask hitLayer;
+    private List<EnemyShip> enemyShipInformation = new List<EnemyShip>();
 
     private void Awake()
     {
@@ -31,70 +15,16 @@ public class GenerateEnemyShip : MonoBehaviour
 
         instance = this;
     }
+
     public void GenerateEnemiesShip()
-    {
+    { 
         foreach (var enemy in enemyShipInformation)
         {
             GameObject enemyShip = Instantiate(enemy._ship);
             enemyShip.GetComponent<EnemieManager>().SetTotalEnemies(enemy.enemiesCuantity);
             enemyShip.transform.position = enemy.initShipPosition;
 
-            GenerateCannons(enemy.initShipPosition.x > 0, enemy, enemyShip);
-
-            ShipsManager.instance.AddEnemyShip(enemyShip.GetComponent<Ship>());
             enemyShip.GetComponent<EnemieManager>().GenerateEnemies();
         }
-    }
-
-    private void GenerateCannons(bool isLeft, EnemyShip enemy, GameObject ship)
-    {
-        List<float> cannonZPosition = new List<float>();
-
-        for (int i = 0; i < enemy.cannonPossiblePosition; i++)
-        {
-            cannonZPosition.Add(enemy.initCannonPosition.z + enemy.cannonOffset);
-            cannonZPosition.Add(enemy.initCannonPosition.z - enemy.cannonOffset);
-            enemy.cannonOffset += enemy.cannonOffset;
-        }
-
-        cannonZPosition.Add(enemy.initCannonPosition.z);
-
-        foreach (var cannon in enemy.cannonCuantity)
-        {
-            GameObject newCannon = Instantiate(cannon);
-            newCannon.transform.SetParent(ship.transform);
-
-            float randomZ = cannonZPosition[Random.Range(0, cannonZPosition.Count)];
-            cannonZPosition.Remove(randomZ);
-
-            float yPosition = GetGroundYPosition(new Vector3(ship.transform.position.x, 0, ship.transform.position.z), ship.transform);
-            if (isLeft)
-            {
-                newCannon.transform.localPosition = new Vector3(enemy.initCannonPosition.x, yPosition, randomZ);
-                newCannon.transform.Rotate(0, 90, 0);
-            }
-            else
-            {
-                newCannon.transform.localPosition = new Vector3(-enemy.initCannonPosition.x, yPosition, randomZ);
-                newCannon.transform.Rotate(0, -90, 0);
-            }
-
-            newCannon.GetComponent<EnemyObject>().enemieManager = ship.GetComponent<EnemieManager>();
-        }
-    }
-
-    private float GetGroundYPosition(Vector3 startPosition, Transform parentTransform)
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(startPosition, Vector3.up, out hit, Mathf.Infinity, hitLayer))
-        {
-            if (hit.collider.CompareTag("Floor"))
-            {
-                Vector3 localHitPosition = parentTransform.InverseTransformPoint(hit.point);
-                return localHitPosition.y + 0.13f;
-            }
-        }
-
-        return 0f;
     }
 }

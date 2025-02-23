@@ -1,6 +1,4 @@
-using System.IO.Compression;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -79,6 +77,8 @@ public class PlayerController : MonoBehaviour
     public ProgressBarController progressBar { get; private set; }
     private CapsuleCollider capsuleCollider;
 
+    public bool movementBuffActive;
+    public float currentKnockBackTime;
 
     private void Awake()
     {
@@ -139,6 +139,9 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnWeaponTiltAction -= CannonTiltAction;
 
+        movementInput = Vector2.zero;
+        movementDirection = Vector3.zero;
+        stateMachine.ChangeState(stateMachine.idleState);
         PlayersManager.instance.ingamePlayers.Remove(this);
     }
 
@@ -325,6 +328,11 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawLine(startPos, endPos);
         }
 
+    }
+
+    public void SetBaseMovementSpeed(float speed)
+    {
+        baseMovementSpeed = speed;
     }
 
 }

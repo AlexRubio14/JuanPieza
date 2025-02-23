@@ -8,7 +8,6 @@ public class EnemieManager : MonoBehaviour
 
     private CameraController cameraController;
 
-    [SerializeField]
     private int totalEnemies;
     [SerializeField]
     private GameObject enemyPrefab;
@@ -57,11 +56,11 @@ public class EnemieManager : MonoBehaviour
         for (int i = 0; i < totalEnemies; i++)
         {
             Vector3 spawnPos = enemySpawnPoint.position + new Vector3(Random.Range(-enemySpawnOffset, enemySpawnOffset), 0, Random.Range(-enemySpawnOffset, enemySpawnOffset));
-            EnemyController newEnemy = Instantiate(enemyPrefab, enemySpawnPoint.position, Quaternion.identity).GetComponent<EnemyController>();
+            EnemyController newEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity).GetComponent<EnemyController>();
             newEnemy.enemieManager = this;
             newEnemy.gameObject.transform.SetParent(transform, true);
+            //newEnemy.GetComponent<EnemyController>().currentAction.currentAction = EnemyAction.ActionType.WAIT;
             enemyList.Add(newEnemy);
-            cameraController.AddObject(newEnemy.gameObject);
         }
     }
 
@@ -140,7 +139,7 @@ public class EnemieManager : MonoBehaviour
 
     private void AsignActionToEnemy(EnemyController _enemy, EnemyAction _action)
     {
-        if(_action == null)
+        if(_action == null || _enemy.currentAction.currentAction != EnemyAction.ActionType.WAIT)
             return;
 
         _enemy.currentAction = _action;
@@ -195,5 +194,11 @@ public class EnemieManager : MonoBehaviour
     {
         totalEnemies = _totalEnemies;
     }
-    
+
+    public List<EnemyController> GetEnemyList()
+    {
+        return enemyList;
+    }
+
+
 }

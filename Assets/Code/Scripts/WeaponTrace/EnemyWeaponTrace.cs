@@ -20,6 +20,8 @@ public class EnemyWeaponTrace : WeaponTracer
 
         lineRenderer.enabled = weapon.isLoaded;
         decal.SetActive(weapon.isLoaded);
+        if (decal.activeInHierarchy)
+            decal.transform.forward = -collisionNormal;
     }
 
     private void OnDrawGizmos()

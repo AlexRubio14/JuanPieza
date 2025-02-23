@@ -5,6 +5,8 @@ public class IdleState : PlayerState
 
     public override void EnterState()
     {
+        if (controller.movementBuffActive)
+            controller.currentKnockBackTime = 0;
     }
 
     public override void UpdateState()

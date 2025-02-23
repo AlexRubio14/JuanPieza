@@ -33,7 +33,7 @@ Material:
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
-  m_LockedProperties: 
+  m_LockedProperties: _DiffuseColor
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -77,6 +77,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: c331f7541c2dba44aa6a7fae28bcef2c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NormalsTexture:
+        m_Texture: {fileID: 2800000, guid: ced0116793ff98a458fa4d21790aad3f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -90,7 +94,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SurfaceFoamTexture:
-        m_Texture: {fileID: 2800000, guid: af1ff6b12c5cd7746b02ddb67b9adcd5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 59322d9235e3b2a44a08574ae149f003, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -117,7 +121,7 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DepthFadeDistance: 1.2
+    - _DepthFadeDistance: 3.9
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -126,49 +130,58 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _IntersectionFoamBlend: 0
-    - _IntersectionFoamCutoff: 0.5
-    - _IntersectionFoamDepth: 2.88
-    - _IntersectionFoamDirection: 0.279
-    - _IntersectionFoamFade: 0.673
-    - _IntersectionFoamSpeed: 0.085
-    - _IntersectionFoamTiling: 49
+    - _HorizonDistance: 12
+    - _IntersectionFoamBlend: 1
+    - _IntersectionFoamCutoff: 0.739
+    - _IntersectionFoamDepth: 1.18
+    - _IntersectionFoamDirection: 0.21
+    - _IntersectionFoamFade: 1
+    - _IntersectionFoamSpeed: 0.13
+    - _IntersectionFoamTiling: 36.8
+    - _LightingHardness: 1
+    - _LightingSmoothness: 0.101
     - _Metallic: 0
+    - _NormalsScale: 0.2
+    - _NormalsSpeed: 0.013
+    - _NormalsStrength: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RefractionScale: 0.01
-    - _RefractionSpeed: 0
-    - _RefractionStrength: 0.0091
+    - _RefractionScale: 0.166
+    - _RefractionSpeed: 0.042
+    - _RefractionStrength: 0.0202
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
-    - _Step: 8.2
+    - _Step: 35.1
     - _Surface: 0
-    - _SurfaceFoamBlend: 0.042
+    - _SurfaceFoamBlend: 1
     - _SurfaceFoamColor: 0
-    - _SurfaceFoamDirection: 0.121
-    - _SurfaceFoamDistortion: 0.85
-    - _SurfaceFoamSpeed: 0.091
-    - _SurfaceFoamTiling: 13
-    - _WaveLength: 8.36
-    - _WaveSpeed: 0.733
-    - _WaveSteepness: 1
+    - _SurfaceFoamDirection: 0.25
+    - _SurfaceFoamDistortion: 1.09
+    - _SurfaceFoamSpeed: 0
+    - _SurfaceFoamTiling: 8.5
+    - _WaveLength: 3.4
+    - _WaveSpeed: 0.261
+    - _WaveSteepness: 0.297
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DepthColor: {r: 0, g: 0.5773268, b: 1, a: 1}
+    - _DepthColor: {r: 0, g: 0.28928742, b: 0.5566037, a: 0.9411765}
+    - _DiffuseColor: {r: 0.007843138, g: 0.46666667, b: 0.5137255, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HorizonColor: {r: 0.039215688, g: 0.28627452, b: 0.4117647, a: 1}
     - _IntersectionFoamColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShallowColor: {r: 0.0906682, g: 1, b: 0, a: 0.7843137}
+    - _ShallowColor: {r: 0.0470588, g: 0.12156855, b: 0.29019603, a: 0.8}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SurfaceFoamColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecularColor: {r: 0.3254902, g: 0.7372549, b: 0.6862745, a: 0.68235296}
+    - _SurfaceFoamColor: {r: 0, g: 0.454902, b: 0.5764706, a: 0.13333334}
     - _WaveDirections: {r: 0, g: 0.5, b: 1, a: 0.2}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

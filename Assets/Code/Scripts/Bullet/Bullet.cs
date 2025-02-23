@@ -6,10 +6,12 @@ public class Bullet : MonoBehaviour
     public GameObject hitParticles { private set; get; }
     public AudioClip hitClip;
     public float explosionRadius;
+    public bool createHole;
 
-    private float damage;
+    protected float damage;
+    protected bool damageDone;
 
-    private bool damageDone;
+    protected Transform shipImpacted;
 
     public void SetDamageDone(bool damageDone)
     { 
@@ -29,5 +31,15 @@ public class Bullet : MonoBehaviour
     public float GetDamage()
     {
         return damage;
+    }
+
+    public Transform GetShipImpacted()
+    {
+        return shipImpacted;
+    }
+
+    public void SetShipImpacted(Transform _shipImpacted)
+    {
+        shipImpacted = _shipImpacted;
     }
 }

@@ -74,6 +74,7 @@ public abstract class Weapon : RepairObject
     {
         if (!hasAmmo)
             return;
+
         Shoot();            
         animator.SetTrigger("Shoot");
         animator.SetBool("HasAmmo", false);
@@ -81,6 +82,7 @@ public abstract class Weapon : RepairObject
         foreach (ParticleSystem item in loadParticles)
             item.Stop(true);
     }
+
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
         if(state.GetIsBroken())

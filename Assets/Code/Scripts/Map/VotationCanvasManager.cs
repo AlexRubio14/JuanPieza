@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -82,7 +83,7 @@ public class VotationCanvasManager : MonoBehaviour
     public void SetMoneyText(bool state)
     {
         moneyText.transform.parent.gameObject.SetActive(state);
-        moneyText.text = "+" + MapManager.Instance.GetCurrentLevel().levelMoney.ToString();
+        moneyText.text = "+" + (((BattleNodeData)MapManager.Instance.GetCurrentLevel() ).levelMoney * (int)BuffsManagers.Instance.GetCurrentGoldMultiplier()).ToString();
 
         if(state)
             StartCoroutine(DesactiveMoneyText());

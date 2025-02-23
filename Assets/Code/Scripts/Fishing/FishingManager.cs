@@ -24,8 +24,7 @@ public class FishingManager : MonoBehaviour
 
     private List<DeathState> deadPlayers;
 
-    private float midXPos;
-    [SerializeField]
+    [Space, SerializeField]
     private Vector2 minMaxTimeToFishing;
     [SerializeField]
     private float playerRespawnOffset;
@@ -41,8 +40,13 @@ public class FishingManager : MonoBehaviour
     [field: SerializeField]
     public float deathZPos { get; private set; }
 
-    [field: Space, Header("audio"), SerializeField]
+    [field: Space, Header("Audio"), SerializeField]
     private AudioClip revivePlayerClip;
+
+    [Space, Header("Tutorial"), SerializeField]
+    private bool isTutorial = false;
+    [SerializeField]
+    private TutorialSwimNPC tutorialNPC;
 
     private void Awake()
     {
@@ -54,11 +58,6 @@ public class FishingManager : MonoBehaviour
         fishingObjectPool = GetComponent<ObjectPool>();
         fishingData = new List<FishingData>();
         deadPlayers = new List<DeathState>();
-    }
-
-    private void Start()
-    {
-        midXPos = ShipsManager.instance.playerShip.transform.position.x;
     }
 
     // Update is called once per frame
@@ -108,14 +107,14 @@ public class FishingManager : MonoBehaviour
     private void WaitingPlayer(int _id)
     {
         //Aqui o el player deberia estar nadando o ha perdido su oportunidad
-        //Comprobar si la posicion actual es la misma que la anterior
-        Vector3 actualPlayerPos = fishingData[_id].currentPlayer.transform.position;
-
-        if (!fishingData[_id].currentPlayer.isSwimming) //El player esta quieto
+        if (fishingData[_id].currentPlayer != null && !fishingData[_id].currentPlayer.isSwimming || //El player esta quieto
+            isTutorial && !tutorialNPC.isSwimming // O es el tutorial y el player se esta moviendo
+            ) 
         {
             //Empezar el evento para que el player recoja la caña y salve al player
             CanHook(_id, FishingState.CAN_HOOK_PLAYER);
         }
+            
     }
     private void CanHookPlayer(int _id)
     {
@@ -123,8 +122,12 @@ public class FishingManager : MonoBehaviour
         if (Time.time - fishingData[_id].starterTime >= timeToHook)
         {
             fishingData[_id].fishingRod.player.interactCanvasObject.SetActive(false);
-            //Generar las variables del player de nuevo
-            fishingData[_id].currentPlayer.CalculateDeathPos();
+            if (fishingData[_id].currentPlayer != null)
+            {
+                //Generar las variables del player de nuevo
+                fishingData[_id].currentPlayer.CalculateDeathPos();
+            }
+            
         }
 
     }
@@ -134,17 +137,27 @@ public class FishingManager : MonoBehaviour
         parabolaData.parabolaProcess += Time.deltaTime * parabolaSpeed;
         fishingData[_id] = parabolaData;
 
-        fishingData[_id].currentPlayer.transform.position =
-            Parabola(fishingData[_id].parabolaStartPos, fishingData[_id].parabolaEndPos, parabolaHeight, fishingData[_id].parabolaProcess);
-
+        Vector3 parabolaPos = Parabola(fishingData[_id].parabolaStartPos, fishingData[_id].parabolaEndPos, parabolaHeight, fishingData[_id].parabolaProcess);
+        if (fishingData[_id].currentPlayer != null)
+            fishingData[_id].currentPlayer.transform.position = parabolaPos;
+        else if (isTutorial)
+            tutorialNPC.transform.position = parabolaPos;
 
 
         if (fishingData[_id].parabolaProcess >= 1)//Acabar la pesca
         {
             StopFishing(fishingData[_id].fishingRod);
-            //Cambiar el estado del player muerto
-            fishingData[_id].currentPlayer.deathStateMachine.ChangeState(fishingData[_id].currentPlayer.deathStateMachine.idleState);
-            AudioManager.instance.Play2dOneShotSound(revivePlayerClip, "Objects");
+            if (fishingData[_id].currentPlayer != null)
+            {
+                //Cambiar el estado del player muerto
+                fishingData[_id].currentPlayer.deathStateMachine.ChangeState(fishingData[_id].currentPlayer.deathStateMachine.idleState);
+                AudioManager.instance.Play2dOneShotSound(revivePlayerClip, "Objects");
+            }
+            else if (isTutorial)
+            {
+                tutorialNPC.NPCRescued();
+                AudioManager.instance.Play2dOneShotSound(revivePlayerClip, "Objects");
+            }
         }
     }
 
@@ -260,6 +273,19 @@ public class FishingManager : MonoBehaviour
             }
         }
 
+        if(isTutorial && !tutorialNPC.rescued && !tutorialNPC.isSwimming && tutorialNPC.hookPosition == Vector3.zero)
+        {
+            //Setear en el player muerto el target
+            tutorialNPC.SetHookPosition(fishingData[id].fishingRod.hook.transform.position);
+            tutorialNPC.isSwimming = true;
+            FishingData newData = fishingData[id];
+            newData.currentPlayer = null;
+            newData.fishingState = FishingState.WAITING_PLAYER;
+            fishingData[id] = newData;
+
+            return;
+        }
+
         //Toca pescar objetos
         GenerateWaitObjectValues(id);
     }
@@ -334,6 +360,9 @@ public class FishingManager : MonoBehaviour
     {
         if (fishingData[_id].currentPlayer != null && fishingData[_id].currentPlayer.hookPosition != Vector3.zero)
             fishingData[_id].currentPlayer.CalculateDeathPos();
+        else if (isTutorial)
+            tutorialNPC.HookRemoved();
+
         StopFishing(_fishingRod);
     }
     private void GrabPlayer(int _id, FishingRod _fishingRod)
@@ -344,6 +373,13 @@ public class FishingManager : MonoBehaviour
         newData.parabolaStartPos = _fishingRod.hook.transform.position;
         newData.parabolaEndPos = _fishingRod.player.transform.position + -_fishingRod.player.transform.forward * playerRespawnOffset;
         fishingData[_id] = newData;
+
+
+        if (isTutorial && fishingData[_id].currentPlayer == null)
+            tutorialNPC.transform.forward = (
+                new Vector3(newData.parabolaEndPos.y, tutorialNPC.transform.position.y, newData.parabolaEndPos.z) -
+                tutorialNPC.transform.position
+                ).normalized;
     }
     private void GrabObject(int _id, FishingRod _fishingRod)
     {
@@ -352,6 +388,7 @@ public class FishingManager : MonoBehaviour
         ObjectSO itemData = fishingObjectPool.GetRandomItem();
         //Instanciarlo
         GameObject newItem = Instantiate(itemData.prefab, _fishingRod.hook.transform.position, Quaternion.identity);
+
         InteractableObject currentItem = newItem.GetComponent<InteractableObject>();
         currentItem.hasToBeInTheShip = true;
         ShipsManager.instance.playerShip.AddInteractuableObject(currentItem);
@@ -373,6 +410,10 @@ public class FishingManager : MonoBehaviour
     {
         deadPlayers.Add(_deadPlayer);
     }
+    public void AddTutorialNPC(TutorialSwimNPC _tutorialNPC)
+    {
+        tutorialNPC = _tutorialNPC;
+    }
     public void RemoveDeadPlayer(DeathState _deadPlayer)
     {
         deadPlayers.Remove(_deadPlayer);
@@ -385,5 +426,10 @@ public class FishingManager : MonoBehaviour
         var mid = Vector3.Lerp(start, end, t);
 
         return new Vector3(mid.x, f(t) + Mathf.Lerp(start.y, end.y, t), mid.z);
+    }
+
+    public ObjectPool GetObjectPool()
+    {
+        return fishingObjectPool;
     }
 }
