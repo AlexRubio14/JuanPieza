@@ -1014,7 +1014,8 @@ GameObject:
   - component: {fileID: 7400175450817648449}
   - component: {fileID: 4839653589689450526}
   - component: {fileID: 8820323783774397692}
-  m_Layer: 0
+  - component: {fileID: 3225158551200266717}
+  m_Layer: 8
   m_Name: RightPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1088,6 +1089,33 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 576
   holeRadius: 2
+--- !u!54 &3225158551200266717
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3036890166148504585}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3258128059856104037
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,7 +1127,8 @@ GameObject:
   - component: {fileID: 5435598744302198752}
   - component: {fileID: 3576801961130558629}
   - component: {fileID: 6133059917616760465}
-  m_Layer: 0
+  - component: {fileID: 472961226878074070}
+  m_Layer: 8
   m_Name: LeftPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1173,6 +1202,33 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 576
   holeRadius: 2
+--- !u!54 &472961226878074070
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3258128059856104037}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3414835403249822125
 GameObject:
   m_ObjectHideFlags: 0
@@ -1915,7 +1971,7 @@ GameObject:
   - component: {fileID: 2182524506297666627}
   - component: {fileID: 2098773667660101992}
   - component: {fileID: 4456756727667327053}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2001,7 +2057,7 @@ GameObject:
   - component: {fileID: 9101683350309952287}
   - component: {fileID: 2894135190645844839}
   - component: {fileID: 4741698936785160714}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2749,7 +2805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8167073194016919252, guid: 120ad1961838cad419dec25ea1640fc0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.45
+      value: 4.28
       objectReference: {fileID: 0}
     - target: {fileID: 8167073194016919252, guid: 120ad1961838cad419dec25ea1640fc0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2757,7 +2813,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8167073194016919252, guid: 120ad1961838cad419dec25ea1640fc0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.42546
+      value: -6.44
       objectReference: {fileID: 0}
     - target: {fileID: 8167073194016919252, guid: 120ad1961838cad419dec25ea1640fc0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2823,7 +2879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8167073194016919252, guid: 2f0adbce2ab0d19449de1471eb242c66, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.37
+      value: -12.11
       objectReference: {fileID: 0}
     - target: {fileID: 8167073194016919252, guid: 2f0adbce2ab0d19449de1471eb242c66, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2831,7 +2887,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8167073194016919252, guid: 2f0adbce2ab0d19449de1471eb242c66, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.25
+      value: 2.53
       objectReference: {fileID: 0}
     - target: {fileID: 8167073194016919252, guid: 2f0adbce2ab0d19449de1471eb242c66, type: 3}
       propertyPath: m_LocalRotation.w

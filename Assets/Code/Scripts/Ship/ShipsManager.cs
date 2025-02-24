@@ -26,8 +26,9 @@ public class ShipsManager : MonoBehaviour
     private void Start()
     {
         GenerateAllyShip();
-        enemiesHordes = new List<ShipData>(NodeManager.instance.battleInformation.enemiesHordes);        
-        GenerateEnemyShip();
+        enemiesHordes = new List<ShipData>(NodeManager.instance.battleInformation.enemiesHordes);
+        if (NodeManager.instance.battleInformation.enemiesHordes[0].spawnShipCondition == ShipData.SpawnShipCondition.INIT)
+            GenerateEnemyShip();
     }
 
     private void GenerateAllyShip()
