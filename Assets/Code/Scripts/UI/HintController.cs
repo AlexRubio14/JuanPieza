@@ -22,15 +22,10 @@ public class HintController : MonoBehaviour
     [SerializeField, SerializedDictionary("Action", "Device Sprites")] 
     private SerializedDictionary<ActionType, List<Sprite>> ActionSprites;
     [Space, SerializeField] private Canvas canvas;
-    [SerializeField] private Image hintImage;
-    [SerializeField] private float hintOffset;
+    [SerializeField] private Image hintRightImage;
+    [SerializeField] private Image hintLeftImage;
 
-    [Space]
-    [Header("Progress Bar")]
-    [SerializeField] private ProgressBarController progressBar;
-    [SerializeField] private float progressBarOffset;
-    
-    public bool isInteracting;
+    [SerializeField] private float hintOffset;
     
     private void Start()
     {
@@ -49,18 +44,12 @@ public class HintController : MonoBehaviour
 
     private void Update()
     {
-        if (hintImage.gameObject.activeInHierarchy)
+        if (hintRightImage.gameObject.activeInHierarchy)
         {
-            Vector3 hintPos = transform.position + new Vector3(0, hintOffset, 0);
-            hintImage.transform.position = hintPos;
+            Vector3 hintPos = transform.position + new Vector3(hintOffset, 0, 0);
+            hintRightImage.transform.position = hintPos;
+        }
 
-        }
-        
-        if(progressBar.gameObject.activeInHierarchy) 
-        {
-            Vector3 progressBarPos = transform.position + new Vector3(progressBarOffset, hintOffset, 0);
-            progressBar.transform.position = progressBarPos;
-        }
     }
 
     public void UpdateActionType(ActionType _action)
@@ -68,14 +57,24 @@ public class HintController : MonoBehaviour
         if (_action == ActionType.NONE)
         {
             //Ocultar la UI de inputs
-            hintImage.gameObject.SetActive(false);
+            hintRightImage.gameObject.SetActive(false);
+            hintLeftImage.gameObject.SetActive(false);
             return;
         }
-        
-        //Mostrar la UI de inputs
-        hintImage.gameObject.SetActive(true);
-        
-        Sprite currentSprite = ActionSprites[_action][(int)deviceType];
-        hintImage.sprite = currentSprite;
+
+        if (_action == ActionType.USE)
+        {
+            hintRightImage.gameObject.SetActive(true);
+
+            Sprite currentSprite = ActionSprites[_action][(int)deviceType];
+            hintRightImage.sprite = currentSprite;
+        }
+        if (_action == ActionType.INTERACT)
+        {
+            hintLeftImage.gameObject.SetActive(true);
+
+            Sprite currentSprite = ActionSprites[_action][(int)deviceType];
+            hintLeftImage.sprite = currentSprite;
+        }
     }
 }
