@@ -17,8 +17,8 @@ public class RaftController : MonoBehaviour
     private float direction = 1;
     [SerializeField] private float speed;
 
-    public Vector3 destinyPos { get; private set; }
-    public Vector3 startingPos { get; private set; }
+    public float destinyZPos { get; private set; }
+    public float startingZPos { get; private set; }
 
     public enum RaftState { WAITING, MOVING_FRONT, MOVING_BACK, BOARDING }
     public RaftState currentState { get; private set; }
@@ -31,6 +31,11 @@ public class RaftController : MonoBehaviour
         ChangeState(RaftState.WAITING);
     }
 
+    private void Start()
+    {
+        destinyZPos = ShipsManager.instance.playerShip.transform.position.z;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -40,14 +45,14 @@ public class RaftController : MonoBehaviour
                 break;
             case RaftState.MOVING_FRONT:
 
-                if(transform.position.z >= destinyPos.z)
+                if(transform.position.z >= destinyZPos)
                 {
                     ChangeState(RaftState.BOARDING);
                 }
                 break;
             case RaftState.MOVING_BACK:
 
-                if (transform.position.z <= startingPos.z)
+                if (transform.position.z <= startingZPos)
                 {
                     ChangeState(RaftState.WAITING);
                     ResetRaft();
@@ -63,25 +68,22 @@ public class RaftController : MonoBehaviour
         }
     }
 
-    // ReSharper disable Unity.PerformanceAnalysis
-    public void SetUpRaft()
+    public void SetUpRaft(BoardShip _boardShip)
     {
         if (isBoarding)
             return;
 
-        int enemiesToSpawn = CalculateRandomEnemiesToSpawn();
-
-        SetPiratesInRaft(enemiesToSpawn);
+        SetPiratesInRaft(_boardShip.enemiesCuantity);
 
         isBoarding = true;
 
-        List<Transform> raftStartPointsRef = managerPirateBoarding.Instance.raftStartPoints;
+        List<Transform> raftStartPointsRef = ManagerPirateBoarding.Instance.raftsStartPos;
         int randomIndex = Random.Range(0, raftStartPointsRef.Count);
 
         transform.position = raftStartPointsRef[randomIndex].position;
 
-        ChangeState(RaftState.MOVING_FRONT);
-        startingPos = transform.position;
+        startingZPos = transform.position.z;
+        //ChangeState(RaftState.MOVING_FRONT);
     }
 
     private void ResetRaft()
@@ -106,36 +108,13 @@ public class RaftController : MonoBehaviour
         Invoke("SendPirateToJump", timeBetweenPirateJumps);
     }
 
-    private int CalculateRandomEnemiesToSpawn()
-    {
-        int enemiesToSpawn = 0;
-
-        switch (MapManager.Instance.GetCurrentHeightLevel())
-        {
-            case 1:
-                enemiesToSpawn = Random.Range(1, 3);
-                break;
-            case 2:
-                enemiesToSpawn = Random.Range(2, 5);
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            default:
-                break;
-        }
-
-        return enemiesToSpawn;
-    }
-
     private void SetPiratesInRaft(int _enemiesToSpawn)
     {
         //If there is no available pirates Instantiate more
-        if (managerPirateBoarding.Instance.piratesPool.Count == 0)
-            managerPirateBoarding.Instance.InstantiatePirates();
+        if (ManagerPirateBoarding.Instance.piratesPool.Count == 0)
+            ManagerPirateBoarding.Instance.InstantiatePirates();
 
-        List<controllerPirateBoarding> pirateListRef = managerPirateBoarding.Instance.piratesPool;
+        List<controllerPirateBoarding> pirateListRef = ManagerPirateBoarding.Instance.piratesPool;
         int positionInRaftIndex = 0;
 
         foreach(controllerPirateBoarding controller in  pirateListRef)
@@ -155,8 +134,6 @@ public class RaftController : MonoBehaviour
         }
     }
 
-
-    // ReSharper disable Unity.PerformanceAnalysis
     public void ChangeState(RaftState newState)
     {
         switch (currentState)
@@ -217,8 +194,8 @@ public class RaftController : MonoBehaviour
 
     }
 
-    public void SetDestinyPos(Vector3 pos)
+    public void SetDestinyPos(float _zPos)
     {
-        destinyPos = pos;
+        destinyZPos = _zPos;
     }
 }

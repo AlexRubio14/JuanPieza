@@ -348,9 +348,4 @@ public class MapManager : MonoBehaviour
     {
         shipEventActive = false;
     }
-
-    public int GetCurrentHeightLevel()
-    {
-        return currentHeightDifficult;
-    }
 }

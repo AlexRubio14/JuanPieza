@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,8 +6,10 @@ public class ShipsManager : MonoBehaviour
 {
     public static ShipsManager instance;
     public AllyShip playerShip {  get; private set; }
-    public List<EnemyShip> enemiesShipsInformatio { get; private set; }
+    public List<ShipData> enemiesHordes { get; private set; }
     public List<Ship> enemiesShips { get; private set; }
+
+    private ShipData.SpawnShipCondition condition;
 
     private void Awake()
     {
@@ -17,13 +18,13 @@ public class ShipsManager : MonoBehaviour
 
         instance = this;
 
-        enemiesShipsInformatio = new List<EnemyShip>();
         enemiesShips = new List<Ship>();
     }
 
     private void Start()
     {
         GenerateAllyShip();
+        enemiesHordes = new List<ShipData>(NodeManager.instance.battleInformation.enemiesHordes);        
         GenerateEnemyShip();
     }
 
@@ -50,27 +51,82 @@ public class ShipsManager : MonoBehaviour
     }
     private void GenerateEnemyShip()
     {
-        foreach (var enemy in NodeManager.instance.battleInformation.enemyShipInformation)
+        foreach (var enemy in enemiesHordes[0].enemyShips)
         {
-            if(enemy.spawnShipCondition == EnemyShip.SpawnShipCondition.INIT)
-            {
-                GameObject enemyShip = Instantiate(enemy._ship);
-                enemyShip.GetComponent<EnemieManager>().SetTotalEnemies(enemy.enemiesCuantity);
-                enemyShip.transform.position = enemy.initShipPosition;
-                enemiesShips.Add(enemyShip.GetComponent<Ship>());
-                enemyShip.GetComponent<EnemieManager>().GenerateEnemies();
+            Quaternion rotation = (enemy.initShipPosition.z > 0) ? Quaternion.Euler(0, 180, 0) : Quaternion.identity;
+            GameObject enemyShip = Instantiate(enemy._ship, enemy.initShipPosition, rotation);
 
-                enemyShip.GetComponent<ShipEnemy>().SetIsArriving(true);
+            enemyShip.GetComponent<EnemieManager>().SetTotalEnemies(enemy.enemiesCuantity);
+
+
+            enemiesShips.Add(enemyShip.GetComponent<Ship>());
+            enemyShip.GetComponent<EnemieManager>().GenerateEnemies();
+            GenerateCannons(enemy, enemyShip);
+            ShipEnemy controller = enemyShip.GetComponent<ShipEnemy>();
+
+            controller.SetIsArriving(true);
+            controller.SetEnemyShip(enemy);
+        }
+
+        if(enemiesHordes.Count > 1) 
+            condition = enemiesHordes[1].spawnShipCondition;
+    }
+
+    private void GenerateCannons(EnemyShip enemy, GameObject ship)
+    {
+        Transform positionsFather = ship.transform.Find("CannonPositions");
+        List<Vector3> cannonsPosition = new List<Vector3>();
+
+        foreach (Transform position in positionsFather)
+        {
+            cannonsPosition.Add(position.localPosition);
+        }
+
+        foreach (var cannons in enemy.cannons)
+        {
+            GameObject cannon = Instantiate(cannons);
+            cannon.transform.SetParent(ship.transform, true);
+            cannon.GetComponent<EnemyObject>().enemieManager = ship.GetComponent<EnemieManager>();
+
+            cannon.transform.localPosition = cannonsPosition[0];
+            if (Mathf.Abs(cannon.transform.position.x) > Mathf.Abs(playerShip.transform.position.x - ship.transform.position.x))
+            {
+                cannon.transform.localPosition = new Vector3(-cannon.transform.localPosition.x, cannonsPosition[0].y, cannonsPosition[0].z);
             }
 
-            enemiesShipsInformatio.Add(enemy);
-        }  
+            Quaternion rotation = (enemy.initShipPosition.x > 0) ? Quaternion.Euler(0, 90, 0) : Quaternion.Euler(0, -90, 0);
+            cannon.transform.rotation = rotation;
+
+            cannonsPosition.Remove(cannonsPosition[0]);
+        }
     }
 
 
     public void RemoveEnemyShip(Ship ship)
     {
         enemiesShips.Remove(ship);
+
+        if (condition != ShipData.SpawnShipCondition.DESTROY || enemiesHordes.Count <= 1)
+            return;
+
+        if (enemiesShips.Count == 0)
+        {
+            enemiesHordes.Remove(enemiesHordes[0]);
+            GenerateEnemyShip();
+        }
+    }
+
+    public void CheckLastEnemyShipHP()
+    {
+        if (condition != ShipData.SpawnShipCondition.HP || enemiesHordes.Count <= 1)
+            return;
+
+        Ship lastShip = enemiesShips[enemiesShips.Count - 1];
+        if ((lastShip.GetCurrentHealth() / lastShip.GetMaxHealth()) < enemiesHordes[1].hpPercentage)
+        {
+            enemiesHordes.Remove(enemiesHordes[0]);
+            GenerateEnemyShip();
+        }
     }
 
     public void RemoveAllyShip()

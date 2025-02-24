@@ -12,6 +12,7 @@ public class AllyShip : Ship
 
     [Header("Boarding Points")]
     [field: SerializeField] public List<Transform> boardingPoints { get; private set; }
+
     protected void InitAllyBoat()
     {
 

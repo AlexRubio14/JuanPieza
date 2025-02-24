@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class managerPirateBoarding : MonoBehaviour
+public class ManagerPirateBoarding : MonoBehaviour
 {
-    public static managerPirateBoarding Instance { get; private set; }
+    public static ManagerPirateBoarding Instance { get; private set; }
 
     [Header("Boarding Pirates")]
     [SerializeField] private GameObject boardingEnemy;
@@ -19,8 +19,8 @@ public class managerPirateBoarding : MonoBehaviour
 
 
     [Header("Raft Start Pos")]
-    [SerializeField] private List<Transform> raftsStartPos = new List<Transform>();
-    public List<Transform> raftStartPoints = new List<Transform>();
+    [field: SerializeField] public List<Transform> raftsStartPos { get; private set; } = new List<Transform>();
+    [SerializeField] private float xOffset;
     [SerializeField] private float zOffset;
     [SerializeField] private Transform startPosHolder;
 
@@ -34,42 +34,24 @@ public class managerPirateBoarding : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(this);
+
+        InstantiateContent();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        InstantiateContent();
         CalculateRaftSpawnPoints();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyUp(KeyCode.H)) {
-            raftsPool[0].SetUpRaft();
-        }
     }
 
     // This method should be called everytime a new stage starts 
     // TODO: Call the method CalculateRaftSpawnPoints when a stage is started
     private void CalculateRaftSpawnPoints()
     {
-        int index = ShipsManager.instance.enemiesShips.Count;
-
         Vector3 playerShipPos = ShipsManager.instance.playerShip.transform.position;
 
-        List<Ship> _enemiesShips = ShipsManager.instance.enemiesShips;
-
-        for(int i = 0; i < index; i++)
-        {
-            Vector3 midPosBetweenShips = (playerShipPos + _enemiesShips[i].transform.position) / 2;
-
-            raftsStartPos[i].transform.position = new Vector3(midPosBetweenShips.x, midPosBetweenShips.y, midPosBetweenShips.z - zOffset);
-            raftStartPoints.Add(raftsStartPos[i]);
-
-            raftsPool[i].SetDestinyPos(midPosBetweenShips);
-        }
+        raftsStartPos[0].transform.position = new Vector3(playerShipPos.x - xOffset, playerShipPos.y, playerShipPos.z - zOffset);
+        raftsStartPos[1].transform.position = new Vector3(playerShipPos.x + xOffset, playerShipPos.y, playerShipPos.z - zOffset);
     }
 
     // Create the Pools of boarding Content in the manager, so it persists perhaps the SCENE IS CHANGED
@@ -104,11 +86,11 @@ public class managerPirateBoarding : MonoBehaviour
 
     public void InstantiateRafts()
     {
-        for(int i = 0; i < raftsToSpawn; i++)
+        for (int i = 0; i < raftsToSpawn; i++)
         {
             GameObject tempRaft = Instantiate(raft, raftsHolder.position, raft.transform.rotation);
 
-            if(tempRaft.TryGetComponent(out RaftController controller))
+            if (tempRaft.TryGetComponent(out RaftController controller))
             {
                 raftsPool.Add(controller);
                 controller.gameObject.transform.SetParent(raftsHolder, true);
@@ -118,9 +100,9 @@ public class managerPirateBoarding : MonoBehaviour
 
     public void DeletePiratePool()
     {
-        foreach(controllerPirateBoarding controller in piratesPool)
+        foreach (controllerPirateBoarding controller in piratesPool)
         {
-            if(controller != null)
+            if (controller != null)
             {
                 Destroy(controller.gameObject);
             }
@@ -129,9 +111,9 @@ public class managerPirateBoarding : MonoBehaviour
 
     public void DeleteRaftPool()
     {
-        foreach(RaftController raft in raftsPool)
+        foreach (RaftController raft in raftsPool)
         {
-            if(raft != null)
+            if (raft != null)
             {
                 Destroy(raft.gameObject);
             }
@@ -142,7 +124,7 @@ public class managerPirateBoarding : MonoBehaviour
     // TODO: call the method when a run is over
     void ResetRaftStartPos()
     {
-        foreach(Transform gameObject in raftsStartPos)
+        foreach (Transform gameObject in raftsStartPos)
         {
             gameObject.transform.position = startPosHolder.position;
         }
@@ -155,10 +137,12 @@ public class managerPirateBoarding : MonoBehaviour
 
         foreach (RaftController controller in raftsPool)
         {
-            if (controller.isBoarding)
-                return null;
+            if (!controller.isBoarding)
+            {
+                raftUnused = controller;
+                break;
+            }
 
-            raftUnused = controller;
         }
 
         return raftUnused;

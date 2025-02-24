@@ -1,18 +1,15 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ShipEnemy : Ship
 {
     [Header("Velocity")]
     [SerializeField] private float velocity;
+    [SerializeField] private EnemyShip shipInformation;
     private bool isArriving;
     private float t;
     private float startZ;
-
-    [Header("StartMoving")]
-    [Range(0f, 1f)]
-    [SerializeField] private float startMovingEnemies;
-    private bool enemiesActive;
 
     public override void Start()
     {
@@ -36,18 +33,25 @@ public class ShipEnemy : Ship
         float newZ = Mathf.Lerp(startZ, 0, t);
         transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
 
-        if (t == 1)
-            isArriving = false;
-        else if (t > startMovingEnemies && !enemiesActive)
+        if (t >= 1)
         {
             foreach (var enemies in GetComponent<EnemieManager>().GetEnemyList())
+            {
                 Camera.main.GetComponent<CameraController>().AddPlayer(enemies.gameObject);
-            enemiesActive = true;
+                enemies.GetComponent<NavMeshAgent>().enabled = true;
+            }
+
+            isArriving = false;
         }
     }
 
     public void SetIsArriving(bool state)
     {
         isArriving = state;
+    }
+
+    public void SetEnemyShip(EnemyShip enemyShip)
+    {
+        shipInformation = enemyShip;
     }
 }

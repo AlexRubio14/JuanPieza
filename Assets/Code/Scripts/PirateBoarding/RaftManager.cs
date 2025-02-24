@@ -21,29 +21,16 @@ public class RaftManager : MonoBehaviour
         Instance = this;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void CreateRaftEvents(List<BoardShip> _boardShipList)
     {
-        for(int i = 0; i < 4; i++)
+        foreach(BoardShip boardship in _boardShipList)
         {
-            raftEventQueue.Enqueue(() => CreateRaftEvent());
+            RaftController raftController = ManagerPirateBoarding.Instance.GetUnusedRaft();
+
+            raftController.SetUpRaft(boardship);
+            //raftEventQueue.Enqueue()
+            Debug.Log("He creado un evento de Raft");
         }
-
-        ProcessRaftEvent();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void CreateRaftEvent()
-    {
-        RaftController raftController = managerPirateBoarding.Instance.GetUnusedRaft();
-
-        raftController.SetUpRaft();
-
     }
 
     public void ProcessRaftEvent()
