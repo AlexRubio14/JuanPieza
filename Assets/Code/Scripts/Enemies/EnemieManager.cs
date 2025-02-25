@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemieManager : MonoBehaviour
 {
-    //Los objetos cuando se rompen llaman a las funciones del manager para ser añadidos a la toDoList
-
-    private CameraController cameraController;
+    //Los objetos cuando se rompen llaman a las funciones del manager para ser aï¿½adidos a la toDoList
 
     private int totalEnemies;
     [SerializeField]
     private GameObject enemyPrefab;
+    [SerializeField]
+    private GameObject falseEnemyPrefab;
     [SerializeField]
     private Transform enemySpawnPoint;
     [SerializeField]
@@ -46,17 +47,34 @@ public class EnemieManager : MonoBehaviour
         NavMeshLink[] links = GetComponentsInChildren<NavMeshLink>();
         foreach (NavMeshLink link in links)
             link.UpdateLink();
+
+        timeToGetResource /= NodeManager.instance.questShip.difficulty;
+        timeToRepair /= NodeManager.instance.questShip.difficulty;
+        timeToInteract /= NodeManager.instance.questShip.difficulty;
+        timeToShoot /= NodeManager.instance.questShip.difficulty;
     }
 
     public void GenerateEnemies()
     {
-        cameraController = FindAnyObjectByType<CameraController>();
         toDoList = new List<EnemyAction>();
         enemyList = new List<EnemyController>();
-        for (int i = 0; i < totalEnemies; i++)
+
+        if(totalEnemies > 0) 
         {
-            Vector3 spawnPos = enemySpawnPoint.position + new Vector3(Random.Range(-enemySpawnOffset, enemySpawnOffset), 0, Random.Range(-enemySpawnOffset, enemySpawnOffset));
-            EnemyController newEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity).GetComponent<EnemyController>();
+            for (int i = 0; i < totalEnemies; i++)
+            {
+                Vector3 spawnPos = enemySpawnPoint.position + new Vector3(Random.Range(-enemySpawnOffset, enemySpawnOffset), 0, Random.Range(-enemySpawnOffset, enemySpawnOffset));
+                EnemyController newEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity).GetComponent<EnemyController>();
+                newEnemy.enemieManager = this;
+                newEnemy.gameObject.transform.SetParent(transform, true);
+                newEnemy.GetComponent<NavMeshAgent>().enabled = false;
+
+                enemyList.Add(newEnemy);
+            }
+        }
+        else
+        {
+            EnemyController newEnemy = Instantiate(falseEnemyPrefab, enemySpawnPoint.position, Quaternion.identity).GetComponent<EnemyController>();
             newEnemy.enemieManager = this;
             newEnemy.gameObject.transform.SetParent(transform, true);
             //newEnemy.GetComponent<EnemyController>().currentAction.currentAction = EnemyAction.ActionType.WAIT;
@@ -139,7 +157,7 @@ public class EnemieManager : MonoBehaviour
 
     private void AsignActionToEnemy(EnemyController _enemy, EnemyAction _action)
     {
-        if(_action == null || _enemy.currentAction.currentAction != EnemyAction.ActionType.WAIT)
+        if(_action == null)
             return;
 
         _enemy.currentAction = _action;
@@ -162,19 +180,19 @@ public class EnemieManager : MonoBehaviour
     }
     public void AddShootCannonAction(EnemyWeapon _weapon)
     {
-        EnemyAction action = new ShootCannonAction(EnemyAction.ActionType.SHOOT_CANNON, /*Parte trasera del Cañon*/ _weapon, interactDistance / 2, timeToShoot);
+        EnemyAction action = new ShootCannonAction(EnemyAction.ActionType.SHOOT_CANNON, /*Parte trasera del Caï¿½on*/ _weapon, interactDistance / 2, timeToShoot);
 
         toDoList.Add(action);
     }
     public void AddReloadCannonAction(EnemyObject _cannon)
     {
-        EnemyAction action = new ReloadCannonAction(EnemyAction.ActionType.RELOAD_CANNON, bulletResource, /*Cañon*/_cannon, SteppedAction.ResourceType.BULLET, interactDistance, timeToGetResource, timeToInteract);
+        EnemyAction action = new ReloadCannonAction(EnemyAction.ActionType.RELOAD_CANNON, bulletResource, /*Caï¿½on*/_cannon, SteppedAction.ResourceType.BULLET, interactDistance, timeToGetResource, timeToInteract);
 
         toDoList.Add(action);
     }
     public void AddRepairCannonAction(EnemyObject _cannon)
     {
-        EnemyAction action = new RepairCannonAction(EnemyAction.ActionType.REPAIR_CANNON, hammerObject, /*Cañon*/_cannon, SteppedAction.ResourceType.HAMMER, interactDistance, timeToGetResource, timeToRepair);
+        EnemyAction action = new RepairCannonAction(EnemyAction.ActionType.REPAIR_CANNON, hammerObject, /*Caï¿½on*/_cannon, SteppedAction.ResourceType.HAMMER, interactDistance, timeToGetResource, timeToRepair);
 
         toDoList.Add(action);
     }

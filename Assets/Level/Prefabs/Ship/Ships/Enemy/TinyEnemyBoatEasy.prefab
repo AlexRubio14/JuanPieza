@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
+  ship: {fileID: 2695206495570368779}
 --- !u!1 &580285236615388429
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +281,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4657391971423510268}
   m_Layer: 0
-  m_Name: CannonPositions3
+  m_Name: CannonPositions1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -515,7 +515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7133702414026087718}
   m_Layer: 0
-  m_Name: CannonPositions2
+  m_Name: CannonPositions3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -632,7 +632,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8939374292426736774}
   m_Layer: 0
-  m_Name: CannonPositions4
+  m_Name: CannonPositions2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -663,7 +663,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5031660818486921701}
   m_Layer: 0
-  m_Name: CannonPositions5
+  m_Name: CannonPositions4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -873,7 +873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
+  ship: {fileID: 2695206495570368779}
 --- !u!1 &4086182033197049970
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,7 +1025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6140746f33cef5749a6fef9a7f119698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
+  ship: {fileID: 2695206495570368779}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
   hitLayer:
     serializedVersion: 2
@@ -1243,7 +1243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
+  ship: {fileID: 2695206495570368779}
 --- !u!1 &5339860289122487734
 GameObject:
   m_ObjectHideFlags: 0
@@ -1338,7 +1338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
+  ship: {fileID: 2695206495570368779}
 --- !u!1 &6193015715972758371
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,7 +1496,6 @@ MonoBehaviour:
   destroyY: -10
   initY: 1
   velocity: 0.2
-  startMovingEnemies: 0.7
 --- !u!54 &7670309692406009392
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1536,7 +1535,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e4d538eee3bcd5409e63b5683dc0098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5511217913929459945, guid: 122656c0e13c21846918af65e4393fce, type: 3}
+  enemyPrefab: {fileID: 5511217913929459945, guid: 7f9b3cd5156ef8449b6e70999a322baa, type: 3}
+  falseEnemyPrefab: {fileID: 5511217913929459945, guid: 5529a8a67947a054e82bcc177012d50a, type: 3}
   enemySpawnPoint: {fileID: 7816651391003825222}
   enemySpawnOffset: 1
   priorityList: 0000000003000000040000000100000002000000
@@ -1754,7 +1754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6140746f33cef5749a6fef9a7f119698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
+  ship: {fileID: 2695206495570368779}
   hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
   hitLayer:
     serializedVersion: 2
@@ -2002,7 +2002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
+  ship: {fileID: 2695206495570368779}
 --- !u!1 &7771515505585486013
 GameObject:
   m_ObjectHideFlags: 0
@@ -2032,10 +2032,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1431023067296426426}
-  - {fileID: 7133702414026087718}
   - {fileID: 4657391971423510268}
   - {fileID: 8939374292426736774}
+  - {fileID: 7133702414026087718}
   - {fileID: 5031660818486921701}
   m_Father: {fileID: 6764713892806314720}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2133,7 +2132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
+  ship: {fileID: 2695206495570368779}
 --- !u!1 &8220072722941503500
 GameObject:
   m_ObjectHideFlags: 0
@@ -2228,7 +2227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
+  ship: {fileID: 2695206495570368779}
 --- !u!1 &8274124109588675004
 GameObject:
   m_ObjectHideFlags: 0
@@ -2323,7 +2322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
+  ship: {fileID: 2695206495570368779}
 --- !u!1 &8937430367664960262
 GameObject:
   m_ObjectHideFlags: 0
@@ -2504,7 +2503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313c4cdf541e1fb47998b345d757bc63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
+  ship: {fileID: 2695206495570368779}
 --- !u!1001 &1797831237096868572
 PrefabInstance:
   m_ObjectHideFlags: 0

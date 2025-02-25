@@ -10,6 +10,9 @@ public class AllyShip : Ship
     [Header("SpawnPoints")]
     [SerializeField] private List<Transform> playersSpawnPos;
 
+    [Header("Boarding Points")]
+    [field: SerializeField] public List<Transform> boardingPoints { get; private set; }
+
     protected void InitAllyBoat()
     {
 
