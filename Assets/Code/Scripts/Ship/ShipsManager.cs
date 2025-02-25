@@ -65,7 +65,7 @@ public class ShipsManager : MonoBehaviour
             ShipEnemy controller = enemyShip.GetComponent<ShipEnemy>();
 
             controller.SetIsArriving(true);
-            controller.SetEnemyShip(enemy);
+            controller.SetBoardshipInformation(enemy.boardShips);
         }
 
         if(enemiesHordes.Count > 1) 

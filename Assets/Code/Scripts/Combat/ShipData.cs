@@ -32,4 +32,5 @@ public class BoardShip
 
     public SpawnBoardShipCondition spawnBoardShipCondition;
     [Range(0, 1)] public float hpPercentage;
+    public float timeToSpawnBoarding;
 }

@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,10 +9,13 @@ public class ShipEnemy : Ship
 {
     [Header("Velocity")]
     [SerializeField] private float velocity;
-    [SerializeField] private EnemyShip shipInformation;
     private bool isArriving;
     private float t;
     private float startZ;
+    [Space, Header("Boarding Info")]
+    [SerializeField] private List<BoardShip> boardshipInformation;
+    private List<BoardShip> hpBoardshipList = new List<BoardShip>();
+    private List<BoardShip> initBoardshipList = new List<BoardShip>();
 
     public override void Start()
     {
@@ -17,6 +23,20 @@ public class ShipEnemy : Ship
 
         t = 0;
         startZ = transform.position.z;
+
+        foreach (BoardShip boardship in boardshipInformation)
+        {
+            if(boardship.spawnBoardShipCondition == BoardShip.SpawnBoardShipCondition.HP)
+            {
+                hpBoardshipList.Add(boardship);
+                continue;
+            }
+
+            initBoardshipList.Add(boardship);
+        }
+
+        hpBoardshipList.Sort((a, b) => b.hpPercentage.CompareTo(a.hpPercentage)); // Sort hppercentages by ascdentant
+        initBoardshipList.Sort((a, b) => a.timeToSpawnBoarding.CompareTo(b.timeToSpawnBoarding)); // Sort timetoSpawnRafts by descendant
     }
 
     protected override void Update()
@@ -42,16 +62,42 @@ public class ShipEnemy : Ship
             }
 
             isArriving = false;
+
+            foreach (BoardShip boardshipInfo in initBoardshipList)
+            {
+                StartCoroutine(RequestCreateRaftEvent(boardshipInfo));
+            }
         }
     }
 
+    private IEnumerator RequestCreateRaftEvent(BoardShip boardshipInfo)
+    {
+        yield return new WaitForSeconds(boardshipInfo.timeToSpawnBoarding);
+        RaftManager.Instance.CreateRaftEvents(boardshipInfo);
+    }
+    
+    public override void SetCurrentHealth(float amount)
+    {
+        base.SetCurrentHealth(amount);
+
+        if (hpBoardshipList.Count == 0)
+            return;
+    
+        if (boardshipInformation[0].hpPercentage * 100 <= GetCurrentHealth())
+        {
+            RaftManager.Instance.CreateRaftEvents(boardshipInformation[0]);
+            hpBoardshipList.RemoveAt(0);
+        }
+    }
+    
     public void SetIsArriving(bool state)
     {
         isArriving = state;
     }
-
-    public void SetEnemyShip(EnemyShip enemyShip)
+    
+    public void SetBoardshipInformation(List<BoardShip> boardshipInfoList)
     {
-        shipInformation = enemyShip;
+        boardshipInformation = boardshipInfoList;
     }
 }
+    

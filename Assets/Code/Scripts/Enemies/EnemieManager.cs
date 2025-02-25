@@ -157,7 +157,7 @@ public class EnemieManager : MonoBehaviour
 
     private void AsignActionToEnemy(EnemyController _enemy, EnemyAction _action)
     {
-        if(_action == null || _enemy.currentAction.currentAction != EnemyAction.ActionType.WAIT)
+        if(_action == null)
             return;
 
         _enemy.currentAction = _action;

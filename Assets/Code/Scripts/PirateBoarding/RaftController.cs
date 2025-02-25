@@ -83,7 +83,8 @@ public class RaftController : MonoBehaviour
         transform.position = raftStartPointsRef[randomIndex].position;
 
         startingZPos = transform.position.z;
-        //ChangeState(RaftState.MOVING_FRONT);
+        ChangeState(RaftState.MOVING_FRONT);
+
     }
 
     private void ResetRaft()
@@ -94,6 +95,9 @@ public class RaftController : MonoBehaviour
 
         pirates.Clear();
         pirateJumpIndex = 0;
+
+        RaftManager.Instance.ProcessRaftEvent(); //Cuando se acaba el abordaje manda una peticion al manager de si hay algun evento en cola que se procese
+        RaftManager.Instance.isProcessingEvent = false; // Al acabar el evento de la raft ponemos en false que haya un evento activo
     }
 
     private void SendPirateToJump(controllerPirateBoarding _controller)

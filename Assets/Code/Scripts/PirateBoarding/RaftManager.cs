@@ -8,7 +8,7 @@ public class RaftManager : MonoBehaviour
 
     [SerializeField] public Queue<Action> raftEventQueue = new Queue<Action>();
 
-    public bool isProcessingEvent { get; private set; } = false;
+    public bool isProcessingEvent = false;
 
     private void Awake()
     {
@@ -21,17 +21,14 @@ public class RaftManager : MonoBehaviour
         Instance = this;
     }
 
-    public void CreateRaftEvents(List<BoardShip> _boardShipList)
+    public void CreateRaftEvents(BoardShip _boardShip)
     {
-        foreach(BoardShip boardship in _boardShipList)
-        {
-            RaftController raftController = ManagerPirateBoarding.Instance.GetUnusedRaft();
+        RaftController raftController = ManagerPirateBoarding.Instance.GetUnusedRaft();
 
-            raftController.SetUpRaft(boardship);
-            //raftEventQueue.Enqueue()
-            Debug.Log("He creado un evento de Raft");
-        }
-    }
+        raftEventQueue.Enqueue(() => raftController.SetUpRaft(_boardShip));
+        ProcessRaftEvent();
+    } 
+
 
     public void ProcessRaftEvent()
     {
@@ -40,6 +37,8 @@ public class RaftManager : MonoBehaviour
 
         if(isProcessingEvent) 
             return;
+
+        isProcessingEvent = true;
 
         Action nextEvent = raftEventQueue.Dequeue();
         nextEvent?.Invoke();
