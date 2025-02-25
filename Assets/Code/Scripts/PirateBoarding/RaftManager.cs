@@ -8,7 +8,7 @@ public class RaftManager : MonoBehaviour
 
     [SerializeField] public Queue<Action> raftEventQueue = new Queue<Action>();
 
-    public bool isProcessingEvent = false;
+    [HideInInspector] public bool isProcessingEvent = false;
 
     private void Awake()
     {

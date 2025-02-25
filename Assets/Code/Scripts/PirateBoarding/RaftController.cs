@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -100,16 +101,25 @@ public class RaftController : MonoBehaviour
         RaftManager.Instance.isProcessingEvent = false; // Al acabar el evento de la raft ponemos en false que haya un evento activo
     }
 
-    private void SendPirateToJump(controllerPirateBoarding _controller)
+    public void SendPirateToJump()
     {
-        if (pirateJumpIndex == pirates.Count)
-            return;
-
-        _controller.SetPirateToJump();
+        pirates[pirateJumpIndex].SetPirateToJump();
 
         pirateJumpIndex++;
 
-        Invoke("SendPirateToJump", timeBetweenPirateJumps);
+        if (pirateJumpIndex == pirates.Count) // Check if all pirates have jumped and moveBack the raft
+        {
+            ChangeState(RaftState.MOVING_BACK);
+            return;
+        }
+
+        StartCoroutine(WaitAndSendPirateToJump()); // wait x time and send the next pirate
+    }
+
+    private IEnumerator WaitAndSendPirateToJump()
+    {
+        yield return new WaitForSeconds(timeBetweenPirateJumps);
+        SendPirateToJump();
     }
 
     private void SetPiratesInRaft(int _enemiesToSpawn)
@@ -171,7 +181,6 @@ public class RaftController : MonoBehaviour
             case RaftState.BOARDING:
                 rb.linearVelocity = Vector3.zero;
                 StartBoarding();
-                Invoke("StartMovingBack", 2.0f); // TODO: Change this invoke to a mehtod (When all pirates jumped into playership changeState into MOVING_BACK
                 break;
             default:
                 break;
@@ -193,9 +202,7 @@ public class RaftController : MonoBehaviour
         }
 
         //Jump into playerShip and start Chasing/boarding
-        SendPirateToJump(pirates[pirateJumpIndex]);
-
-
+        SendPirateToJump();
     }
 
     public void SetDestinyPos(float _zPos)
