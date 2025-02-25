@@ -282,7 +282,7 @@ public class PlayerController : MonoBehaviour
                 nearestObj.GetSelectedVisual().Show();
             }
             else
-                hintController.UpdateActionType(HintController.ActionType.NONE);
+                hintController.UpdateActionType(new HintController.ActionType[] { HintController.ActionType.NONE });
         }
     }
     public void StopUse()

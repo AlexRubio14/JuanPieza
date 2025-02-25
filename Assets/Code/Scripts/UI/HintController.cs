@@ -1,18 +1,27 @@
 using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class HintController : MonoBehaviour
 {
+    [SerializeField]
+    private HintActionData.Language language;
+
+    [SerializeField]
+    private HintActionData[] hintActions;
     public enum DeviceType { KEYBOARD = 0, GAMEPAD = 1}
     public enum ActionType { 
-        NONE, 
+        CANT_USE,
         USE, 
         HOLD_USE,
+        CANT_INTERACT,
         INTERACT, 
-        HOLD_INTERACT
+        HOLD_INTERACT,
+        NONE
     }
     
     [field: SerializeField]
@@ -24,9 +33,24 @@ public class HintController : MonoBehaviour
     [Space, SerializeField] private Canvas canvas;
     [SerializeField] private Image hintRightImage;
     [SerializeField] private Image hintLeftImage;
+    private TextMeshProUGUI hintRightText;
+    private TextMeshProUGUI hintLeftText;
 
     [SerializeField] private float hintOffset;
-    
+
+    public bool showingHints;
+
+    public struct Hint
+    {
+        public Hint(ActionType _type, string _id)
+        {
+            hintType = _type;
+            hintId = _id;
+        }
+        public ActionType hintType;
+        public string hintId;
+    }
+
     private void Start()
     {
         canvas.worldCamera = Camera.main;
@@ -40,6 +64,11 @@ public class HintController : MonoBehaviour
             deviceType = DeviceType.KEYBOARD;
         else
             Debug.Log($"Input no reconocido, el dispositivo es: {device.displayName}");
+
+
+        hintRightText = hintRightImage.GetComponentInChildren<TextMeshProUGUI>();
+        hintLeftText = hintLeftImage.GetComponentInChildren<TextMeshProUGUI>();
+
     }
 
     private void Update()
@@ -48,33 +77,100 @@ public class HintController : MonoBehaviour
         {
             Vector3 hintPos = transform.position + new Vector3(hintOffset, 0, 0);
             hintRightImage.transform.position = hintPos;
+            hintRightImage.transform.forward = Camera.main.transform.forward;
+        }
+
+        if (hintLeftImage.gameObject.activeInHierarchy)
+        {
+            Vector3 hintPos = transform.position + new Vector3(-hintOffset, 0, 0);
+            hintLeftImage.transform.position = hintPos;
+            hintLeftImage.transform.forward = Camera.main.transform.forward;
         }
 
     }
 
-    public void UpdateActionType(ActionType _action)
+    private HintActionData GetDataById(string _stringId)
     {
-        if (_action == ActionType.NONE)
+        foreach (HintActionData item in hintActions)
         {
-            //Ocultar la UI de inputs
-            hintRightImage.gameObject.SetActive(false);
-            hintLeftImage.gameObject.SetActive(false);
-            return;
+            if(item.HintId == _stringId)
+                return item;
         }
 
-        if (_action == ActionType.USE)
-        {
-            hintRightImage.gameObject.SetActive(true);
+        return null;
+    }
 
-            Sprite currentSprite = ActionSprites[_action][(int)deviceType];
-            hintRightImage.sprite = currentSprite;
-        }
-        if (_action == ActionType.INTERACT)
+    private void UpdateRightAction(Hint _action)
+    {
+        switch (_action.hintType)
         {
-            hintLeftImage.gameObject.SetActive(true);
+            case ActionType.CANT_INTERACT:
+                hintRightImage.gameObject.SetActive(false);
+                break;
+            case ActionType.INTERACT:
+            case ActionType.HOLD_INTERACT:
+                hintRightImage.gameObject.SetActive(true);
 
-            Sprite currentSprite = ActionSprites[_action][(int)deviceType];
-            hintLeftImage.sprite = currentSprite;
+                Sprite currentSprite = ActionSprites[_action.hintType][(int)deviceType];
+                hintRightImage.sprite = currentSprite;
+                hintRightText.text = _action.hintId;
+
+                break;
+            default:
+                break;
         }
+
+
+    }
+    private void UpdateLeftAction(Hint _action)
+    {
+        switch (_action)
+        {
+            case ActionType.CANT_USE:
+                hintLeftImage.gameObject.SetActive(false);
+                break;
+            case ActionType.USE:
+            case ActionType.HOLD_USE:
+                hintLeftImage.gameObject.SetActive(true);
+
+                Sprite currentSprite = ActionSprites[_action][(int)deviceType];
+                hintLeftImage.sprite = currentSprite;
+                hintLeftText.text = _hintId;
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public void UpdateActionType(Hint[] _actions)
+    {
+
+        foreach (Hint item in _actions)
+        {
+            switch (item.hintType)
+            {
+                case ActionType.CANT_USE:
+                case ActionType.USE:
+                case ActionType.HOLD_USE:
+                    UpdateLeftAction(item);
+                    break;
+                case ActionType.CANT_INTERACT:
+                case ActionType.INTERACT:
+                case ActionType.HOLD_INTERACT:
+                    UpdateRightAction(item);
+                    break;
+                case ActionType.NONE:
+                    UpdateRightAction(item);
+                    UpdateLeftAction(item);
+                    showingHints = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        showingHints = hintRightImage.gameObject.activeInHierarchy || hintLeftImage.gameObject.activeInHierarchy;
+
     }
 }

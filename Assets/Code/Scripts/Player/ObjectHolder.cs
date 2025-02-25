@@ -32,6 +32,10 @@ public class ObjectHolder : MonoBehaviour
     {
         InteractableObject neareastObject = CheckItemsInRange();
         ChangeNearestInteractableObject(neareastObject);
+
+        if(!hintController.showingHints && handObject)
+            hintController.UpdateActionType(handObject.ShowNeededInputHint(this));
+
     }
 
     // Crea un sphereRaycast, te pilla el interactableObject mas cercano que no este siendo utilizado y te devuelve su script y su collider a la vez.
@@ -162,7 +166,7 @@ public class ObjectHolder : MonoBehaviour
             }
             else
             {
-                hintController.UpdateActionType(HintController.ActionType.NONE);
+                hintController.UpdateActionType(new HintController.ActionType[] { HintController.ActionType.NONE });
             }
             return;
         }

@@ -108,12 +108,10 @@ public abstract class Weapon : RepairObject
         return !isPlayerMounted() && !handObject /*Montarse*/ || isPlayerMounted() && playerCont.playerInput.playerReference == mountedPlayerId /*Bajarse*/ || !hasAmmo && handObject && handObject.objectSO == objectToInteract /*Recargar*/ ;
     }
 
-    public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
+    public override HintController.ActionType[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         if (state.GetIsBroken())
-        {
             return base.ShowNeededInputHint(_objectHolder);
-        }
 
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
@@ -123,19 +121,17 @@ public abstract class Weapon : RepairObject
         else
             tooltip.SetState(ObjectsTooltip.ObjectState.Loaded);
         
-        if (!handObject && !isPlayerMounted() //No tiene nada en la mano y no hay nadie montado
-            || isPlayerMounted() && !hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId //Si lo esta utilizando y no esta cargado
-            || !hasAmmo && handObject && handObject.objectSO == objectToInteract //Si no esta cargado y tiene la bala en la mano
-            )
-        {
-            return HintController.ActionType.INTERACT;
-        }
+        if (!handObject && !isPlayerMounted()) //No tiene nada en la mano y no hay nadie montado
+            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.CANT_USE };
+        else if (isPlayerMounted() && !hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId) //Si lo esta utilizando y no esta cargado)
+            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.CANT_USE };
+        else if (!hasAmmo && handObject && handObject.objectSO == objectToInteract)//Si no esta cargado y tiene la bala en la mano
+            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.USE };
         else if (hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId)
-        {
-            return HintController.ActionType.USE;
-        }
+            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.USE };
+        
 
-        return HintController.ActionType.NONE;
+        return new HintController.ActionType[] { HintController.ActionType.NONE };
     }
 
     protected void Mount(PlayerController _player, ObjectHolder _objectHolder)

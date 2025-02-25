@@ -143,7 +143,7 @@ public class Repair : InteractableObject
     public virtual void OnBreakObject() { }
     protected virtual void RepairEnded(ObjectHolder _objectHolder)
     {
-        _objectHolder.hintController.UpdateActionType(HintController.ActionType.NONE);
+        _objectHolder.hintController.UpdateActionType(new HintController.ActionType[] { HintController.ActionType.NONE });
     }
     #endregion
 

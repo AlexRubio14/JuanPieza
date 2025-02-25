@@ -14,16 +14,16 @@ public class RepairHole : Repair
         Destroy(gameObject);
     }
 
-    public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
         if (handObject && handObject.objectSO == repairItem)
         {
-            return HintController.ActionType.HOLD_USE;
+            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.HOLD_USE };
         }
 
-        return HintController.ActionType.NONE;
+        return new HintController.ActionType[] { HintController.ActionType.NONE };
     }
     public void SetbulletInformation(Ship _ship, float amount)
     {

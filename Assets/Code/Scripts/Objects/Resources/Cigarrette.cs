@@ -31,20 +31,24 @@ public class Cigarrette : Resource
         return !_objectHolder.GetHasObjectPicked();
     }
 
-    public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
+    public override HintController.ActionType[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         if (!_objectHolder.GetHasObjectPicked())
-            return HintController.ActionType.INTERACT;
+            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.CANT_USE};
         else if (_objectHolder.GetHandInteractableObject() == this)
-            return HintController.ActionType.USE;
+            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.USE };
 
-        return HintController.ActionType.NONE;
+        return new HintController.ActionType[] { HintController.ActionType.NONE };
     }
 
     public override void Interact(ObjectHolder _objectHolder)
     {
         base.Interact(_objectHolder);
-        _objectHolder.hintController.UpdateActionType(HintController.ActionType.USE);
+        _objectHolder.hintController.UpdateActionType(new HintController.Hint[]
+        {
+            new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
+            new HintController.Hint(HintController.ActionType.USE, "smoke")
+        });
     }
 
     public override void Use(ObjectHolder _objectHolder)
@@ -54,7 +58,10 @@ public class Cigarrette : Resource
         _objectHolder.RemoveItemFromHand();
         _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
 
-        _objectHolder.hintController.UpdateActionType(HintController.ActionType.NONE);
+        _objectHolder.hintController.UpdateActionType(new HintController.Hint[]
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        });
 
         Destroy(gameObject);
         

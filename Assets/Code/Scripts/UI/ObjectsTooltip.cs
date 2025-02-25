@@ -10,12 +10,11 @@ public class ObjectsTooltip : MonoBehaviour
     [SerializeField] private ObjectType objectType = ObjectType.Object;
 
     private ObjectState currentState;
-    private Camera camera;
     
     [Header("UI")]
     [SerializeField] private GameObject progressBarGO;
     [SerializeField] private float size = 1.5f;
-    [SerializeField] private float offset = 2;
+    [SerializeField] private float offset = 3.5f;
     private Canvas canvas;
     private Image image;
     public ProgressBarController progressBar { get; private set; }
@@ -78,6 +77,7 @@ public class ObjectsTooltip : MonoBehaviour
         if (image.gameObject.activeInHierarchy)
         {
             Vector3 tooltipPos = transform.position + new Vector3(0, offset, 0);
+
             image.transform.position = tooltipPos;
             
             if (progressBar != null)

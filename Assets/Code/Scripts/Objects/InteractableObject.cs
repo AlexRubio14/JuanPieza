@@ -72,19 +72,31 @@ public abstract class InteractableObject : MonoBehaviour
         if (ShipsManager.instance && hasToBeInTheShip && ShipsManager.instance.playerShip)
             ShipsManager.instance.playerShip.RemoveInteractuableObject(this);
     }
-    public virtual HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
+    public virtual HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
-        if (handObject && objectToInteract == handObject.objectSO || !_objectHolder.GetHandInteractableObject() && !objectToInteract)
+
+        if (handObject && objectToInteract == handObject.objectSO)
         {
             if (tooltip != null)
                 tooltip.SetState(ObjectsTooltip.ObjectState.Interacting);
             
-            return HintController.ActionType.INTERACT;
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, ""),
+                new HintController.Hint( HintController.ActionType.CANT_USE, "")
+            };
+        }
+        else if (!_objectHolder.GetHandInteractableObject() && !objectToInteract)
+        {
+
         }
  
-        return HintController.ActionType.NONE;
+        return new HintController.Hint[]
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        };
     }
 
     protected IEnumerator AddObjectToShip()
