@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class controllerPirateBoarding : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class controllerPirateBoarding : MonoBehaviour
     public enum PirateState { IDLE, PARABOLA, BOARDING, DEAD }
 
     public PirateState currentState { get; private set; } = PirateState.IDLE;
+
+    [SerializeField] private float raycastDis;
+    [SerializeField] private LayerMask floorLayer;
 
 
     private void Awake()
@@ -52,7 +56,7 @@ public class controllerPirateBoarding : MonoBehaviour
     public void JumpIntoPlayerShip()
     {
         parabolaProcess += Time.deltaTime * parabolaSpeed;
-        FishingManager.Parabola(transform.position, posToJump, transform.position.y + 5f, parabolaProcess);
+        transform.position = FishingManager.Parabola(transform.position, posToJump, jumpHeigt, parabolaProcess);
 
         if (parabolaProcess >= 1f)
         {
@@ -69,7 +73,6 @@ public class controllerPirateBoarding : MonoBehaviour
             case PirateState.IDLE:
                 break;
             case PirateState.PARABOLA:
-                rb.useGravity = false;
                 break;
             case PirateState.BOARDING:
                 break;
@@ -84,7 +87,6 @@ public class controllerPirateBoarding : MonoBehaviour
             case PirateState.IDLE:
                 break;
             case PirateState.PARABOLA:
-                rb.useGravity = true;
                 rb.isKinematic = false;
                 JumpIntoPlayerShip();
                 break;
@@ -118,7 +120,14 @@ public class controllerPirateBoarding : MonoBehaviour
             }
         }
 
-        posToJump = closestPoint;
+        Vector3 raycastPoint = new Vector3(closestPoint.x, closestPoint.y + raycastDis, closestPoint.z);
+
+        RaycastHit raycastHit = new RaycastHit();  
+
+        if (Physics.Raycast(raycastPoint, Vector3.down, out raycastHit, floorLayer))
+        {
+            posToJump = raycastHit.point;
+        }
     }
 
     public void SetPirateToJump()
