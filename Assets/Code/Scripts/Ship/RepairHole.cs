@@ -6,7 +6,7 @@ public class RepairHole : Repair
     private float damageDeal;
     protected override void RepairEnded(ObjectHolder _objectHolder)
     {
-        //ship.RemoveInteractuableObject(_objectHolder.GetHandInteractableObject());
+        _objectHolder.hintController.UpdateActionType(new HintController.Hint[] { new HintController.Hint(HintController.ActionType.NONE, "") });
         ship.SetCurrentHealth(damageDeal);
         InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
         _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
@@ -19,11 +19,17 @@ public class RepairHole : Repair
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
         if (handObject && handObject.objectSO == repairItem)
-        {
-            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.HOLD_USE };
-        }
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
+                new HintController.Hint(HintController.ActionType.HOLD_USE, "repair_hole")
+            };
 
-        return new HintController.ActionType[] { HintController.ActionType.NONE };
+
+        return new HintController.Hint[]
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        };
     }
     public void SetbulletInformation(Ship _ship, float amount)
     {

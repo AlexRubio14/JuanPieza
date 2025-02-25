@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using UnityEngine;
 
 public abstract class Resource : InteractableObject
@@ -46,19 +45,31 @@ public abstract class Resource : InteractableObject
         return !handObject;
     }
 
-    public override HintController.ActionType[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
         if (!handObject)
         {
-            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.CANT_USE };
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
+                new HintController.Hint(HintController.ActionType.CANT_USE, "")
+
+            };
         }
         else if (handObject == this)
         {
-            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.CANT_USE };
+            return new HintController.Hint[] 
+            { 
+                new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
+                new HintController.Hint(HintController.ActionType.CANT_USE, "") 
+            };
         }
 
-        return new HintController.ActionType[] { HintController.ActionType.NONE };
+        return new HintController.Hint[] 
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        };
     }
 }

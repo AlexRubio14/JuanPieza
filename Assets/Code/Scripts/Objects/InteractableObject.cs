@@ -24,7 +24,7 @@ public abstract class InteractableObject : MonoBehaviour
     
     protected virtual void Awake()
     {
-        if (TryGetComponent<ObjectsTooltip>(out ObjectsTooltip _tooltip))
+        if (TryGetComponent(out ObjectsTooltip _tooltip))
             tooltip = _tooltip;
         
         rb = GetComponent<Rigidbody>();
@@ -72,33 +72,8 @@ public abstract class InteractableObject : MonoBehaviour
         if (ShipsManager.instance && hasToBeInTheShip && ShipsManager.instance.playerShip)
             ShipsManager.instance.playerShip.RemoveInteractuableObject(this);
     }
-    public virtual HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-
-
-        if (handObject && objectToInteract == handObject.objectSO)
-        {
-            if (tooltip != null)
-                tooltip.SetState(ObjectsTooltip.ObjectState.Interacting);
-            
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, ""),
-                new HintController.Hint( HintController.ActionType.CANT_USE, "")
-            };
-        }
-        else if (!_objectHolder.GetHandInteractableObject() && !objectToInteract)
-        {
-
-        }
- 
-        return new HintController.Hint[]
-        {
-            new HintController.Hint(HintController.ActionType.NONE, "")
-        };
-    }
-
+    public abstract HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder);
+    
     protected IEnumerator AddObjectToShip()
     {
         yield return new WaitForEndOfFrame();

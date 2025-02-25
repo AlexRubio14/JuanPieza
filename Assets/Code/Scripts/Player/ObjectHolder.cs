@@ -161,13 +161,10 @@ public class ObjectHolder : MonoBehaviour
         {
             nearestInteractableObject = _nearestObject;
             if (handObject)
-            {
                 hintController.UpdateActionType(handObject.ShowNeededInputHint(this));
-            }
             else
-            {
-                hintController.UpdateActionType(new HintController.ActionType[] { HintController.ActionType.NONE });
-            }
+                hintController.UpdateActionType(new HintController.Hint[] { new HintController.Hint(HintController.ActionType.NONE, "") });
+
             return;
         }
 
@@ -180,11 +177,6 @@ public class ObjectHolder : MonoBehaviour
                 if (_nearestObject.GetTooltip().GetTotalPlayers() > 0)
                     _nearestObject.GetTooltip().SetState(ObjectsTooltip.ObjectState.Interacting);
             }
-
-        }
-        else
-        {
-            //Mostrar el interactable object que necesita
 
         }
 

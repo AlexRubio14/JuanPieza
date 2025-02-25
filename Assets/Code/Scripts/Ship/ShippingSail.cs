@@ -105,4 +105,19 @@ public class ShippingSail : InteractableObject
     {
         return bridge[0].activeSelf;
     }
+
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        if (!_objectHolder.GetHandInteractableObject())
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "sail"),
+                new HintController.Hint(HintController.ActionType.CANT_USE, "")
+            };
+
+        return new HintController.Hint[]
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        };
+    }
 }

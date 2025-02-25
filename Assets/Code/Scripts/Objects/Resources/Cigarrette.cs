@@ -31,14 +31,25 @@ public class Cigarrette : Resource
         return !_objectHolder.GetHasObjectPicked();
     }
 
-    public override HintController.ActionType[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         if (!_objectHolder.GetHasObjectPicked())
-            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.CANT_USE};
+            return new HintController.Hint[] 
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "grab"), 
+                new HintController.Hint(HintController.ActionType.CANT_USE, "")
+            };
         else if (_objectHolder.GetHandInteractableObject() == this)
-            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.USE };
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
+                new HintController.Hint(HintController.ActionType.USE, "smoke")
+            };
 
-        return new HintController.ActionType[] { HintController.ActionType.NONE };
+        return new HintController.Hint[]
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        };
     }
 
     public override void Interact(ObjectHolder _objectHolder)

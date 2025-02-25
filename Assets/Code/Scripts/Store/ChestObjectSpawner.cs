@@ -69,4 +69,12 @@ public class ChestObjectSpawner : InteractableObject
         interactableObject.hasToBeInTheShip = false;
         Destroy(gameObject);
     }
+
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        return new HintController.Hint[]
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        };
+    }
 }

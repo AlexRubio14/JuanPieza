@@ -42,6 +42,14 @@ public class Repair : InteractableObject
 
         return handObject && handObject.objectSO == repairItem;
     }
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        return new HintController.Hint[]
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        };
+    }
+
     #endregion
 
     #region Repair Functions
@@ -143,8 +151,9 @@ public class Repair : InteractableObject
     public virtual void OnBreakObject() { }
     protected virtual void RepairEnded(ObjectHolder _objectHolder)
     {
-        _objectHolder.hintController.UpdateActionType(new HintController.ActionType[] { HintController.ActionType.NONE });
+        _objectHolder.hintController.UpdateActionType(new HintController.Hint[] { new HintController.Hint(HintController.ActionType.NONE, "") });
     }
+
     #endregion
 
 }

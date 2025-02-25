@@ -267,23 +267,23 @@ public class PlayerController : MonoBehaviour
     {
         InteractableObject handObject = objectHolder.GetHandInteractableObject();
 
-        if (handObject)
+        if (!handObject)
+            return;
+
+        handObject.Use(objectHolder);
+        InteractableObject newHandObject = objectHolder.GetHandInteractableObject();
+        InteractableObject nearestObj = objectHolder.GetNearestInteractableObject();
+        if (nearestObj && nearestObj.CanInteract(objectHolder))
         {
-            handObject.Use(objectHolder);
-            InteractableObject newHandObject = objectHolder.GetHandInteractableObject();
-            InteractableObject nearestObj = objectHolder.GetNearestInteractableObject();
-            if (handObject == newHandObject)
-                hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));
-            else if (newHandObject)
-                hintController.UpdateActionType(newHandObject.ShowNeededInputHint(objectHolder));
-            else if (nearestObj)
-            {
-                hintController.UpdateActionType(nearestObj.ShowNeededInputHint(objectHolder));
-                nearestObj.GetSelectedVisual().Show();
-            }
-            else
-                hintController.UpdateActionType(new HintController.ActionType[] { HintController.ActionType.NONE });
+            hintController.UpdateActionType(nearestObj.ShowNeededInputHint(objectHolder));
+            nearestObj.GetSelectedVisual().Show();
         }
+        else if (handObject == newHandObject)
+            hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));
+        else if (newHandObject)
+            hintController.UpdateActionType(newHandObject.ShowNeededInputHint(objectHolder));
+        else
+            hintController.UpdateActionType(new HintController.Hint[] { new HintController.Hint(HintController.ActionType.NONE, "") });
     }
     public void StopUse()
     {

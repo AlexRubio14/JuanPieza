@@ -108,7 +108,7 @@ public abstract class Weapon : RepairObject
         return !isPlayerMounted() && !handObject /*Montarse*/ || isPlayerMounted() && playerCont.playerInput.playerReference == mountedPlayerId /*Bajarse*/ || !hasAmmo && handObject && handObject.objectSO == objectToInteract /*Recargar*/ ;
     }
 
-    public override HintController.ActionType[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         if (state.GetIsBroken())
             return base.ShowNeededInputHint(_objectHolder);
@@ -122,16 +122,34 @@ public abstract class Weapon : RepairObject
             tooltip.SetState(ObjectsTooltip.ObjectState.Loaded);
         
         if (!handObject && !isPlayerMounted()) //No tiene nada en la mano y no hay nadie montado
-            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.CANT_USE };
-        else if (isPlayerMounted() && !hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId) //Si lo esta utilizando y no esta cargado)
-            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.CANT_USE };
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "mount"),
+                new HintController.Hint(HintController.ActionType.CANT_USE, "")
+            };
+        else if (isPlayerMounted() && !hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId) //Si lo esta utilizando y no esta cargado
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "dismount"),
+                new HintController.Hint(HintController.ActionType.CANT_USE, "")
+            };
         else if (!hasAmmo && handObject && handObject.objectSO == objectToInteract)//Si no esta cargado y tiene la bala en la mano
-            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.USE };
-        else if (hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId)
-            return new HintController.ActionType[] { HintController.ActionType.INTERACT, HintController.ActionType.USE };
-        
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
+                new HintController.Hint(HintController.ActionType.USE, "load_bullet")
+            };
+        else if (hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId) //Si esta cargado y el player esta montado
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "dismount"),
+                new HintController.Hint(HintController.ActionType.USE, "shoot")
+            };        
 
-        return new HintController.ActionType[] { HintController.ActionType.NONE };
+        return new HintController.Hint[] 
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "") 
+        };
     }
 
     protected void Mount(PlayerController _player, ObjectHolder _objectHolder)

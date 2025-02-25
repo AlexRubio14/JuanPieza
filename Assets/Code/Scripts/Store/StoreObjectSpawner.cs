@@ -65,4 +65,9 @@ public class StoreObjectSpawner : InteractableObject
             child.SetParent(null);
         }
     }
+
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        throw new NotImplementedException();
+    }
 }

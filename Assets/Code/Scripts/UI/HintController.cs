@@ -105,6 +105,7 @@ public class HintController : MonoBehaviour
         switch (_action.hintType)
         {
             case ActionType.CANT_INTERACT:
+            case ActionType.NONE:
                 hintRightImage.gameObject.SetActive(false);
                 break;
             case ActionType.INTERACT:
@@ -113,7 +114,7 @@ public class HintController : MonoBehaviour
 
                 Sprite currentSprite = ActionSprites[_action.hintType][(int)deviceType];
                 hintRightImage.sprite = currentSprite;
-                hintRightText.text = _action.hintId;
+                hintRightText.text = GetDataById(_action.hintId).hintTexts[language];
 
                 break;
             default:
@@ -124,18 +125,19 @@ public class HintController : MonoBehaviour
     }
     private void UpdateLeftAction(Hint _action)
     {
-        switch (_action)
+        switch (_action.hintType)
         {
             case ActionType.CANT_USE:
+            case ActionType.NONE:
                 hintLeftImage.gameObject.SetActive(false);
                 break;
             case ActionType.USE:
             case ActionType.HOLD_USE:
                 hintLeftImage.gameObject.SetActive(true);
 
-                Sprite currentSprite = ActionSprites[_action][(int)deviceType];
+                Sprite currentSprite = ActionSprites[_action.hintType][(int)deviceType];
                 hintLeftImage.sprite = currentSprite;
-                hintLeftText.text = _hintId;
+                hintLeftText.text = GetDataById(_action.hintId).hintTexts[language];
                 break;
             default:
                 break;
