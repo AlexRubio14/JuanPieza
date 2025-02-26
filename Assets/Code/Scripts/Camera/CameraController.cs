@@ -39,6 +39,7 @@ public class CameraController : MonoBehaviour
     private float playerWeight;
     [SerializeField]
     private float objectWeight;
+
     [Space, Header("Cameras"), SerializeField]
     private Camera insideCamera;
     [SerializeField]
@@ -46,6 +47,10 @@ public class CameraController : MonoBehaviour
 
     [Header("Cameras Variables"), SerializeField, Range(0, 1)]
     private float movementSpeed;
+    [SerializeField]
+    private float maxMovementSpeed;
+    [SerializeField]
+    private float slowingDistance;
     [SerializeField]
     private float zoomOutSpeed;
     [SerializeField]
@@ -206,14 +211,15 @@ public class CameraController : MonoBehaviour
             zPosition = Mathf.Clamp(zPosition - zoomSpeed * Time.fixedDeltaTime, -maxZDistance, maxZDistance);
         }
 
-        Vector3 finalPos = Vector3.Lerp
-            (
-            transform.position,
-            destinyPos,
-            movementSpeed * Time.fixedDeltaTime
-            );
-        finalPos.y = Mathf.Clamp(finalPos.y, minYDistance, Mathf.Infinity);
-        finalPos.z -= zOffset;
+
+        destinyPos.y = Mathf.Clamp(destinyPos.y, minYDistance, Mathf.Infinity);
+        destinyPos.z -= zOffset;
+        Vector3 finalPos = Vector3.zero;
+
+        if (Vector3.Distance(transform.position, destinyPos) > slowingDistance)
+            finalPos = transform.position + (destinyPos - transform.position).normalized * maxMovementSpeed * Time.fixedDeltaTime;
+        else
+            finalPos = Vector3.Lerp(transform.position, destinyPos, movementSpeed * Time.fixedDeltaTime);
 
         transform.position = finalPos;
     }
