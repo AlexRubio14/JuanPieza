@@ -63,17 +63,30 @@ public class Box : RepairObject
             || handObject && handObject.objectSO == objectToInteract; //Si tengo un objeto en la mano y es del mismo tipo que el que dropea
     }
 
-    public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         if (state.GetIsBroken())
             return base.ShowNeededInputHint(_objectHolder);
         
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
     
-        if (!handObject && HasItems() || handObject && handObject.objectSO == objectToInteract)
-            return HintController.ActionType.INTERACT;
-        
-        return HintController.ActionType.NONE;
+        if (!handObject && HasItems())
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
+                new HintController.Hint(HintController.ActionType.CANT_USE, "")
+            };
+        else if (handObject && handObject.objectSO == objectToInteract)
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "store"),
+                new HintController.Hint(HintController.ActionType.CANT_USE, "")
+            };
+
+        return new HintController.Hint[]
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        };
     }
     public ObjectSO GetItemDrop()
     {

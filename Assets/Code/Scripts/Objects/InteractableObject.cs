@@ -9,6 +9,8 @@ public abstract class InteractableObject : MonoBehaviour
     public ObjectSO objectToInteract {  get; protected set; }
     [SerializeField] 
     protected SelectedVisual selectedVisual;
+    [SerializeField] 
+    protected ObjectsTooltip tooltip;
     public bool isBeingUsed { get; protected set; }
 
     [SerializeField]
@@ -22,6 +24,9 @@ public abstract class InteractableObject : MonoBehaviour
     
     protected virtual void Awake()
     {
+        if (TryGetComponent(out ObjectsTooltip _tooltip))
+            tooltip = _tooltip;
+        
         rb = GetComponent<Rigidbody>();
         isBeingUsed = false;
     }
@@ -40,6 +45,10 @@ public abstract class InteractableObject : MonoBehaviour
         return selectedVisual;
     }
 
+    public ObjectsTooltip GetTooltip()
+    {
+        return tooltip;
+    }
     public void SetIsBeingUsed(bool _value)
     {
         isBeingUsed = _value;
@@ -63,18 +72,8 @@ public abstract class InteractableObject : MonoBehaviour
         if (ShipsManager.instance && hasToBeInTheShip && ShipsManager.instance.playerShip)
             ShipsManager.instance.playerShip.RemoveInteractuableObject(this);
     }
-    public virtual HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-
-        if (handObject && objectToInteract == handObject.objectSO || !_objectHolder.GetHandInteractableObject() && !objectToInteract)
-        {
-            return HintController.ActionType.INTERACT;
-        }
- 
-        return HintController.ActionType.NONE;
-    }
-
+    public abstract HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder);
+    
     protected IEnumerator AddObjectToShip()
     {
         yield return new WaitForEndOfFrame();

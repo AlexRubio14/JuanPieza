@@ -32,6 +32,10 @@ public class ObjectHolder : MonoBehaviour
     {
         InteractableObject neareastObject = CheckItemsInRange();
         ChangeNearestInteractableObject(neareastObject);
+
+        if(!hintController.showingHints && handObject)
+            hintController.UpdateActionType(handObject.ShowNeededInputHint(this));
+
     }
 
     // Crea un sphereRaycast, te pilla el interactableObject mas cercano que no este siendo utilizado y te devuelve su script y su collider a la vez.
@@ -125,8 +129,6 @@ public class ObjectHolder : MonoBehaviour
             currentIO.rb.isKinematic = false;
             foreach (Collider item in currentIO.GetComponents<Collider>())
                 item.enabled = true;
-
-
         }
 
         return currentIO;
@@ -145,7 +147,15 @@ public class ObjectHolder : MonoBehaviour
             return;
 
         if (nearestInteractableObject)
+        {
             nearestInteractableObject.GetSelectedVisual().Hide();
+            if (nearestInteractableObject.GetTooltip() != null)
+            {
+                nearestInteractableObject.GetTooltip().RemovePlayer();
+                if (nearestInteractableObject.GetTooltip().GetTotalPlayers() <= 0)
+                    nearestInteractableObject.GetTooltip().SetState(ObjectsTooltip.ObjectState.None);
+            }
+        }
 
         if (!_nearestObject)
         {
@@ -153,15 +163,20 @@ public class ObjectHolder : MonoBehaviour
             if (handObject)
                 hintController.UpdateActionType(handObject.ShowNeededInputHint(this));
             else
-                hintController.UpdateActionType(HintController.ActionType.NONE);
+                hintController.UpdateActionType(new HintController.Hint[] { new HintController.Hint(HintController.ActionType.NONE, "") });
+
             return;
         }
 
         if (_nearestObject.CanInteract(this))
-            _nearestObject.GetSelectedVisual().Show();
-        else
         {
-            //Mostrar el interactable object que necesita
+            _nearestObject.GetSelectedVisual().Show();
+            if (_nearestObject.GetTooltip() != null)
+            {
+                _nearestObject.GetTooltip().AddPlayer();
+                if (_nearestObject.GetTooltip().GetTotalPlayers() > 0)
+                    _nearestObject.GetTooltip().SetState(ObjectsTooltip.ObjectState.Interacting);
+            }
 
         }
 

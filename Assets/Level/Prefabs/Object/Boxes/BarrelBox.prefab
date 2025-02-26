@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 6036797146210223406}
   - component: {fileID: 7304327315729237766}
   - component: {fileID: 8989068304543053247}
+  - component: {fileID: 1779356945327840000}
   m_Layer: 9
   m_Name: BarrelBox
   m_TagString: Scenario
@@ -239,6 +240,7 @@ MonoBehaviour:
   <objectSO>k__BackingField: {fileID: 11400000, guid: 75f0c86d5318d8745aa462abde4ab6f8, type: 2}
   <objectToInteract>k__BackingField: {fileID: 11400000, guid: f7ef454cecb748d4e96323e6b241d203, type: 2}
   selectedVisual: {fileID: 8989068304543053247}
+  tooltip: {fileID: 0}
   rb: {fileID: 2768330552373322967}
   <grabPivot>k__BackingField: {fileID: 0}
   hasToBeInTheShip: 1
@@ -288,6 +290,26 @@ MonoBehaviour:
   - {fileID: 2319561091619575290}
   - {fileID: 9155708737169875976}
   - {fileID: 1216461874570066146}
+--- !u!114 &1779356945327840000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125427756097205554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81df2381bb7219488602b295dd717d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 1
+  progressBarGO: {fileID: 5568467514944838423, guid: 596cd99dcbfe3b449b4556b592e9decb, type: 3}
+  size: 1.5
+  offset: 3.5
+  interactingSprite: {fileID: 0}
+  brokenSprite: {fileID: 21300000, guid: 3e4d24c0cb09c8e49ae1fc66d6ee86d3, type: 3}
+  emptySprite: {fileID: 0}
+  loadedSprite: {fileID: 0}
 --- !u!1 &3085079590030875325
 GameObject:
   m_ObjectHideFlags: 0

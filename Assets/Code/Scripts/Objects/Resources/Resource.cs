@@ -45,14 +45,31 @@ public abstract class Resource : InteractableObject
         return !handObject;
     }
 
-    public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
         if (!handObject)
         {
-            return HintController.ActionType.INTERACT;
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
+                new HintController.Hint(HintController.ActionType.CANT_USE, "")
+
+            };
         }
-        return HintController.ActionType.NONE;
+        else if (handObject == this)
+        {
+            return new HintController.Hint[] 
+            { 
+                new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
+                new HintController.Hint(HintController.ActionType.CANT_USE, "") 
+            };
+        }
+
+        return new HintController.Hint[] 
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        };
     }
 }

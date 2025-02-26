@@ -12,6 +12,14 @@ public class SellObjects : InteractableObject
         }
     }
 
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        return new HintController.Hint[]
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        };
+    }
+
     public override void Use(ObjectHolder _objectHolder)
     {
     }

@@ -19,20 +19,42 @@ public class Radio : Resource
         return !_objectHolder.GetHasObjectPicked();
     }
 
-    public override HintController.ActionType ShowNeededInputHint(ObjectHolder _objectHolder)
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         if (!_objectHolder.GetHasObjectPicked())
-            return HintController.ActionType.INTERACT;
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
+                new HintController.Hint(HintController.ActionType.CANT_USE, "")
+            };
         else if (_objectHolder.GetHandInteractableObject() == this)
-            return HintController.ActionType.USE;
+        {
+            if (!isPlaying)
+                return new HintController.Hint[]
+                {
+                    new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
+                    new HintController.Hint(HintController.ActionType.USE, "play_music")
+                };
+            else
+                return new HintController.Hint[]
+                {
+                    new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
+                    new HintController.Hint(HintController.ActionType.USE, "stop_music")
+                };
 
-        return HintController.ActionType.NONE;
+
+        }
+        return new HintController.Hint[]
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        };
     }
 
     public override void Interact(ObjectHolder _objectHolder)
     {
-        base.Interact(_objectHolder);
-        _objectHolder.hintController.UpdateActionType(HintController.ActionType.USE);
+        base.Interact(_objectHolder); 
+        _objectHolder.hintController.UpdateActionType(ShowNeededInputHint(_objectHolder));
+
     }
 
     public override void Use(ObjectHolder _objectHolder)
@@ -40,12 +62,13 @@ public class Radio : Resource
         //playear animacion player
         _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
 
-        _objectHolder.hintController.UpdateActionType(HintController.ActionType.NONE);
 
         if (isPlaying)
             StopPlaying();
         else
             Play();
+
+        _objectHolder.hintController.UpdateActionType(ShowNeededInputHint(_objectHolder));
     }
 
     private void Play()
@@ -65,8 +88,10 @@ public class Radio : Resource
         isPlaying = false;
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+
         if (isPlaying)
             StopPlaying();
     }
