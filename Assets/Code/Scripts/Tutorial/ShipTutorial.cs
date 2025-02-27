@@ -115,6 +115,8 @@ public class ShipTutorial : MonoBehaviour
 
         StartCoroutine(FindHoles());
 
+        holes = new RepairHole[0];
+
         IEnumerator FindHoles()
         {
             yield return new WaitForSeconds(3);
