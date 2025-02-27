@@ -9,6 +9,7 @@ public class ManagerPirateBoarding : MonoBehaviour
     [SerializeField] private GameObject boardingEnemy;
     [SerializeField] public Transform piratesHolder;
     [SerializeField] private int piratesToSpawn;
+    public List<controllerPirateBoarding> piratesBoarding { get; private set; } = new List<controllerPirateBoarding>();
     [SerializeField] public List<controllerPirateBoarding> piratesPool { get; private set; } = new List<controllerPirateBoarding>();
 
     [Header("Rafts")]

@@ -109,6 +109,7 @@ public class RaftController : MonoBehaviour
 
         if (pirateJumpIndex == pirates.Count) // Check if all pirates have jumped and moveBack the raft
         {
+            pirates.Clear();
             ChangeState(RaftState.MOVING_BACK);
             return;
         }
@@ -199,6 +200,7 @@ public class RaftController : MonoBehaviour
         foreach(controllerPirateBoarding controller in pirates)
         {
             controller.transform.parent = null;
+            ManagerPirateBoarding.Instance.piratesBoarding.Add(controller);
         }
 
         //Jump into playerShip and start Chasing/boarding

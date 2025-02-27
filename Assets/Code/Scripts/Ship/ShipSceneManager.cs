@@ -102,8 +102,6 @@ public class ShipSceneManager : MonoBehaviour
 
     public void InstantiateShip()
     {
-        GameObject _ship;
-
        
     }
 
