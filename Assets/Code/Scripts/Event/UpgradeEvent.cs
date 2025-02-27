@@ -61,7 +61,7 @@ public class UpgradeEvent : MonoBehaviour
 
         int randomWeapon = Random.Range(0, weapons.Count);
 
-        while (weapons[randomWeapon].rarity != upgradeRarity || weapons[randomWeapon].name == currentWeaponSO.name)
+        while (weapons[randomWeapon].rarity != upgradeRarity || weapons[randomWeapon].objectName == currentWeaponSO.objectName)
             randomWeapon = Random.Range(0, weapons.Count);
 
         SpawnObject(randomWeapon);
