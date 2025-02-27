@@ -13,7 +13,7 @@ public class QuestInfoPoster : MonoBehaviour
     {
         objective.text = questData.questObjective.ToString();
 
-        description.text = "";
+        description.text = questData.description + "\n" + "\n";
         foreach (ResourceQuantity resource in questData.ship.resourceCuantity)
         {
             description.text += resource.quantity.ToString() + " " + resource.resource.objectName.ToString() + "\n";

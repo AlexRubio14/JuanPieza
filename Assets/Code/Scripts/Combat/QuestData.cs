@@ -8,6 +8,7 @@ public class QuestData : ScriptableObject
     public enum QuestObjective { BATTLE, TRANSPORT, RESCUE };
 
     public QuestType questType;
+    public string description;
     public QuestObjective questObjective;
     public PlayerShip ship;
     public int difficulty;
