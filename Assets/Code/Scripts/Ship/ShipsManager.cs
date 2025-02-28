@@ -11,6 +11,8 @@ public class ShipsManager : MonoBehaviour
 
     private ShipData.SpawnShipCondition condition;
 
+    private TransitionController transitionController;
+
     private void Awake()
     {
         if (instance != null)
@@ -19,13 +21,14 @@ public class ShipsManager : MonoBehaviour
         instance = this;
 
         enemiesShips = new List<Ship>();
+        transitionController = GetComponent<TransitionController>();
     }
 
     private void Start()
     {
         GenerateAllyShip();
         enemiesHordes = new List<ShipData>(NodeManager.instance.battleInformation.enemiesHordes);
-
+        transitionController.InitLevelTransition();
     }
 
     public void GenerateEnemies()
@@ -112,14 +115,21 @@ public class ShipsManager : MonoBehaviour
     {
         enemiesShips.Remove(ship);
 
-        if (condition != ShipData.SpawnShipCondition.DESTROY || enemiesHordes.Count <= 1)
-            return;
-
         if (enemiesShips.Count == 0)
         {
             enemiesHordes.Remove(enemiesHordes[0]);
-            GenerateEnemyShip();
+            if (enemiesHordes.Count == 0)
+            {
+                Camera.main.GetComponent<ArriveIslandCamera>().enabled = true;
+                Camera.main.GetComponent<ArriveIslandCamera>().SetIsRepositing();
+            }
+
         }
+
+        if (condition != ShipData.SpawnShipCondition.DESTROY || enemiesHordes.Count <= 1 || enemiesShips.Count <= 1)
+            return;
+
+        GenerateEnemyShip();
     }
 
     public void CheckLastEnemyShipHP()

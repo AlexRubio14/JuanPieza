@@ -20,12 +20,12 @@ public class AllyShip : Ship
     public float t { get; private set; }
     private float startZ;
     private bool arriving;
+    private bool leaving;
 
     public override void Start()
     {
         base.Start();
 
-        arriving = true;
         startZ = transform.position.z;
     }
 
@@ -34,16 +34,23 @@ public class AllyShip : Ship
         base.Update();
 
         if (arriving)
-            ArriveToLevel();
+            MoveShip(startZ, 0);
+        if(leaving)
+            MoveShip(0, startZ * -1);
     }
 
-    private void ArriveToLevel()
+    private void MoveShip(float firstZ, float secondZ)
     {
         t += Time.deltaTime * speed;
-        float newZ = Mathf.Lerp(startZ, 0, t);
+        float newZ = Mathf.Lerp(firstZ, secondZ, t);
         transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
         if (t >= 1)
             arriving = false;
+        if (t >= 0.3 && leaving)
+        {
+            ShipsManager.instance.gameObject.GetComponent<TransitionController>().EndLevelTransition();
+            leaving = false;
+        }        
     }
 
     public override void DestroyShip()
@@ -116,5 +123,16 @@ public class AllyShip : Ship
     public List<Transform> GetSpawnPoints()
     {
         return playersSpawnPos;
+    }
+
+    public void SetArriving(bool state)
+    {
+        arriving = state;
+    }
+
+    public void SetLeaving(bool state)
+    {
+        leaving = state;
+        t = 0;
     }
 }
