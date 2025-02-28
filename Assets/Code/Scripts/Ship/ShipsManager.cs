@@ -11,6 +11,8 @@ public class ShipsManager : MonoBehaviour
 
     private ShipData.SpawnShipCondition condition;
 
+    private TransitionController transitionController;
+
     private void Awake()
     {
         if (instance != null)
@@ -19,12 +21,18 @@ public class ShipsManager : MonoBehaviour
         instance = this;
 
         enemiesShips = new List<Ship>();
+        transitionController = GetComponent<TransitionController>();
     }
 
     private void Start()
     {
         GenerateAllyShip();
         enemiesHordes = new List<ShipData>(NodeManager.instance.battleInformation.enemiesHordes);
+        transitionController.InitLevelTransition();
+    }
+
+    public void GenerateEnemies()
+    {
         if (NodeManager.instance.battleInformation.enemiesHordes[0].spawnShipCondition == ShipData.SpawnShipCondition.INIT)
             GenerateEnemyShip();
     }
@@ -34,7 +42,7 @@ public class ShipsManager : MonoBehaviour
         GameObject _ship;
 
         _ship = Instantiate(NodeManager.instance.questShip.ship._ship);
-        _ship.transform.position = new Vector3(0, _ship.GetComponent<AllyShip>().GetInitY(), 0);
+        _ship.transform.position = new Vector3(0, _ship.GetComponent<AllyShip>().GetInitY(), _ship.GetComponent<AllyShip>().startZPosition);
         playerShip = _ship.GetComponent<AllyShip>();
 
         ItemBox[] itemBoxes = _ship.GetComponentsInChildren<ItemBox>();
@@ -107,14 +115,21 @@ public class ShipsManager : MonoBehaviour
     {
         enemiesShips.Remove(ship);
 
-        if (condition != ShipData.SpawnShipCondition.DESTROY || enemiesHordes.Count <= 1)
-            return;
-
         if (enemiesShips.Count == 0)
         {
             enemiesHordes.Remove(enemiesHordes[0]);
-            GenerateEnemyShip();
+            if (enemiesHordes.Count == 0)
+            {
+                Camera.main.GetComponent<ArriveIslandCamera>().enabled = true;
+                Camera.main.GetComponent<ArriveIslandCamera>().SetIsRepositing();
+            }
+
         }
+
+        if (condition != ShipData.SpawnShipCondition.DESTROY || enemiesHordes.Count <= 1 || enemiesShips.Count <= 1)
+            return;
+
+        GenerateEnemyShip();
     }
 
     public void CheckLastEnemyShipHP()
