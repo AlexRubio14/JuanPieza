@@ -13,18 +13,37 @@ public class AllyShip : Ship
     [Header("Boarding Points")]
     [field: SerializeField] public List<Transform> boardingPoints { get; private set; }
 
-    protected void InitAllyBoat()
+    [Header("Arrive Battle")]
+    [field: SerializeField] public float startZPosition { get; private set; }
+    [field: SerializeField] public Vector3 cameraInitPosition { get; private set; }
+    [SerializeField] private float speed;
+    public float t { get; private set; }
+    private float startZ;
+    private bool arriving;
+
+    public override void Start()
     {
+        base.Start();
 
-        animator = GetComponent<Animator>();
-
-        if (currentHealth == GetMaxHealth())
-            base.Initialize();
+        arriving = true;
+        startZ = transform.position.z;
     }
 
     private void Update()
     {
         base.Update();
+
+        if (arriving)
+            ArriveToLevel();
+    }
+
+    private void ArriveToLevel()
+    {
+        t += Time.deltaTime * speed;
+        float newZ = Mathf.Lerp(startZ, 0, t);
+        transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
+        if (t >= 1)
+            arriving = false;
     }
 
     public override void DestroyShip()

@@ -25,6 +25,11 @@ public class ShipsManager : MonoBehaviour
     {
         GenerateAllyShip();
         enemiesHordes = new List<ShipData>(NodeManager.instance.battleInformation.enemiesHordes);
+
+    }
+
+    public void GenerateEnemies()
+    {
         if (NodeManager.instance.battleInformation.enemiesHordes[0].spawnShipCondition == ShipData.SpawnShipCondition.INIT)
             GenerateEnemyShip();
     }
@@ -34,7 +39,7 @@ public class ShipsManager : MonoBehaviour
         GameObject _ship;
 
         _ship = Instantiate(NodeManager.instance.questShip.ship._ship);
-        _ship.transform.position = new Vector3(0, _ship.GetComponent<AllyShip>().GetInitY(), 0);
+        _ship.transform.position = new Vector3(0, _ship.GetComponent<AllyShip>().GetInitY(), _ship.GetComponent<AllyShip>().startZPosition);
         playerShip = _ship.GetComponent<AllyShip>();
 
         ItemBox[] itemBoxes = _ship.GetComponentsInChildren<ItemBox>();
