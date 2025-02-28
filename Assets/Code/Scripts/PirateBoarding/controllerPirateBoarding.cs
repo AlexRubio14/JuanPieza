@@ -136,13 +136,15 @@ public class controllerPirateBoarding : MonoBehaviour
         ChangeState(PirateState.PARABOLA);
     }
 
-    private void ResetPirate()
+    public void ResetPirate()
     {
-        //foreach (controllerPirateBoarding controller in pirates)
-        //{
-        //    controller.transform.SetParent(managerPirateBoarding.Instance.piratesHolder, true);
-        //    controller.transform.position = managerPirateBoarding.Instance.piratesHolder.transform.position;
-        //}
+        Debug.Log("Reset Pirate");
+
+        transform.SetParent(ManagerPirateBoarding.Instance.piratesHolder, true);
+        transform.position = ManagerPirateBoarding.Instance.piratesHolder.transform.position;
+        currentState = PirateState.IDLE;
+        isBoarding = false;
+        rb.isKinematic = true;
     }
 
     public void SetPosToJump(Vector3 _posToJump)

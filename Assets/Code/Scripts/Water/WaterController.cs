@@ -21,5 +21,22 @@ public class WaterController : MonoBehaviour
 
         AudioManager.instance.Play2dOneShotSound(fallWaterClip, "Objects");
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("BoardingPirate"))
+        {
+            if (other.gameObject.TryGetComponent(out controllerPirateBoarding controller))
+            {
+                controller.ResetPirate();
+            }
+        }
+
+        //Instanciar particulas
+        Vector3 splashPosition = new Vector3(other.transform.position.x, transform.position.y, other.transform.position.z);
+        Instantiate(waterSplashParticles, splashPosition, Quaternion.identity);
+
+        AudioManager.instance.Play2dOneShotSound(fallWaterClip, "Objects");
+    }
 }
 
