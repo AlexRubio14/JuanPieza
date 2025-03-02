@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ObjectHolder : MonoBehaviour
@@ -193,10 +194,16 @@ public class ObjectHolder : MonoBehaviour
         InteractableObject item = Instantiate(_interactableObject.prefab).GetComponent<InteractableObject>();
         item.SetIsBeingUsed(true);
         item.GetComponent<Rigidbody>().isKinematic = true;
-        item.transform.SetParent(transform.parent, true);
-        item.transform.position = objectPickedPos[(int)_interactableObject.objectSize].position;
-        ChangeObjectInHand(item);
+        StartCoroutine(SetItemParent(item));
         AudioManager.instance.Play2dOneShotSound(pickUpClip, "Objects");
+
+        IEnumerator SetItemParent(InteractableObject interactableObject)
+        {
+            yield return new WaitForEndOfFrame();
+
+            ChangeObjectInHand(interactableObject);
+        }
+
         return item;
     }
     private void OnDrawGizmos()

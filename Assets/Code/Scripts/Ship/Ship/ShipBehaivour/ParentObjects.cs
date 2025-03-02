@@ -7,10 +7,13 @@ public class ParentObjects : MonoBehaviour
     {
         if (((1 << other.gameObject.layer) & mask) != 0)
         {
-            if(other.TryGetComponent<Weapon>(out Weapon weapon)) 
-                if(weapon.isPlayerMounted())
+            if (other.TryGetComponent(out InteractableObject interactableObject))
+                if (interactableObject.isBeingUsed)
                     return;
-            other.transform.parent = transform;
+            if (other.TryGetComponent(out Weapon weapon))
+                if (weapon.isPlayerMounted())
+                    return;
+            other.transform.SetParent(transform);
         }
     }
 }
