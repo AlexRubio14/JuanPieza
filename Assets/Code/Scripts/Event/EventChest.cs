@@ -89,4 +89,9 @@ public class EventChest : InteractableObject
     {
         canInteract = _canInteract;
     }
+
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        throw new System.NotImplementedException();
+    }
 }

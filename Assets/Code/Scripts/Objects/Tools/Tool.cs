@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Tool : InteractableObject
+public abstract class Tool : InteractableObject
 {
     [SerializeField] protected AudioClip dropItemClip;
 
@@ -52,4 +52,5 @@ public class Tool : InteractableObject
         
 
     }
+
 }

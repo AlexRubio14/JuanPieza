@@ -6,7 +6,7 @@ public class ObjectSO : ScriptableObject
     public enum ItemRarity { BASIC, RARE, EPIC, LEGENDARY }
 
     [field: SerializeField]
-    public string name {  get; private set; }
+    public string objectName {  get; private set; }
 
     [field: SerializeField]
     public GameObject prefab { get; private set; }

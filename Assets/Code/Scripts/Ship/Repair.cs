@@ -28,14 +28,28 @@ public class Repair : InteractableObject
     }
 
     #region Object Fuctions
-    public override void Interact(ObjectHolder _objectHolder) { }
-    public override void Use(ObjectHolder _objectHolder) { }
+
+    public override void Interact(ObjectHolder _objectHolder)
+    {
+    }
+
+    public override void Use(ObjectHolder _objectHolder)
+    {
+    }
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
         return handObject && handObject.objectSO == repairItem;
     }
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        return new HintController.Hint[]
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        };
+    }
+
     #endregion
 
     #region Repair Functions
@@ -46,7 +60,9 @@ public class Repair : InteractableObject
 
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
         playerCont.animator.SetBool("Interacting", true);
-        playerCont.progressBar.EnableProgressBar(true);
+        //playerCont.progressBar.EnableProgressBar(true);
+        tooltip.SetState(ObjectsTooltip.ObjectState.Repairing);
+        
         players.Add(playerCont);
         playerCont.stateMachine.ChangeState(playerCont.stateMachine.repairState);
 
@@ -61,7 +77,7 @@ public class Repair : InteractableObject
     {
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
         playerCont.animator.SetBool("Interacting", false);
-        playerCont.progressBar.EnableProgressBar(false);
+        //playerCont.progressBar.EnableProgressBar(false);
         players.Remove(playerCont);
         playerCont.stateMachine.ChangeState(playerCont.stateMachine.idleState);
 
@@ -77,22 +93,29 @@ public class Repair : InteractableObject
         {
             if (repairParticles.isStopped)
                 repairParticles.Play(true);
+            
             currentRepairTime += players.Count * Time.deltaTime;
             if (currentRepairTime >= repairDuration)
             {
                 FinishRepairing();
                 currentRepairTime = 0;
             }
-
-            foreach (PlayerController player in players)
-                player.progressBar.SetProgress(currentRepairTime, repairDuration);
-
+            tooltip.progressBar.SetProgress(currentRepairTime, repairDuration);
+            
+            //foreach (PlayerController player in players)
+                //player.progressBar.SetProgress(currentRepairTime, repairDuration);
         }
         else
         {
             if (repairParticles.isPlaying)
+            {
                 repairParticles.Stop(true);
-
+                tooltip.SetState(ObjectsTooltip.ObjectState.None);
+            }
+            
+            if (state.GetIsBroken() && tooltip != null)
+                tooltip.SetState(ObjectsTooltip.ObjectState.Broken);
+            
             currentRepairTime = 0;
         }
     }
@@ -112,6 +135,9 @@ public class Repair : InteractableObject
             }
             RepairEnded(objHolder);
         }
+
+        Debug.Log("State set to none");
+        tooltip.SetState(ObjectsTooltip.ObjectState.None);
     }
     public bool IsPlayerReparing(PlayerController _playerController)
     {
@@ -125,8 +151,9 @@ public class Repair : InteractableObject
     public virtual void OnBreakObject() { }
     protected virtual void RepairEnded(ObjectHolder _objectHolder)
     {
-        _objectHolder.hintController.UpdateActionType(HintController.ActionType.NONE);
+        _objectHolder.hintController.UpdateActionType(new HintController.Hint[] { new HintController.Hint(HintController.ActionType.NONE, "") });
     }
+
     #endregion
 
 }

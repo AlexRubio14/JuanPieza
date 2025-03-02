@@ -52,7 +52,7 @@ public class Ship : MonoBehaviour
         ShipsManager.instance.RemoveEnemyShip(this);
         Destroy(gameObject);
     }
-    public void SetCurrentHealth(float amount)
+    virtual public void SetCurrentHealth(float amount)
     {
         currentHealth += amount;
         targetHeight = Mathf.Lerp(lowerY, initY, currentHealth / maxHealth);

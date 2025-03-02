@@ -82,6 +82,7 @@ Properties {
 
 	_CullMode			("Cull Mode", Float) = 0
 	_ColorMask			("Color Mask", Float) = 15
+	
 }
 
 SubShader {
@@ -106,7 +107,7 @@ SubShader {
 	ZWrite Off
 	Lighting Off
 	Fog { Mode Off }
-	ZTest [unity_GUIZTestMode]
+	ZTest Off
 	Blend One OneMinusSrcAlpha
 	ColorMask [_ColorMask]
 

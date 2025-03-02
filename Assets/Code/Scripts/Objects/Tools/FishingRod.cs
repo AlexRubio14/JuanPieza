@@ -130,4 +130,38 @@ public class FishingRod : Tool
     {
         FishingManager.instance.RemoveFishingRod(this);
     }
+
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+        if (handObject && handObject == this)
+        {
+            if(!hookThrowed)
+                return new HintController.Hint[]
+                {
+                    new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
+                    new HintController.Hint(HintController.ActionType.USE, "throw_hook")
+                };
+            else
+                return new HintController.Hint[]
+                {
+                    new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
+                    new HintController.Hint(HintController.ActionType.USE, "recover_hook")
+                };
+        }
+        else if (!handObject)
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
+                new HintController.Hint(HintController.ActionType.CANT_USE, "")
+            };
+
+
+
+
+        return new HintController.Hint[]
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        };
+    }
 }

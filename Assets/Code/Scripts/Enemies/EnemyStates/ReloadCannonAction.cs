@@ -35,7 +35,14 @@ public class ReloadCannonAction : SteppedAction
         if (!target.isBroken)
             base.Interacting();
         else
+        {
+            //Parar animacion de interactuar
+            animator.SetBool("Interacting", false);
+            agent.isStopped = false;
+            enemyController.interactParticles.Stop(true);
+
             onActionEnd(false);
+        }
     }
 
     protected override void Interact()

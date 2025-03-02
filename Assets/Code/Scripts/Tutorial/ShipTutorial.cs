@@ -82,10 +82,6 @@ public class ShipTutorial : MonoBehaviour
                 StartCoroutine(ChangeItemLayer(item, _layer));
             }
 
-            ShippingSail sail = ShipsManager.instance.playerShip.GetComponentInChildren<ShippingSail>();
-            sail.enabled = false;
-            sail.gameObject.layer = defaultLayer;
-
             cannon.GetObjectState().SetIsBroke(true);
             cannon.OnBreakObject();
 
@@ -119,6 +115,8 @@ public class ShipTutorial : MonoBehaviour
 
         StartCoroutine(FindHoles());
 
+        holes = new RepairHole[0];
+
         IEnumerator FindHoles()
         {
             yield return new WaitForSeconds(3);
@@ -150,7 +148,7 @@ public class ShipTutorial : MonoBehaviour
         if (!fixedShip && HolesRepaired())//No hay agujeros y 
         {
             fixedShip = true;
-            //Empezar dialogo del cañon
+            //Empezar dialogo del caï¿½on
             DialogueController.instance.StartDialogue(finishRepairDialogue);
             repairingShip = false;
         }
