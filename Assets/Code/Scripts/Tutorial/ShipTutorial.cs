@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ShipTutorial : MonoBehaviour
@@ -70,7 +71,7 @@ public class ShipTutorial : MonoBehaviour
             obj.SetActive(false);
 
         repairingShip = false;
-
+        fixedShip = false;
         StartCoroutine(StartTutorial(defaultLayer));
         
         IEnumerator StartTutorial(LayerMask _layer)
@@ -115,8 +116,6 @@ public class ShipTutorial : MonoBehaviour
 
         StartCoroutine(FindHoles());
 
-        holes = new RepairHole[0];
-
         IEnumerator FindHoles()
         {
             yield return new WaitForSeconds(3);
@@ -131,7 +130,7 @@ public class ShipTutorial : MonoBehaviour
         foreach (GameObject obj in arrows)
             obj.transform.forward = -Camera.main.transform.forward;
 
-        if (repairingShip)
+        if (repairingShip && holes != null)
         {
 
             for (int i = 0; i < holes.Length; i++)
@@ -145,6 +144,7 @@ public class ShipTutorial : MonoBehaviour
                     arrows[i].SetActive(false);
             }
         }
+
         if (!fixedShip && HolesRepaired())//No hay agujeros y 
         {
             fixedShip = true;
@@ -164,6 +164,9 @@ public class ShipTutorial : MonoBehaviour
 
     private bool HolesRepaired()
     {
+        if (holes == null || holes.Length <= 0)
+            return false;
+
         foreach (RepairHole item in holes)
         {
             if (item != null)
