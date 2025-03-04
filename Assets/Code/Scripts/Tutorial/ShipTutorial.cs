@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ShipTutorial : MonoBehaviour
@@ -16,6 +15,7 @@ public class ShipTutorial : MonoBehaviour
     Action showWAction;
     Action enableWAction;
     Action disableWAction;
+    Action showHAction;
     Action showCAction;
     Action enableCAction;
     Action disableCAction;
@@ -50,6 +50,8 @@ public class ShipTutorial : MonoBehaviour
     [SerializeField]
     private DialogueData finishRepairDialogue;
     private bool repairingShip;
+    [SerializeField]
+    private Transform sea;
 
     [Space, Header("Cannon"), SerializeField]
     private Cannon cannon;
@@ -59,9 +61,13 @@ public class ShipTutorial : MonoBehaviour
     private ObjectSO bulletObject;
     [SerializeField]
     private DialogueData cannonBulletDialogue;
+    private InteractableObject bulletBox;
     private InteractableObject hammerBox;
+    [SerializeField]
+    private ObjectSO hammerObject;
     private bool cannonFixed;
-
+    [SerializeField]
+    private Transform rock;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -90,6 +96,7 @@ public class ShipTutorial : MonoBehaviour
 
             fishingRodBox = ShipsManager.instance.playerShip.GetObjectBoxByObject(fishingRodSO);
             hammerBox = ShipsManager.instance.playerShip.GetObjectBoxByObject(cannon.GetRepairItem());
+            bulletBox = ShipsManager.instance.playerShip.GetObjectBoxByObject(cannon.objectToInteract);
         }
 
         showFAction += ShowFishing; 
@@ -99,7 +106,8 @@ public class ShipTutorial : MonoBehaviour
         showWAction += ShowWood;
         enableWAction += EnableWoodObjects;
         disableWAction += DisableWoodObjects;
-        showCAction += ShowCannon;
+        showHAction += ShowHammer;
+        showCAction += ShowCannonBulletBox;
         enableCAction += EnableCannon;
         disableCAction += DisableCannon;
 
@@ -110,6 +118,7 @@ public class ShipTutorial : MonoBehaviour
         DialogueController.instance.AddAction("D.T.SW", showWAction);
         DialogueController.instance.AddAction("D.T.EW", enableWAction);
         DialogueController.instance.AddAction("D.T.DW", disableWAction);
+        DialogueController.instance.AddAction("D.T.SH", showHAction);
         DialogueController.instance.AddAction("D.T.SC", showCAction);
         DialogueController.instance.AddAction("D.T.EC", enableCAction);
         DialogueController.instance.AddAction("D.T.DC", disableCAction);
@@ -130,9 +139,61 @@ public class ShipTutorial : MonoBehaviour
         foreach (GameObject obj in arrows)
             obj.transform.forward = -Camera.main.transform.forward;
 
-        if (repairingShip && holes != null)
-        {
+        FishMentorTutorial();
+        HoleRepairTutorial();
+        CannonFixTutorial();
+        ShootCannonTutorial();
 
+    }
+
+    private void FishMentorTutorial()
+    {
+        if (npc.rescued)
+            return;
+        bool haveFishingRod = false;
+
+        foreach (PlayerController item in PlayersManager.instance.ingamePlayers)
+        {
+            InteractableObject handObject = item.objectHolder.GetHandInteractableObject();
+            if (handObject && handObject.objectSO == fishingRodSO)
+                haveFishingRod = true;
+        }
+
+        if (haveFishingRod)
+            arrows[0].transform.position = npc.transform.position + Vector3.up * arrowOffset;
+        else
+            ShowFishing();
+    }
+    private void HoleRepairTutorial()
+    {
+        if (fixedShip)
+            return;
+
+        if (HolesRepaired()) //Si no hay agujeros
+        {
+            fixedShip = true;
+            //Empezar dialogo del ca�on
+            DialogueController.instance.StartDialogue(finishRepairDialogue);
+            repairingShip = false;
+        }
+
+        if (!repairingShip || holes == null)
+            return;
+
+
+        bool haveWood = false;
+
+        foreach (PlayerController item in PlayersManager.instance.ingamePlayers)
+        {
+            InteractableObject handObject = item.objectHolder.GetHandInteractableObject();
+            if (handObject && handObject.objectSO == woodObject)
+                haveWood = true;
+        }
+
+        //Si tiene madera en la mano
+        if (haveWood)
+        {
+            HideArrow();
             for (int i = 0; i < holes.Length; i++)
             {
                 if (holes[i] != null)
@@ -144,23 +205,87 @@ public class ShipTutorial : MonoBehaviour
                     arrows[i].SetActive(false);
             }
         }
-
-        if (!fixedShip && HolesRepaired())//No hay agujeros y 
+        else //Si no tiene madera mostrar flecha en 
         {
-            fixedShip = true;
-            //Empezar dialogo del ca�on
-            DialogueController.instance.StartDialogue(finishRepairDialogue);
-            repairingShip = false;
-        }
-        
+            HideArrow();
 
-        if (!cannonFixed && !cannon.GetObjectState().GetIsBroken())
-        {
-            cannonFixed = true;
-            DialogueController.instance.StartDialogue(cannonBulletDialogue);
-        }
+            bool haveFishingRod = false;
 
+            foreach (PlayerController item in PlayersManager.instance.ingamePlayers)
+            {
+                InteractableObject handObject = item.objectHolder.GetHandInteractableObject();
+                if (handObject && handObject.objectSO == fishingRodSO)
+                    haveFishingRod = true;
+            }
+
+            arrows[0].SetActive(true);
+
+            if (haveFishingRod)
+                arrows[0].transform.position = sea.transform.position + Vector3.up * arrowOffset;
+            else
+                ShowFishing();
+        }
     }
+    private void CannonFixTutorial()
+    {
+        if (!HolesRepaired() || cannonFixed)
+            return;
+
+        bool haveHammer = false;
+
+        foreach (PlayerController item in PlayersManager.instance.ingamePlayers)
+        {
+            InteractableObject handObject = item.objectHolder.GetHandInteractableObject();
+            if (handObject && handObject.objectSO == hammerObject)
+                haveHammer = true;
+        }
+
+        arrows[0].SetActive(true);
+
+        if (haveHammer)
+            arrows[0].transform.position = cannon.transform.position + Vector3.up * arrowOffset;
+        else
+            ShowHammer();
+
+        if (holes == null || holes.Length <= 0 || cannonFixed || cannon.GetObjectState().GetIsBroken())
+            return;
+        cannonFixed = true;
+        DialogueController.instance.StartDialogue(cannonBulletDialogue);
+    }
+    private void ShootCannonTutorial()
+    {
+        if (!cannonFixed)
+            return;
+
+        arrows[0].SetActive(true);
+        if (cannon.isPlayerMounted())//Mostrar flecha a la roca
+        {
+            if(rock)
+                arrows[0].transform.position = rock.transform.position + Vector3.up * arrowOffset;
+            else
+            {
+                //ACABAR TUTORIAL
+                arrows[0].SetActive(false);
+            }
+        }
+        else //Mostrar flecha al cañon
+        {
+            bool haveBullet = false;
+
+            foreach (PlayerController item in PlayersManager.instance.ingamePlayers)
+            {
+                InteractableObject handObject = item.objectHolder.GetHandInteractableObject();
+                if (handObject && handObject.objectSO == cannon.objectToInteract)
+                    haveBullet = true;
+            }
+
+            if (cannon.hasAmmo || haveBullet)
+                arrows[0].transform.position = cannon.transform.position + Vector3.up * arrowOffset;
+            else
+                ShowCannonBulletBox();
+        }
+    }
+
 
     private bool HolesRepaired()
     {
@@ -189,18 +314,19 @@ public class ShipTutorial : MonoBehaviour
         _item.gameObject.layer = _layer;
     }
 
+
     private void HideArrow()
     {
         foreach (GameObject obj in arrows)
             obj.SetActive(false);
     }
 
+
     private void ShowFishing()
     {
         arrows[0].SetActive(true);
         arrows[0].transform.position = fishingRodBox.transform.position + Vector3.up * arrowOffset;
-        arrows[1].SetActive(true);
-        arrows[1].transform.position = npc.transform.position + Vector3.up * arrowOffset;
+
     }
     private void EnableFishing() 
     {
@@ -235,12 +361,15 @@ public class ShipTutorial : MonoBehaviour
         fishingObjectPool.RemoveItemFromPriorityList(woodObject);
     }
 
-    private void ShowCannon()
+    private void ShowHammer()
     {
         arrows[0].SetActive(true);
-        arrows[0].transform.position = cannon.transform.position + Vector3.up * arrowOffset;
-        arrows[1].SetActive(true);
-        arrows[1].transform.position = hammerBox.transform.position + Vector3.up * arrowOffset;
+        arrows[0].transform.position = hammerBox.transform.position + Vector3.up * arrowOffset;
+    }
+    private void ShowCannonBulletBox()
+    {
+        arrows[0].SetActive(true);
+        arrows[0].transform.position = bulletBox.transform.position + Vector3.up * arrowOffset;
     }
     private void EnableCannon()
     {
