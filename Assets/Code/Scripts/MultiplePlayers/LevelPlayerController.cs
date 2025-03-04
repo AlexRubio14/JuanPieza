@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,33 +17,38 @@ public class LevelPlayerController : MonoBehaviour
 
     void Start()
     {
-        playersSpawnPos = ShipsManager.instance.playerShip.GetSpawnPoints();
-
-        for (int i = 0; i < PlayersManager.instance.players.Count; i++)
+        StartCoroutine(WaitEndOfFrame());
+        IEnumerator WaitEndOfFrame()
         {
-            PlayerController controller = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<PlayerController>();
-            controller.gameObject.transform.position = playersSpawnPos[i].transform.position;
+            yield return new WaitForEndOfFrame();
 
-            controller.gameObject.name = "Player" + i;
-            controller.playerInput = PlayersManager.instance.players[i].Item1.GetComponent<GameInput>();
-            controller.transform.SetParent(ShipsManager.instance.playerShip.gameObject.transform, true);
-            
-            PlayersManager.instance.players[i].Item1.actions.FindActionMap("PlayerSelectMenu").Disable();
-            PlayersManager.instance.players[i].Item1.actions.FindActionMap("Gameplay").Enable();
-            PlayersManager.instance.players[i].Item1.SwitchCurrentActionMap("Gameplay");
+            playersSpawnPos = ShipsManager.instance.playerShip.GetSpawnPoints();
 
-            SkinnedMeshRenderer[] renderers = controller.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
-
-            foreach (SkinnedMeshRenderer renderer in renderers)
+            for (int i = 0; i < PlayersManager.instance.players.Count; i++)
             {
-                renderer.material = PlayersManager.instance.characterMat[i];
+                PlayerController controller = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<PlayerController>();
+                controller.gameObject.transform.position = playersSpawnPos[i].transform.position;
+                controller.gameObject.name = "Player" + i;
+                controller.playerInput = PlayersManager.instance.players[i].Item1.GetComponent<GameInput>();
+                controller.transform.SetParent(ShipsManager.instance.playerShip.gameObject.transform, true);
+
+                PlayersManager.instance.players[i].Item1.actions.FindActionMap("PlayerSelectMenu").Disable();
+                PlayersManager.instance.players[i].Item1.actions.FindActionMap("Gameplay").Enable();
+                PlayersManager.instance.players[i].Item1.SwitchCurrentActionMap("Gameplay");
+
+                SkinnedMeshRenderer[] renderers = controller.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+                foreach (SkinnedMeshRenderer renderer in renderers)
+                {
+                    renderer.material = PlayersManager.instance.characterMat[i];
+                }
+
+                MeshRenderer hatRenderer = controller.gameObject.GetComponentInChildren<MeshRenderer>();
+                hatRenderer.material = PlayersManager.instance.characterMat[i];
+
+                if (cameraCont)
+                    cameraCont.AddPlayer(controller.gameObject);
             }
-
-            MeshRenderer hatRenderer = controller.gameObject.GetComponentInChildren<MeshRenderer>();
-            hatRenderer.material = PlayersManager.instance.characterMat[i];
-
-            if (cameraCont)
-                cameraCont.AddPlayer(controller.gameObject);
-        }
+        }  
     }
 }
