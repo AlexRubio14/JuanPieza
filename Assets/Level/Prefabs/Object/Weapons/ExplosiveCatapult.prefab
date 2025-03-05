@@ -237,6 +237,7 @@ GameObject:
   - component: {fileID: 3894281368699678792}
   - component: {fileID: 5575554586989478809}
   - component: {fileID: 8953062763050043457}
+  - component: {fileID: 7575848392866323742}
   m_Layer: 9
   m_Name: ExplosiveCatapult
   m_TagString: Object
@@ -280,6 +281,7 @@ MonoBehaviour:
   <objectSO>k__BackingField: {fileID: 11400000, guid: a3bc7d82416c2c74e808f04858acc334, type: 2}
   <objectToInteract>k__BackingField: {fileID: 11400000, guid: f7ef454cecb748d4e96323e6b241d203, type: 2}
   selectedVisual: {fileID: 807546827017697251}
+  tooltip: {fileID: 7575848392866323742}
   rb: {fileID: 4986079673123290112}
   <grabPivot>k__BackingField: {fileID: 103871828140907417}
   hasToBeInTheShip: 1
@@ -289,6 +291,7 @@ MonoBehaviour:
   repairParticles: {fileID: 2904809377459801192}
   repairClip: {fileID: 8300000, guid: 1e4e3078b3cd9f042ac17029ed429788, type: 3}
   ridingPos: {fileID: 6387550713895505024}
+  coolDown: 2
   weaponDamage: 30
   <bulletForce>k__BackingField: 500
   <tiltObject>k__BackingField: {fileID: 2472425405071750603}
@@ -427,6 +430,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.6598501, y: 1.6135471, z: 5.2190742}
   m_Center: {x: 0.011164904, y: 0.82190573, z: -1.2136556}
+--- !u!114 &7575848392866323742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7945949425479645119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81df2381bb7219488602b295dd717d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 1
+  progressBarGO: {fileID: 5568467514944838423, guid: 596cd99dcbfe3b449b4556b592e9decb, type: 3}
+  size: 1
+  offset: 2
+  interactingSprite: {fileID: 0}
+  brokenSprite: {fileID: 21300000, guid: 3e4d24c0cb09c8e49ae1fc66d6ee86d3, type: 3}
+  emptySprite: {fileID: 21300000, guid: 25eb10021aa362045bf67f289ba2e498, type: 3}
+  loadedSprite: {fileID: 21300000, guid: 14f18b5ffe66eda47a19b890a602552e, type: 3}
 --- !u!1001 &1243564270300701129
 PrefabInstance:
   m_ObjectHideFlags: 0
