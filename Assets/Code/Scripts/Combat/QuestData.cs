@@ -3,11 +3,8 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "QuestData", menuName = "Scriptable Objects/QuestData")]
 public class QuestData : ScriptableObject
-{
-    public enum QuestType { MAIN, SECUNDARY, TUTORIAL };
-    public enum QuestObjective { BATTLE, TRANSPORT, RESCUE };
+{    public enum QuestObjective { BATTLE, TRANSPORT, RESCUE };
 
-    public QuestType questType;
     public string description;
     public QuestObjective questObjective;
     public PlayerShip ship;
