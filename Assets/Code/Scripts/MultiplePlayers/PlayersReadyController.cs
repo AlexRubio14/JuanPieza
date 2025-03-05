@@ -22,6 +22,11 @@ public class PlayersReadyController : MonoBehaviour
     [Space, SerializeField]
     private GameObject[] playerUIPos;
 
+    [Space, SerializeField]
+    private bool isHub;
+    [SerializeField]
+    private HubPlayerController hubPlayerController;
+
     // Start is called before the first frame update
     private string nextScene;
     private void Awake()
@@ -40,16 +45,36 @@ public class PlayersReadyController : MonoBehaviour
 
     void Start()
     {
-        DisplayStartGameButton();
+        if(!isHub)
+            DisplayStartGameButton();
     }
 
     public void AddPlayer(PlayerInput _newPlayer)
     {
-        (PlayerInput, SinglePlayerController) newPlayer = (_newPlayer, _newPlayer.GetComponent<SinglePlayerController>());
+        if (isHub)
+            AddPlayerToHub(_newPlayer);
+        else
+            AddPlayerToMenu(_newPlayer);
+    }   
+
+    private void AddPlayerToHub(PlayerInput _newPlayer)
+    {
+        (PlayerInput input, SinglePlayerController singlePlayer) newPlayer = (_newPlayer, _newPlayer.GetComponent<SinglePlayerController>());
+        newPlayer.singlePlayer.currentPlayerSelectorObject.SetActive(false);
+        PlayersManager.instance.players.Add(newPlayer);
+        int playerIndex = PlayersManager.instance.players.IndexOf(newPlayer);
+
+        _newPlayer.GetComponent<GameInput>().playerReference = playerIndex;
+        SetPlayerInputEvents(_newPlayer);
+
+        hubPlayerController.AddPlayerToHub(playerIndex);
+    }
+    private void AddPlayerToMenu(PlayerInput _newPlayer)
+    {
+        (PlayerInput input, SinglePlayerController singlePlayer) newPlayer = (_newPlayer, _newPlayer.GetComponent<SinglePlayerController>());
         PlayersManager.instance.players.Add(newPlayer);
         int playerIndex = PlayersManager.instance.players.IndexOf(newPlayer);
         PlacePlayerOnMenu(playerIndex);
-        //_newPlayer.GetComponent<PlayerController>().spawnPos = playersStartPos[playerIndex];
         SetPlayerInputEvents(_newPlayer);
         DisplayStartGameButton();
 
@@ -64,8 +89,7 @@ public class PlayersReadyController : MonoBehaviour
 
         MeshRenderer hatRenderer = _newPlayer.gameObject.GetComponentInChildren<MeshRenderer>();
         hatRenderer.material = PlayersManager.instance.characterMat[_newPlayer.playerIndex];
-    }   
-
+    }
     private void PlacePlayerOnMenu(int _playerIndex)
     {
         //Ocultar los botones de unirse en el lado que se 
@@ -117,10 +141,5 @@ public class PlayersReadyController : MonoBehaviour
 
         SceneManager.LoadScene(nextScene);
 
-    }
-
-    private void SaveScenes()
-    {
-        
     }
 }
