@@ -33,13 +33,9 @@ public class EnemieManager : MonoBehaviour
 
     [Space, Header("Interactions"), SerializeField]
     private float interactDistance;
-    [SerializeField]
     private float timeToGetResource;
-    [SerializeField]
     private float timeToRepair;
-    [SerializeField]
     private float timeToInteract;
-    [SerializeField]
     private float timeToShoot;
 
     private void Start()
@@ -47,11 +43,6 @@ public class EnemieManager : MonoBehaviour
         NavMeshLink[] links = GetComponentsInChildren<NavMeshLink>();
         foreach (NavMeshLink link in links)
             link.UpdateLink();
-
-        timeToGetResource /= NodeManager.instance.questShip.difficulty;
-        timeToRepair /= NodeManager.instance.questShip.difficulty;
-        timeToInteract /= NodeManager.instance.questShip.difficulty;
-        timeToShoot /= NodeManager.instance.questShip.difficulty;
     }
 
     public void GenerateEnemies()
@@ -216,6 +207,14 @@ public class EnemieManager : MonoBehaviour
     public List<EnemyController> GetEnemyList()
     {
         return enemyList;
+    }
+
+    public void SetStats(EnemiesStats stats)
+    {
+        timeToGetResource = stats.TimeToGetResources;
+        timeToRepair = stats.TimeToRepair;
+        timeToInteract = stats.TimeToInteract;
+        timeToShoot = stats.TimeToShoot;
     }
 
 

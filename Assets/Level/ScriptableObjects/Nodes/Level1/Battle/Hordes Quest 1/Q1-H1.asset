@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c498e34354eb61149ad1977a613b37be, type: 3}
   m_Name: Q1-H1
   m_EditorClassIdentifier: 
-  spawnShipCondition: 2
+  spawnShipCondition: 0
   hpPercentage: 0
   enemyShips:
   - _ship: {fileID: 6245023586670514266, guid: d7a4b616d743d024f92e210e58121e9c, type: 3}
     enemiesCuantity: 0
-    initShipPosition: {x: -20, y: 1, z: -50}
+    initShipPosition: {x: -20, y: -0.8, z: -50}
     cannons: []
     canBoard: 0
     boardShips: []
+    stats:
+      TimeToGetResources: 0
+      TimeToRepair: 0
+      TimeToInteract: 0
+      TimeToShoot: 0
