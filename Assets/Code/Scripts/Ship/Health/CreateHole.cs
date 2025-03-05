@@ -8,7 +8,7 @@ public class CreateHole : DetectBullet
     [SerializeField]
     private LayerMask hitLayer;
     [SerializeField]
-    private float holeRadius = 2;
+    private float holeRadius;
     protected override void DetectCollision(Collision collision, Bullet _bullet)
     {
         base.DetectCollision(collision, _bullet);
