@@ -8,7 +8,7 @@ public class LevelPlayerController : MonoBehaviour
     [SerializeField]
     private GameObject playerPrefab;
 
-    private List<Transform> playersSpawnPos;
+    [SerializeField] private List<Transform> playersSpawnPos;
 
     private void Awake()
     {
@@ -21,8 +21,9 @@ public class LevelPlayerController : MonoBehaviour
         IEnumerator WaitEndOfFrame()
         {
             yield return new WaitForEndOfFrame();
-
-            playersSpawnPos = ShipsManager.instance.playerShip.GetSpawnPoints();
+            
+            if (ShipsManager.instance != null)
+                playersSpawnPos = ShipsManager.instance.playerShip.GetSpawnPoints();
 
             for (int i = 0; i < PlayersManager.instance.players.Count; i++)
             {
@@ -30,7 +31,9 @@ public class LevelPlayerController : MonoBehaviour
                 controller.gameObject.transform.position = playersSpawnPos[i].transform.position;
                 controller.gameObject.name = "Player" + i;
                 controller.playerInput = PlayersManager.instance.players[i].Item1.GetComponent<GameInput>();
-                controller.transform.SetParent(ShipsManager.instance.playerShip.gameObject.transform, true);
+                
+                if (ShipsManager.instance != null)
+                    controller.transform.SetParent(ShipsManager.instance.playerShip.gameObject.transform, true);
 
                 PlayersManager.instance.players[i].Item1.actions.FindActionMap("PlayerSelectMenu").Disable();
                 PlayersManager.instance.players[i].Item1.actions.FindActionMap("Gameplay").Enable();
