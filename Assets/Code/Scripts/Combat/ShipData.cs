@@ -20,6 +20,7 @@ public class EnemyShip
     public List<GameObject> cannons;
     public bool canBoard;
     public List<BoardShip> boardShips;
+    public EnemiesStats stats;
 }
 
 [System.Serializable]
@@ -33,4 +34,12 @@ public class BoardShip
     public SpawnBoardShipCondition spawnBoardShipCondition;
     [Range(0, 1)] public float hpPercentage;
     public float timeToSpawnBoarding;
+}
+[System.Serializable]
+public class EnemiesStats
+{
+    public float TimeToGetResources;
+    public float TimeToRepair;
+    public float TimeToInteract;
+    public float TimeToShoot;
 }

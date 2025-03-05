@@ -11,7 +11,6 @@ public class QuestData : ScriptableObject
     public string description;
     public QuestObjective questObjective;
     public PlayerShip ship;
-    public int difficulty;
     public int questReward;
 }
 

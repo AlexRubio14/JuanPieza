@@ -29,13 +29,13 @@ public class AllyShip : Ship
         startZ = transform.position.z;
     }
 
-    private void Update()
+    protected override void Update()
     {
         base.Update();
 
         if (arriving)
             MoveShip(startZ, 0);
-        if(leaving)
+        if (leaving)
             MoveShip(0, startZ * -1);
     }
 
