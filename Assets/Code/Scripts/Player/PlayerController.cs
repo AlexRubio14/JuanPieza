@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float slopeCheckDistance;
     [SerializeField]
-    private LayerMask slopeCheckLayer;
+    public LayerMask slopeCheckLayer;
     private RaycastHit slopeHit;
 
 

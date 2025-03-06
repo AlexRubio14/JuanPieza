@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.Image;
+using UnityEngine.AI;
+using UnityEngine.InputSystem.XR;
 
 public class controllerPirateBoarding : MonoBehaviour
 {
@@ -12,12 +13,16 @@ public class controllerPirateBoarding : MonoBehaviour
     private float parabolaProcess = 0f;
     [SerializeField] private float parabolaSpeed;
 
+    [SerializeField] private float knockbackForce;
+
 
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private NavMeshAgent navMeshAgent;
 
-    public enum PirateState { IDLE, PARABOLA, BOARDING, DEAD }
+    private Vector3 targetPos;
+    public enum PirateState { WAITING, PARABOLA, CHASING, DEAD }
 
-    public PirateState currentState { get; private set; } = PirateState.IDLE;
+    public PirateState currentState { get; private set; } = PirateState.WAITING;
 
     [SerializeField] private float raycastDis;
     [SerializeField] private LayerMask floorLayer;
@@ -39,12 +44,13 @@ public class controllerPirateBoarding : MonoBehaviour
     {
         switch (currentState)   
         {
-            case PirateState.IDLE:
+            case PirateState.WAITING:
                 break;
             case PirateState.PARABOLA:
                 JumpIntoPlayerShip();
                 break;
-            case PirateState.BOARDING:
+            case PirateState.CHASING:
+                CalculateTarget();
                 break;
             case PirateState.DEAD:
                 break;
@@ -60,9 +66,9 @@ public class controllerPirateBoarding : MonoBehaviour
 
         if (parabolaProcess >= 1f)
         {
-            ChangeState(PirateState.IDLE);
+            ActivateNavMesh();
+            ChangeState(PirateState.CHASING);
         }
-
     }
     
     public void ChangeState(PirateState newState)
@@ -70,11 +76,11 @@ public class controllerPirateBoarding : MonoBehaviour
 
         switch (currentState)
         {
-            case PirateState.IDLE:
+            case PirateState.WAITING:
                 break;
             case PirateState.PARABOLA:
                 break;
-            case PirateState.BOARDING:
+            case PirateState.CHASING:
                 break;
             case PirateState.DEAD:
                 break;
@@ -84,13 +90,12 @@ public class controllerPirateBoarding : MonoBehaviour
 
         switch (newState)
         {
-            case PirateState.IDLE:
+            case PirateState.WAITING:
                 break;
             case PirateState.PARABOLA:
-                rb.isKinematic = false;
                 JumpIntoPlayerShip();
                 break;
-            case PirateState.BOARDING:
+            case PirateState.CHASING:
                 break;
             case PirateState.DEAD:
                 rb.isKinematic = true;
@@ -100,6 +105,11 @@ public class controllerPirateBoarding : MonoBehaviour
         }
 
         currentState = newState;
+    }
+
+    private void ActivateNavMesh()
+    {
+        navMeshAgent.enabled = true;
     }
 
     public void CalculateNearPointToJump()
@@ -130,6 +140,35 @@ public class controllerPirateBoarding : MonoBehaviour
         }
     }
 
+    private void CalculateTarget()
+    {
+        Vector3 tempTargetPos = Vector3.zero;
+        float tempDistance = 100;
+
+        NavMeshPath currentPath = new NavMeshPath();
+
+        foreach(PlayerController controller in PlayersManager.instance.ingamePlayers)
+        {
+            navMeshAgent.CalculatePath(controller.transform.position, currentPath);
+
+            if (currentPath.status == NavMeshPathStatus.PathInvalid)
+                continue;
+
+            Vector3 disFromPirateToPlayer = controller.transform.position - transform.position;
+
+            if(disFromPirateToPlayer.magnitude <= tempDistance)
+            {
+                tempTargetPos = controller.transform.position;
+                tempDistance = disFromPirateToPlayer.magnitude;
+            }
+        }
+
+        if (tempTargetPos == Vector3.zero)
+            tempTargetPos = transform.position;
+
+        navMeshAgent.SetDestination(tempTargetPos);
+    }
+
     public void SetPirateToJump()
     {
         CalculateNearPointToJump();
@@ -138,11 +177,9 @@ public class controllerPirateBoarding : MonoBehaviour
 
     public void ResetPirate()
     {
-        Debug.Log("Reset Pirate");
-
         transform.SetParent(ManagerPirateBoarding.Instance.piratesHolder, true);
         transform.position = ManagerPirateBoarding.Instance.piratesHolder.transform.position;
-        currentState = PirateState.IDLE;
+        currentState = PirateState.WAITING;
         isBoarding = false;
         rb.isKinematic = true;
     }
@@ -150,5 +187,24 @@ public class controllerPirateBoarding : MonoBehaviour
     public void SetPosToJump(Vector3 _posToJump)
     {
         posToJump = _posToJump;
+    }
+
+    private void KnockbackPlayer(GameObject player)
+    {
+        Vector3 knockbackDir = transform.forward;
+        knockbackDir.y = 1;
+
+        if(player.TryGetComponent(out Rigidbody rb))
+        {
+            rb.AddForce(knockbackForce * knockbackDir.normalized, ForceMode.Impulse);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider.CompareTag("Player"))
+        {
+            KnockbackPlayer(collision.gameObject);
+        }
     }
 }
