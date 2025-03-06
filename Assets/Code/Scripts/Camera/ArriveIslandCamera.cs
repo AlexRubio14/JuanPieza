@@ -8,6 +8,7 @@ public class ArriveIslandCamera : MonoBehaviour
     public enum CameraBehaivour { WAIT, ARRIVING, ROTATING, REPOSITING, INVERSE_ROTATING };
 
     [SerializeField] private float speed;
+    [SerializeField] private float startRotating;
 
     public CameraBehaivour behaivour;
 
@@ -62,7 +63,7 @@ public class ArriveIslandCamera : MonoBehaviour
     {
         float newZ = Mathf.Lerp(startZ, endZ, ShipsManager.instance.playerShip.t);
         transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
-        if (ShipsManager.instance.playerShip.t >= 1)
+        if (ShipsManager.instance.playerShip.t >= startRotating)
         {
             startPosition = transform.position;
             behaivour = CameraBehaivour.ROTATING;
@@ -72,11 +73,23 @@ public class ArriveIslandCamera : MonoBehaviour
 
     private void ResetCamPosition()
     {
-        t += Time.deltaTime * speed;
+        t += Time.deltaTime * ShipsManager.instance.playerShip.currentSpeed;
 
         Vector3 newPosition = Vector3.Lerp(startPosition, initPosition, t);
-        transform.position = newPosition;
+        float newZ;
+        if (ShipsManager.instance.playerShip.t <= 1)
+        {
+            newZ = Mathf.Lerp(startZ, endZ, ShipsManager.instance.playerShip.t);
+            startPosition.z = endZ;
+        }
+        else
+        {
+            float tZ = (t - (1 - startRotating)) / startRotating; 
+            tZ = Mathf.Clamp01(tZ);
+            newZ = Mathf.Lerp(startPosition.z, initPosition.z, tZ);
+        }
 
+        transform.position = new Vector3(newPosition.x, newPosition.y, newZ);
         transform.rotation = Quaternion.Slerp(Quaternion.identity, Quaternion.Euler(55, 0, 0), t);
 
         if(t >= 1)

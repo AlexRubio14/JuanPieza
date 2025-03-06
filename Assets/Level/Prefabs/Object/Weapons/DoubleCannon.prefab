@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 2884378185280330747}
   - component: {fileID: 1173568168622258923}
   - component: {fileID: 3242741993357289315}
+  - component: {fileID: 1774029561049129063}
   m_Layer: 9
   m_Name: DoubleCannon
   m_TagString: Object
@@ -63,7 +64,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -11.44, y: 2.47, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3166211483879754231}
@@ -89,6 +90,7 @@ MonoBehaviour:
   <objectSO>k__BackingField: {fileID: 11400000, guid: 4528481fd4d7f8d479f81b83058a6852, type: 2}
   <objectToInteract>k__BackingField: {fileID: 11400000, guid: dffcfb1857ced7d4fb477cee9121a908, type: 2}
   selectedVisual: {fileID: 4533079699732526716}
+  tooltip: {fileID: 1774029561049129063}
   rb: {fileID: 1173568168622258923}
   <grabPivot>k__BackingField: {fileID: 3527029587255982843}
   hasToBeInTheShip: 1
@@ -98,6 +100,7 @@ MonoBehaviour:
   repairParticles: {fileID: 5354762692452381090}
   repairClip: {fileID: 8300000, guid: 1e4e3078b3cd9f042ac17029ed429788, type: 3}
   ridingPos: {fileID: 5842127873249521153}
+  coolDown: 2
   weaponDamage: 20
   <bulletForce>k__BackingField: 750
   <tiltObject>k__BackingField: {fileID: 3778269650414963606}
@@ -216,6 +219,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1774029561049129063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687742630878781227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81df2381bb7219488602b295dd717d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 1
+  progressBarGO: {fileID: 5568467514944838423, guid: 596cd99dcbfe3b449b4556b592e9decb, type: 3}
+  size: 1
+  offset: 2
+  interactingSprite: {fileID: 0}
+  brokenSprite: {fileID: 21300000, guid: 3e4d24c0cb09c8e49ae1fc66d6ee86d3, type: 3}
+  emptySprite: {fileID: 21300000, guid: 25eb10021aa362045bf67f289ba2e498, type: 3}
+  loadedSprite: {fileID: 21300000, guid: 14f18b5ffe66eda47a19b890a602552e, type: 3}
 --- !u!1 &3426756992027230203
 GameObject:
   m_ObjectHideFlags: 0
