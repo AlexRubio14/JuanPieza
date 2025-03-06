@@ -16,7 +16,6 @@ public class PlayerShip
 {
     public GameObject _ship;
     public List<ResourceQuantity> resourceCuantity;
-    public Sprite shipImage;
 }
 [System.Serializable]
 public class ResourceQuantity

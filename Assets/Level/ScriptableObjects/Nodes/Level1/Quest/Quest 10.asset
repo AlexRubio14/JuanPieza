@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c68083eaf7e01540a9e8972c7ace1a3, type: 3}
-  m_Name: Quest 8
+  m_Name: Quest 10
   m_EditorClassIdentifier: 
-  description: We still don't have resources.
+  description: Hemos instalado unas nuevas catapultas en el barco.
   questObjective: 0
   ship:
     _ship: {fileID: 2418087686159776117, guid: 21ea42335b339e04880cebd085931c5c, type: 3}
-    resourceCuantity: []
+    resourceCuantity:
+    - resource: {fileID: 11400000, guid: f7ef454cecb748d4e96323e6b241d203, type: 2}
+      quantity: 100
   questReward: 1000
