@@ -19,11 +19,24 @@ public class Ship : MonoBehaviour
     protected Animator animator;
     public Action<GameObject> onDamageRecieved;
 
+    [Space, SerializeField]
+    private Collider[] shipCameraBounds;
+
     public virtual void Start()
     {
         Initialize();
         animator = GetComponent<Animator>();
+        AddShipBounds();
+
     }
+
+    protected void AddShipBounds()
+    {
+        CameraController cam = Camera.main.GetComponent<CameraController>();
+        foreach (Collider coll in shipCameraBounds)
+            cam.AddObject(coll.gameObject);
+    }
+
 
     public void Initialize()
     {
