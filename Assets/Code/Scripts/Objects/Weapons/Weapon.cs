@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public abstract class Weapon : RepairObject
 {
@@ -27,6 +28,10 @@ public abstract class Weapon : RepairObject
 
     [HideInInspector]
     public float tiltProcess;
+
+    [Header("Tilt Input Hint"), SerializeField]
+    private TiltHintController tiltInputHint;
+
 
     protected Animator animator;
     protected int mountedPlayerId = -1;
@@ -162,11 +167,17 @@ public abstract class Weapon : RepairObject
         transform.SetParent(_player.transform);
 
         selectedVisual.Hide();
+
+
+        EnableTiltInputHint(true);
+
     }
     protected void UnMount(PlayerController _player, ObjectHolder _objectHolder)
     {
         //Cambiar el mapa de inputs
         PlayersManager.instance.players[_player.playerInput.playerReference].Item1.SwitchCurrentActionMap("Gameplay");
+
+        EnableTiltInputHint(false);
 
         //Cambiar estado del player
         PlayerStateMachine playerSM = _objectHolder.GetComponentInParent<PlayerStateMachine>();
@@ -231,5 +242,13 @@ public abstract class Weapon : RepairObject
     public bool isPlayerMounted()
     {
         return mountedPlayerId != -1;
+    }
+
+    protected void EnableTiltInputHint(bool _enable)
+    {
+        tiltInputHint.gameObject.SetActive(_enable);
+
+        if (_enable)
+            tiltInputHint.ChangeDeviceType(PlayersManager.instance.players[mountedPlayerId].Item1.devices[0] is Gamepad , PlayersManager.instance.ingamePlayers[mountedPlayerId].transform);
     }
 }

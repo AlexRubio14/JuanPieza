@@ -7,7 +7,7 @@ public class PlayersManager : MonoBehaviour
     public static PlayersManager instance;
 
     [field: SerializeField]
-    public List<(PlayerInput, SinglePlayerController)> players {  get; private set; }
+    public List<(PlayerInput playerInput, SinglePlayerController singlePlayer)> players {  get; private set; }
     public List<PlayerController> ingamePlayers {  get; private set; }
 
     [field: Space, SerializeField]
