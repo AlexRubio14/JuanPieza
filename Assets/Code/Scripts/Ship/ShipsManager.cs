@@ -33,8 +33,11 @@ public class ShipsManager : MonoBehaviour
 
     public void GenerateEnemies()
     {
-        if (NodeManager.instance.battleInformation.enemiesHordes[0].spawnShipCondition == ShipData.SpawnShipCondition.INIT)
-            GenerateEnemyShip();
+        if (NodeManager.instance.questShip.questObjective != QuestData.QuestObjective.BATTLE || 
+            NodeManager.instance.battleInformation.enemiesHordes[0].spawnShipCondition != ShipData.SpawnShipCondition.INIT)
+            return;
+
+        GenerateEnemyShip();
     }
 
     private void GenerateAllyShip()
