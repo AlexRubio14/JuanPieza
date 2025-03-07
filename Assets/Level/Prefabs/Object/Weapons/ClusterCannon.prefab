@@ -236,6 +236,7 @@ GameObject:
   - component: {fileID: 1201026868603936365}
   - component: {fileID: 5931957409507476953}
   - component: {fileID: 503275928408252352}
+  - component: {fileID: 7192271132973546406}
   m_Layer: 9
   m_Name: ClusterCannon
   m_TagString: Object
@@ -253,7 +254,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.33, y: 0.22, z: -13.89}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6986544758662447124}
@@ -279,7 +280,7 @@ MonoBehaviour:
   <objectSO>k__BackingField: {fileID: 11400000, guid: 9fb1b2add814a1d4db66b362e22bfc95, type: 2}
   <objectToInteract>k__BackingField: {fileID: 11400000, guid: dffcfb1857ced7d4fb477cee9121a908, type: 2}
   selectedVisual: {fileID: 7038551062971641082}
-  tooltip: {fileID: 0}
+  tooltip: {fileID: 7192271132973546406}
   rb: {fileID: 1201026868603936365}
   <grabPivot>k__BackingField: {fileID: 0}
   hasToBeInTheShip: 1
@@ -408,6 +409,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7192271132973546406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8849408466616681510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81df2381bb7219488602b295dd717d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 1
+  progressBarGO: {fileID: 5568467514944838423, guid: 596cd99dcbfe3b449b4556b592e9decb, type: 3}
+  size: 1
+  offset: 2
+  interactingSprite: {fileID: 0}
+  brokenSprite: {fileID: 21300000, guid: 3e4d24c0cb09c8e49ae1fc66d6ee86d3, type: 3}
+  emptySprite: {fileID: 21300000, guid: 25eb10021aa362045bf67f289ba2e498, type: 3}
+  loadedSprite: {fileID: 21300000, guid: 14f18b5ffe66eda47a19b890a602552e, type: 3}
 --- !u!1001 &205073635071645644
 PrefabInstance:
   m_ObjectHideFlags: 0

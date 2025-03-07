@@ -122,14 +122,11 @@ public class ShipsManager : MonoBehaviour
             {
                 Camera.main.GetComponent<ArriveIslandCamera>().enabled = true;
                 Camera.main.GetComponent<ArriveIslandCamera>().SetIsRepositing();
+                return;
             }
-
+            if (condition == ShipData.SpawnShipCondition.DESTROY)
+                GenerateEnemyShip();
         }
-
-        if (condition != ShipData.SpawnShipCondition.DESTROY || enemiesHordes.Count <= 1 || enemiesShips.Count <= 1)
-            return;
-
-        GenerateEnemyShip();
     }
 
     public void CheckLastEnemyShipHP()
