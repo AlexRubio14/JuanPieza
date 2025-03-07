@@ -107,19 +107,13 @@ public class EnemieManager : MonoBehaviour
     }
     private EnemyAction GetSomethingToDo()
     {
-        if(toDoList.Count <= 0)
+        if (toDoList.Count <= 0)
             return null;
 
         EnemyAction greatestAction = null;
         int lastActionId = 30000;
-        foreach(EnemyAction action in toDoList)
+        foreach (EnemyAction action in toDoList)
         {
-            if(action.currentAction == EnemyAction.ActionType.REPAIR_SHIP)
-            {
-                toDoList.Remove(action);
-                return action;
-            }
-
             int currentId = GetCurrentActionId(action.currentAction);
 
             if (lastActionId > currentId)
