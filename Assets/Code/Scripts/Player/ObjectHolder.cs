@@ -57,7 +57,7 @@ public class ObjectHolder : MonoBehaviour
 
             InteractableObject tempObject = item.collider.GetComponent<InteractableObject>();
 
-            if (tempObject.isBeingUsed)
+            if (tempObject.isBeingUsed || !tempObject.CanInteract(this))
                 continue;
 
             lastDistance = Vector3.Distance(transform.parent.position, item.collider.transform.position);
@@ -102,14 +102,14 @@ public class ObjectHolder : MonoBehaviour
         if (!_setParent)
             return;
 
-        _interactableObject.transform.SetParent(transform.parent);
         
-        _interactableObject.transform.position = objectPickedPos[(int)_interactableObject.objectSO.objectSize].position;
-        _interactableObject.transform.position += _interactableObject.grabPivot.transform.localPosition;
+        _interactableObject.transform.SetParent(objectPickedPos[(int)_interactableObject.objectSO.objectSize]);
 
-        _interactableObject.transform.rotation = transform.rotation;
-        _interactableObject.transform.forward = _interactableObject.grabPivot.transform.forward;
+        _interactableObject.transform.localPosition = -_interactableObject.grabPivot.transform.localPosition;
 
+
+        _interactableObject.transform.localRotation = Quaternion.identity;
+        _interactableObject.transform.localRotation = _interactableObject.grabPivot.transform.localRotation;
 
         foreach (Collider item in _interactableObject.GetComponents<Collider>())
             item.enabled = false;
