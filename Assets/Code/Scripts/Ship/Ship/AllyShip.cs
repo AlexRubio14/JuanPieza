@@ -24,6 +24,8 @@ public class AllyShip : Ship
     private bool arriving;
     private bool leaving;
 
+    private float recoverHealth;
+
     public override void Start()
     {
         base.Start();
@@ -54,6 +56,21 @@ public class AllyShip : Ship
             ShipsManager.instance.gameObject.GetComponent<TransitionController>().EndLevelTransition();
             leaving = false;
         }        
+    }
+
+    public override void SetCurrentHealth(float amount)
+    {
+        base.SetCurrentHealth(amount);
+
+        if(amount < 0)
+            recoverHealth += -1 * amount;
+        else
+            recoverHealth -= amount;
+    }
+
+    public void SetRecoverHealth(float amount)
+    {
+        recoverHealth -= amount;
     }
 
     public override void DestroyShip()

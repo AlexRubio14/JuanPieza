@@ -23,7 +23,6 @@ public class CreateHole : DetectBullet
     {
         GameObject _hole = Instantiate(hole);
         _hole.transform.position = position;
-        _hole.GetComponent<Hole>().SetShipInformation(ship);
         _hole.GetComponentInChildren<RepairHole>().SetbulletInformation(ship, _bullet.GetDamage());
         _hole.transform.SetParent(transform, true);
 
