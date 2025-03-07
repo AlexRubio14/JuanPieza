@@ -8,7 +8,7 @@ public class CreateHole : DetectBullet
     [SerializeField]
     private LayerMask hitLayer;
     [SerializeField]
-    private float holeRadius = 2;
+    private float holeRadius;
     protected override void DetectCollision(Collision collision, Bullet _bullet)
     {
         base.DetectCollision(collision, _bullet);
@@ -23,7 +23,6 @@ public class CreateHole : DetectBullet
     {
         GameObject _hole = Instantiate(hole);
         _hole.transform.position = position;
-        _hole.GetComponent<Hole>().SetShipInformation(ship);
         _hole.GetComponentInChildren<RepairHole>().SetbulletInformation(ship, _bullet.GetDamage());
         _hole.transform.SetParent(transform, true);
 

@@ -4,10 +4,12 @@ public class RepairHole : Repair
 {
     private Ship ship;
     private float damageDeal;
+    [SerializeField] private bool hasToRecoverHP;
     protected override void RepairEnded(ObjectHolder _objectHolder)
     {
         _objectHolder.hintController.UpdateActionType(new HintController.Hint[] { new HintController.Hint(HintController.ActionType.NONE, "") });
-        ship.SetCurrentHealth(damageDeal);
+        if(hasToRecoverHP)
+            ship.SetCurrentHealth(damageDeal);
         InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
         _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
         Destroy(currentObject.gameObject);
@@ -35,5 +37,15 @@ public class RepairHole : Repair
     {
         ship = _ship;
         damageDeal = amount;
+    }
+
+    public void SetDamageDeal(float _damageDeal) 
+    {
+        damageDeal -= _damageDeal;
+    }
+
+    public float GetDamageDeal()
+    {
+        return damageDeal;
     }
 }

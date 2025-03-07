@@ -5,21 +5,25 @@ public class Hole : MonoBehaviour
     [Header("Particles")]
     [SerializeField] private ParticleSystem waterParticles;
 
-    [Header("Damage")]
-    [SerializeField] private float holeDamage;
-
     [Header("Time")]
     [SerializeField] private float maxDamageTime;
     [SerializeField] private int maxTimeLosingHealth;
     private float currentTime;
     private int currentTimeLosingHealth;
 
-    [Header("Ship")]
-    private Ship ship;
-
+    private RepairHole hole;
+    private float damageDiference;
+    [SerializeField] private bool isPlayerHole;
+    private void Start()
+    {
+        hole = GetComponent<RepairHole>();
+        damageDiference = hole.GetDamageDeal() / maxTimeLosingHealth;
+    }
     void Update()
     {
-        HoleDamageTimer();
+
+       HoleDamageTimer();
+
     }
 
     private void HoleDamageTimer()
@@ -29,7 +33,12 @@ public class Hole : MonoBehaviour
             currentTime += Time.deltaTime;
             if (currentTime > maxDamageTime)
             {
-                ship.SetCurrentHealth(-holeDamage);
+                if (isPlayerHole)
+                {
+                    hole.SetDamageDeal(damageDiference);
+                    ShipsManager.instance.playerShip.SetRecoverHealth(damageDiference);
+                }
+
                 currentTime = 0;
                 currentTimeLosingHealth++;
             }
@@ -38,10 +47,5 @@ public class Hole : MonoBehaviour
         {
             waterParticles.Stop();
         }
-    }
-
-    public void SetShipInformation(Ship _ship)
-    {
-        ship = _ship;
     }
 }

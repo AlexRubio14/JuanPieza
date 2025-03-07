@@ -1026,7 +1026,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ship: {fileID: 2695206495570368779}
-  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
+  hole: {fileID: 6933031838757936066, guid: b3627defe9c0dc74cb61cc6eb5f0674f, type: 3}
   hitLayer:
     serializedVersion: 2
     m_Bits: 576
@@ -1496,6 +1496,7 @@ MonoBehaviour:
   destroyY: -10
   initY: 1
   velocity: 0.2
+  boardshipInformation: []
 --- !u!54 &7670309692406009392
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1545,10 +1546,6 @@ MonoBehaviour:
   bulletResource: {fileID: 2621371534332809875}
   hammerObject: {fileID: 5090931682371189882}
   interactDistance: 2.5
-  timeToGetResource: 3
-  timeToRepair: 12.5
-  timeToInteract: 9
-  timeToShoot: 10
 --- !u!95 &2892431809410758422
 Animator:
   serializedVersion: 7
@@ -1755,7 +1752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ship: {fileID: 2695206495570368779}
-  hole: {fileID: 6933031838757936066, guid: 06b0c35e1a9aba44f88ecef48e9dee1a, type: 3}
+  hole: {fileID: 6933031838757936066, guid: b3627defe9c0dc74cb61cc6eb5f0674f, type: 3}
   hitLayer:
     serializedVersion: 2
     m_Bits: 576
@@ -2036,6 +2033,7 @@ Transform:
   - {fileID: 8939374292426736774}
   - {fileID: 7133702414026087718}
   - {fileID: 5031660818486921701}
+  - {fileID: 1431023067296426426}
   m_Father: {fileID: 6764713892806314720}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7934747415226563602

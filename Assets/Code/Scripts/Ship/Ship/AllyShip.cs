@@ -16,15 +16,19 @@ public class AllyShip : Ship
     [field: SerializeField] public float startZPosition { get; private set; }
     [field: SerializeField] public Vector3 cameraInitPosition { get; private set; }
     [SerializeField] private float speed;
+    [SerializeField] private float minSpeed;
+    public float currentSpeed { get; private set; }
     public float t { get; private set; }
     private float startZ;
     private bool arriving;
     private bool leaving;
 
+    private float recoverHealth;
+
     public override void Start()
     {
         base.Start();
-
+        currentSpeed = speed;
         startZ = transform.position.z;
     }
 
@@ -40,8 +44,9 @@ public class AllyShip : Ship
 
     private void MoveShip(float firstZ, float secondZ)
     {
-        t += Time.deltaTime * speed;
+        t += Time.deltaTime * currentSpeed;
         float newZ = Mathf.Lerp(firstZ, secondZ, t);
+        currentSpeed = Mathf.Lerp(speed, minSpeed, t);
         transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
         if (t >= 1)
             arriving = false;
@@ -50,6 +55,21 @@ public class AllyShip : Ship
             ShipsManager.instance.gameObject.GetComponent<TransitionController>().EndLevelTransition();
             leaving = false;
         }        
+    }
+
+    public override void SetCurrentHealth(float amount)
+    {
+        base.SetCurrentHealth(amount);
+
+        if(amount < 0)
+            recoverHealth += -1 * amount;
+        else
+            recoverHealth -= amount;
+    }
+
+    public void SetRecoverHealth(float amount)
+    {
+        recoverHealth -= amount;
     }
 
     public override void DestroyShip()
