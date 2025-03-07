@@ -1,13 +1,11 @@
-using TMPro;
-using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
+using System.Collections;
+using UnityEngine;
 
 public class ArriveIslandCamera : MonoBehaviour
 {
     public enum CameraBehaivour { WAIT, ARRIVING, ROTATING, REPOSITING, INVERSE_ROTATING };
 
-    [SerializeField] private float speed;
     [SerializeField] private float startRotating;
 
     public CameraBehaivour behaivour;
@@ -22,8 +20,15 @@ public class ArriveIslandCamera : MonoBehaviour
 
     private void Start()
     {
-        InitValues();
-        behaivour = CameraBehaivour.WAIT;
+        StartCoroutine(WaitEndOfFrame());
+        IEnumerator WaitEndOfFrame()
+        {
+            yield return new WaitForEndOfFrame();
+
+            InitValues();
+            behaivour = CameraBehaivour.WAIT;
+        }
+
     }
 
     private void InitValues()
@@ -103,7 +108,7 @@ public class ArriveIslandCamera : MonoBehaviour
 
     private void RepositingCamPosition()
     {
-        t += Time.deltaTime * speed;
+        t += Time.deltaTime * ShipsManager.instance.playerShip.currentSpeed;
 
         Vector3 newPosition = Vector3.Lerp(currentPosition, initPosition, t);
         transform.position = newPosition;
@@ -117,7 +122,7 @@ public class ArriveIslandCamera : MonoBehaviour
 
     private void EndCameraPosition()
     {
-        t += Time.deltaTime * speed;
+        t += Time.deltaTime * ShipsManager.instance.playerShip.currentSpeed;
 
         Vector3 newPosition = Vector3.Lerp(initPosition, startPosition, t); 
         transform.position = newPosition;
