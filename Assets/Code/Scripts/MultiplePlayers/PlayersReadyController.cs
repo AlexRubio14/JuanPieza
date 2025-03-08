@@ -21,14 +21,18 @@ public class PlayersReadyController : MonoBehaviour
 
     [Space, SerializeField]
     private GameObject[] playerUIPos;
+    private string nextScene;
 
-    [Space, SerializeField]
+    [Space, Header("Hub"), SerializeField]
     private bool isHub;
     [SerializeField]
     private HubPlayerController hubPlayerController;
+    [SerializeField]
+    private string HUB_TUTORIAL;
+    [SerializeField]
+    private GameObject hubTutorialPrefab;
 
     // Start is called before the first frame update
-    private string nextScene;
     private void Awake()
     {
         if (TestPlayerController.Instance)
@@ -47,6 +51,8 @@ public class PlayersReadyController : MonoBehaviour
     {
         if(!isHub)
             DisplayStartGameButton();
+        else
+            CheckHubTutorial();
     }
 
     public void AddPlayer(PlayerInput _newPlayer)
@@ -55,20 +61,14 @@ public class PlayersReadyController : MonoBehaviour
             AddPlayerToHub(_newPlayer);
         else
             AddPlayerToMenu(_newPlayer);
-    }   
-
-    private void AddPlayerToHub(PlayerInput _newPlayer)
-    {
-        (PlayerInput input, SinglePlayerController singlePlayer) newPlayer = (_newPlayer, _newPlayer.GetComponent<SinglePlayerController>());
-        newPlayer.singlePlayer.currentPlayerSelectorObject.SetActive(false);
-        PlayersManager.instance.players.Add(newPlayer);
-        int playerIndex = PlayersManager.instance.players.IndexOf(newPlayer);
-
-        _newPlayer.GetComponent<GameInput>().playerReference = playerIndex;
-        SetPlayerInputEvents(_newPlayer);
-
-        hubPlayerController.AddPlayerToHub(playerIndex);
     }
+    private void SetPlayerInputEvents(PlayerInput _playerInput)
+    {
+        _playerInput.currentActionMap.FindAction("StartGame").performed += StartGameEvent;
+        _playerInput.currentActionMap.FindAction("Exit").performed += RemovePlayerEvent;
+    }
+
+    #region Test Player Selector
     private void AddPlayerToMenu(PlayerInput _newPlayer)
     {
         (PlayerInput input, SinglePlayerController singlePlayer) newPlayer = (_newPlayer, _newPlayer.GetComponent<SinglePlayerController>());
@@ -99,11 +99,7 @@ public class PlayersReadyController : MonoBehaviour
         PlayersManager.instance.players[_playerIndex].Item1.transform.forward = -playerUIPos[_playerIndex].transform.forward;
 
     }
-    private void SetPlayerInputEvents(PlayerInput _playerInput)
-    {
-        _playerInput.currentActionMap.FindAction("StartGame").performed += StartGameEvent;
-        _playerInput.currentActionMap.FindAction("Exit").performed += RemovePlayerEvent;
-    }
+   
 
     public void RemovePlayerEvent(InputAction.CallbackContext obj)
     {
@@ -124,7 +120,6 @@ public class PlayersReadyController : MonoBehaviour
         if (PlayersManager.instance.players.Count >= MIN_PLAYERS)
             StartGame();
     }
-
     private void DisplayStartGameButton()
     {
         startGameButton.SetActive(PlayersManager.instance.players.Count >= MIN_PLAYERS);
@@ -142,4 +137,31 @@ public class PlayersReadyController : MonoBehaviour
         SceneManager.LoadScene(nextScene);
 
     }
+    #endregion
+
+
+    #region Hub
+    private void AddPlayerToHub(PlayerInput _newPlayer)
+    {
+        (PlayerInput input, SinglePlayerController singlePlayer) newPlayer = (_newPlayer, _newPlayer.GetComponent<SinglePlayerController>());
+        newPlayer.singlePlayer.currentPlayerSelectorObject.SetActive(false);
+        PlayersManager.instance.players.Add(newPlayer);
+        int playerIndex = PlayersManager.instance.players.IndexOf(newPlayer);
+
+        _newPlayer.GetComponent<GameInput>().playerReference = playerIndex;
+        SetPlayerInputEvents(_newPlayer);
+
+        hubPlayerController.AddPlayerToHub(playerIndex);
+    }
+    private void CheckHubTutorial()
+    {
+        if (PlayerPrefs.HasKey(HUB_TUTORIAL) && PlayerPrefs.GetInt("HUB_TUTORIAL") == 1)
+            return;
+
+        PlayerPrefs.SetInt(HUB_TUTORIAL, 1);
+
+        //Instanciar Tutorial
+        Instantiate(hubTutorialPrefab, Vector3.zero, Quaternion.identity);
+    }
+    #endregion
 }
