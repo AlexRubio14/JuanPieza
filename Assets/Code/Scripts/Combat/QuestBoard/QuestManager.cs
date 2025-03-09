@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class QuestManager : MonoBehaviour
 {
@@ -47,4 +48,11 @@ public class QuestManager : MonoBehaviour
     {
         availableQuests.Add(newQuest);
     }
+
+    public void StartQuest(BattleQuestNodeData _battleInformation, QuestData _questShip)
+    {
+        NodeManager.instance.SetData(_battleInformation, _questShip);
+        SceneManager.LoadScene("Battle");
+    }
+
 }

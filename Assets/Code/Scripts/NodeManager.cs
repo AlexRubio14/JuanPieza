@@ -22,5 +22,10 @@ public class NodeManager : MonoBehaviour
         }
     }
 
+    public void SetData(BattleQuestNodeData _battleInformation, QuestData _questShip)
+    {
+        battleInformation = _battleInformation;
+        questShip = _questShip;
+    }
 
 }
