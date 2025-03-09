@@ -27,6 +27,8 @@ public class RescueNPC : MonoBehaviour
         animator.SetBool("Swimming", true);
 
         transform.SetParent(null);
+
+        FishingManager.instance.AddTutorialNPC(this);
     }
 
     void Update()
