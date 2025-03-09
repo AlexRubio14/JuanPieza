@@ -32,7 +32,9 @@ public class RescueManager : MonoBehaviour
             GameObject npcPrefab = npcs[UnityEngine.Random.Range(0, npcs.Count)];
             GameObject spawnPoint = spawnNpcsPositions[UnityEngine.Random.Range(0, spawnNpcsPositions.Count)];
             Vector3 _randomOffset = new Vector3(UnityEngine.Random.Range(-randomOffset, randomOffset), 0,UnityEngine.Random.Range(-randomOffset, randomOffset));
-            Instantiate(npcPrefab, spawnPoint.transform.position + _randomOffset, Quaternion.identity);
+            float randomRotationY = UnityEngine.Random.Range(0f, 360f);
+            Quaternion randomRotation = Quaternion.Euler(0f, randomRotationY, 0f);
+            Instantiate(npcPrefab, spawnPoint.transform.position + _randomOffset, randomRotation);
         }
     }
 

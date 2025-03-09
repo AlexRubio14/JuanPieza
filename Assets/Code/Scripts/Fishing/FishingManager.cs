@@ -46,7 +46,7 @@ public class FishingManager : MonoBehaviour
     [Space, Header("Tutorial"), SerializeField]
     private bool isTutorial = false;
     [SerializeField]
-    private TutorialSwimNPC tutorialNPC;
+    private RescueNPC tutorialNPC;
 
     private void Awake()
     {
@@ -410,7 +410,7 @@ public class FishingManager : MonoBehaviour
     {
         deadPlayers.Add(_deadPlayer);
     }
-    public void AddTutorialNPC(TutorialSwimNPC _tutorialNPC)
+    public void AddTutorialNPC(RescueNPC _tutorialNPC)
     {
         tutorialNPC = _tutorialNPC;
     }

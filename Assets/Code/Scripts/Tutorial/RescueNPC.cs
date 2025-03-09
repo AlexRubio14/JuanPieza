@@ -1,10 +1,7 @@
 using UnityEngine;
 
-public class TutorialSwimNPC : MonoBehaviour
+public class RescueNPC : MonoBehaviour
 {
-    [SerializeField]
-    private DialogueData rescuedDialogue;
-
     [HideInInspector]
     public bool rescued {  get; private set; }
 
@@ -25,13 +22,11 @@ public class TutorialSwimNPC : MonoBehaviour
         isSwimming = false;
 
         hookPosition = Vector3.zero;
-        FishingManager.instance.AddTutorialNPC(this);
 
         animator.SetTrigger("Dead");
         animator.SetBool("Swimming", true);
 
         transform.SetParent(null);
-
     }
 
     void Update()
@@ -79,7 +74,7 @@ public class TutorialSwimNPC : MonoBehaviour
         animator.SetBool("Swimming", false);
         transform.SetParent(ShipsManager.instance.playerShip.transform);
 
-        DialogueController.instance.StartDialogue(rescuedDialogue);
+        RescueManager.instance.RemoveNpcCount();
     }
     
 }
