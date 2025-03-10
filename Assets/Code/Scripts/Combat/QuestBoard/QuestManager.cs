@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class QuestManager : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class QuestManager : MonoBehaviour
 
     public List<QuestData> allQuests;
     public List<QuestData> availableQuests;
+    public QuestData currentQuest;
 
     private void Awake()
     {
@@ -46,5 +48,15 @@ public class QuestManager : MonoBehaviour
     public void AddAvailableQuest(QuestData newQuest)
     {
         availableQuests.Add(newQuest);
+    }
+
+    public void DeactivateCanvas(GameObject canvas)
+    {
+        canvas.SetActive(false);
+    }
+
+    public void SetCurrentQuest(QuestData _quest)
+    {
+        currentQuest = _quest;
     }
 }
