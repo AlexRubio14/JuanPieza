@@ -155,10 +155,8 @@ public class PlayersReadyController : MonoBehaviour
     }
     private void CheckHubTutorial()
     {
-        if (PlayerPrefs.HasKey(HUB_TUTORIAL) && PlayerPrefs.GetInt("HUB_TUTORIAL") == 1)
+        if (PlayerPrefs.HasKey(HUB_TUTORIAL) && PlayerPrefs.GetInt(HUB_TUTORIAL) == 1)
             return;
-
-        PlayerPrefs.SetInt(HUB_TUTORIAL, 1);
 
         //Instanciar Tutorial
         Instantiate(hubTutorialPrefab, Vector3.zero, Quaternion.identity);

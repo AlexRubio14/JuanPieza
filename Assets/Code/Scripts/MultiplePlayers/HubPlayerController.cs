@@ -8,6 +8,8 @@ public class HubPlayerController : MonoBehaviour
     [SerializeField]
     private List<Transform> playersSpawnPos;
 
+    [Space, SerializeField]
+    private string HUB_TUTORIAL;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,5 +36,13 @@ public class HubPlayerController : MonoBehaviour
 
         MeshRenderer hatRenderer = controller.gameObject.GetComponentInChildren<MeshRenderer>();
         hatRenderer.material = PlayersManager.instance.characterMat[_playerId];
+
+        if (PlayerPrefs.HasKey(HUB_TUTORIAL) && PlayerPrefs.GetInt(HUB_TUTORIAL) == 1)
+            return;
+
+
+        FindAnyObjectByType<HubTutorialNPC>().PlayStarterDialogue();
+        PlayerPrefs.SetInt(HUB_TUTORIAL, 1);
+        PlayerPrefs.Save();
     }
 }
