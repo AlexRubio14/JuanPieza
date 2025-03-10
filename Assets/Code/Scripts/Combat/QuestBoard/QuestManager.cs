@@ -8,6 +8,7 @@ public class QuestManager : MonoBehaviour
 
     public List<QuestData> allQuests;
     public List<QuestData> availableQuests;
+    public QuestData currentQuest;
 
     private void Awake()
     {
@@ -49,10 +50,13 @@ public class QuestManager : MonoBehaviour
         availableQuests.Add(newQuest);
     }
 
-    public void StartQuest(BattleQuestNodeData _battleInformation, QuestData _questShip)
+    public void DeactivateCanvas(GameObject canvas)
     {
-        NodeManager.instance.SetData(_battleInformation, _questShip);
-        SceneManager.LoadScene("Battle");
+        canvas.SetActive(false);
     }
 
+    public void SetCurrentQuest(QuestData _quest)
+    {
+        currentQuest = _quest;
+    }
 }

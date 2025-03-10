@@ -13,6 +13,8 @@ public class QuestData : ScriptableObject
     public List<QuestData> questsToComplete;
     public Vector2 positionInMap;
     public bool completed;
+
+    public BattleQuestNodeData battleInformation;
 }
 
 [System.Serializable]

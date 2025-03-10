@@ -27,13 +27,13 @@ public class ShipsManager : MonoBehaviour
     private void Start()
     {
         GenerateAllyShip();
-        enemiesHordes = new List<ShipData>(NodeManager.instance.battleInformation.enemiesHordes);
+        enemiesHordes = new List<ShipData>(NodeManager.instance.questData.battleInformation.enemiesHordes);
         transitionController.InitLevelTransition();
     }
 
     public void GenerateEnemies()
     {
-        if (NodeManager.instance.battleInformation.enemiesHordes[0].spawnShipCondition == ShipData.SpawnShipCondition.INIT)
+        if (NodeManager.instance.questData.battleInformation.enemiesHordes[0].spawnShipCondition == ShipData.SpawnShipCondition.INIT)
             GenerateEnemyShip();
     }
 
@@ -41,7 +41,7 @@ public class ShipsManager : MonoBehaviour
     {
         GameObject _ship;
 
-        _ship = Instantiate(NodeManager.instance.questShip.ship._ship);
+        _ship = Instantiate(NodeManager.instance.questData.ship._ship);
         _ship.transform.position = new Vector3(0, _ship.GetComponent<AllyShip>().GetInitY(), _ship.GetComponent<AllyShip>().startZPosition);
         playerShip = _ship.GetComponent<AllyShip>();
 
@@ -49,7 +49,7 @@ public class ShipsManager : MonoBehaviour
 
         foreach (var items in itemBoxes)
         {
-            foreach(var resources in NodeManager.instance.questShip.ship.resourceCuantity)
+            foreach(var resources in NodeManager.instance.questData.ship.resourceCuantity)
             {
                 if(items.GetItemDrop() == resources.resource)
                 {
