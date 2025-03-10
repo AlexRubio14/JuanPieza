@@ -272,15 +272,16 @@ public class FishingManager : MonoBehaviour
         for (int i = 0; i < rescueNPCs.Count; i++)
         {
             if (!rescueNPCs[i].rescued &&
-            rescueNPCs[i].isSwimming &&
+            !rescueNPCs[i].isSwimming &&
             rescueNPCs[i].hookPosition == Vector3.zero)
             {
                 //Setear en el player muerto el target
-                fishingData[id].rescueNPC.SetHookPosition(fishingData[id].fishingRod.hook.transform.position);
-                fishingData[id].rescueNPC.isSwimming = true;
+                rescueNPCs[i].SetHookPosition(fishingData[id].fishingRod.hook.transform.position);
+                rescueNPCs[i].isSwimming = true;
                 FishingData newData = fishingData[id];
                 newData.currentPlayer = null;
                 newData.fishingState = FishingState.WAITING_PLAYER;
+                newData.rescueNPC = rescueNPCs[i];
                 fishingData[id] = newData;
                 return;
             }
