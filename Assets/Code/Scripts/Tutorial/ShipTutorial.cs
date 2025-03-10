@@ -39,7 +39,7 @@ public class ShipTutorial : MonoBehaviour
     private ObjectSO fishingRodSO;
     private InteractableObject fishingRodBox;
     [SerializeField]
-    private TutorialSwimNPC npc;
+    private RescueNPC npc;
 
     [Space, Header("Wood"), SerializeField]
     private ObjectSO woodObject;

@@ -9,6 +9,7 @@ public class QuestData : ScriptableObject
     public QuestObjective questObjective;
     public PlayerShip ship;
     public int questReward;
+    public int rescueCuantity;
 
     public List<QuestData> questsToComplete;
     public Vector2 positionInMap;
