@@ -49,9 +49,9 @@ public class Bonk : RepairObject
             };
 
         return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.NONE, "")
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
 
-            };
+        };
     }
 }

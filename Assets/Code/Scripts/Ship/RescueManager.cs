@@ -27,7 +27,7 @@ public class RescueManager : MonoBehaviour
 
     private void GenerateNPC()
     {
-        for (int i = 0; i < NodeManager.instance.questShip.rescueCuantity; i++) 
+        for (int i = 0; i < NodeManager.instance.questData.rescueCuantity; i++) 
         {
             GameObject npcPrefab = npcs[UnityEngine.Random.Range(0, npcs.Count)];
             GameObject spawnPoint = spawnNpcsPositions[UnityEngine.Random.Range(0, spawnNpcsPositions.Count)];
