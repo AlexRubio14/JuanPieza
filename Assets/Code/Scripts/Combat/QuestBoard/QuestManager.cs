@@ -55,8 +55,9 @@ public class QuestManager : MonoBehaviour
         canvas.SetActive(false);
     }
 
-    public void SetCurrentQuest(QuestData _quest)
+    public void AcceptQuest()
     {
-        currentQuest = _quest;
+        NodeManager.instance.SetData(currentQuest);
+        SceneManager.LoadScene("Battle");
     }
 }

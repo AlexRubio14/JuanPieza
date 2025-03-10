@@ -18,10 +18,4 @@ public class QuestBoard : MonoBehaviour
             questButton.GetComponent<QuestIcon>().SetQuestData(quest);
         }   
     }
-
-    public void AcceptQuest()
-    {
-        NodeManager.instance.SetData(QuestManager.Instance.currentQuest);
-        SceneManager.LoadScene("Battle");
-    }
 }
