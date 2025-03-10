@@ -56,8 +56,12 @@ public class RollState : PlayerState
 
         if (!collision.gameObject.CompareTag("Scenario") && !collision.gameObject.CompareTag("Object"))
             return;
+        Vector3 bounceNormal = new Vector3(collision.contacts[0].normal.x, 0, collision.contacts[0].normal.z);
         //Rebotar
-        Vector3 bounceDir = collision.contacts[0].normal * controller.bounceForce.x + Vector3.up * controller.bounceForce.y;
+        if (bounceNormal.x == 0 && bounceNormal.z == 0)
+            return;
+        Vector3 bounceDir = new Vector3(collision.contacts[0].normal.x, 0, collision.contacts[0].normal.z) * controller.bounceForce.x + Vector3.up * controller.bounceForce.y;
+        controller.rb.linearVelocity = Vector3.zero;
         controller.AddImpulse(bounceDir, controller.rollSpeed);
         rollTimePassed = -controller.rollDuration / 2;
         controller.animator.SetTrigger("Roll");

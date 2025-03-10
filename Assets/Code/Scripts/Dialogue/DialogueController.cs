@@ -44,6 +44,7 @@ public class DialogueController : MonoBehaviour
         sequenceIndex = -1;
         showingText = false;
         displayingDialogue = false;
+        FinishDialogue();
     }
     private void OnEnable()
     {
