@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TransitionController : MonoBehaviour
@@ -41,7 +42,11 @@ public class TransitionController : MonoBehaviour
 
             transitionImage.rectTransform.localScale = Vector3.Lerp(targetScale, initialScale, progresStart);
             if(timer >= 1)
+            {
                 isEnding = false;
+                SceneManager.LoadScene("HUB");
+            }
+
         }
     }
 
