@@ -44,6 +44,9 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField]
     public Vector2 pushForce { get; private set; }
 
+    [field: SerializeField] public float pirateKnockbackForce { get; private set; }
+    [field: SerializeField] public float pirateUpForce { get; private set; }
+
     public Rigidbody rb { get; private set; }
 
     [SerializeField] public ObjectHolder objectHolder;

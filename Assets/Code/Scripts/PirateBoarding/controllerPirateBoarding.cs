@@ -21,7 +21,7 @@ public class controllerPirateBoarding : MonoBehaviour
     private Vector3 posToJump;
 
     [Space, Header("Knockback")]
-    [SerializeField] private float pirateKnockbackForce;
+    [SerializeField] private float selfKnockbackForce; //Knockback a ti mismo al empujar al player
 
     [SerializeField] private float playerKnockbackForce;
     private bool isKnockbacking = false;
@@ -225,7 +225,7 @@ public class controllerPirateBoarding : MonoBehaviour
     private void PirateKnockback()
     {
         Vector3 pirateKnockbackDir = transform.forward * -1;
-        rb.AddForce(pirateKnockbackForce * pirateKnockbackDir.normalized, ForceMode.Impulse);
+        rb.AddForce(selfKnockbackForce * pirateKnockbackDir.normalized, ForceMode.Impulse);
 
         Invoke("IsKnockbacking", 0.3f);
     }
