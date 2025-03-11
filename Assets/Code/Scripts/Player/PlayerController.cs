@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float slopeCheckDistance;
     [SerializeField]
-    private LayerMask slopeCheckLayer;
+    public LayerMask slopeCheckLayer;
     private RaycastHit slopeHit;
 
 
@@ -43,6 +43,9 @@ public class PlayerController : MonoBehaviour
     public LayerMask pushLayers { get; private set; }
     [field: SerializeField]
     public Vector2 pushForce { get; private set; }
+
+    [field: SerializeField] public float pirateKnockbackForce { get; private set; }
+    [field: SerializeField] public float pirateUpForce { get; private set; }
 
     public Rigidbody rb { get; private set; }
 
@@ -79,6 +82,10 @@ public class PlayerController : MonoBehaviour
 
     public bool movementBuffActive;
     public float currentKnockBackTime;
+
+    [SerializeField] public LayerMask objectLayer;
+
+
 
     private void Awake()
     {
@@ -326,7 +333,6 @@ public class PlayerController : MonoBehaviour
             endPos = startPos + (Vector3.down * (capsuleCollider.height / 2 + slopeCheckDistance));
             Gizmos.DrawLine(startPos, endPos);
         }
-
     }
 
     public void SetBaseMovementSpeed(float speed)

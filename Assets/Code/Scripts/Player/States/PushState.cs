@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PushState : PlayerState
@@ -18,6 +19,18 @@ public class PushState : PlayerState
                 Vector3 pushForward = controller.transform.forward * controller.pushForce.x;
                 Vector3 pushUp = Vector3.up * controller.pushForce.y;
                 hit.rigidbody.AddForce(pushForward + pushUp, ForceMode.Impulse);
+            }
+
+            if(hit.collider.CompareTag("BoardingPirate"))
+            {
+                hit.transform.gameObject.TryGetComponent(out controllerPirateBoarding pirateController);
+                pirateController.ChangeState(controllerPirateBoarding.PirateState.KNOCKBACK);
+                Vector3 knockbackForward = controller.transform.forward * controller.pirateKnockbackForce;
+                Vector3 pushUp = Vector3.up * controller.pirateUpForce;
+
+                Vector3 knockbackDir = knockbackForward + pushUp;
+
+                pirateController.PirateKnockback(knockbackDir, controller.pirateKnockbackForce);
             }
         }
     }
