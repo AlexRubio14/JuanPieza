@@ -10,13 +10,6 @@ public class HubPlayerController : MonoBehaviour
 
     [Space, SerializeField]
     private string HUB_TUTORIAL;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        for (int i = 0; i < PlayersManager.instance.players.Count; i++)
-            AddPlayerToHub(i);
-
-    }
 
     public void AddPlayerToHub(int _playerId)
     {

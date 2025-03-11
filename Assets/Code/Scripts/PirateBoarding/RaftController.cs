@@ -9,7 +9,7 @@ public class RaftController : MonoBehaviour
 
     [SerializeField] private GameObject boardingEnemy;
 
-    [SerializeField] private List<controllerPirateBoarding> pirates;
+    [SerializeField] private List<PirateBoardingController> pirates;
     private int pirateJumpIndex = 0;
     [SerializeField] private float timeBetweenPirateJumps;
 
@@ -78,7 +78,7 @@ public class RaftController : MonoBehaviour
 
         isBoarding = true;
 
-        List<Transform> raftStartPointsRef = ManagerPirateBoarding.Instance.raftsStartPos;
+        List<Transform> raftStartPointsRef = PirateBoardingManager.Instance.raftsStartPos;
         int randomIndex = Random.Range(0, raftStartPointsRef.Count);
 
         transform.position = raftStartPointsRef[randomIndex].position;
@@ -126,13 +126,13 @@ public class RaftController : MonoBehaviour
     private void SetPiratesInRaft(int _enemiesToSpawn)
     {
         //If there is no available pirates Instantiate more
-        if (ManagerPirateBoarding.Instance.piratesPool.Count == 0)
-            ManagerPirateBoarding.Instance.InstantiatePirates();
+        if (PirateBoardingManager.Instance.piratesPool.Count == 0)
+            PirateBoardingManager.Instance.InstantiatePirates();
 
-        List<controllerPirateBoarding> pirateListRef = ManagerPirateBoarding.Instance.piratesPool;
+        List<PirateBoardingController> pirateListRef = PirateBoardingManager.Instance.piratesPool;
         int positionInRaftIndex = 0;
 
-        foreach(controllerPirateBoarding controller in  pirateListRef)
+        foreach(PirateBoardingController controller in  pirateListRef)
         {
             if (controller.isBoarding)
                 continue;
@@ -197,10 +197,10 @@ public class RaftController : MonoBehaviour
 
     private void StartBoarding()
     {
-        foreach(controllerPirateBoarding controller in pirates)
+        foreach(PirateBoardingController controller in pirates)
         {
             controller.transform.parent = null;
-            ManagerPirateBoarding.Instance.piratesBoarding.Add(controller);
+            PirateBoardingManager.Instance.piratesBoarding.Add(controller);
         }
 
         //Jump into playerShip and start Chasing/boarding
