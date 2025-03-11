@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManagerPirateBoarding : MonoBehaviour
+public class PirateBoardingManager : MonoBehaviour
 {
-    public static ManagerPirateBoarding Instance { get; private set; }
+    public static PirateBoardingManager Instance { get; private set; }
 
     [Header("Boarding Pirates")]
     [SerializeField] private GameObject boardingEnemy;
     [SerializeField] public Transform piratesHolder;
     [SerializeField] private int piratesToSpawn;
-    public List<controllerPirateBoarding> piratesBoarding { get; private set; } = new List<controllerPirateBoarding>();
-    [SerializeField] public List<controllerPirateBoarding> piratesPool { get; private set; } = new List<controllerPirateBoarding>();
+    public List<PirateBoardingController> piratesBoarding { get; private set; } = new List<PirateBoardingController>();
+    [SerializeField] public List<PirateBoardingController> piratesPool { get; private set; } = new List<PirateBoardingController>();
 
     [Header("Rafts")]
     [SerializeField] private GameObject raft;
@@ -77,7 +77,7 @@ public class ManagerPirateBoarding : MonoBehaviour
         {
             GameObject pirate = Instantiate(boardingEnemy, piratesHolder.position, boardingEnemy.transform.rotation);
 
-            if (pirate.TryGetComponent(out controllerPirateBoarding controller))
+            if (pirate.TryGetComponent(out PirateBoardingController controller))
             {
                 piratesPool.Add(controller);
                 controller.gameObject.transform.SetParent(piratesHolder, true);
@@ -101,7 +101,7 @@ public class ManagerPirateBoarding : MonoBehaviour
 
     public void DeletePiratePool()
     {
-        foreach (controllerPirateBoarding controller in piratesPool)
+        foreach (PirateBoardingController controller in piratesPool)
         {
             if (controller != null)
             {

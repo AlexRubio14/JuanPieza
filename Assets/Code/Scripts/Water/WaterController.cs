@@ -17,7 +17,7 @@ public class WaterController : MonoBehaviour
 
         if(collision.collider.CompareTag("BoardingPirate"))
         {
-            if (collision.gameObject.TryGetComponent(out controllerPirateBoarding controller))
+            if (collision.gameObject.TryGetComponent(out PirateBoardingController controller))
             {
                 controller.ResetPirate();
             }

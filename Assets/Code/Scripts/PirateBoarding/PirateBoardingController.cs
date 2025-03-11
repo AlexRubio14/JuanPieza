@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.XR;
 
-public class controllerPirateBoarding : MonoBehaviour
+public class PirateBoardingController : MonoBehaviour
 {
     public bool isBoarding = false;
 
@@ -257,8 +256,8 @@ public class controllerPirateBoarding : MonoBehaviour
 
     public void ResetPirate()
     {
-        transform.SetParent(ManagerPirateBoarding.Instance.piratesHolder, true);
-        transform.position = ManagerPirateBoarding.Instance.piratesHolder.transform.position;
+        transform.SetParent(PirateBoardingManager.Instance.piratesHolder, true);
+        transform.position = PirateBoardingManager.Instance.piratesHolder.transform.position;
         currentState = PirateState.WAITING;
         isBoarding = false;
         rb.isKinematic = true;

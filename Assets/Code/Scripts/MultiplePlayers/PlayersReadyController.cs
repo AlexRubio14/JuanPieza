@@ -143,13 +143,29 @@ public class PlayersReadyController : MonoBehaviour
     #region Hub
     private void AddPlayerToHub(PlayerInput _newPlayer)
     {
-        (PlayerInput input, SinglePlayerController singlePlayer) newPlayer = (_newPlayer, _newPlayer.GetComponent<SinglePlayerController>());
-        newPlayer.singlePlayer.currentPlayerSelectorObject.SetActive(false);
-        PlayersManager.instance.players.Add(newPlayer);
-        int playerIndex = PlayersManager.instance.players.IndexOf(newPlayer);
+        (PlayerInput input, SinglePlayerController singlePlayer) newPlayer = (null, null);
+        bool playerExists = false;
+        foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
+        {
+            if(_newPlayer == item.Item1)
+            {
+                newPlayer = item;
+                playerExists = true;
+                break;
+            }
+        }
 
+
+        if (!playerExists)
+        {
+            newPlayer = (_newPlayer, _newPlayer.GetComponent<SinglePlayerController>());
+            PlayersManager.instance.players.Add(newPlayer);
+        }
+
+        int playerIndex = PlayersManager.instance.players.IndexOf(newPlayer);
         _newPlayer.GetComponent<GameInput>().playerReference = playerIndex;
-        SetPlayerInputEvents(_newPlayer);
+
+        newPlayer.singlePlayer.currentPlayerSelectorObject.SetActive(false);
 
         hubPlayerController.AddPlayerToHub(playerIndex);
     }

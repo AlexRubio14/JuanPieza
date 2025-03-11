@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class CameraController : MonoBehaviour
 {
@@ -24,9 +25,10 @@ public class CameraController : MonoBehaviour
         public PlayerStateMachine player;
     }
 
-    [Header("Players"), SerializeField]
+    [Header("Objects to Follow"), SerializeField]
     private List<ObjectFollow> followObjects;
-
+    private int totalPlayers;
+    private int totalEnemies;
 
     [Header("Position Adjustments"), SerializeField]
     private float minYDistance;
@@ -38,7 +40,10 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float playerWeight;
     [SerializeField]
+    private float enemyWeight;
+    [SerializeField]
     private float objectWeight;
+
 
     [Space, Header("Cameras"), SerializeField]
     private Camera insideCamera;
@@ -92,13 +97,25 @@ public class CameraController : MonoBehaviour
 
     public void AddPlayer(GameObject _newPlayer)
     {
+        totalPlayers++;
+
+        for (int i = 0; i < followObjects.Count; i++)
+        {
+            if (followObjects[i].player != null)
+            {
+                ObjectFollow updatedPlayer = followObjects[i];
+                updatedPlayer.weight = playerWeight / totalPlayers;
+                followObjects[i] = updatedPlayer;
+            }
+        }
+
         followObjects.Add(new ObjectFollow(
             _newPlayer.GetComponent<CapsuleCollider>(),
-            playerWeight,
+            playerWeight / totalPlayers,
             _newPlayer.GetComponent<PlayerStateMachine>()
             ));
     }
-    public void AddObject(GameObject _objectToAdd)
+    public void AddBounds(GameObject _objectToAdd)
     {
         followObjects.Add(new ObjectFollow(
             _objectToAdd.GetComponent<Collider>(),
@@ -110,6 +127,7 @@ public class CameraController : MonoBehaviour
 
     public void RemovePlayer(GameObject _removablePlayer)
     {
+        totalPlayers--;
         CapsuleCollider currentCollider = _removablePlayer.GetComponent<CapsuleCollider>();
         ObjectFollow playerToRemove = GetObjectByCollider(currentCollider);
         if(playerToRemove.collider != null)
