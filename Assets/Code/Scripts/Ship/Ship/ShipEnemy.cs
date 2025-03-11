@@ -57,7 +57,7 @@ public class ShipEnemy : Ship
         {
             foreach (var enemies in GetComponent<EnemieManager>().GetEnemyList())
             {
-                Camera.main.GetComponent<CameraController>().AddPlayer(enemies.gameObject);
+                //Camera.main.GetComponent<CameraController>().AddBounds(enemies.gameObject);
                 enemies.GetComponent<NavMeshAgent>().enabled = true;
             }
 
@@ -67,6 +67,8 @@ public class ShipEnemy : Ship
             {
                 StartCoroutine(RequestCreateRaftEvent(boardshipInfo));
             }
+
+            AddShipBounds();
         }
     }
 

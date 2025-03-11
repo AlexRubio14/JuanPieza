@@ -23,7 +23,7 @@ public class RaftManager : MonoBehaviour
 
     public void CreateRaftEvents(BoardShip _boardShip)
     {
-        RaftController raftController = ManagerPirateBoarding.Instance.GetUnusedRaft();
+        RaftController raftController = PirateBoardingManager.Instance.GetUnusedRaft();
 
         raftEventQueue.Enqueue(() => raftController.SetUpRaft(_boardShip));
         ProcessRaftEvent();

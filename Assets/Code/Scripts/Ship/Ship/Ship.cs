@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Ship : MonoBehaviour
@@ -26,15 +25,13 @@ public class Ship : MonoBehaviour
     {
         Initialize();
         animator = GetComponent<Animator>();
-        AddShipBounds();
-
     }
 
     protected void AddShipBounds()
     {
         CameraController cam = Camera.main.GetComponent<CameraController>();
         foreach (Collider coll in shipCameraBounds)
-            cam.AddObject(coll.gameObject);
+            cam.AddBounds(coll.gameObject);
     }
 
 
