@@ -183,12 +183,22 @@ public class controllerPirateBoarding : MonoBehaviour
 
         foreach(PlayerController controller in PlayersManager.instance.ingamePlayers)
         {
-            navMeshAgent.CalculatePath(controller.transform.position, currentPath);
+            Vector3 playerPos = controller.transform.position;
 
-            if (currentPath.status == NavMeshPathStatus.PathInvalid)
-                continue;
+            if(controller.stateMachine.currentState == controller.stateMachine.knockbackState)
+            {// SI esta en knockback, queremos su punto a la altura del suelo para que se pueda hacer un camino en la mesh
+                if (Physics.Raycast(playerPos, Vector3.down, out RaycastHit raycastHit, 10f, floorLayer))
+                {
+                    playerPos = raycastHit.point;
+                }
+            }
 
-            Vector3 disFromPirateToPlayer = controller.transform.position - transform.position;
+            //navMeshAgent.CalculatePath(controller.transform.position, currentPath);
+
+            //if (currentPath.status == NavMeshPathStatus.PathInvalid)
+            //    continue;
+
+            Vector3 disFromPirateToPlayer = playerPos - transform.position;
 
             if(disFromPirateToPlayer.magnitude <= tempDistance)
             {
