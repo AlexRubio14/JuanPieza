@@ -5,9 +5,7 @@ public class NodeManager : MonoBehaviour
     public static NodeManager instance;
 
     [field: SerializeField]
-    public BattleQuestNodeData battleInformation { get; private set; }
-    [field: SerializeField]
-    public QuestData questShip { get; private set; }
+    public QuestData questData { get; private set; }
 
     private void Awake()
     {
@@ -22,5 +20,9 @@ public class NodeManager : MonoBehaviour
         }
     }
 
+    public void SetData(QuestData _questData)
+    {
+        questData = _questData;
+    }
 
 }
