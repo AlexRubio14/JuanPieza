@@ -13,7 +13,6 @@ public class DetectBullet : MonoBehaviour
             {
                 bullet.SetShipImpacted(ship.transform);
                 ShipsManager.instance.CheckLastEnemyShipHP();
-                Debug.Log(ship.name);
             }
             AudioManager.instance.Play2dOneShotSound(bullet.hitClip, "Objects");
             DetectCollision(collision, bullet);

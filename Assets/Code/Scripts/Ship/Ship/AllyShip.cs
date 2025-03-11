@@ -30,6 +30,7 @@ public class AllyShip : Ship
         base.Start();
         currentSpeed = speed;
         startZ = transform.position.z;
+        AddShipBounds();
     }
 
     protected override void Update()
