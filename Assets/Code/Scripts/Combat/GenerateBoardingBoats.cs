@@ -25,7 +25,6 @@ public class GenerateBoardingBoats : MonoBehaviour
         if (currentRaft.GetPirates().Count == 0)
             return;
 
-
             raftCount--;
             if(raftCount <= 0)
             {
