@@ -63,8 +63,8 @@ RectTransform:
   m_GameObject: {fileID: 267915224585243032}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8998798516069277936}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
@@ -103,7 +103,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 9755aa3b04ae11c4d904808527115fde, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -204,11 +204,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starterDialogue: {fileID: 11400000, guid: ff3dcb313332132478b0010f90263573, type: 2}
+  mapTutorialDialogue: {fileID: 11400000, guid: 8dd5019d06916fc41a97d82fb790dcae, type: 2}
+  selectQuestDialogue: {fileID: 11400000, guid: 02152d2d8b8f0e94297b52ed8a505209, type: 2}
   arrows:
   - {fileID: 144702315734228893}
   - {fileID: 1509154652033498007}
   - {fileID: 6906136740787999311}
-  arrowOffset: {x: 0, y: 1, z: -1}
+  arrowCanvas: {fileID: 7911557789830021497}
+  arrowOffset: {x: 0, y: 2, z: -1}
 --- !u!1 &1509154652033498007
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,8 +275,8 @@ RectTransform:
   m_GameObject: {fileID: 4304210264977698739}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2839651062619891038}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
@@ -312,7 +315,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 9755aa3b04ae11c4d904808527115fde, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -383,8 +386,8 @@ RectTransform:
   m_GameObject: {fileID: 7221080595451558761}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2755770894066661660}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
@@ -423,7 +426,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 9755aa3b04ae11c4d904808527115fde, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -493,7 +496,7 @@ RectTransform:
   m_GameObject: {fileID: 7911557789830021497}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.3999999, y: 2.3999999, z: 2.3999999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2839651062619891038}
@@ -577,6 +580,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5488602722392537210}
     m_Modifications:
+    - target: {fileID: 4125621615200052443, guid: b0aa8974a6acaf643a0b778d617fd462, type: 3}
+      propertyPath: m_Color.a
+      value: 0.627451
+      objectReference: {fileID: 0}
     - target: {fileID: 7190122115163083735, guid: b0aa8974a6acaf643a0b778d617fd462, type: 3}
       propertyPath: m_Name
       value: DialogueController
