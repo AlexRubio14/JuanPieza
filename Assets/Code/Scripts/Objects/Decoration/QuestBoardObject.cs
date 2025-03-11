@@ -41,4 +41,9 @@ public class QuestBoardObject : InteractableObject
     {
         
     }
+
+    public GameObject GetQuestCanvas()
+    {
+        return questCanvas;
+    }
 }

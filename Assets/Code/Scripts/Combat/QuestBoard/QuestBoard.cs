@@ -1,21 +1,30 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class QuestBoard : MonoBehaviour
 {
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private GameObject informationCanvas;
 
-    private void OnEnable()
+    private List<QuestIcon> questIcons;
+
+    private void Start()
     {
+        questIcons = new List<QuestIcon>();
+        
         QuestManager.Instance.UpdateAvailableQuests();
 
         foreach (QuestData quest in QuestManager.Instance.availableQuests)
         {
-            GameObject questButton = Instantiate(buttonPrefab, transform);
+            QuestIcon questButton = Instantiate(buttonPrefab, transform).GetComponent<QuestIcon>();
             questButton.transform.localPosition = new Vector3(quest.positionInMap.x, quest.positionInMap.y, 0);
-            questButton.GetComponent<QuestIcon>().SetInformationCanvas(informationCanvas);
-            questButton.GetComponent<QuestIcon>().SetQuestData(quest);
-        }   
+            questButton.SetInformationCanvas(informationCanvas);
+            questButton.SetQuestData(quest);
+
+            questIcons.Add(questButton);
+        }
     }
+    public List<QuestIcon> GetQuestIcons() { return questIcons; }
+
+    public GameObject GetInformationCanvas() { return informationCanvas; }
 }
