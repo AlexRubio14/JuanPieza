@@ -88,6 +88,23 @@ public class RaftController : MonoBehaviour
 
     }
 
+    public void SetUpRaftHardCoded()
+    {
+        if (isBoarding)
+            return;
+
+        SetPiratesInRaft(2);
+
+        isBoarding = true;
+
+        List<Transform> raftStartPointsRef = ManagerPirateBoarding.Instance.raftsStartPos;
+
+        int randomIndex = Random.Range(0, raftStartPointsRef.Count);
+
+        startingZPos = transform.position.z;
+        ChangeState(RaftState.MOVING_FRONT);
+    }
+
     private void ResetRaft()
     {
         transform.position = transform.parent.position;
@@ -210,5 +227,10 @@ public class RaftController : MonoBehaviour
     public void SetDestinyPos(float _zPos)
     {
         destinyZPos = _zPos;
+    }
+
+    public List<controllerPirateBoarding> GetPirates()
+    {
+        return pirates;
     }
 }
