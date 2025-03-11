@@ -16,8 +16,16 @@ public class GenerateBoardingBoats : MonoBehaviour
 
     private void Update()
     {
-        if (ManagerPirateBoarding.Instance.piratesBoarding.Count <= 0 && currentRaft.GetPirates().Count <= 0)
-        {
+        if (PirateBoardingManager.Instance.piratesBoarding.Count >= 0) //Si hay piratas abordando return;
+            return;
+
+        if (currentRaft == null)
+            return;
+
+        if (currentRaft.GetPirates().Count == 0)
+            return;
+
+
             raftCount--;
             if(raftCount <= 0)
             {
@@ -27,5 +35,4 @@ public class GenerateBoardingBoats : MonoBehaviour
             else
                 currentRaft = RaftManager.Instance.CreateRaftEventsHardCoded();
         }
-    }
 }

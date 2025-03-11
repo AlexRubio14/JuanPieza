@@ -32,11 +32,6 @@ public class RaftController : MonoBehaviour
         ChangeState(RaftState.WAITING);
     }
 
-    private void Start()
-    {
-        destinyZPos = ShipsManager.instance.playerShip.transform.position.z;
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -46,7 +41,7 @@ public class RaftController : MonoBehaviour
                 break;
             case RaftState.MOVING_FRONT:
 
-                if(transform.position.z >= destinyZPos)
+                if(transform.position.z >= ShipsManager.instance.playerShip.transform.position.z)
                 {
                     ChangeState(RaftState.BOARDING);
                 }
@@ -97,7 +92,7 @@ public class RaftController : MonoBehaviour
 
         isBoarding = true;
 
-        List<Transform> raftStartPointsRef = ManagerPirateBoarding.Instance.raftsStartPos;
+        List<Transform> raftStartPointsRef = PirateBoardingManager.Instance.raftsStartPos;
 
         int randomIndex = Random.Range(0, raftStartPointsRef.Count);
 
@@ -229,7 +224,7 @@ public class RaftController : MonoBehaviour
         destinyZPos = _zPos;
     }
 
-    public List<controllerPirateBoarding> GetPirates()
+    public List<PirateBoardingController> GetPirates()
     {
         return pirates;
     }
