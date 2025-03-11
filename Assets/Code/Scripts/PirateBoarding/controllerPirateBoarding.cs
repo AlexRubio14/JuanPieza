@@ -218,14 +218,14 @@ public class controllerPirateBoarding : MonoBehaviour
             playerController.stateMachine.ChangeState(playerController.stateMachine.knockbackState);
 
             //Pirate Knockback
-            PirateKnockback();
+            Vector3 pirateKnockbackDir = transform.forward * -1;
+            PirateKnockback(pirateKnockbackDir, selfKnockbackForce);
         }
     }
 
-    private void PirateKnockback()
+    public void PirateKnockback(Vector3 _knockbackDir, float _knockbackForce)
     {
-        Vector3 pirateKnockbackDir = transform.forward * -1;
-        rb.AddForce(selfKnockbackForce * pirateKnockbackDir.normalized, ForceMode.Impulse);
+        rb.AddForce(_knockbackDir * _knockbackForce, ForceMode.Impulse);
 
         Invoke("IsKnockbacking", 0.3f);
     }

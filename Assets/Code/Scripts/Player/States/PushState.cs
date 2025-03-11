@@ -23,8 +23,14 @@ public class PushState : PlayerState
 
             if(hit.collider.CompareTag("BoardingPirate"))
             {
-                Vector3 knockbackDir = hit.transform.forward * -1;
-                Vector3 pushUp = Vector3.up;
+                hit.transform.gameObject.TryGetComponent(out controllerPirateBoarding pirateController);
+                pirateController.ChangeState(controllerPirateBoarding.PirateState.KNOCKBACK);
+                Vector3 knockbackForward = controller.transform.forward * controller.pirateKnockbackForce;
+                Vector3 pushUp = Vector3.up * controller.pirateUpForce;
+
+                Vector3 knockbackDir = knockbackForward + pushUp;
+
+                pirateController.PirateKnockback(knockbackDir, controller.pirateKnockbackForce);
             }
         }
     }
