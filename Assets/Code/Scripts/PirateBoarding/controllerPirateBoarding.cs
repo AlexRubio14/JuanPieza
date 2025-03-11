@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,25 +8,36 @@ public class controllerPirateBoarding : MonoBehaviour
 {
     public bool isBoarding = false;
 
-    private Vector3 posToJump;
-    [SerializeField] private float jumpHeigt;
-    
-    private float parabolaProcess = 0f;
-    [SerializeField] private float parabolaSpeed;
-
-    [SerializeField] private float knockbackForce;
-
-
     [SerializeField] private Rigidbody rb;
     [SerializeField] private NavMeshAgent navMeshAgent;
 
     private Vector3 targetPos;
-    public enum PirateState { WAITING, PARABOLA, CHASING, DEAD }
+
+    [Space, Header("Parabola")]
+    [SerializeField] private float jumpHeigt;
+
+    [SerializeField] private float parabolaSpeed;
+    private float parabolaProcess = 0f;
+    private Vector3 posToJump;
+
+    [Space, Header("Knockback")]
+    [SerializeField] private float pirateKnockbackForce;
+
+    [SerializeField] private float playerKnockbackForce;
+    private bool isKnockbacking = false;
+
+    [Space, Header("SphereCast")]
+    [SerializeField] private Transform sphereCastPos;
+    [SerializeField] private float radiusSphereCast;
+    [SerializeField] private LayerMask playerLayer;
+    public enum PirateState { WAITING, PARABOLA, CHASING, KNOCKBACK, DEAD }
 
     public PirateState currentState { get; private set; } = PirateState.WAITING;
 
     [SerializeField] private float raycastDis;
     [SerializeField] private LayerMask floorLayer;
+
+    private float navSpeed;
 
 
     private void Awake()
@@ -36,7 +48,7 @@ public class controllerPirateBoarding : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        navSpeed = navMeshAgent.speed; 
     }
 
     // Update is called once per frame
@@ -51,6 +63,10 @@ public class controllerPirateBoarding : MonoBehaviour
                 break;
             case PirateState.CHASING:
                 CalculateTarget();
+                CheckCanKnockbackPlayer();
+                break;
+            case PirateState.KNOCKBACK:
+                KnockbackUpdate();
                 break;
             case PirateState.DEAD:
                 break;
@@ -82,6 +98,8 @@ public class controllerPirateBoarding : MonoBehaviour
                 break;
             case PirateState.CHASING:
                 break;
+            case PirateState.KNOCKBACK:
+                break;
             case PirateState.DEAD:
                 break;
             default:
@@ -96,6 +114,13 @@ public class controllerPirateBoarding : MonoBehaviour
                 JumpIntoPlayerShip();
                 break;
             case PirateState.CHASING:
+                rb.isKinematic = true;
+                navMeshAgent.speed = navSpeed;
+                break;
+            case PirateState.KNOCKBACK:
+                navMeshAgent.speed = 0;
+                navMeshAgent.enabled = false;
+                rb.isKinematic = false;
                 break;
             case PirateState.DEAD:
                 rb.isKinematic = true;
@@ -107,6 +132,15 @@ public class controllerPirateBoarding : MonoBehaviour
         currentState = newState;
     }
 
+    private void KnockbackUpdate()
+    {
+        if(isKnockbacking && rb.linearVelocity.magnitude <= Vector3.zero.magnitude)
+        {
+            navMeshAgent.enabled = true;
+            ChangeState(PirateState.CHASING);
+            isKnockbacking = false;
+        }
+    }
     private void ActivateNavMesh()
     {
         navMeshAgent.enabled = true;
@@ -169,6 +203,52 @@ public class controllerPirateBoarding : MonoBehaviour
         navMeshAgent.SetDestination(tempTargetPos);
     }
 
+    private void KnockbackPlayer(PlayerController playerController)
+    {
+        ChangeState(PirateState.KNOCKBACK);
+
+        Vector3 playerKnockbackDir = transform.forward;
+        playerKnockbackDir.y = 1;
+
+
+        if (playerController.gameObject.TryGetComponent(out Rigidbody playerRb))
+        {
+            //Player knocback
+            playerRb.AddForce(playerKnockbackForce * playerKnockbackDir.normalized, ForceMode.Impulse);
+            playerController.stateMachine.ChangeState(playerController.stateMachine.knockbackState);
+
+            //Pirate Knockback
+            PirateKnockback();
+        }
+    }
+
+    private void PirateKnockback()
+    {
+        Vector3 pirateKnockbackDir = transform.forward * -1;
+        rb.AddForce(pirateKnockbackForce * pirateKnockbackDir.normalized, ForceMode.Impulse);
+
+        Invoke("IsKnockbacking", 0.3f);
+    }
+
+    private void IsKnockbacking()
+    {
+        isKnockbacking = true;
+    }
+
+    private void CheckCanKnockbackPlayer()
+    {
+        if(Physics.SphereCast(sphereCastPos.position, radiusSphereCast, transform.forward, out RaycastHit hitInfo, radiusSphereCast, playerLayer))
+        {
+            PlayerController playerController = hitInfo.transform.gameObject.GetComponent<PlayerController>();
+
+            if (playerController.stateMachine.currentState == playerController.stateMachine.knockbackState)
+                return;
+
+            KnockbackPlayer(playerController);
+            
+        }
+    }
+
     public void SetPirateToJump()
     {
         CalculateNearPointToJump();
@@ -189,22 +269,10 @@ public class controllerPirateBoarding : MonoBehaviour
         posToJump = _posToJump;
     }
 
-    private void KnockbackPlayer(GameObject player)
+    private void OnDrawGizmos()
     {
-        Vector3 knockbackDir = transform.forward;
-        knockbackDir.y = 1;
-
-        if(player.TryGetComponent(out Rigidbody rb))
-        {
-            rb.AddForce(knockbackForce * knockbackDir.normalized, ForceMode.Impulse);
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.collider.CompareTag("Player"))
-        {
-            KnockbackPlayer(collision.gameObject);
-        }
+        //Gizmo del area de empujar
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(sphereCastPos.position, radiusSphereCast);
     }
 }

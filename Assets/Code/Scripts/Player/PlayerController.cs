@@ -80,6 +80,10 @@ public class PlayerController : MonoBehaviour
     public bool movementBuffActive;
     public float currentKnockBackTime;
 
+    [SerializeField] public LayerMask objectLayer;
+
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -326,7 +330,6 @@ public class PlayerController : MonoBehaviour
             endPos = startPos + (Vector3.down * (capsuleCollider.height / 2 + slopeCheckDistance));
             Gizmos.DrawLine(startPos, endPos);
         }
-
     }
 
     public void SetBaseMovementSpeed(float speed)
