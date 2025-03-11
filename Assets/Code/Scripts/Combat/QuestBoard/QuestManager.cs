@@ -10,6 +10,8 @@ public class QuestManager : MonoBehaviour
     public List<QuestData> availableQuests;
     public QuestData currentQuest;
 
+    public StartMisionAnimation misionAnimation;
+
     private void Awake()
     {
         if (Instance == null)
@@ -58,6 +60,6 @@ public class QuestManager : MonoBehaviour
     public void AcceptQuest()
     {
         NodeManager.instance.SetData(currentQuest);
-        SceneManager.LoadScene("Battle");
+        misionAnimation.StartAnimation();
     }
 }
