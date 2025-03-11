@@ -25,4 +25,9 @@ public class NodeManager : MonoBehaviour
         questData = _questData;
     }
 
+    public void CompleteQuest()
+    {
+        questData.completed = true;
+    }
+
 }

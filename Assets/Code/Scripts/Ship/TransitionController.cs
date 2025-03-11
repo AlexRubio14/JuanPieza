@@ -44,6 +44,7 @@ public class TransitionController : MonoBehaviour
             if(timer >= 1)
             {
                 isEnding = false;
+                NodeManager.instance.CompleteQuest();
                 SceneManager.LoadScene("HUB");
             }
 
