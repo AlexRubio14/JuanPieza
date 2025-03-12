@@ -113,9 +113,6 @@ public class Repair : InteractableObject
                 tooltip.SetState(ObjectsTooltip.ObjectState.None);
             }
             
-            if (state.GetIsBroken() && tooltip != null)
-                tooltip.SetState(ObjectsTooltip.ObjectState.Broken);
-            
             currentRepairTime = 0;
         }
     }
