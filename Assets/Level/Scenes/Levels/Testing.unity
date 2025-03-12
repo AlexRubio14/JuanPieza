@@ -349,9 +349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc75f25e39573e48b5e686209a41c0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <playerShip>k__BackingField: {fileID: 0}
-  <enemiesShips>k__BackingField:
-  - {fileID: 1050180326}
 --- !u!4 &415519707
 Transform:
   m_ObjectHideFlags: 0
@@ -731,17 +728,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6764713892806314720, guid: d7a4b616d743d024f92e210e58121e9c, type: 3}
   m_PrefabInstance: {fileID: 715356303}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1050180326 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8235452403105692152, guid: d7a4b616d743d024f92e210e58121e9c, type: 3}
-  m_PrefabInstance: {fileID: 715356303}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 545e131d25258c443a50685a25080760, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1072442223
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1188,7 +1174,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2a11dfdb2e1c146bacb3b21de6eee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: {fileID: 11400000, guid: a895b2e5a734cbd4da0ebff5f6ca5fc9, type: 2}
+  firtLevel: {fileID: 0}
+  bossLevel: {fileID: 0}
+  battleLevels: []
+  shopLevels: []
+  eventLevels: []
+  battleInitPercentage: 0
+  shopInitPercentage: 0
+  eventInitPercentage: 0
+  resetLastBattleValue: 0
+  resetLastEventValue: 0
+  mapMaxHeight: 0
   voteTime: 6
   firstPointZ: 40
   secondPointZ: 80
@@ -1301,6 +1297,9 @@ MonoBehaviour:
   - {fileID: 2418087686159776117, guid: 535d196b498267844976a8e298d30f88, type: 3}
   - {fileID: 2418087686159776117, guid: aecfa116ec899eb4da4628b032333d5e, type: 3}
   - {fileID: 8682344190508449631, guid: 884fc8ca30ef8f941958358e2745a473, type: 3}
+  boxesDefaultKey: []
+  boxesDefaultValue: 
+  islandArriveDistance: 0
 --- !u!4 &1534582616
 Transform:
   m_ObjectHideFlags: 0
@@ -1377,6 +1376,75 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12183d5f8ed77594eb94c7a39d74b1cc, type: 3}
+--- !u!1001 &1599404705
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
+      propertyPath: m_Name
+      value: Boat
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2a07eddc44586194f98811e249df74d8, type: 3}
 --- !u!1 &1709573589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1614,6 +1682,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingMoney: 0
+  spendMoneyClip: {fileID: 0}
+  gainMoneyClip: {fileID: 0}
   OnMoneyChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1745,3 +1815,4 @@ SceneRoots:
   - {fileID: 2114015575}
   - {fileID: 1534582616}
   - {fileID: 795562691628828613}
+  - {fileID: 1599404705}
