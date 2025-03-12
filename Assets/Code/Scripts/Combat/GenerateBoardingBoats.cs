@@ -4,34 +4,45 @@ public class GenerateBoardingBoats : MonoBehaviour
 {
     private int raftCount;
     private RaftController currentRaft;
-
+    private bool boardingHasStarted = false;
     private void Start()
     {
-        if (NodeManager.instance.questData.questObjective == QuestData.QuestObjective.BOARDING) 
+        if (NodeManager.instance.questData.questObjective == QuestData.QuestObjective.BOARDING)
         {
             raftCount = 3;
-            currentRaft = RaftManager.Instance.CreateRaftEventsHardCoded();
+            Invoke("StartBoarding", 8f);
         }
+    }
+
+    private void StartBoarding()
+    {
+        currentRaft = RaftManager.Instance.CreateRaftEventsHardCoded();
+        boardingHasStarted = true;
     }
 
     private void Update()
     {
-        if (PirateBoardingManager.Instance.piratesBoarding.Count >= 0) //Si hay piratas abordando return;
+        if (!boardingHasStarted)
             return;
 
-        if (currentRaft == null)
+        if (!currentRaft.eventHasFinished)
             return;
 
-        if (currentRaft.GetPirates().Count == 0)
-            return;
-
+        if (PirateBoardingManager.Instance.piratesBoarding.Count <= 0)
+        {
             raftCount--;
-            if(raftCount <= 0)
+            if (raftCount <= 0)
             {
                 Camera.main.GetComponent<ArriveIslandCamera>().enabled = true;
                 Camera.main.GetComponent<ArriveIslandCamera>().SetIsRepositing();
+                boardingHasStarted = false;
             }
             else
+            {
                 currentRaft = RaftManager.Instance.CreateRaftEventsHardCoded();
+            }
         }
+    }
+
+
 }
