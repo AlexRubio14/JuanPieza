@@ -5,6 +5,7 @@ using UnityEngine;
 public class QuestData : ScriptableObject
 {    public enum QuestObjective { BATTLE, TRANSPORT, RESCUE, BOARDING };
 
+    public string title;
     public string description;
     public QuestObjective questObjective;
     public PlayerShip ship;
