@@ -6,22 +6,32 @@ public class PushState : PlayerState
     private float pushTimePassed;
     public override void EnterState()
     {
+        controller.animator.SetTrigger("Push");
         pushTimePassed = 0;
 
         Vector3 positionToCast = controller.transform.position + controller.transform.forward * controller.pushOffset;
         RaycastHit[] hits = Physics.SphereCastAll(positionToCast, controller.pushRadius, controller.transform.forward,
             1f, controller.pushLayers);
-        foreach (RaycastHit hit in hits )
+        foreach (RaycastHit hit in hits)
         {
             if (hit.collider && controller.gameObject != hit.collider.gameObject)
             {
-                Debug.Log(hit.collider.gameObject.name);
-                Vector3 pushForward = controller.transform.forward * controller.pushForce.x;
-                Vector3 pushUp = Vector3.up * controller.pushForce.y;
+                Vector2 pushForce = Vector2.zero;
+                if (hit.collider.CompareTag("Object"))
+                    pushForce = controller.objectPushForce;
+                else if (hit.collider && hit.collider.CompareTag("Player"))
+                {
+                    pushForce = controller.playerPushForce;
+                    hit.collider.GetComponentInChildren<Animator>().SetTrigger("Hitted");
+                }
+
+                Vector3 pushForward = controller.transform.forward * pushForce.x;
+                Vector3 pushUp = Vector3.up * pushForce.y;
                 hit.rigidbody.AddForce(pushForward + pushUp, ForceMode.Impulse);
             }
 
-            if(hit.collider.CompareTag("BoardingPirate"))
+
+            if (hit.collider && hit.collider.CompareTag("BoardingPirate"))
             {
                 hit.transform.gameObject.TryGetComponent(out PirateBoardingController pirateController);
                 pirateController.ChangeState(PirateBoardingController.PirateState.KNOCKBACK);

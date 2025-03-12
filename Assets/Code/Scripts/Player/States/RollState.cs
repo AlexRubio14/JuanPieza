@@ -64,7 +64,7 @@ public class RollState : PlayerState
         controller.rb.linearVelocity = Vector3.zero;
         controller.AddImpulse(bounceDir, controller.rollSpeed);
         rollTimePassed = -controller.rollDuration / 2;
-        controller.animator.SetTrigger("Roll");
+        controller.animator.SetTrigger("Hitted");
 
     }
 }

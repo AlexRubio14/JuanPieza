@@ -421,7 +421,7 @@ public class FishingManager : MonoBehaviour
         deadPlayers.Remove(_deadPlayer);
     }
 
-    public static Vector3 Parabola(Vector3 start, Vector3 end, float height, float t)
+    private static Vector3 Parabola(Vector3 start, Vector3 end, float height, float t)
     {
         System.Func<float, float> f = x => -4 * height * x * x + 4 * height * x;
 

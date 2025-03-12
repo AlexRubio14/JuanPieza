@@ -42,7 +42,9 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField]
     public LayerMask pushLayers { get; private set; }
     [field: SerializeField]
-    public Vector2 pushForce { get; private set; }
+    public Vector2 playerPushForce { get; private set; }
+    [field: SerializeField]
+    public Vector2 objectPushForce { get; private set; }
 
     [field: SerializeField] public float pirateKnockbackForce { get; private set; }
     [field: SerializeField] public float pirateUpForce { get; private set; }
@@ -80,8 +82,8 @@ public class PlayerController : MonoBehaviour
     //public ProgressBarController progressBar { get; private set; }
     private CapsuleCollider capsuleCollider;
 
-    public bool movementBuffActive;
-    public float currentKnockBackTime;
+    public bool movementBuffActive {  get; set; }
+    public float currentKnockBackTime { get; set; }
 
     [SerializeField] public LayerMask objectLayer;
 
@@ -163,6 +165,7 @@ public class PlayerController : MonoBehaviour
         if (canRoll)
         {
             stateMachine.currentState.RollAction();
+            canRoll = false;
             Invoke("WaitRollCD", rollCD);
         }
     }
