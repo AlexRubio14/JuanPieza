@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance { get; private set; }
@@ -18,7 +16,7 @@ public class QuestManager : MonoBehaviour
         {
             Instance = this;
         }
-        else 
+        else
         {
             Destroy(gameObject);
         }
@@ -33,7 +31,7 @@ public class QuestManager : MonoBehaviour
                 continue;
 
             bool addQuest = true;
-            foreach(QuestData questToComplete in quest.questsToComplete)
+            foreach (QuestData questToComplete in quest.questsToComplete)
             {
                 if (!questToComplete.completed)
                 {
@@ -42,7 +40,7 @@ public class QuestManager : MonoBehaviour
                 }
             }
 
-            if(addQuest)
+            if (addQuest)
                 AddAvailableQuest(quest);
         }
     }
