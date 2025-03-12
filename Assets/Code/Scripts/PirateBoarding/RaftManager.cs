@@ -10,6 +10,8 @@ public class RaftManager : MonoBehaviour
 
     [HideInInspector] public bool isProcessingEvent = false;
 
+    [SerializeField] private GenerateBoardingBoats generateBoardingBoats;
+
     private void Awake()
     {
         if(Instance != null && Instance == this)
@@ -48,5 +50,16 @@ public class RaftManager : MonoBehaviour
     public void ResetQueue()
     {
         raftEventQueue.Clear();
+    }
+
+    public RaftController CreateRaftEventsHardCoded()
+    {
+        RaftController raftController = PirateBoardingManager.Instance.GetUnusedRaft();
+
+        raftEventQueue.Enqueue(() => raftController.SetUpRaftHardCoded());
+        ProcessRaftEvent();
+
+
+        return raftController;
     }
 }

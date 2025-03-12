@@ -27,14 +27,11 @@ public class RaftController : MonoBehaviour
 
     [SerializeField] private float radiusJump;
 
+    public bool eventHasFinished; // Solo lo tiene en cuenta para la mision hardcodeada de abordaje, no sirve para nada mas
+
     private void Awake()
     {
         ChangeState(RaftState.WAITING);
-    }
-
-    private void Start()
-    {
-        destinyZPos = ShipsManager.instance.playerShip.transform.position.z;
     }
 
     // Update is called once per frame
@@ -46,7 +43,7 @@ public class RaftController : MonoBehaviour
                 break;
             case RaftState.MOVING_FRONT:
 
-                if(transform.position.z >= destinyZPos)
+                if(transform.position.z >= ShipsManager.instance.playerShip.transform.position.z)
                 {
                     ChangeState(RaftState.BOARDING);
                 }
@@ -88,6 +85,25 @@ public class RaftController : MonoBehaviour
 
     }
 
+    public void SetUpRaftHardCoded()
+    {
+        if (isBoarding)
+            return;
+
+        SetPiratesInRaft(2);
+
+        isBoarding = true;
+
+        List<Transform> raftStartPointsRef = PirateBoardingManager.Instance.raftsStartPos;
+
+        int randomIndex = Random.Range(0, raftStartPointsRef.Count);
+
+        transform.position = raftStartPointsRef[randomIndex].position;
+
+        startingZPos = transform.position.z;
+        ChangeState(RaftState.MOVING_FRONT);
+    }
+
     private void ResetRaft()
     {
         transform.position = transform.parent.position;
@@ -99,6 +115,7 @@ public class RaftController : MonoBehaviour
 
         RaftManager.Instance.ProcessRaftEvent(); //Cuando se acaba el abordaje manda una peticion al manager de si hay algun evento en cola que se procese
         RaftManager.Instance.isProcessingEvent = false; // Al acabar el evento de la raft ponemos en false que haya un evento activo
+        eventHasFinished = true;
     }
 
     public void SendPirateToJump()
@@ -174,6 +191,7 @@ public class RaftController : MonoBehaviour
             case RaftState.MOVING_FRONT:
                 direction = 1;
                 rb.linearVelocity = transform.forward * (speed * direction);
+                eventHasFinished = false;
                 break;
             case RaftState.MOVING_BACK:
                 direction = -1;
@@ -210,5 +228,10 @@ public class RaftController : MonoBehaviour
     public void SetDestinyPos(float _zPos)
     {
         destinyZPos = _zPos;
+    }
+
+    public List<PirateBoardingController> GetPirates()
+    {
+        return pirates;
     }
 }

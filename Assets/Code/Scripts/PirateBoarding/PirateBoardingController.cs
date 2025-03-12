@@ -268,9 +268,12 @@ public class PirateBoardingController : MonoBehaviour
     {
         transform.SetParent(PirateBoardingManager.Instance.piratesHolder, true);
         transform.position = PirateBoardingManager.Instance.piratesHolder.transform.position;
-        currentState = PirateState.WAITING;
+        ChangeState(PirateState.WAITING);
         isBoarding = false;
         rb.isKinematic = true;
+        PirateBoardingManager.Instance.piratesBoarding.Remove(this);
+        parabolaProcess = 0f;
+        transform.forward = Vector3.forward;
     }
 
     public void SetPosToJump(Vector3 _posToJump)
