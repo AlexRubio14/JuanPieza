@@ -18,6 +18,7 @@ public class PirateBoardingController : MonoBehaviour
     [SerializeField] private float parabolaSpeed;
     private float parabolaProcess = 0f;
     private Vector3 posToJump;
+    private Vector3 jumpStartPos;
 
     [Space, Header("Knockback")]
     [SerializeField] private float selfKnockbackForce; //Knockback a ti mismo al empujar al player
@@ -38,10 +39,11 @@ public class PirateBoardingController : MonoBehaviour
 
     private float navSpeed;
 
+    private Animator animator;
 
     private void Awake()
     {
-        
+        animator = GetComponentInChildren<Animator>(); 
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -77,7 +79,7 @@ public class PirateBoardingController : MonoBehaviour
     public void JumpIntoPlayerShip()
     {
         parabolaProcess += Time.deltaTime * parabolaSpeed;
-        transform.position = FishingManager.Parabola(transform.position, posToJump, jumpHeigt, parabolaProcess);
+        transform.position = Parabola(jumpStartPos, posToJump, jumpHeigt, parabolaProcess);
 
         if (parabolaProcess >= 1f)
         {
@@ -85,7 +87,16 @@ public class PirateBoardingController : MonoBehaviour
             ChangeState(PirateState.CHASING);
         }
     }
-    
+
+    private static Vector3 Parabola(Vector3 start, Vector3 end, float height, float t)
+    {
+        System.Func<float, float> f = x => -4 * height * x * x + 4 * height * x;
+
+        var mid = Vector3.Lerp(start, end, t);
+
+        return new Vector3(mid.x, f(t) + Mathf.Lerp(start.y, end.y, t), mid.z);
+    }
+
     public void ChangeState(PirateState newState)
     {
 
@@ -110,6 +121,7 @@ public class PirateBoardingController : MonoBehaviour
             case PirateState.WAITING:
                 break;
             case PirateState.PARABOLA:
+                jumpStartPos = transform.position;
                 JumpIntoPlayerShip();
                 break;
             case PirateState.CHASING:
@@ -120,6 +132,7 @@ public class PirateBoardingController : MonoBehaviour
                 navMeshAgent.speed = 0;
                 navMeshAgent.enabled = false;
                 rb.isKinematic = false;
+                animator.SetTrigger("Hitted");
                 break;
             case PirateState.DEAD:
                 rb.isKinematic = true;
@@ -210,6 +223,8 @@ public class PirateBoardingController : MonoBehaviour
             tempTargetPos = transform.position;
 
         navMeshAgent.SetDestination(tempTargetPos);
+
+        animator.SetBool("Moving", tempTargetPos != transform.position);
     }
 
     private void KnockbackPlayer(PlayerController playerController)
@@ -253,7 +268,9 @@ public class PirateBoardingController : MonoBehaviour
             if (playerController.stateMachine.currentState == playerController.stateMachine.knockbackState)
                 return;
 
+            playerController.animator.SetTrigger("Hitted");
             KnockbackPlayer(playerController);
+            animator.SetTrigger("Push");
             
         }
     }

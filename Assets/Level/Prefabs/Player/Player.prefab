@@ -791,14 +791,15 @@ MonoBehaviour:
     m_Bits: 256
   <rollSpeed>k__BackingField: 750
   <rollDuration>k__BackingField: 0.15
-  rollCD: 5
-  <bounceForce>k__BackingField: {x: 1.3, y: 0.4}
+  rollCD: 1.5
+  <bounceForce>k__BackingField: {x: 0.7, y: 0.5}
   <pushRadius>k__BackingField: 1
   <pushOffset>k__BackingField: 1
   <pushLayers>k__BackingField:
     serializedVersion: 2
-    m_Bits: 8256
-  <pushForce>k__BackingField: {x: 1200, y: 500}
+    m_Bits: 8768
+  <playerPushForce>k__BackingField: {x: 700, y: 500}
+  <objectPushForce>k__BackingField: {x: 15, y: 20}
   <pirateKnockbackForce>k__BackingField: 3.5
   <pirateUpForce>k__BackingField: 8
   objectHolder: {fileID: 349248494732518255}
@@ -809,8 +810,6 @@ MonoBehaviour:
   <cannonRotationSpeed>k__BackingField: 0.6
   dieClip: {fileID: 8300000, guid: 936a4004a87f1e74cbdc582295462778, type: 3}
   capsuleCollider: {fileID: 0}
-  movementBuffActive: 0
-  currentKnockBackTime: 0
   objectLayer:
     serializedVersion: 2
     m_Bits: 512
