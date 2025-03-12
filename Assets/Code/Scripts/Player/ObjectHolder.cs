@@ -57,7 +57,7 @@ public class ObjectHolder : MonoBehaviour
 
             InteractableObject tempObject = item.collider.GetComponent<InteractableObject>();
 
-            if (tempObject.isBeingUsed || !tempObject.CanInteract(this))
+            if (tempObject.isBeingUsed || !tempObject.CanInteract(this) && (tempObject is not Repair || !(tempObject as Repair).GetObjectState().GetIsBroken()))
                 continue;
 
             lastDistance = Vector3.Distance(transform.parent.position, item.collider.transform.position);
@@ -134,8 +134,6 @@ public class ObjectHolder : MonoBehaviour
         }
 
         return currentIO;
-
-
     }
     public void ChangeNearestInteractableObject(InteractableObject _nearestObject)
     {
@@ -179,12 +177,28 @@ public class ObjectHolder : MonoBehaviour
                 if (_nearestObject.GetTooltip().GetTotalPlayers() > 0)
                     _nearestObject.GetTooltip().SetState(ObjectsTooltip.ObjectState.Interacting);
             }
-
         }
-
+        
+        if (_nearestObject is Repair)
+        {
+            Repair repair = _nearestObject as Repair;
+            if (repair.GetObjectState().GetIsBroken())
+            {
+                if (repair.GetTooltip() != null)
+                {
+                    if (!repair.CanInteract(this))
+                        repair.GetTooltip().AddPlayer();
+                    
+                    if (repair.GetTooltip().GetTotalPlayers() > 0)
+                        repair.GetTooltip().SetState(ObjectsTooltip.ObjectState.Broken);
+                }
+                _nearestObject.GetSelectedVisual().Show();
+            }
+        }
+        
         nearestInteractableObject = _nearestObject;
 
-        if (!handObject || handObject && nearestInteractableObject.CanInteract(this))
+        if (nearestInteractableObject.CanInteract(this))
             hintController.UpdateActionType(nearestInteractableObject.ShowNeededInputHint(this));
     }
 
