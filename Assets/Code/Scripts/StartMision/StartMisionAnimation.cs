@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class StartMisionAnimation : MonoBehaviour
 {
+    public enum AnimationState { MOVE_CAMERA, START_TRANSITION, END_TRANSITION, WAIT }
+    private AnimationState animationState;
+
     [Header("Positions")]
     [SerializeField] private List<GameObject> playerPositions;
     [SerializeField] private Vector3 cameraPosition;
@@ -17,14 +20,12 @@ public class StartMisionAnimation : MonoBehaviour
     [SerializeField] private float speed;
     private float initZPosition;
     private Camera animationCamera;
-    private bool startAnimation;
     private bool animationActivated;
     private float t;
 
     [Header("Transition")]
     [SerializeField] private Image transitionImage;
     [SerializeField] private float transitionDuration = 1f;
-    private bool imageTransition;
 
     [Header("Canvas")]
     [SerializeField] private QuestBoardObject board;
@@ -32,16 +33,25 @@ public class StartMisionAnimation : MonoBehaviour
     private void Start()
     {
         animationCamera = Camera.main;
+        animationState = AnimationState.START_TRANSITION;
         animationActivated = true;
+        transitionImage.rectTransform.localScale = Vector3.one;
     }
 
     private void Update()
     {
-        if (startAnimation)
-            MoveCamera();
-
-        if (imageTransition)
-            TransitionCamera();
+        switch (animationState)
+        {
+            case AnimationState.MOVE_CAMERA:
+                MoveCamera();
+                break;
+            case AnimationState.START_TRANSITION:
+                TransitionCamera();
+                break;
+            case AnimationState.END_TRANSITION:
+                TransitionCamera();
+                break;
+        }
     }
 
     private void MoveCamera()
@@ -54,8 +64,7 @@ public class StartMisionAnimation : MonoBehaviour
             ActivePlayerAnimation();
         if (t >= stopCamera)
         {
-            startAnimation = false;
-            imageTransition = true;
+            animationState = AnimationState.END_TRANSITION;
             t = 0;
         }
     }
@@ -65,12 +74,19 @@ public class StartMisionAnimation : MonoBehaviour
         t += Time.deltaTime;
         float progresStart = Mathf.Clamp01(t / transitionDuration);
 
-        transitionImage.rectTransform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, progresStart);
+        if(animationState == AnimationState.START_TRANSITION)
+            transitionImage.rectTransform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, progresStart);
+        else
+            transitionImage.rectTransform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, progresStart);
+
         if (t >= 1)
         {
             t = 0;
-            imageTransition = false;
-            SceneManager.LoadScene("Battle");
+
+            if (animationState == AnimationState.START_TRANSITION)
+                animationState = AnimationState.WAIT;
+            else
+                SceneManager.LoadScene("Battle");
         }
     }
 
@@ -102,6 +118,6 @@ public class StartMisionAnimation : MonoBehaviour
         animationCamera.transform.position = cameraPosition;
         initZPosition = cameraPosition.z;
 
-        startAnimation = true;
+        animationState = AnimationState.MOVE_CAMERA;
     }
 }
