@@ -6,20 +6,26 @@ public class Hammer : Tool
     {
         InteractableObject nearObject = _objectHolder.GetNearestInteractableObject();
 
-        if (!nearObject || nearObject is not RepairObject)
+        if (!nearObject)
             return;
 
-        (nearObject as RepairObject).AddPlayer(_objectHolder);
+        if(nearObject is RepairObject)
+            (nearObject as RepairObject).AddPlayer(_objectHolder);
+        else if (nearObject is RepairHole)
+            (nearObject as RepairHole).AddPlayer(_objectHolder);
     }
 
     public override void StopUse(ObjectHolder _objectHolder)
     {
         InteractableObject nearObject = _objectHolder.GetNearestInteractableObject();
 
-        if (!nearObject || nearObject is not RepairObject)
+        if (!nearObject)
             return;
 
-        (nearObject as RepairObject).RemovePlayer(_objectHolder);
+        if (nearObject is RepairObject)
+            (nearObject as RepairObject).RemovePlayer(_objectHolder);
+        else if (nearObject is RepairHole)
+            (nearObject as RepairHole).RemovePlayer(_objectHolder);
     }
 
     public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
