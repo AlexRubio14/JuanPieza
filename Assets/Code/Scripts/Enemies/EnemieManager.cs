@@ -25,8 +25,6 @@ public class EnemieManager : MonoBehaviour
     private Ship enemyShip;
 
     [Space, Header("Resource Spots"), SerializeField]
-    private EnemyObject woodResource;
-    [SerializeField]
     private EnemyObject bulletResource;
     [SerializeField]
     private EnemyObject hammerObject;
@@ -103,7 +101,7 @@ public class EnemieManager : MonoBehaviour
 
     private void OnDamageRecieved(GameObject _hole)
     {
-        AddRepairShipAction(_hole);
+
     }
     private EnemyAction GetSomethingToDo()
     {
@@ -158,11 +156,6 @@ public class EnemieManager : MonoBehaviour
     }
 
     #region Add Actions
-    public void AddRepairShipAction(GameObject _hole)
-    {
-        EnemyAction action = new RepairShipAction(EnemyAction.ActionType.REPAIR_SHIP, woodResource, _hole, SteppedAction.ResourceType.WOOD, interactDistance, timeToGetResource, timeToRepair);
-        toDoList.Add(action);
-    }
     public void AddShootCannonAction(EnemyWeapon _weapon)
     {
         EnemyAction action = new ShootCannonAction(EnemyAction.ActionType.SHOOT_CANNON, /*Parte trasera del Ca�on*/ _weapon, interactDistance / 2, timeToShoot);
