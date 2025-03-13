@@ -133,8 +133,8 @@ public abstract class Weapon : RepairObject
         else if (!hasAmmo && handObject && handObject.objectSO == objectToInteract)//Si no esta cargado y tiene la bala en la mano
             return new HintController.Hint[]
             {
-                new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
-                new HintController.Hint(HintController.ActionType.USE, "load_bullet")
+                new HintController.Hint(HintController.ActionType.INTERACT, "load_bullet"),
+                new HintController.Hint(HintController.ActionType.CANT_USE, "")
             };
         else if (hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId) //Si esta cargado y el player esta montado
             return new HintController.Hint[]
