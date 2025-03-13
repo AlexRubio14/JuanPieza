@@ -60,6 +60,7 @@ public class PirateBoardingController : MonoBehaviour
             case PirateState.WAITING:
                 break;
             case PirateState.PARABOLA:
+                transform.forward = transform.position - jumpStartPos;
                 JumpIntoPlayerShip();
                 break;
             case PirateState.CHASING:
@@ -162,19 +163,13 @@ public class PirateBoardingController : MonoBehaviour
     {
         List<Transform> boardingPoints = ShipsManager.instance.playerShip.boardingPoints;
 
-        Vector3 closestPoint = Vector3.zero;
-        float tempDistance = 100;
+        SortBoardingPoints(boardingPoints); 
 
-        foreach (Transform boardingPoint in boardingPoints)
-        {
-            Vector3 disFromPirateToPoint = boardingPoint.position - transform.position;
+        int randomIndex = Random.Range(0, Mathf.Min(3, boardingPoints.Count)); // Pick a random value between the first 3 positions
 
-            if(disFromPirateToPoint.magnitude <= tempDistance)
-            {
-                closestPoint = boardingPoint.position;
-                tempDistance = disFromPirateToPoint.magnitude;
-            }
-        }
+        Vector3 closestPoint = boardingPoints[randomIndex].position;
+
+        //Uses raycast to adjust the position to jump, to the raft collision
 
         Vector3 raycastPoint = new Vector3(closestPoint.x, closestPoint.y + raycastDis, closestPoint.z);
 
@@ -186,6 +181,18 @@ public class PirateBoardingController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sorts the given list of Transforms by their distance to this object's position, in ascending order.
+    /// The closest Transform will be at index 0.
+    /// </summary>
+    public void SortBoardingPoints(List<Transform> boardingPoints)
+    {
+        boardingPoints.Sort((a, b) =>
+            Vector3.Distance(transform.position, a.position).CompareTo(
+            Vector3.Distance(transform.position, b.position))
+        );
+    }
+
     private void CalculateTarget()
     {
         Vector3 tempTargetPos = Vector3.zero;
@@ -195,6 +202,9 @@ public class PirateBoardingController : MonoBehaviour
 
         foreach(PlayerController controller in PlayersManager.instance.ingamePlayers)
         {
+            if (controller.stateMachine.currentState == controller.stateMachine.deathState)
+                continue;
+
             Vector3 playerPos = controller.transform.position;
 
             if(controller.stateMachine.currentState == controller.stateMachine.knockbackState)
@@ -204,11 +214,6 @@ public class PirateBoardingController : MonoBehaviour
                     playerPos = raycastHit.point;
                 }
             }
-
-            //navMeshAgent.CalculatePath(controller.transform.position, currentPath);
-
-            //if (currentPath.status == NavMeshPathStatus.PathInvalid)
-            //    continue;
 
             Vector3 disFromPirateToPlayer = playerPos - transform.position;
 
@@ -288,6 +293,7 @@ public class PirateBoardingController : MonoBehaviour
         ChangeState(PirateState.WAITING);
         isBoarding = false;
         rb.isKinematic = true;
+        isKnockbacking = false;
         PirateBoardingManager.Instance.piratesBoarding.Remove(this);
         parabolaProcess = 0f;
         transform.forward = Vector3.forward;
