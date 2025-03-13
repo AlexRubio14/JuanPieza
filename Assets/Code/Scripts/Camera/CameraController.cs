@@ -27,7 +27,6 @@ public class CameraController : MonoBehaviour
     [Header("Objects to Follow"), SerializeField]
     private List<ObjectFollow> followObjects;
     private int totalPlayers;
-    private int totalEnemies;
 
     [Header("Position Adjustments"), SerializeField]
     private float minYDistance;
@@ -38,8 +37,6 @@ public class CameraController : MonoBehaviour
     private float zOffset;
     [SerializeField]
     private float playerWeight;
-    [SerializeField]
-    private float enemyWeight;
     [SerializeField]
     private float objectWeight;
 
