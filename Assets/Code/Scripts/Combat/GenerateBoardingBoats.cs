@@ -1,16 +1,20 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GenerateBoardingBoats : MonoBehaviour
 {
     private int raftCount;
     private RaftController currentRaft;
     private bool boardingHasStarted = false;
+
+    
     private void Start()
     {
         if (NodeManager.instance.questData.questObjective == QuestData.QuestObjective.BOARDING)
         {
             raftCount = 3;
             Invoke("StartBoarding", 8f);
+            
         }
     }
 

@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
     public Animator animator { get; private set; }
     
-    private HintController hintController;
+    public HintController hintController { get; private set; }
 
     [field: SerializeField]
     //public ProgressBarController progressBar { get; private set; }
