@@ -174,4 +174,14 @@ public class HintController : MonoBehaviour
         showingHints = hintRightImage.gameObject.activeInHierarchy || hintLeftImage.gameObject.activeInHierarchy;
 
     }
+
+    public void SetHintLeftText(string text)
+    {
+        hintLeftText.text = text;
+    }
+
+    public void SetHintLeftImage(Image image)
+    {
+        hintLeftImage = image;
+    }
 }
