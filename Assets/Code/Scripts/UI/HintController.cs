@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class HintController : MonoBehaviour
@@ -174,5 +173,15 @@ public class HintController : MonoBehaviour
 
         showingHints = hintRightImage.gameObject.activeInHierarchy || hintLeftImage.gameObject.activeInHierarchy;
 
+    }
+
+    public void SetHintLeftText(string text)
+    {
+        hintLeftText.text = text;
+    }
+
+    public void SetHintLeftImage(Image image)
+    {
+        hintLeftImage = image;
     }
 }
