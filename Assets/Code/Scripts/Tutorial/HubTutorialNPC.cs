@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -20,6 +20,31 @@ public class HubTutorialNPC : MonoBehaviour
     private QuestBoard boardCanvas;
 
 
+    [Space, Header("Camera Changes"), SerializeField]
+    private Camera secondaryCamera;
+    private Camera mainCamera;
+    [SerializeField]
+    private Vector3 playerCameraPos;
+    [SerializeField]
+    private Quaternion playerCameraRot;
+    [SerializeField]
+    private Vector3 mentorCameraPos;
+    [SerializeField]
+    private Quaternion mentorCameraRot;
+    [SerializeField]
+    private AnimatorController tutorialAnimator;
+    [SerializeField]
+    private AnimatorController baseAnimator;
+
+
+    private Action lookPlayerAction;
+    private Action lookMentorAction;
+    private Action excitedMentorAction;
+    private Action sadMentorAction;
+    private Action handUpMentorAction;
+    private Action idleMentorAction;
+    private Action resetPlayerAction;
+    
 
     [Space, Header("Show Arrow"), SerializeField]
     private GameObject[] arrows;
@@ -40,12 +65,31 @@ public class HubTutorialNPC : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
     {
-        //Cargar Actions
+        //Cargar Actions Camera
+        lookPlayerAction += LookPlayerAction;
+        lookMentorAction += LookMentorAction;
+        excitedMentorAction += ExcitedMentorAction;
+        sadMentorAction += SadMentorAction;
+        handUpMentorAction += HandUpMentorAction;
+        idleMentorAction += IdleMentorAction;
+        resetPlayerAction += ResetPlayerAction;
+
+        //Añadir actions al dialogueController
+        DialogueController.instance.AddAction("D.HT.LP", lookPlayerAction);
+        DialogueController.instance.AddAction("D.HT.LM", lookMentorAction);
+        DialogueController.instance.AddAction("D.HT.EM", excitedMentorAction);
+        DialogueController.instance.AddAction("D.HT.SM", sadMentorAction);
+        DialogueController.instance.AddAction("D.HT.HUM", handUpMentorAction);
+        DialogueController.instance.AddAction("D.HT.IM", idleMentorAction);
+        DialogueController.instance.AddAction("D.HT.RP", resetPlayerAction);
+
+
+        //Cargar Actions Arrows
         hideArrowsAction += HideArrow;
         showBAAction += ShowBoardArrow;
         showMAAction += ShowMapArrow;
@@ -67,12 +111,14 @@ public class HubTutorialNPC : MonoBehaviour
         boardObject.GetQuestCanvas().SetActive(false);
         mapTutorial = false;
         selectQuestTutorial = false;
+
+        mainCamera = Camera.main;
     }
 
     private void FixedUpdate()
     {
         foreach (GameObject obj in arrows)
-            obj.transform.forward = -Camera.main.transform.forward;
+            obj.transform.forward = -mainCamera.transform.forward;
 
 
         if(!mapTutorial && boardCanvas.gameObject.activeInHierarchy)
@@ -136,6 +182,64 @@ public class HubTutorialNPC : MonoBehaviour
         arrows[1].transform.position = boardCanvas.GetInformationCanvas().GetComponentInChildren<AcceptButton>().transform.position + arrowOffset * 50;
     }
 
+    private void LookPlayerAction()
+    {
+        mainCamera.gameObject.SetActive(false);
+        secondaryCamera.gameObject.SetActive(true);
+        secondaryCamera.transform.position = playerCameraPos;
+        secondaryCamera.transform.rotation = playerCameraRot;
 
+        PlayerController currentPlayer = PlayersManager.instance.ingamePlayers[0];
+
+        currentPlayer.transform.forward = (
+            new Vector3(transform.position.x, 0, transform.position.z) 
+            - 
+            new Vector3(currentPlayer.transform.position.x, 0, currentPlayer.transform.position.z)
+            ).normalized;
+
+        currentPlayer.animator.runtimeAnimatorController = tutorialAnimator;
+        currentPlayer.animator.SetTrigger("Fear");
+    }
+    private void LookMentorAction()
+    {
+        secondaryCamera.transform.position = mentorCameraPos;
+        secondaryCamera.transform.rotation = mentorCameraRot;
+
+        animator.SetTrigger("AimHand");
+    }
+    private void ExcitedMentorAction()
+    {
+        animator.SetTrigger("Celebrate");
+    }
+    private void SadMentorAction()
+    {
+        animator.SetTrigger("Sad");
+        animator.SetBool("isSad", true);
+    }
+    private void HandUpMentorAction()
+    {
+        animator.SetTrigger("HandUp");
+        animator.SetBool("isHandUp", true);
+        StartCoroutine(WaitToChangeIsSad());
+
+        IEnumerator WaitToChangeIsSad()
+        {
+            yield return new WaitForEndOfFrame();
+            animator.SetBool("isSad", false);
+        }
+
+    }
+    private void IdleMentorAction()
+    {
+        animator.ResetTrigger("HandUp");
+        animator.SetBool("isHandUp", false);
+    }
+    private void ResetPlayerAction()
+    {
+        mainCamera.gameObject.SetActive(true);
+        secondaryCamera.gameObject.SetActive(false);
+
+        PlayersManager.instance.ingamePlayers[0].animator.runtimeAnimatorController = baseAnimator;
+    }
 
 }
