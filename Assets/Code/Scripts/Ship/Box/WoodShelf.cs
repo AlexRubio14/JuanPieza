@@ -10,6 +10,9 @@ public class WoodShelf : Box
     [Header("Force")]
     [SerializeField] private float forceMultiplier;
 
+    [Header("Tutorial")]
+    [SerializeField] private ShowMessageRepair message;
+
     protected override void Start()
     {
         base.Start();
@@ -31,6 +34,8 @@ public class WoodShelf : Box
         base.RemoveItemInBox();
 
         currentDecorationInShelf--;
+        if(message)
+            message.TakeHarmer();
         decorations[currentDecorationInShelf].SetActive(false);
     }
 

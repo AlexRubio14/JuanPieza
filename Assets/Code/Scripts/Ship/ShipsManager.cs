@@ -86,7 +86,7 @@ public class ShipsManager : MonoBehaviour
 
     private void GenerateCannons(EnemyShip enemy, GameObject ship)
     {
-        Transform positionsFather = ship.transform.Find("CannonPositions");
+        Transform positionsFather = ship.GetComponent<ShipEnemy>().GetCannonPositions();
         List<Vector3> cannonsPosition = new List<Vector3>();
 
         foreach (Transform position in positionsFather)
@@ -114,20 +114,22 @@ public class ShipsManager : MonoBehaviour
     }
 
 
-    public void RemoveEnemyShip(Ship ship)
+    public void RemoveEnemyShip(Ship ship = null)
     {
-        enemiesShips.Remove(ship);
+        if(ship)
+            enemiesShips.Remove(ship);
 
         if (enemiesShips.Count == 0)
         {
-            enemiesHordes.Remove(enemiesHordes[0]);
-            if (enemiesHordes.Count == 0)
+            if(ship)
+                enemiesHordes.Remove(enemiesHordes[0]);
+            if (enemiesHordes.Count == 0 && PirateBoardingManager.Instance.piratesBoarding.Count <= 0)
             {
                 Camera.main.GetComponent<ArriveIslandCamera>().enabled = true;
                 Camera.main.GetComponent<ArriveIslandCamera>().SetIsRepositing();
                 return;
             }
-            if (condition == ShipData.SpawnShipCondition.DESTROY)
+            if (condition == ShipData.SpawnShipCondition.DESTROY && ship)
                 GenerateEnemyShip();
         }
     }

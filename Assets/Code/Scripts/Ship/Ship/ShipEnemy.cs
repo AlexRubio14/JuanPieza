@@ -17,6 +17,8 @@ public class ShipEnemy : Ship
     private List<BoardShip> hpBoardshipList = new List<BoardShip>();
     private List<BoardShip> initBoardshipList = new List<BoardShip>();
 
+    [SerializeField] private Transform cannonPositions;
+
     public override void Start()
     {
         base.Start();
@@ -100,6 +102,11 @@ public class ShipEnemy : Ship
     public void SetBoardshipInformation(List<BoardShip> boardshipInfoList)
     {
         boardshipInformation = boardshipInfoList;
+    }
+
+    public Transform GetCannonPositions()
+    {
+        return cannonPositions;
     }
 }
     

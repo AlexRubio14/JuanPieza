@@ -142,7 +142,7 @@ public class ArriveIslandCamera : MonoBehaviour
         foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
             item.Item1.SwitchCurrentActionMap("Camera");
 
-        ShipsManager.instance.playerShip.gameObject.transform.Find("Script").gameObject.SetActive(false);
+        ShipsManager.instance.playerShip.SetBehaivour(false);
     }
 
     private void ActivePlayers()
@@ -150,7 +150,8 @@ public class ArriveIslandCamera : MonoBehaviour
         foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
             item.Item1.SwitchCurrentActionMap("Gameplay");
 
-        ShipsManager.instance.playerShip.gameObject.transform.Find("Script").gameObject.SetActive(true);
+        ShipsManager.instance.playerShip.SetBehaivour(true);
+        ShipsManager.instance.playerShip.SetMessage();
     }
 
     public void SetIsArriving()
