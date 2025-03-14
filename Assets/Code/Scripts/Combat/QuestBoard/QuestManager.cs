@@ -27,7 +27,7 @@ public class QuestManager : MonoBehaviour
         availableQuests = new List<QuestData>();
         foreach (QuestData quest in allQuests)
         {
-            if (quest.completed == true)
+            /*if (quest.completed == true)
                 continue;
 
             bool addQuest = true;
@@ -40,8 +40,8 @@ public class QuestManager : MonoBehaviour
                 }
             }
 
-            if (addQuest)
-                AddAvailableQuest(quest);
+            if (addQuest)*/
+            AddAvailableQuest(quest);
         }
     }
 

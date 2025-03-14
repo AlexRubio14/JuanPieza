@@ -23,6 +23,7 @@ public class QuestIcon : MonoBehaviour
     public void ActivateInformationCanvas()
     {
         informationCanvas.SetActive(true);
+        informationCanvas.GetComponent<QuestInformationCanvas>().UpdateText(quest.title, quest.description);
         QuestManager.Instance.currentQuest = quest;
     }
 
