@@ -121,6 +121,21 @@ public class AllyShip : Ship
 
         return false;
     }
+
+    public int GetTotalObjectQuantity(ObjectSO _object)
+    {
+        int totalObjects = 0;
+
+        foreach (InteractableObject item in objects)
+        {
+            if (item.objectSO == _object)
+                totalObjects++;
+
+        }
+
+        return totalObjects;
+    }
+
     public Box GetObjectBoxByObject(ObjectSO _object)
     {
         List<InteractableObject> objectList = ShipsManager.instance.playerShip.GetObjectOfType(ObjectSO.ObjectType.BOX);

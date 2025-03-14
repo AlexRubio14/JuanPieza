@@ -23,6 +23,8 @@ public class ObjectPool : MonoBehaviour
     int totalEpics;
     int totalLegendaries;
 
+    [SerializeField] private int minCannonBallsInTheShip;
+
     private void Start()
     {
         totalPercentage = 0;
@@ -104,34 +106,33 @@ public class ObjectPool : MonoBehaviour
     {
         //Comprobar uno a uno los objetos 
 
-        /*Comprobar madera
-         * Buscar la caja de madera y ver los objetos que tiene
-         * Ver si hay madera suelta por el barco
-         * Si no hay nada de madera en la caja ni en el barco devolver la madera
-         */
-        if (priorityList.Count >= 1 && !CheckObjectInsideBox(priorityList[0]) && !ShipsManager.instance.playerShip.ItemExist(priorityList[0]))
-            return priorityList[0];
         /* Cañones
          * Si no hay ninguna arma en el barco devolver un cañon
          */
-        if (priorityList.Count >= 2 && !CheckObjectByType(priorityList[1]))
-            return priorityList[1];
+        if (priorityList.Count >= 1 && !CheckObjectByType(priorityList[0]))
+            return priorityList[0];
 
         /* Balas
          * Buscar la caja de balas y ver los objetos que tiene
          * Ver si hay balas suelta por el barco
          * Si no hay nada de balas ni en la caja ni en el barco devolver la bala
          */
-        if (priorityList.Count >= 3 && !CheckObjectInsideBox(priorityList[2]) && !ShipsManager.instance.playerShip.ItemExist(priorityList[2]))
-            return priorityList[2];
+        if (priorityList.Count >= 2 && GetNeedCannonBalls(priorityList[1]))
+            return priorityList[1];
 
         return null;
     }
-    private bool CheckObjectInsideBox(ObjectSO _object)
+
+    private bool GetNeedCannonBalls(ObjectSO _object)
     {
-        Box currentBox = ShipsManager.instance.playerShip.GetObjectBoxByObject(_object);
-        if (currentBox == null) return true;
-        return ShipsManager.instance.playerShip.GetObjectBoxByObject(_object).HasItems();
+        return (CheckObjectInsideBox(_object) + ShipsManager.instance.playerShip.GetTotalObjectQuantity(priorityList[1])) <= minCannonBallsInTheShip;
+    }
+    private int CheckObjectInsideBox(ObjectSO _object)
+    {
+        if (ShipsManager.instance.playerShip.GetObjectBoxByObject(_object) == null)
+            return 0;
+
+        return ShipsManager.instance.playerShip.GetObjectBoxByObject(_object).GetItemsInBox();
     }
     private bool CheckObjectByType(ObjectSO _object)
     {
