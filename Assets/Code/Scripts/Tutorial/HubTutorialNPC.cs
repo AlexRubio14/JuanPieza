@@ -220,7 +220,14 @@ public class HubTutorialNPC : MonoBehaviour
     {
         animator.SetTrigger("HandUp");
         animator.SetBool("isHandUp", true);
-        animator.SetBool("isSad", false);
+        StartCoroutine(WaitToChangeIsSad());
+
+        IEnumerator WaitToChangeIsSad()
+        {
+            yield return new WaitForEndOfFrame();
+            animator.SetBool("isSad", false);
+        }
+
     }
     private void IdleMentorAction()
     {
