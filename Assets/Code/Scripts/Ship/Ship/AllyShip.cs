@@ -25,6 +25,9 @@ public class AllyShip : Ship
 
     private float recoverHealth;
 
+    [SerializeField] private GameObject behaivour;
+    [SerializeField] private ShowMessageRepair[] message;
+
     public override void Start()
     {
         base.Start();
@@ -169,5 +172,17 @@ public class AllyShip : Ship
     {
         leaving = state;
         t = 0;
+    }
+
+    public void SetBehaivour(bool state)
+    {
+        if (behaivour)
+            behaivour.SetActive(state);
+    }
+
+    public void SetMessage()
+    {
+        foreach (var _message in message)
+            _message.ActiveBoxMessage();
     }
 }

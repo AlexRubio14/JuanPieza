@@ -319,6 +319,7 @@ MonoBehaviour:
   lowerY: 0.2
   destroyY: -5
   initY: 0.7
+  shipCameraBounds: []
   playersSpawnPos:
   - {fileID: 3484732061700912472}
   - {fileID: 5802678920399674566}
@@ -328,6 +329,8 @@ MonoBehaviour:
   <startZPosition>k__BackingField: -20
   <cameraInitPosition>k__BackingField: {x: 0, y: 4, z: -60}
   speed: 0.2
+  minSpeed: 0
+  behaivour: {fileID: 9043462827694989983}
 --- !u!54 &8365819680216379399
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -295,6 +295,7 @@ public class PirateBoardingController : MonoBehaviour
         rb.isKinematic = true;
         isKnockbacking = false;
         PirateBoardingManager.Instance.piratesBoarding.Remove(this);
+        ShipsManager.instance.RemoveEnemyShip();
         parabolaProcess = 0f;
         transform.forward = Vector3.forward;
     }
