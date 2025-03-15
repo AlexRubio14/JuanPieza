@@ -9,8 +9,15 @@ public class QuestIcon : MonoBehaviour
     private GameObject informationCanvas;
     private QuestData quest;
 
+    private void Start()
+    {
+        transform.localScale = new Vector3(minScale, minScale, minScale);
+    }
     void Update()
     {
+        if (quest.completed)
+            return;
+
         float scale = Mathf.PingPong(Time.time * speed, maxScale - minScale) + minScale;
         transform.localScale = new Vector3(scale, scale, scale);
     }
