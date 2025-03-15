@@ -21,6 +21,8 @@ public class ShipEnemy : Ship
     public override void Start()
     {
         base.Start();
+        
+        enemyHealth.IsEnemyHealth(true);
 
         t = 0;
         startZ = transform.position.z;

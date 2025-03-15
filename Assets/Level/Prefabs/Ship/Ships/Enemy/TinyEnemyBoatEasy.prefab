@@ -1644,7 +1644,7 @@ MonoBehaviour:
   - {fileID: 6760581420110909343}
   velocity: 0.2
   boardshipInformation: []
-  enemyHealth: {fileID: 0}
+  enemyHealth: {fileID: 2907178040390376937}
 --- !u!54 &7670309692406009392
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2816,6 +2816,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthBar
       objectReference: {fileID: 0}
+    - target: {fileID: 4854343658225014919, guid: 894ed3ae9c79c4a4698ead1566eb7966, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6881710094691362663, guid: 894ed3ae9c79c4a4698ead1566eb7966, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2896,11 +2900,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8854584165823754211, guid: 894ed3ae9c79c4a4698ead1566eb7966, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 6764713892806314720}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 894ed3ae9c79c4a4698ead1566eb7966, type: 3}
+--- !u!114 &2907178040390376937 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 185761499471110542, guid: 894ed3ae9c79c4a4698ead1566eb7966, type: 3}
+  m_PrefabInstance: {fileID: 3083745420533546087}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5e21799b82fc04c9e1b131a66ff5a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8451871948776921856 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6881710094691362663, guid: 894ed3ae9c79c4a4698ead1566eb7966, type: 3}

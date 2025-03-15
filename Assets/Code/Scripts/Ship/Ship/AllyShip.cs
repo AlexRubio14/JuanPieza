@@ -69,11 +69,15 @@ public class AllyShip : Ship
             recoverHealth += -1 * amount;
         else
             recoverHealth -= amount;
+        
+
     }
 
     public void SetRecoverHealth(float amount)
     {
         recoverHealth -= amount;
+        
+        ShipsManager.instance.playerHealthController.SetEaseHealthbar((recoverHealth + GetCurrentHealth()) / GetMaxHealth());
     }
 
     public override void DestroyShip()
