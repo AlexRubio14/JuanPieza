@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PushState : PlayerState
@@ -18,7 +17,10 @@ public class PushState : PlayerState
             {
                 Vector2 pushForce = Vector2.zero;
                 if (hit.collider.CompareTag("Object"))
+                {
                     pushForce = controller.objectPushForce;
+                    hit.rigidbody.AddTorque(controller.transform.right * controller.objectTorqueForce, ForceMode.Impulse);
+                }
                 else if (hit.collider && hit.collider.CompareTag("Player"))
                 {
                     pushForce = controller.playerPushForce;

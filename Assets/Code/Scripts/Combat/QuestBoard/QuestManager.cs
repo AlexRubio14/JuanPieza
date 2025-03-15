@@ -50,11 +50,6 @@ public class QuestManager : MonoBehaviour
         availableQuests.Add(newQuest);
     }
 
-    public void DeactivateCanvas(GameObject canvas)
-    {
-        canvas.SetActive(false);
-    }
-
     public void AcceptQuest()
     {
         NodeManager.instance.SetData(currentQuest);

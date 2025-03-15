@@ -168,6 +168,9 @@ public class PlayersReadyController : MonoBehaviour
         newPlayer.singlePlayer.currentPlayerSelectorObject.SetActive(false);
 
         hubPlayerController.AddPlayerToHub(playerIndex);
+
+        //Ocultar los botones de unirse en el lado que se 
+        joinGameButtonsUI[playerIndex].SetActive(false);
     }
     private void CheckHubTutorial()
     {

@@ -5,6 +5,7 @@ public class ExitPanel : MonoBehaviour
 {
     private Button exitButton;
     [SerializeField] private GameObject informationCanvas;
+    [SerializeField] private QuestBoard questBoard;
 
     private void Awake()
     {
@@ -15,6 +16,7 @@ public class ExitPanel : MonoBehaviour
 
     void OnButtonClick()
     {
-        QuestManager.Instance.DeactivateCanvas(informationCanvas);
+        informationCanvas.SetActive(false);
+        questBoard.GetQuestIcons()[0].GetComponent<Button>().Select();
     }
 }
