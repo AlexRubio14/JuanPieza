@@ -13,7 +13,7 @@ public class ShipsManager : MonoBehaviour
 
     private TransitionController transitionController;
 
-    [SerializeField] private HealthController playerHealthController;
+    public HealthController playerHealthController;
     private void Awake()
     {
         if (instance != null)

@@ -16,7 +16,8 @@ public class ShipEnemy : Ship
     [SerializeField] private List<BoardShip> boardshipInformation;
     private List<BoardShip> hpBoardshipList = new List<BoardShip>();
     private List<BoardShip> initBoardshipList = new List<BoardShip>();
-
+    [SerializeField] private HealthController enemyHealth;
+    
     public override void Start()
     {
         base.Start();
@@ -81,7 +82,9 @@ public class ShipEnemy : Ship
     public override void SetCurrentHealth(float amount)
     {
         base.SetCurrentHealth(amount);
-
+        
+        enemyHealth.SetHealthBar(GetCurrentHealth() / GetMaxHealth());
+        
         if (hpBoardshipList.Count == 0)
             return;
     

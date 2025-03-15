@@ -63,7 +63,7 @@ public class AllyShip : Ship
     {
         base.SetCurrentHealth(amount);
 
-        HealthController.instance.SetHealthBar(GetCurrentHealth() / GetMaxHealth());
+        ShipsManager.instance.playerHealthController.SetHealthBar(GetCurrentHealth() / GetMaxHealth());
         
         if(amount < 0)
             recoverHealth += -1 * amount;
