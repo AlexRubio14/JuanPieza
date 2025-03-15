@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -62,6 +63,8 @@ public class AllyShip : Ship
     {
         base.SetCurrentHealth(amount);
 
+        HealthController.instance.SetHealthBar(GetCurrentHealth() / GetMaxHealth());
+        
         if(amount < 0)
             recoverHealth += -1 * amount;
         else
