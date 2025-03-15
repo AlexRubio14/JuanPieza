@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class HubTutorialNPC : MonoBehaviour
 {
@@ -32,9 +32,9 @@ public class HubTutorialNPC : MonoBehaviour
     [SerializeField]
     private Quaternion mentorCameraRot;
     [SerializeField]
-    private AnimatorController tutorialAnimator;
+    private RuntimeAnimatorController tutorialAnimator;
     [SerializeField]
-    private AnimatorController baseAnimator;
+    private RuntimeAnimatorController baseAnimator;
 
 
     private Action lookPlayerAction;
@@ -58,13 +58,13 @@ public class HubTutorialNPC : MonoBehaviour
     private Action showMAAction;
     private Action waitCIAction;
     private Action showSQAAction;
+    private Action disableQuestIconAction;
+    private Action enableQuestIconAction;
 
-    private NavMeshAgent agent;
     private Animator animator;
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
     }
 
@@ -78,6 +78,8 @@ public class HubTutorialNPC : MonoBehaviour
         handUpMentorAction += HandUpMentorAction;
         idleMentorAction += IdleMentorAction;
         resetPlayerAction += ResetPlayerAction;
+        
+
 
         //Añadir actions al dialogueController
         DialogueController.instance.AddAction("D.HT.LP", lookPlayerAction);
@@ -95,6 +97,8 @@ public class HubTutorialNPC : MonoBehaviour
         showMAAction += ShowMapArrow;
         waitCIAction += SetMenuInputMap;
         showSQAAction += ShowSelectQuestArrow;
+        disableQuestIconAction += DisableQuestIcons;
+        enableQuestIconAction += EnableQuestIcons;
 
         //Añadir actions al dialogueController
         DialogueController.instance.AddAction("D.HT.HA", hideArrowsAction);
@@ -102,6 +106,8 @@ public class HubTutorialNPC : MonoBehaviour
         DialogueController.instance.AddAction("D.HT.SMA", showMAAction);
         DialogueController.instance.AddAction("D.HT.WCI", waitCIAction);
         DialogueController.instance.AddAction("D.HT.SSQA", showSQAAction);
+        DialogueController.instance.AddAction("D.HT.DQI", disableQuestIconAction);
+        DialogueController.instance.AddAction("D.HT.EQI", enableQuestIconAction);
 
         HideArrow();
 
@@ -137,7 +143,6 @@ public class HubTutorialNPC : MonoBehaviour
     {
         DialogueController.instance.StartDialogue(starterDialogue);
     }
-
     private void SetMenuInputMap()
     {
         StartCoroutine(WaitToChangeInputMap());
@@ -149,7 +154,6 @@ public class HubTutorialNPC : MonoBehaviour
         }
         
     }
-
     private void HideArrow()
     {
         foreach (GameObject obj in arrows)
@@ -159,21 +163,18 @@ public class HubTutorialNPC : MonoBehaviour
             obj.SetActive(false);
         }
     }
-    
     private void ShowBoardArrow()
     {
         arrows[0].SetActive(true);
         arrows[0].transform.position = boardObject.transform.position + arrowOffset;
     }
-
     private void ShowMapArrow()
     {
         arrows[0].SetActive(true);
-        arrows[0].transform.SetParent(boardCanvas.GetQuestIcons()[0].transform);
+        arrows[0].transform.SetParent(boardCanvas.transform);
         arrows[0].transform.localScale = Vector3.one * 100;
         arrows[0].transform.position = boardCanvas.GetQuestIcons()[0].transform.position + arrowOffset * 50;
     }
-
     private void ShowSelectQuestArrow()
     {
         arrows[1].SetActive(true);
@@ -242,4 +243,22 @@ public class HubTutorialNPC : MonoBehaviour
         PlayersManager.instance.ingamePlayers[0].animator.runtimeAnimatorController = baseAnimator;
     }
 
+    private void DisableQuestIcons()
+    {
+        foreach (QuestIcon item in boardCanvas.GetQuestIcons())
+            item.GetComponent<Button>().interactable = false;
+    }
+    private void EnableQuestIcons()
+    {
+        StartCoroutine(WaitEndOfFrame());
+
+        IEnumerator WaitEndOfFrame()
+        {
+            yield return new WaitForEndOfFrame();
+            foreach (QuestIcon item in boardCanvas.GetQuestIcons())
+                item.GetComponent<Button>().interactable = true;
+
+            boardCanvas.GetQuestIcons()[0].GetComponent<Button>().Select();
+        }
+    }
 }

@@ -12,6 +12,11 @@ public class AcceptButton : MonoBehaviour
         acceptButton.onClick.AddListener(OnButtonClick);
     }
 
+    private void OnEnable()
+    {
+        acceptButton.Select();
+    }
+
     void OnButtonClick()
     {
         QuestManager.Instance.AcceptQuest();

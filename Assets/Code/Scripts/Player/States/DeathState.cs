@@ -57,7 +57,8 @@ public class DeathState : PlayerState
         FishingManager.instance.RemoveDeadPlayer(this);
         rb.isKinematic = false;
         controller.animator.SetBool("Swimming", false);
-        controller.transform.SetParent(ShipsManager.instance.playerShip.transform);
+        if(ShipsManager.instance.playerShip)
+            controller.transform.SetParent(ShipsManager.instance.playerShip.transform);
     }
 
     public override void RollAction() { /*No puedes rodar*/ }
