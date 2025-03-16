@@ -20,16 +20,6 @@ public class HubPlayerController : MonoBehaviour
 
         PlayersManager.instance.players[_playerId].Item1.SwitchCurrentActionMap("Gameplay");
 
-        SkinnedMeshRenderer[] renderers = controller.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
-
-        foreach (SkinnedMeshRenderer renderer in renderers)
-        {
-            renderer.material = PlayersManager.instance.characterMat[_playerId];
-        }
-
-        MeshRenderer hatRenderer = controller.gameObject.GetComponentInChildren<MeshRenderer>();
-        hatRenderer.material = PlayersManager.instance.characterMat[_playerId];
-
         if (PlayerPrefs.HasKey(HUB_TUTORIAL) && PlayerPrefs.GetInt(HUB_TUTORIAL) == 1)
             return;
 

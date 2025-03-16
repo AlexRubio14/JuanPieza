@@ -60,7 +60,7 @@ public abstract class InteractableObject : MonoBehaviour
         
         return 
             handObject && objectToInteract == handObject.objectSO || 
-            !_objectHolder.GetHandInteractableObject() && !objectToInteract;
+            !handObject && !objectToInteract;
     }
 
     protected virtual void OnEnable()
