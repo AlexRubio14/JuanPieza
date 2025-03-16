@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FishingManager : MonoBehaviour
@@ -269,20 +270,27 @@ public class FishingManager : MonoBehaviour
             }
         }
 
+        RescueNPC rescueNPC = GetNearestAvaliableRescueNPC(_fishingRod);
+        if (rescueNPC)
+        {
+            //Setear en el player muerto el target
+            rescueNPC.SetHookPosition(fishingData[id].fishingRod.hook.transform.position);
+            rescueNPC.isSwimming = true;
+            FishingData newData = fishingData[id];
+            newData.currentPlayer = null;
+            newData.fishingState = FishingState.WAITING_PLAYER;
+            newData.rescueNPC = rescueNPC;
+            fishingData[id] = newData;
+            return;
+        }
+            
         for (int i = 0; i < rescueNPCs.Count; i++)
         {
             if (!rescueNPCs[i].rescued &&
             !rescueNPCs[i].isSwimming &&
             rescueNPCs[i].hookPosition == Vector3.zero)
             {
-                //Setear en el player muerto el target
-                rescueNPCs[i].SetHookPosition(fishingData[id].fishingRod.hook.transform.position);
-                rescueNPCs[i].isSwimming = true;
-                FishingData newData = fishingData[id];
-                newData.currentPlayer = null;
-                newData.fishingState = FishingState.WAITING_PLAYER;
-                newData.rescueNPC = rescueNPCs[i];
-                fishingData[id] = newData;
+                
                 return;
             }
         }
@@ -353,6 +361,28 @@ public class FishingManager : MonoBehaviour
         int id = GetFisingRodId(_fishingRod);
         if (id != -1)
             fishingData.Remove(fishingData[id]);
+    }
+
+    private RescueNPC GetNearestAvaliableRescueNPC(FishingRod _fishingRod)
+    {
+        RescueNPC nearestNPC = null;
+        float distance = 100;
+        for (int i = 0; i < rescueNPCs.Count; i++)
+        {
+            if(!rescueNPCs[i].rescued &&
+            !rescueNPCs[i].isSwimming &&
+            rescueNPCs[i].hookPosition == Vector3.zero)
+            {
+                float currentDitance = Vector3.Distance(rescueNPCs[i].transform.position, _fishingRod.hook.transform.position);
+                if (currentDitance < distance)
+                {
+                    nearestNPC = rescueNPCs[i];
+                    distance = currentDitance;
+                }
+            }
+        }
+
+        return nearestNPC;
     }
     #endregion
 
