@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip dieClip;
     [SerializeField] public AudioClip dashClip;
     [SerializeField] public AudioClip dashHitClip;
+    [SerializeField] public AudioClip pushGameObjectClip;
     [SerializeField] public List<AudioClip> pushListClips;
 
     public Animator animator { get; private set; }

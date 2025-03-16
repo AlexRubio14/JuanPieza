@@ -30,6 +30,8 @@ public class PushState : PlayerState
                 Vector3 pushForward = controller.transform.forward * pushForce.x;
                 Vector3 pushUp = Vector3.up * pushForce.y;
                 hit.rigidbody.AddForce(pushForward + pushUp, ForceMode.Impulse);
+
+                AudioManager.instance.Play2dOneShotSound(controller.pushGameObjectClip, "Player", 1, 0.85f, 1.15f);
             }
 
 
@@ -43,6 +45,7 @@ public class PushState : PlayerState
                 Vector3 knockbackDir = knockbackForward + pushUp;
 
                 pirateController.PirateKnockback(knockbackDir, controller.pirateKnockbackForce);
+                AudioManager.instance.Play2dOneShotSound(controller.pushGameObjectClip, "Player", 1, 0.85f, 1.15f);
             }
         }
 
@@ -53,7 +56,7 @@ public class PushState : PlayerState
     {
         int randIndex = Random.Range(0, controller.pushListClips.Count);
 
-        AudioManager.instance.Play2dOneShotSound(controller.pushListClips[randIndex], "Player", 0.6f, 0.9f, 1.1f);
+        AudioManager.instance.Play2dOneShotSound(controller.pushListClips[randIndex], "Player", 1f, 0.9f, 1.1f);
     }
 
     public override void UpdateState()

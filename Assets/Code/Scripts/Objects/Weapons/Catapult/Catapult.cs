@@ -22,5 +22,6 @@ public class Catapult : Weapon
             , ForceMode.VelocityChange);
         newBullet.GetComponent<Bullet>().SetDamage(weaponDamage);
         hasAmmo = false;
+        AudioManager.instance.Play2dOneShotSound(weaponShootClip, "Objects", 1, 0.9f, 1.1f);
     }
 }

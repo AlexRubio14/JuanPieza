@@ -488,6 +488,7 @@ MonoBehaviour:
   shipCameraBounds:
   - {fileID: 5739109873757880494}
   - {fileID: 1337392679729473242}
+  boatDestroyed: {fileID: 8300000, guid: 0547658a6be1e7645b64360681c39c5e, type: 3}
   playersSpawnPos:
   - {fileID: 3801627174945678398}
   - {fileID: 5028742461309032499}
@@ -624,7 +625,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.05
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: ddb85051289cf5c45acbbe8f7c529a5f, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: ec8e81c8b3e97dc4288ddc0aba5c1e5d, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &2603402405004576645
 GameObject:
@@ -2054,11 +2055,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: DecorationChest
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6762738349600778999, guid: 26527b132d8e2ff438800a115dbaada7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6762738349600778999, guid: 26527b132d8e2ff438800a115dbaada7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5605904055967666489, guid: 26527b132d8e2ff438800a115dbaada7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 761924788035612375}
   m_SourcePrefab: {fileID: 100100000, guid: 26527b132d8e2ff438800a115dbaada7, type: 3}
+--- !u!1 &949951942957330611 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5605904055967666489, guid: 26527b132d8e2ff438800a115dbaada7, type: 3}
+  m_PrefabInstance: {fileID: 4675515193012658570}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &761924788035612375
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949951942957330611}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.0500001, y: 0.3, z: 0.823}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!4 &6712974332685390211 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2146953535142572041, guid: 26527b132d8e2ff438800a115dbaada7, type: 3}
