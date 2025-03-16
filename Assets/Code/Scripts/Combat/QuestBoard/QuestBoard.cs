@@ -9,10 +9,10 @@ public class QuestBoard : MonoBehaviour
 
     private List<QuestIcon> questIcons;
 
-    private void Start()
+    private void OnEnable()
     {
         questIcons = new List<QuestIcon>();
-        
+
         QuestManager.Instance.UpdateAvailableQuests();
 
         foreach (QuestData quest in QuestManager.Instance.availableQuests)

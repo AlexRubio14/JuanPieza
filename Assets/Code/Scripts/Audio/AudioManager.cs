@@ -194,4 +194,9 @@ public class AudioManager : MonoBehaviour
         else
             yield return null;
     }
+
+    public AudioMixer GetMixer()
+    {
+        return mixer;
+    }
 }

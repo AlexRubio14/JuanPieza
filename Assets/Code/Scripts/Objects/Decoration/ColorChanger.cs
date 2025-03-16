@@ -1,5 +1,9 @@
+using UnityEngine;
+
 public class ColorChanger : InteractableObject
 {
+    [Space, Header("Color Changer"), SerializeField]
+    private GameObject changeColorParticles;
     public override void Interact(ObjectHolder _objectHolder)
     {
         int playerId = _objectHolder.GetComponentInParent<PlayerController>().playerInput.playerReference;
@@ -7,7 +11,9 @@ public class ColorChanger : InteractableObject
         int colorId = PlayersManager.instance.GetNextMaterial(PlayersManager.instance.players[playerId].singlePlayer.currentColor);
         PlayersManager.instance.players[playerId].singlePlayer.ChangePlayerColor(colorId);
 
-        _objectHolder.GetComponentInParent<IngamePlayerColorController>().SetPlayerColor(colorId) ;
+        _objectHolder.GetComponentInParent<IngamePlayerColorController>().SetPlayerColor(colorId);
+
+        Instantiate(changeColorParticles, _objectHolder.transform.parent.position, Quaternion.identity);
 
     }
     public override void Use(ObjectHolder _objectHolder) { }

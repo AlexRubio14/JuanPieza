@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ExitQuestBoard : MonoBehaviour
@@ -16,5 +17,9 @@ public class ExitQuestBoard : MonoBehaviour
     void OnButtonClick()
     {
         mapCanvas.SetActive(false);
+        foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.GetPlayers())
+        {
+            player.Item1.SwitchCurrentActionMap("Gameplay");
+        }
     }
 }

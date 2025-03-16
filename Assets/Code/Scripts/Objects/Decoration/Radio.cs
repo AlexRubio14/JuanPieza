@@ -59,10 +59,6 @@ public class Radio : Resource
 
     public override void Use(ObjectHolder _objectHolder)
     {
-        //playear animacion player
-        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
-
-
         if (isPlaying)
             StopPlaying();
         else

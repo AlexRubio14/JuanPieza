@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,11 +7,17 @@ public class QuestBoardObject : InteractableObject
     [SerializeField] private GameObject questCanvas;
     public override void Interact(ObjectHolder _objectHolder)
     {
-        questCanvas.SetActive(true);
 
-        foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.GetPlayers())
+        StartCoroutine(WaitEndOfFrame());
+        IEnumerator WaitEndOfFrame()
         {
-            player.Item1.SwitchCurrentActionMap("Dialogue");
+            yield return new WaitForEndOfFrame();
+            questCanvas.SetActive(true);
+
+            foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.GetPlayers())
+            {
+                player.Item1.SwitchCurrentActionMap("MapMenu");
+            }
         }
     }
 

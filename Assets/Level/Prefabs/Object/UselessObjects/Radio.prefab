@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2377455167152417292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 295694054934110002}
+  m_Layer: 9
+  m_Name: GrabPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &295694054934110002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2377455167152417292}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1420783066600405563}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &8395515496249075971
 GameObject:
   m_ObjectHideFlags: 0
@@ -37,6 +68,7 @@ Transform:
   - {fileID: 3602135288989095650}
   - {fileID: 4062855015183124760}
   - {fileID: 4933387227813732643}
+  - {fileID: 295694054934110002}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &4042366615927977883
@@ -56,12 +88,17 @@ MonoBehaviour:
   selectedVisual: {fileID: 460597698741433702}
   tooltip: {fileID: 0}
   rb: {fileID: 2498971714603910142}
-  <grabPivot>k__BackingField: {fileID: 1420783066600405563}
+  <grabPivot>k__BackingField: {fileID: 295694054934110002}
   hasToBeInTheShip: 1
   dropItemClip: {fileID: 8300000, guid: ca052a633d841bb40b287fd68e6abcfb, type: 3}
   musicsList:
+  - {fileID: 8300000, guid: 9d0aee5c0dfdea248a43546d43e7f2f0, type: 3}
+  - {fileID: 8300000, guid: ea030556455bdfb4086d9c8b285bc600, type: 3}
   - {fileID: 8300000, guid: 0005d30eb43712c4db32501258299082, type: 3}
-  - {fileID: 8300000, guid: ae7c605648159ac4a817e9ed587d47ed, type: 3}
+  - {fileID: 8300000, guid: 6169d01cf8eae1d40a3b94a2c334a3cf, type: 3}
+  - {fileID: 8300000, guid: 7b9f2b55042b7cf43829ee1672d27496, type: 3}
+  - {fileID: 8300000, guid: 0f18e284930e3be4292a79dbe5c7e1cd, type: 3}
+  - {fileID: 8300000, guid: 7e83fced301865c4d9563827f7858e28, type: 3}
 --- !u!114 &6203328519240700976
 MonoBehaviour:
   m_ObjectHideFlags: 0
