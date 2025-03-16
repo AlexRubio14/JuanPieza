@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -75,6 +77,9 @@ public class PlayerController : MonoBehaviour
 
     [field: Space, Header("Audio"), SerializeField]
     public AudioClip dieClip;
+    [SerializeField] public AudioClip dashClip;
+    [SerializeField] public AudioClip dashHitClip;
+    [SerializeField] public List<AudioClip> pushListClips;
 
     public Animator animator { get; private set; }
     

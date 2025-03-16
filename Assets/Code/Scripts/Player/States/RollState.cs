@@ -13,6 +13,8 @@ public class RollState : PlayerState
             controller.AddImpulse(controller.movementDirection, controller.rollSpeed);
         else
             controller.AddImpulse(controller.transform.forward, controller.rollSpeed);
+
+        AudioManager.instance.Play2dOneShotSound(controller.dashClip, "Player", 1, 0.95f, 1.05f);
     }
     public override void UpdateState()
     {
@@ -65,6 +67,6 @@ public class RollState : PlayerState
         controller.AddImpulse(bounceDir, controller.rollSpeed);
         rollTimePassed = -controller.rollDuration / 2;
         controller.animator.SetTrigger("Hitted");
-
+        AudioManager.instance.Play2dOneShotSound(controller.dashHitClip, "Player", 0.7f, 0.95f, 1.05f);
     }
 }

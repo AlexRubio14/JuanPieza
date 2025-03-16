@@ -6,10 +6,8 @@ public class MenuHandler : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.instance.musicAs.clip = AudioManager.instance.musicClip;
         AudioManager.instance.musicAs.volume = 0.2f;
-        AudioManager.instance.musicAs.Play();
-
+        AudioManager.instance.musicAs = AudioManager.instance.Play2dLoop(AudioManager.instance.musicClip, "Music", 1,1,1);
     }
 
     public void PlayButton()

@@ -45,7 +45,17 @@ public class PushState : PlayerState
                 pirateController.PirateKnockback(knockbackDir, controller.pirateKnockbackForce);
             }
         }
+
+        PickRandomPushClip();
     }
+
+    public void PickRandomPushClip()
+    {
+        int randIndex = Random.Range(0, controller.pushListClips.Count);
+
+        AudioManager.instance.Play2dOneShotSound(controller.pushListClips[randIndex], "Player", 0.6f, 0.9f, 1.1f);
+    }
+
     public override void UpdateState()
     {
         //Contar el tiempo rodando

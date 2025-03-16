@@ -89,7 +89,7 @@ public class DialogueController : MonoBehaviour
             else
                 ReadDialogueType();
 
-            //AudioManager.instance.Play2dOneShotSound(clickSound, "Button");
+            
         }
     }
 
@@ -105,6 +105,7 @@ public class DialogueController : MonoBehaviour
                 break;
             case DialogueData.DialogueType.DIALOGUE:
                 DisplayNextDialogue(currentDialogue.dialogue);
+                AudioManager.instance.Play2dOneShotSound(clickSound, "Button", 1.5f, 0.95f, 1.05f);
                 break;
             case DialogueData.DialogueType.ACTION:
                 DoAction(currentDialogue.actionId);
@@ -160,7 +161,7 @@ public class DialogueController : MonoBehaviour
             letterIndex++;
             Invoke("DisplayLetter", timeBetweenLetters);
             if (dialogueSoundIndex % 4 == 0)
-                //AudioManager.instance.Play2dOneShotSound(letterSpawnSound, "SFX", 0.35f, 2f, 2.5f);
+                AudioManager.instance.Play2dOneShotSound(letterSpawnSound, "SFX", 0.35f, 2f, 2.5f);
 
             dialogueSoundIndex++;
         }
