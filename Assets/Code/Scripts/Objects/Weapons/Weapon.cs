@@ -115,8 +115,6 @@ public abstract class Weapon : RepairObject
         
         if (!hasAmmo)
             tooltip.SetState(ObjectsTooltip.ObjectState.Empty);
-        else
-            tooltip.SetState(ObjectsTooltip.ObjectState.Loaded);
         
         if (!handObject && !isPlayerMounted()) //No tiene nada en la mano y no hay nadie montado
             return new HintController.Hint[]

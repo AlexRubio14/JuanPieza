@@ -13,6 +13,7 @@ public class ShipsManager : MonoBehaviour
 
     private TransitionController transitionController;
 
+    public HealthController playerHealthController;
     private void Awake()
     {
         if (instance != null)

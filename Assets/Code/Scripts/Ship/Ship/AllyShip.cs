@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -65,15 +66,21 @@ public class AllyShip : Ship
     {
         base.SetCurrentHealth(amount);
 
+        ShipsManager.instance.playerHealthController.SetHealthBar(GetCurrentHealth() / GetMaxHealth());
+        
         if(amount < 0)
             recoverHealth += -1 * amount;
         else
             recoverHealth -= amount;
+        
+
     }
 
     public void SetRecoverHealth(float amount)
     {
         recoverHealth -= amount;
+        
+        ShipsManager.instance.playerHealthController.SetEaseHealthbar((recoverHealth + GetCurrentHealth()) / GetMaxHealth());
     }
 
     public override void DestroyShip()
