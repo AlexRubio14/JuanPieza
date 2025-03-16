@@ -22,6 +22,17 @@ public class QuestBoard : MonoBehaviour
             questButton.SetInformationCanvas(informationCanvas);
             questButton.SetQuestData(quest);
 
+            if (quest.completed)
+            {
+                questButton.gameObject.transform.localScale = new Vector3(
+                    questButton.gameObject.transform.localScale.x * 0.8f,
+                    questButton.gameObject.transform.localScale.y * 0.8f,
+                    questButton.gameObject.transform.localScale.z * 0.8f);
+
+                Image iconImage = questButton.gameObject.GetComponent<Image>();
+                iconImage.color = new Color(iconImage.color.r, iconImage.color.g, iconImage.color.b, 0.7f);
+            }
+
             if (questIcons.Count == 0)
                 questButton.GetComponent<Button>().Select();
 
