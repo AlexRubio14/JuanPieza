@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +10,6 @@ public class HealthController : MonoBehaviour
     [SerializeField, Range(0.05f, 0.5f)] private float lerpSpeed = 0.05f;
     [SerializeField, Range(0.01f, 10.0f)] private float disvanishSpeed = 7.0f;
 
-    private Image canvasImage;
-    
     private bool enemyHealthBar;
     private float targetHealth = 100;
     private bool isVanishing;
@@ -18,7 +17,6 @@ public class HealthController : MonoBehaviour
 
     private void Start()
     {
-        canvasImage = GetComponent<Image>();
         StartVanish();
     }
 
@@ -62,7 +60,7 @@ public class HealthController : MonoBehaviour
         enemyHealthBar = isEnemyHealth;
     }
 
-    public void StartVanish()
+    private void StartVanish()
     {
         isVanishing = true;
         vanishTimer = 0f;
@@ -73,18 +71,28 @@ public class HealthController : MonoBehaviour
         vanishTimer += Time.deltaTime;
         float alpha = Mathf.Lerp(1f, 0f, vanishTimer / disvanishSpeed);
 
-        SetImageAlpha(healthBarImage, alpha);
-        SetImageAlpha(easeHealthBarImage, alpha);
-        SetImageAlpha(canvasImage, alpha);
+        SetAlphaRecursively(transform, alpha);
+
         if (vanishTimer >= disvanishSpeed)
         {
             isVanishing = false;
-            SetImageAlpha(healthBarImage, 0f);
-            SetImageAlpha(easeHealthBarImage, 0f);
-            SetImageAlpha(canvasImage, 0f);
+
+            SetAlphaRecursively(transform, 0f);
         }
     }
+    private void SetAlphaRecursively(Transform parent, float alpha)
+    {
+        foreach (Transform child in parent)
+        {
+            Image childImage = child.GetComponent<Image>();
+            if (childImage != null)
+            {
+                SetImageAlpha(childImage, alpha);
+            }
 
+            SetAlphaRecursively(child, alpha);
+        }
+    }
     private void SetImageAlpha(Image image, float alpha)
     {
         if (image != null)

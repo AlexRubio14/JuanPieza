@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class WorldToUIPosition : MonoBehaviour
@@ -7,10 +8,11 @@ public class WorldToUIPosition : MonoBehaviour
     [SerializeField] private RectTransform uiElement;
 
     private Camera mainCamera;
-
+    
     private void Start()
     {
         mainCamera = Camera.main;
+        
 
         if (uiElement == null)
         {
