@@ -15,9 +15,9 @@ public class MenuHandler : MonoBehaviour
     public void PlayButton()
     {
         AudioManager.instance.seagullAs = AudioManager.instance.Play2dLoop(AudioManager.instance.seagullClip, "Music", 1, 1, 1);
-        SceneManager.LoadScene("Hub");
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
+        SceneManager.LoadScene("Hub");
     }
 
     public void ExitButton()
