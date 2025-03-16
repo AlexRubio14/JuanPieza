@@ -80,15 +80,9 @@ public class PlayersReadyController : MonoBehaviour
 
         _newPlayer.GetComponent<GameInput>().playerReference = playerIndex;
 
-        SkinnedMeshRenderer[] renderers = _newPlayer.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
-
-        foreach (SkinnedMeshRenderer renderer in renderers)
-        {
-            renderer.material = PlayersManager.instance.characterMat[_newPlayer.playerIndex];
-        }
-
-        MeshRenderer hatRenderer = _newPlayer.gameObject.GetComponentInChildren<MeshRenderer>();
-        hatRenderer.material = PlayersManager.instance.characterMat[_newPlayer.playerIndex];
+        newPlayer.singlePlayer.currentColor = -1;
+        int colorIndex = PlayersManager.instance.GetNextMaterial(-1);
+        newPlayer.singlePlayer.ChangePlayerColor(colorIndex);
     }
     private void PlacePlayerOnMenu(int _playerIndex)
     {
@@ -154,13 +148,16 @@ public class PlayersReadyController : MonoBehaviour
                 break;
             }
         }
-
+        
 
         if (!playerExists)
         {
             newPlayer = (_newPlayer, _newPlayer.GetComponent<SinglePlayerController>());
             PlayersManager.instance.players.Add(newPlayer);
         }
+        newPlayer.singlePlayer.currentColor = -1;
+        int colorIndex = PlayersManager.instance.GetNextMaterial(-1);
+        newPlayer.singlePlayer.ChangePlayerColor(colorIndex);
 
         int playerIndex = PlayersManager.instance.players.IndexOf(newPlayer);
         _newPlayer.GetComponent<GameInput>().playerReference = playerIndex;
