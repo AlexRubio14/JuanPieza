@@ -14,6 +14,8 @@ public class ShipsManager : MonoBehaviour
     private TransitionController transitionController;
 
     public HealthController playerHealthController;
+    [SerializeField] private AudioClip missionCompleted;
+
     private void Awake()
     {
         if (instance != null)
@@ -118,7 +120,9 @@ public class ShipsManager : MonoBehaviour
     public void RemoveEnemyShip(Ship ship = null)
     {
         if(ship)
+        {
             enemiesShips.Remove(ship);
+        }
 
         if (enemiesShips.Count == 0)
         {

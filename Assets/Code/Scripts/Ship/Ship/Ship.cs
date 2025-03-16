@@ -21,6 +21,9 @@ public class Ship : MonoBehaviour
     [Space, SerializeField]
     private Collider[] shipCameraBounds;
 
+    [SerializeField] private AudioClip boatDestroyed;
+
+
     public virtual void Start()
     {
         Initialize();
@@ -75,12 +78,16 @@ public class Ship : MonoBehaviour
     }
     private void CheckHealth()
     {
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             currentHealth = 0;
             targetHeight = destroyY;
             if (animator)
+            {
                 animator.SetBool("Dead", true);
+                AudioManager.instance.Play2dOneShotSound(boatDestroyed, "SFX", 1, 0.8f, 1.2f);
+
+            }
         }
         if (currentHealth > maxHealth)
         {

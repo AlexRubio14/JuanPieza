@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.XR;
 
 public class PirateBoardingController : MonoBehaviour
 {
@@ -19,12 +20,15 @@ public class PirateBoardingController : MonoBehaviour
     private float parabolaProcess = 0f;
     private Vector3 posToJump;
     private Vector3 jumpStartPos;
+    [SerializeField] private AudioClip pirateJumpClip;
 
     [Space, Header("Knockback")]
     [SerializeField] private float selfKnockbackForce; //Knockback a ti mismo al empujar al player
 
     [SerializeField] private float playerKnockbackForce;
     private bool isKnockbacking = false;
+    [SerializeField] private List<AudioClip> pushClipsList;
+    [SerializeField] private AudioClip playerKnockbackHit;
 
     [Space, Header("SphereCast")]
     [SerializeField] private Transform sphereCastPos;
@@ -60,7 +64,6 @@ public class PirateBoardingController : MonoBehaviour
             case PirateState.WAITING:
                 break;
             case PirateState.PARABOLA:
-                transform.forward = transform.position - jumpStartPos;
                 JumpIntoPlayerShip();
                 break;
             case PirateState.CHASING:
@@ -81,11 +84,13 @@ public class PirateBoardingController : MonoBehaviour
     {
         parabolaProcess += Time.deltaTime * parabolaSpeed;
         transform.position = Parabola(jumpStartPos, posToJump, jumpHeigt, parabolaProcess);
+        transform.forward = transform.position - jumpStartPos;
 
         if (parabolaProcess >= 1f)
         {
             ActivateNavMesh();
             ChangeState(PirateState.CHASING);
+
         }
     }
 
@@ -123,6 +128,7 @@ public class PirateBoardingController : MonoBehaviour
                 break;
             case PirateState.PARABOLA:
                 jumpStartPos = transform.position;
+                AudioManager.instance.Play2dOneShotSound(pirateJumpClip, "Player", 0.7f, 0.85f, 1.15f);
                 JumpIntoPlayerShip();
                 break;
             case PirateState.CHASING:
@@ -245,10 +251,13 @@ public class PirateBoardingController : MonoBehaviour
             //Player knocback
             playerRb.AddForce(playerKnockbackForce * playerKnockbackDir.normalized, ForceMode.Impulse);
             playerController.stateMachine.ChangeState(playerController.stateMachine.knockbackState);
+            AudioManager.instance.Play2dOneShotSound(playerKnockbackHit, "Player", 1, 0.85f, 1.15f);
 
             //Pirate Knockback
             Vector3 pirateKnockbackDir = transform.forward * -1;
             PirateKnockback(pirateKnockbackDir, selfKnockbackForce);
+
+            PickRandomPushClip();
         }
     }
 
@@ -298,6 +307,13 @@ public class PirateBoardingController : MonoBehaviour
         ShipsManager.instance.RemoveEnemyShip();
         parabolaProcess = 0f;
         transform.forward = Vector3.forward;
+    }
+
+    public void PickRandomPushClip()
+    {
+        int randIndex = Random.Range(0, pushClipsList.Count);
+
+        AudioManager.instance.Play2dOneShotSound(pushClipsList[randIndex], "Player", 1f, 0.9f, 1.1f);
     }
 
     public void SetPosToJump(Vector3 _posToJump)

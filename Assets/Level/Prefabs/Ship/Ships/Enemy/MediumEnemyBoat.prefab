@@ -5046,16 +5046,16 @@ MonoBehaviour:
   lowerY: -4
   destroyY: -10
   initY: -1
-  maxWeigth: 10000
-  damageTime: 0
-  weigthDamage: 0
+  shipCameraBounds: []
+  boatDestroyed: {fileID: 8300000, guid: 0547658a6be1e7645b64360681c39c5e, type: 3}
   playersSpawnPos: []
-  votations: []
-  idShip: 0
-  newZ: 0
-  newY: 0
-  barrelBox: {fileID: 0}
-  isBarrelBoxActive: 0
+  <boardingPoints>k__BackingField: []
+  <startZPosition>k__BackingField: 0
+  <cameraInitPosition>k__BackingField: {x: 0, y: 0, z: 0}
+  speed: 0
+  minSpeed: 0
+  behaivour: {fileID: 0}
+  message: []
 --- !u!114 &499040704903479180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5068,20 +5068,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e4d538eee3bcd5409e63b5683dc0098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalEnemies: 6
   enemyPrefab: {fileID: 5511217913929459945, guid: 122656c0e13c21846918af65e4393fce, type: 3}
+  falseEnemyPrefab: {fileID: 0}
   enemySpawnPoint: {fileID: 6454939228105831708}
   enemySpawnOffset: 6
   priorityList: 0000000001000000040000000100000002000000
   enemyShip: {fileID: 6058864818896888152}
-  woodResource: {fileID: 1695415869774762374}
   bulletResource: {fileID: 9208685714245566768}
   hammerObject: {fileID: 2039854267104118464}
   interactDistance: 2.5
-  timeToGetResource: 2
-  timeToRepair: 3.5
-  timeToInteract: 2
-  timeToShoot: 1.5
 --- !u!54 &6330436407681195130
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6373,17 +6368,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b10445b86a2e62468c37479510431ff, type: 3}
---- !u!114 &1695415869774762374 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7931781692832970477, guid: 6b10445b86a2e62468c37479510431ff, type: 3}
-  m_PrefabInstance: {fileID: 8760638912839116651}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a72c58b306dded04d95fae2e4cae2d19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2388785365708036123 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6391347906360688496, guid: 6b10445b86a2e62468c37479510431ff, type: 3}
