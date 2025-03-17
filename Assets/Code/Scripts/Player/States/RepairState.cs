@@ -30,6 +30,4 @@ public class RepairState : PlayerState
     {
         //Si te golpea algo llamar al controller.StopInteract();
     }
-
-   
 }
