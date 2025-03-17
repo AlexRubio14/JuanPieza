@@ -29,6 +29,10 @@ public class AllyShip : Ship
     [SerializeField] private GameObject behaivour;
     [SerializeField] private ShowMessageRepair[] message;
 
+    [Header("GenerateCannon")]
+    [SerializeField] private GameObject cannon;
+    [SerializeField] private WoodShelf fishingShelf;
+
     public override void Start()
     {
         base.Start();
@@ -158,6 +162,22 @@ public class AllyShip : Ship
         }
 
         return null;
+    }
+
+    public bool GetTotalWeaponsInShip()
+    {
+        List<InteractableObject> objectList = GetObjectOfType(ObjectSO.ObjectType.WEAPON);
+        if (objectList.Count > 1)
+            return true;
+        return false;
+    }
+
+    public void GenerateCannon()
+    {
+        if (fishingShelf == null && !ShipsManager.instance.playerShip.GetTotalWeaponsInShip())
+        {
+            Instantiate(cannon, new Vector3(0,5,0), Quaternion.identity).transform.SetParent(this.gameObject.transform);
+        }
     }
     public List<InteractableObject> GetInventory()
     {
