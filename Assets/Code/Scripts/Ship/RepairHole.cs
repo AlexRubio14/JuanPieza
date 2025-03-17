@@ -10,7 +10,6 @@ public class RepairHole : Repair
         _objectHolder.hintController.UpdateActionType(new HintController.Hint[] { new HintController.Hint(HintController.ActionType.NONE, "") });
         if(hasToRecoverHP)
             ship.SetCurrentHealth(damageDeal);
-        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
         Destroy(gameObject);
     }
 

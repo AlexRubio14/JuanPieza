@@ -1,10 +1,19 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PushState : PlayerState
 {
     private float pushTimePassed;
     public override void EnterState()
     {
+        if(!controller.canPush)
+        {
+            stateMachine.ChangeState(stateMachine.idleState);
+            return;
+        }
+
+        controller.canPush = false;
+
         controller.animator.SetTrigger("Push");
         pushTimePassed = 0;
 
@@ -49,6 +58,9 @@ public class PushState : PlayerState
             }
         }
 
+        controller.Invoke("WaitCanPush", controller.pushCD);
+
+
         PickRandomPushClip();
     }
 
@@ -66,7 +78,6 @@ public class PushState : PlayerState
         if (pushTimePassed >= controller.rollDuration)
         {
             stateMachine.ChangeState(stateMachine.idleState);
-            ///Debug.Break();
         }
     }
     public override void FixedUpdateState()
@@ -90,4 +101,6 @@ public class PushState : PlayerState
     {
         base.OnCollisionEnter(collision);
     }
+
+
 }

@@ -14,7 +14,7 @@ public class QuestBoardObject : InteractableObject
             yield return new WaitForEndOfFrame();
             questCanvas.SetActive(true);
 
-            foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.GetPlayers())
+            foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.players)
             {
                 player.Item1.SwitchCurrentActionMap("MapMenu");
             }
@@ -23,7 +23,7 @@ public class QuestBoardObject : InteractableObject
 
     public void StopInteracting()
     {
-        foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.GetPlayers())
+        foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.players)
         {
             player.Item1.SwitchCurrentActionMap("Gameplay");
         }
