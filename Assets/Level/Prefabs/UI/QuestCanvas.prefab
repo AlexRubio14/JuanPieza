@@ -59,7 +59,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.4292453, g: 1, b: 0.73472255, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1256,6 +1256,7 @@ GameObject:
   - component: {fileID: 1298466923938954027}
   - component: {fileID: 144850965376314517}
   - component: {fileID: 355180153360020988}
+  - component: {fileID: 8079539679642546995}
   m_Layer: 9
   m_Name: AcceptButton
   m_TagString: Untagged
@@ -1280,7 +1281,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -500, y: 260}
+  m_AnchoredPosition: {x: -560, y: 340}
   m_SizeDelta: {x: 96, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9100265599576001003
@@ -1363,7 +1364,7 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 21300000, guid: b61c69ca98b5df444916864ae55d7d62, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: b61c69ca98b5df444916864ae55d7d62, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 19239ba4a5bd84a49961c098bd67e975, type: 3}
     m_SelectedSprite: {fileID: 21300000, guid: b61c69ca98b5df444916864ae55d7d62, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -1434,6 +1435,50 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 8079539679642546995}
+          m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+          m_MethodName: set_canFloat
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 10
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8079539679642546995}
+          m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+          m_MethodName: set_canFloat
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &8079539679642546995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5148155740545267372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dabc6c48e8fb548bd54df2d3d8c83d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1.5
+  maxExpand: 1.1
+  minExpand: 1
+  <canFloat>k__BackingField: 0
 --- !u!1 &5199292750822078869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,6 +1629,7 @@ GameObject:
   - component: {fileID: 5418150081431538887}
   - component: {fileID: 3407087005298515916}
   - component: {fileID: 3445121503645248459}
+  - component: {fileID: 1845412939490490297}
   m_Layer: 9
   m_Name: ExitButton
   m_TagString: Untagged
@@ -1763,6 +1809,50 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1845412939490490297}
+          m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+          m_MethodName: set_canFloat
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 10
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1845412939490490297}
+          m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+          m_MethodName: set_canFloat
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1845412939490490297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5224028591352679361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dabc6c48e8fb548bd54df2d3d8c83d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1.5
+  maxExpand: 1.1
+  minExpand: 1
+  <canFloat>k__BackingField: 0
 --- !u!1 &5503496117426884649
 GameObject:
   m_ObjectHideFlags: 0
@@ -2259,6 +2349,7 @@ GameObject:
   - component: {fileID: 390926768866391449}
   - component: {fileID: 4651507609451786187}
   - component: {fileID: 2001643558032179959}
+  - component: {fileID: 8172429310569966595}
   m_Layer: 9
   m_Name: ExitButton
   m_TagString: Untagged
@@ -2283,7 +2374,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 500, y: 260}
+  m_AnchoredPosition: {x: 560, y: 340}
   m_SizeDelta: {x: 96, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5685232434723254909
@@ -2354,7 +2445,7 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 21300000, guid: fa338463e2a182d4683ab7b3527a972c, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: fa338463e2a182d4683ab7b3527a972c, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 4240c5854a0782a40a07c091809258f3, type: 3}
     m_SelectedSprite: {fileID: 21300000, guid: fa338463e2a182d4683ab7b3527a972c, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -2439,6 +2530,50 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 8172429310569966595}
+          m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+          m_MethodName: set_canFloat
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 10
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8172429310569966595}
+          m_TargetAssemblyTypeName: ImageFloatEffect, Assembly-CSharp
+          m_MethodName: set_canFloat
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &8172429310569966595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6473135140460308233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dabc6c48e8fb548bd54df2d3d8c83d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1.5
+  maxExpand: 1.1
+  minExpand: 1
+  <canFloat>k__BackingField: 0
 --- !u!1 &6742888775277534049
 GameObject:
   m_ObjectHideFlags: 0
@@ -2572,7 +2707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.9019608}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2700,7 +2835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

@@ -1,5 +1,6 @@
 using AYellowpaper.SerializedCollections;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -55,7 +56,7 @@ public class DialogueController : MonoBehaviour
     {
         dialogueAction.action.started += InputPressed;
 
-        UpdateInputImages();
+        StartCoroutine(UpdateInputImages());
     }
     private void OnDisable()
     {
@@ -83,7 +84,7 @@ public class DialogueController : MonoBehaviour
         foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
             item.Item1.SwitchCurrentActionMap("Dialogue");
 
-
+        StartCoroutine(UpdateInputImages());
         ReadDialogueType();
     }
 
@@ -185,10 +186,12 @@ public class DialogueController : MonoBehaviour
 
 
 
-    private void UpdateInputImages()
+    private IEnumerator UpdateInputImages()
     {
-
-        HintController.DeviceType device = PlayersManager.instance.ingamePlayers.Count > 0 ? PlayersManager.instance.ingamePlayers[0].hintController.deviceType : HintController.DeviceType.KEYBOARD;
+        yield return new WaitForEndOfFrame();
+        HintController.DeviceType device = PlayersManager.instance.ingamePlayers.Count > 0 
+            ? PlayersManager.instance.ingamePlayers[0].hintController.deviceType 
+            : HintController.DeviceType.KEYBOARD;
         foreach (KeyValuePair<Image, Sprite[]> item in actionsSprites)
         {
             item.Key.sprite = item.Value[(int)device];

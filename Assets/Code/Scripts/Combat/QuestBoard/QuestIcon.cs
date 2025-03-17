@@ -1,26 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuestIcon : MonoBehaviour
 {
-    [SerializeField] private float minScale;
-    [SerializeField] private float maxScale;
-    [SerializeField] private float speed;
-
+    [SerializeField]
+    private Image completedImage;
     private GameObject informationCanvas;
     private QuestData quest;
-
-    private void Start()
-    {
-        transform.localScale = new Vector3(minScale, minScale, minScale);
-    }
-    void Update()
-    {
-        if (quest.completed)
-            return;
-
-        float scale = Mathf.PingPong(Time.time * speed, maxScale - minScale) + minScale;
-        transform.localScale = new Vector3(scale, scale, scale);
-    }
 
     public void SetInformationCanvas(GameObject _informationCanvas)
     {
@@ -37,5 +23,6 @@ public class QuestIcon : MonoBehaviour
     public void SetQuestData(QuestData _quest)
     {
         quest = _quest;
+        completedImage.gameObject.SetActive(_quest.completed);
     }
 }
