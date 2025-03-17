@@ -38,6 +38,17 @@ public class QuestBoard : MonoBehaviour
             questIcons.Add(questButton);
         }
     }
+
+    private void OnDisable()
+    {
+        foreach (QuestIcon item in questIcons)
+        {
+            item.gameObject.SetActive(false);
+            Destroy(item.gameObject);
+        }
+
+        questIcons = null;
+    }
     public List<QuestIcon> GetQuestIcons() { return questIcons; }
 
     public GameObject GetInformationCanvas() { return informationCanvas; }

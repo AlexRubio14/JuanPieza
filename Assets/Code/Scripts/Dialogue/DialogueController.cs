@@ -83,7 +83,7 @@ public class DialogueController : MonoBehaviour
         foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
             item.Item1.SwitchCurrentActionMap("Dialogue");
 
-
+        UpdateInputImages();
         ReadDialogueType();
     }
 
