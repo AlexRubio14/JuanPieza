@@ -13,7 +13,15 @@ public class WaterController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Bullet") || collision.collider.CompareTag("Object"))
+        {
+            if (collision.gameObject.TryGetComponent<InteractableObject>(out InteractableObject interactableObject))
+            {
+                if (interactableObject.objectSO.objectType == ObjectSO.ObjectType.WEAPON)
+                    ShipsManager.instance.playerShip.GenerateCannon();
+            }
             Destroy(collision.gameObject);
+        }
+
 
         
 
