@@ -17,7 +17,7 @@ public class ExitQuestBoard : MonoBehaviour
     void OnButtonClick()
     {
         mapCanvas.SetActive(false);
-        foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.GetPlayers())
+        foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.players)
         {
             player.Item1.SwitchCurrentActionMap("Gameplay");
         }

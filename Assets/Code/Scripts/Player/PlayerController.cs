@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,6 +41,10 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField]
     public float pushOffset { get; private set; }
     [field: SerializeField]
+    public float pushCD {  get; private set; }
+    [HideInInspector]
+    public bool canPush;
+    [field: SerializeField]
     public LayerMask pushLayers { get; private set; }
     [field: SerializeField]
     public Vector2 playerPushForce { get; private set; }
@@ -52,6 +55,7 @@ public class PlayerController : MonoBehaviour
 
     [field: SerializeField] public float pirateKnockbackForce { get; private set; }
     [field: SerializeField] public float pirateUpForce { get; private set; }
+
 
     public Rigidbody rb { get; private set; }
 
@@ -112,6 +116,7 @@ public class PlayerController : MonoBehaviour
     {
         SuscribeActions();
         canRoll = true;
+        canPush = true;
         objectHolder = GetComponentInChildren<ObjectHolder>();
         interactCanvas.worldCamera = Camera.main;
         interactCanvasObject.SetActive(false);
@@ -244,6 +249,10 @@ public class PlayerController : MonoBehaviour
     private void WaitRollCD()
     {
         canRoll = true;
+    }
+    private void WaitCanPush()
+    {
+        canPush = true;
     }
     public void Interact()
     {

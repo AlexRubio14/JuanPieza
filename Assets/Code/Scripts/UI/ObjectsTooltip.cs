@@ -88,12 +88,10 @@ public class ObjectsTooltip : MonoBehaviour
     public void AddPlayer()
     {
         playersInteracting++;
-        Debug.Log("Added player: " + playersInteracting);
     }
     public void RemovePlayer()
     {
         playersInteracting--;
-        Debug.Log("Remove player: " + playersInteracting);
     }
 
     public int GetTotalPlayers()

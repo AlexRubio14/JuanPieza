@@ -154,10 +154,10 @@ public class PlayersReadyController : MonoBehaviour
         {
             newPlayer = (_newPlayer, _newPlayer.GetComponent<SinglePlayerController>());
             PlayersManager.instance.players.Add(newPlayer);
+            newPlayer.singlePlayer.currentColor = -1;
+            int colorIndex = PlayersManager.instance.GetNextMaterial(-1);
+            newPlayer.singlePlayer.ChangePlayerColor(colorIndex);
         }
-        newPlayer.singlePlayer.currentColor = -1;
-        int colorIndex = PlayersManager.instance.GetNextMaterial(-1);
-        newPlayer.singlePlayer.ChangePlayerColor(colorIndex);
 
         int playerIndex = PlayersManager.instance.players.IndexOf(newPlayer);
         _newPlayer.GetComponent<GameInput>().playerReference = playerIndex;

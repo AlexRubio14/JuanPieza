@@ -27,11 +27,6 @@ public class PlayersManager : MonoBehaviour
         ingamePlayers = new List<PlayerController>();
     } 
 
-    public List<(PlayerInput, SinglePlayerController)> GetPlayers()
-    {
-        return players;
-    }
-
     public Material GetMaterial(int _material)
     {
         return characterMat[_material];

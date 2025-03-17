@@ -1,8 +1,10 @@
+using AYellowpaper.SerializedCollections;
 using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class DialogueController : MonoBehaviour
 {
@@ -33,6 +35,9 @@ public class DialogueController : MonoBehaviour
     private AudioClip clickSound;
     private int dialogueSoundIndex;
 
+    [Space, SerializedDictionary("UI Image", "Input Sprites")]
+    public SerializedDictionary<Image, Sprite[]> actionsSprites;
+
     private void Awake()
     {
         if(instance != null && instance != this)
@@ -49,6 +54,8 @@ public class DialogueController : MonoBehaviour
     private void OnEnable()
     {
         dialogueAction.action.started += InputPressed;
+
+        UpdateInputImages();
     }
     private void OnDisable()
     {
@@ -88,8 +95,6 @@ public class DialogueController : MonoBehaviour
                 DisplayAllLetters();
             else
                 ReadDialogueType();
-
-            
         }
     }
 
@@ -176,5 +181,17 @@ public class DialogueController : MonoBehaviour
     {
         if(!actionList.ContainsKey(_actionId))
             actionList.Add(_actionId, _action);
+    }
+
+
+
+    private void UpdateInputImages()
+    {
+
+        HintController.DeviceType device = PlayersManager.instance.ingamePlayers.Count > 0 ? PlayersManager.instance.ingamePlayers[0].hintController.deviceType : HintController.DeviceType.KEYBOARD;
+        foreach (KeyValuePair<Image, Sprite[]> item in actionsSprites)
+        {
+            item.Key.sprite = item.Value[(int)device];
+        }
     }
 }
