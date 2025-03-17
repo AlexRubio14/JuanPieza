@@ -30,7 +30,7 @@ public class QuestBoard : MonoBehaviour
                     questButton.gameObject.transform.localScale.z * 0.8f);
 
                 Image iconImage = questButton.gameObject.GetComponent<Image>();
-                iconImage.color = new Color(iconImage.color.r, iconImage.color.g, iconImage.color.b, 0.7f);
+                questButton.GetComponent<Button>().interactable = false;
             }
 
             if (questIcons.Count == 0)
