@@ -14,7 +14,6 @@ public class ShipsManager : MonoBehaviour
     private TransitionController transitionController;
 
     public HealthController playerHealthController;
-    [SerializeField] private AudioClip missionCompleted;
 
     private void Awake()
     {

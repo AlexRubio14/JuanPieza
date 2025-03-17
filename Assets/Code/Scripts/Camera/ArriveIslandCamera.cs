@@ -18,6 +18,8 @@ public class ArriveIslandCamera : MonoBehaviour
     private float startZ;
     private float endZ;
 
+    [SerializeField] private AudioClip missionCompleted;
+
     private void Start()
     {
         StartCoroutine(WaitEndOfFrame());
@@ -161,6 +163,7 @@ public class ArriveIslandCamera : MonoBehaviour
 
     public void SetIsRepositing()
     {
+        AudioManager.instance.Play2dOneShotSound(missionCompleted, "SFX", 1, 1, 1);
         t = 0;
         GetComponent<CameraController>().enabled = false;
         currentPosition = transform.position;
