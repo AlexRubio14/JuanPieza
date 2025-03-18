@@ -168,6 +168,12 @@ public class ObjectsTooltip : MonoBehaviour
 
     private void SetImage(Sprite sprite)
     {
+        if (sprite == null)
+        {
+            image.gameObject.SetActive(false);
+            progressBar.gameObject.SetActive(false);
+            return;
+        }
         image.gameObject.SetActive(true);
         progressBar.gameObject.SetActive(false);
         
