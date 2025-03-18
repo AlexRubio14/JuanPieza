@@ -6,21 +6,21 @@ public class GenerateBoardingBoats : MonoBehaviour
     private int raftCount;
     private RaftController currentRaft;
     private bool boardingHasStarted = false;
-
+    private int pirates;
     
     private void Start()
     {
         if (NodeManager.instance.questData.questObjective == QuestData.QuestObjective.BOARDING)
         {
             raftCount = 3;
+            pirates = 1;
             Invoke("StartBoarding", 8f);
-            
         }
     }
 
     private void StartBoarding()
     {
-        currentRaft = RaftManager.Instance.CreateRaftEventsHardCoded();
+        currentRaft = RaftManager.Instance.CreateRaftEventsHardCoded(pirates);
         boardingHasStarted = true;
     }
 
@@ -43,7 +43,11 @@ public class GenerateBoardingBoats : MonoBehaviour
             }
             else
             {
-                currentRaft = RaftManager.Instance.CreateRaftEventsHardCoded();
+                if(raftCount == 2)
+                    pirates = 2; 
+                else
+                    pirates = 4;
+                currentRaft = RaftManager.Instance.CreateRaftEventsHardCoded(pirates);
             }
         }
     }

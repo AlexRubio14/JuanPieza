@@ -52,11 +52,11 @@ public class RaftManager : MonoBehaviour
         raftEventQueue.Clear();
     }
 
-    public RaftController CreateRaftEventsHardCoded()
+    public RaftController CreateRaftEventsHardCoded(int pirates)
     {
         RaftController raftController = PirateBoardingManager.Instance.GetUnusedRaft();
 
-        raftEventQueue.Enqueue(() => raftController.SetUpRaftHardCoded());
+        raftEventQueue.Enqueue(() => raftController.SetUpRaftHardCoded(pirates));
         ProcessRaftEvent();
 
 
