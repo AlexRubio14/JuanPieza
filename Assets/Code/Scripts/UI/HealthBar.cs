@@ -55,7 +55,6 @@ public class HealthBar : MonoBehaviour
     {
         if (_matInstance != null) return;
 
-        Debug.Log("Setup Material", this.gameObject);
         _matInstance = new Material(Shader.Find("Custom/HealthBar"));
         if (Application.isPlaying)
         {

@@ -133,7 +133,6 @@ public class Repair : InteractableObject
             RepairEnded(objHolder);
         }
 
-        Debug.Log("State set to none");
         tooltip.SetState(ObjectsTooltip.ObjectState.None);
     }
     public bool IsPlayerReparing(PlayerController _playerController)

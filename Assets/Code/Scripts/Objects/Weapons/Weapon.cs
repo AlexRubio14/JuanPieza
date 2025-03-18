@@ -194,7 +194,9 @@ public abstract class Weapon : RepairObject
         InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
         Destroy(currentObject.gameObject);
 
+        animator.ResetTrigger("Shot");
         animator.SetBool("HasAmmo", true);
+        
 
         foreach (ParticleSystem item in loadParticles)
             item.Play(true);
