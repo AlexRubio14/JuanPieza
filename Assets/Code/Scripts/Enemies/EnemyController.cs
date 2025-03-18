@@ -120,7 +120,6 @@ public class EnemyController : MonoBehaviour
         Vector3 pushUp = Vector3.up * _force.y;
         transform.position += Vector3.up * 0.5f;
         rb.AddForce((pushForward + pushUp), ForceMode.Impulse);
-        Debug.Log(rb.linearVelocity);
     }
 
     private void OnDrawGizmos()

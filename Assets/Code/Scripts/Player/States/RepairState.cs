@@ -14,7 +14,6 @@ public class RepairState : PlayerState
     {
         //Para de reparar
         controller.StopInteract();
-        Debug.Log("Deja de reparar");
     }
     public override void UseAction() { /*No puedes usar ningun objeto*/ }
     public override void StopUseAction()
