@@ -58,8 +58,13 @@ public class RaftController : MonoBehaviour
                 }
                 break;
             case RaftState.BOARDING:
-
                 direction = -1;
+                if (pirateJumpIndex == pirates.Count) // Check if all pirates have jumped and moveBack the raft
+                {
+                    pirates.Clear();
+                    ChangeState(RaftState.MOVING_BACK);
+                    return;
+                }
                 break;
             default:
                 break;
@@ -113,23 +118,21 @@ public class RaftController : MonoBehaviour
         pirates.Clear();
         pirateJumpIndex = 0;
 
+        eventHasFinished = true;
         RaftManager.Instance.ProcessRaftEvent(); //Cuando se acaba el abordaje manda una peticion al manager de si hay algun evento en cola que se procese
         RaftManager.Instance.isProcessingEvent = false; // Al acabar el evento de la raft ponemos en false que haya un evento activo
-        eventHasFinished = true;
     }
 
     public void SendPirateToJump()
     {
+        if (pirates.Count == 0)
+            return;
+
         pirates[pirateJumpIndex].SetPirateToJump();
 
         pirateJumpIndex++;
 
-        if (pirateJumpIndex == pirates.Count) // Check if all pirates have jumped and moveBack the raft
-        {
-            pirates.Clear();
-            ChangeState(RaftState.MOVING_BACK);
-            return;
-        }
+        
 
         StartCoroutine(WaitAndSendPirateToJump()); // wait x time and send the next pirate
     }
@@ -206,11 +209,6 @@ public class RaftController : MonoBehaviour
         }
 
         currentState = newState;
-    }
-
-    private void StartMovingBack()
-    {
-        ChangeState(RaftState.MOVING_BACK);
     }
 
     private void StartBoarding()

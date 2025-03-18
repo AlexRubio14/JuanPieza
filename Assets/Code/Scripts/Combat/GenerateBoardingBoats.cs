@@ -47,6 +47,7 @@ public class GenerateBoardingBoats : MonoBehaviour
                     pirates = 2; 
                 else
                     pirates = 4;
+
                 currentRaft = RaftManager.Instance.CreateRaftEventsHardCoded(pirates);
             }
         }
