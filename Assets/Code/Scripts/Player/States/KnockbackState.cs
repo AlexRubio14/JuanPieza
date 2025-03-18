@@ -34,9 +34,6 @@ public class KnockbackState : PlayerState
         }
 
         currentTime += Time.deltaTime;
-
-        //if (Physics.Raycast(controller.transform.position, Vector3.down, 1, controller.slopeCheckLayer))
-        //    stateMachine.ChangeState(stateMachine.idleState);
     }
     public override void FixedUpdateState()
     {
