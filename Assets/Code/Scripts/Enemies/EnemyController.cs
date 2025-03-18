@@ -70,7 +70,6 @@ public class EnemyController : MonoBehaviour
             rb.isKinematic = true;
             agent.enabled = true;
         }
-
     }
 
     private void OnTriggerStay(Collider other)
@@ -108,6 +107,8 @@ public class EnemyController : MonoBehaviour
 
     private void SetNavLinkSpeed()
     {
+        bool isGamePaused = PauseManager.Instance.IsPaused;
+        
         float currentSpeed = !inPetrol ? baseSpeed : petrolSpeed;
         agent.speed = !agent.isOnOffMeshLink ? currentSpeed : linkSpeed;
     }

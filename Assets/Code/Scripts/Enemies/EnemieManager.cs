@@ -96,6 +96,7 @@ public class EnemieManager : MonoBehaviour
         {
             if (enemy.currentAction == null)
                 AsignActionToEnemy(enemy, GetSomethingToDo());
+            
         }
     }
 
