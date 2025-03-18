@@ -59,7 +59,6 @@ public class RaftManager : MonoBehaviour
         raftEventQueue.Enqueue(() => raftController.SetUpRaftHardCoded(pirates));
         ProcessRaftEvent();
 
-
         return raftController;
     }
 }
