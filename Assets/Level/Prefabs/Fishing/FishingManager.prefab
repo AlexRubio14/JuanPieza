@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8066213909585788101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7356194627300511325}
+  - component: {fileID: 210622050369948143}
+  - component: {fileID: 6614048558953922461}
+  m_Layer: 0
+  m_Name: FishingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7356194627300511325
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066213909585788101}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.8846955, y: 2.9009337, z: 45.936443}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &210622050369948143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066213909585788101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43e0ff667e261dd4fa46eb5eaf3df772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPool:
+  - {fileID: 11400000, guid: d1a4f89d8d9efee4db14633f515fcdee, type: 2}
+  - {fileID: 11400000, guid: 3c728c693048391439494e7b458cbff3, type: 2}
+  - {fileID: 11400000, guid: dffcfb1857ced7d4fb477cee9121a908, type: 2}
+  - {fileID: 11400000, guid: f7ef454cecb748d4e96323e6b241d203, type: 2}
+  - {fileID: 11400000, guid: 28a0c7230efed1043b7fea72c6f1699b, type: 2}
+  - {fileID: 11400000, guid: eac69d6c61e34504596fbd6cc72b6e96, type: 2}
+  - {fileID: 11400000, guid: 9fb1b2add814a1d4db66b362e22bfc95, type: 2}
+  - {fileID: 11400000, guid: 4528481fd4d7f8d479f81b83058a6852, type: 2}
+  - {fileID: 11400000, guid: a3bc7d82416c2c74e808f04858acc334, type: 2}
+  priorityList:
+  - {fileID: 11400000, guid: d1a4f89d8d9efee4db14633f515fcdee, type: 2}
+  - {fileID: 11400000, guid: 9fb1b2add814a1d4db66b362e22bfc95, type: 2}
+  - {fileID: 11400000, guid: dffcfb1857ced7d4fb477cee9121a908, type: 2}
+  rarityPercentages:
+    _serializedList:
+    - Key: 0
+      Value: 0.95
+    - Key: 1
+      Value: 0.07
+    - Key: 2
+      Value: 0.02
+    - Key: 3
+      Value: 0.006
+  realPercentages: []
+--- !u!114 &6614048558953922461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066213909585788101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e86887d9b9114749b643448dfa737e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minMaxTimeToFishing: {x: 1, y: 3}
+  playerRespawnOffset: 1.5
+  timeToHook: 1
+  parabolaSpeed: 1.8
+  parabolaHeight: 5
+  <defaultYPos>k__BackingField: -0.18
+  <deathZPos>k__BackingField: -25
+  revivePlayerClip: {fileID: 8300000, guid: 6ce5c263f73a47e418ef928e385fef5e, type: 3}
