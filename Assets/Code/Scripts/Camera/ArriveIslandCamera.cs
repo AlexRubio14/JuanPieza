@@ -163,7 +163,7 @@ public class ArriveIslandCamera : MonoBehaviour
 
     public void SetIsRepositing()
     {
-        AudioManager.instance.Play2dOneShotSound(missionCompleted, "SFX", 1, 1, 1);
+        AudioManager.instance.Play2dOneShotSound(missionCompleted, "SFX", 0.4f, 1, 1);
         t = 0;
         GetComponent<CameraController>().enabled = false;
         currentPosition = transform.position;

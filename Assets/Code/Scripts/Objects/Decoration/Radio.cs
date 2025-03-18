@@ -72,7 +72,7 @@ public class Radio : Resource
         int randomMusic = Random.Range(0, musicsList.Count);
 
         AudioManager.instance.musicAs.Pause();
-        audioSource = AudioManager.instance.Play2dLoop(musicsList[randomMusic], "Music", 1, 1, 1);
+        audioSource = AudioManager.instance.Play2dLoop(musicsList[randomMusic], "Radio", 1, 1, 1);
         isPlaying = true;
     }
 

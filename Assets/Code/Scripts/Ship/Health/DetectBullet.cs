@@ -14,7 +14,7 @@ public class DetectBullet : MonoBehaviour
                 bullet.SetShipImpacted(ship.transform);
                 ShipsManager.instance.CheckLastEnemyShipHP();
             }
-            AudioManager.instance.Play2dOneShotSound(bullet.hitClip, "Objects");
+            AudioManager.instance.Play2dOneShotSound(bullet.hitClip, "Objects", 0.6f, 0.9f, 1.1f);
             DetectCollision(collision, bullet);
         }
     }
