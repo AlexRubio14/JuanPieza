@@ -85,12 +85,12 @@ public class RaftController : MonoBehaviour
 
     }
 
-    public void SetUpRaftHardCoded()
+    public void SetUpRaftHardCoded(int piretes)
     {
         if (isBoarding)
             return;
 
-        SetPiratesInRaft(2);
+        SetPiratesInRaft(piretes);
 
         isBoarding = true;
 
