@@ -63,7 +63,7 @@ public class ShipsManager : MonoBehaviour
             }
         }
     }
-    private void GenerateEnemyShip()
+    public void GenerateEnemyShip()
     {
         foreach (var enemy in enemiesHordes[0].enemyShips)
         {
@@ -74,7 +74,7 @@ public class ShipsManager : MonoBehaviour
             enemyShip.GetComponent<EnemieManager>().SetStats(enemy.stats);
 
             enemiesShips.Add(enemyShip.GetComponent<Ship>());
-            enemyShip.GetComponent<EnemieManager>().GenerateEnemies();
+            enemyShip.GetComponent<EnemieManager>().GenerateEnemies(enemy.stats);
             GenerateCannons(enemy, enemyShip);
             ShipEnemy controller = enemyShip.GetComponent<ShipEnemy>();
 
