@@ -24,7 +24,7 @@ public class GenerateEnemyShip : MonoBehaviour
             enemyShip.GetComponent<EnemieManager>().SetTotalEnemies(enemy.enemiesCuantity);
             enemyShip.transform.position = enemy.initShipPosition;
 
-            enemyShip.GetComponent<EnemieManager>().GenerateEnemies();
+            enemyShip.GetComponent<EnemieManager>().GenerateEnemies(enemy.stats);
         }
     }
 }

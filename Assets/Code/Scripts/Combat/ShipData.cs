@@ -42,4 +42,5 @@ public class EnemiesStats
     public float TimeToRepair;
     public float TimeToInteract;
     public float TimeToShoot;
+    public float Speed;
 }
