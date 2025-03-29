@@ -107,8 +107,6 @@ public class EnemyController : MonoBehaviour
 
     private void SetNavLinkSpeed()
     {
-        bool isGamePaused = PauseManager.Instance.IsPaused;
-        
         float currentSpeed = !inPetrol ? baseSpeed : petrolSpeed;
         agent.speed = !agent.isOnOffMeshLink ? currentSpeed : linkSpeed;
     }
