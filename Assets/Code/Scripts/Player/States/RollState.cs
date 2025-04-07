@@ -3,16 +3,19 @@ using UnityEngine;
 public class RollState : PlayerState
 {
     private float rollTimePassed;
+    private bool bounced;
+    private Vector3 rollDir;
+    
     public override void EnterState()
     {
         rollTimePassed = 0;
-
+        bounced = false;
         controller.animator.SetTrigger("Roll");
 
         if (controller.movementInput != Vector2.zero)
-            controller.AddImpulse(controller.movementDirection, controller.rollSpeed);
+            rollDir = controller.movementDirection;
         else
-            controller.AddImpulse(controller.transform.forward, controller.rollSpeed);
+            rollDir = controller.transform.forward;
 
         AudioManager.instance.Play2dOneShotSound(controller.dashClip, "Player", 1, 0.95f, 1.05f);
     }
@@ -22,19 +25,12 @@ public class RollState : PlayerState
         //Contar el tiempo rodando
         rollTimePassed += Time.deltaTime;
         if(rollTimePassed >= controller.rollDuration)
-        {
             stateMachine.ChangeState(stateMachine.idleState);
-            ///Debug.Break();
-        }
     }
     public override void FixedUpdateState()
     {
-        if (controller.CheckSlope())
-        {
-            Vector3 slopeDir = controller.GetSlopeMoveDir(controller.rb.linearVelocity);
-
-            controller.rb.linearVelocity = slopeDir * controller.rb.linearVelocity.magnitude;
-        }
+        if(!bounced)
+            controller.Movement(rollDir, controller.rollSpeed);
     }
     public override void ExitState()
     {
@@ -56,12 +52,15 @@ public class RollState : PlayerState
     {
         base.OnCollisionEnter(collision);
 
-        if (!collision.gameObject.CompareTag("Scenario") && !collision.gameObject.CompareTag("Object"))
+        if (bounced || !collision.gameObject.CompareTag("Scenario") && !collision.gameObject.CompareTag("Object"))
             return;
+
         Vector3 bounceNormal = new Vector3(collision.contacts[0].normal.x, 0, collision.contacts[0].normal.z);
         //Rebotar
         if (bounceNormal.x == 0 && bounceNormal.z == 0)
             return;
+
+        bounced = true;
         Vector3 bounceDir = new Vector3(collision.contacts[0].normal.x, 0, collision.contacts[0].normal.z) * controller.bounceForce.x + Vector3.up * controller.bounceForce.y;
         controller.rb.linearVelocity = Vector3.zero;
         controller.AddImpulse(bounceDir, controller.rollSpeed);
