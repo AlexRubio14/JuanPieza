@@ -21,19 +21,7 @@ public class MoveState : PlayerState
         
         controller.rb.useGravity = true;
 
-        Vector3 moveDir;
-        if (controller.CheckSlope())
-        {
-            moveDir = controller.GetSlopeMoveDir(controller.movementDirection);
-            if (moveDir.y == 0)
-            {
-                //Esto soluciona el problema de cuando te mueves en horizontal por encima de una rampa la gravedad te empuja hacia abajo
-                controller.rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY; 
-                moveDir /= 2; //Lo divido entre 2 para que el movimiento en horizontal en medio de la rampa no vaya tan rapido
-            }
-        }
-        else
-            moveDir = controller.movementDirection;
+        Vector3 moveDir = controller.movementDirection;
 
         controller.Movement(moveDir, controller.baseMovementSpeed);
         
