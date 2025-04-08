@@ -321,7 +321,7 @@ public class PirateBoardingController : MonoBehaviour
         posToJump = _posToJump;
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         //Gizmo del area de empujar
         Gizmos.color = Color.cyan;

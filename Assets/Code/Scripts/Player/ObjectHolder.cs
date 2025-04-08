@@ -221,7 +221,7 @@ public class ObjectHolder : MonoBehaviour
 
         return item;
     }
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(sphereCastTransform.position, sphereCastRadius);

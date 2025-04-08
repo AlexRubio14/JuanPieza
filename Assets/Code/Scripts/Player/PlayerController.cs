@@ -63,9 +63,13 @@ public class PlayerController : MonoBehaviour
 
 
     [field: Space, Header("Death"), SerializeField]
-    public float timeToDie {  get; private set; }
+    public float timeToDie { get; private set; }
+    [field: SerializeField]
+    public float timeToRespawn { get; private set; }
     [field: SerializeField]
     public float swimSpeed { get; private set; }
+    [field: SerializeField]
+    public float swimRotateSpeed { get; private set; }
 
     [Space, Header("Interact"), SerializeField]
     private Canvas interactCanvas;
@@ -332,7 +336,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         //Gizmo del area de empujar
         Gizmos.color = Color.cyan;
