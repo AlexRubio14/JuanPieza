@@ -126,7 +126,7 @@ public class FishingManager : MonoBehaviour
             if (fishingData[_id].currentPlayer != null)
             {
                 //Generar las variables del player de nuevo
-                fishingData[_id].currentPlayer.CalculateDeathPos();
+                //fishingData[_id].currentPlayer.CalculateDeathPos();
             }
 
         }
@@ -256,18 +256,18 @@ public class FishingManager : MonoBehaviour
 
         for (int i = 0; i < deadPlayers.Count; i++)
         {
-            if (deadPlayers[i].hookPosition == Vector3.zero)//Si no tiene ningun target
-            {
-                //Setear en el player muerto el target
-                deadPlayers[i].SetHookPosition(fishingData[id].fishingRod.hook.transform.position);
+            //if (deadPlayers[i].hookPosition == Vector3.zero)//Si no tiene ningun target
+            //{
+            //    //Setear en el player muerto el target
+            //    deadPlayers[i].SetHookPosition(fishingData[id].fishingRod.hook.transform.position);
 
-                FishingData newData = fishingData[id];
-                newData.currentPlayer = deadPlayers[i];
-                newData.currentPlayer.isSwimming = true;
-                newData.fishingState = FishingState.WAITING_PLAYER;
-                fishingData[id] = newData;
-                return;
-            }
+            //    FishingData newData = fishingData[id];
+            //    newData.currentPlayer = deadPlayers[i];
+            //    newData.currentPlayer.isSwimming = true;
+            //    newData.fishingState = FishingState.WAITING_PLAYER;
+            //    fishingData[id] = newData;
+            //    return;
+            //}
         }
 
         RescueNPC rescueNPC = GetNearestAvaliableRescueNPC(_fishingRod);
@@ -389,10 +389,10 @@ public class FishingManager : MonoBehaviour
     #region Grab Fishing Rod
     private void GrabWhileWaitingPlayer(int _id, FishingRod _fishingRod)
     {
-        if (fishingData[_id].currentPlayer != null && fishingData[_id].currentPlayer.hookPosition != Vector3.zero)
-            fishingData[_id].currentPlayer.CalculateDeathPos();
-        else if (fishingData[_id].rescueNPC != null)
-            fishingData[_id].rescueNPC.HookRemoved();
+        //if (fishingData[_id].currentPlayer != null && fishingData[_id].currentPlayer.hookPosition != Vector3.zero)
+        //    fishingData[_id].currentPlayer.CalculateDeathPos();
+        //else if (fishingData[_id].rescueNPC != null)
+        //    fishingData[_id].rescueNPC.HookRemoved();
 
         StopFishing(_fishingRod);
     }

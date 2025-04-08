@@ -61,7 +61,6 @@ public class CameraController : MonoBehaviour
     
     private void Awake()
     {
-
         //Guardamos la Y del primer Player
         //Seteamos todos los players con la misma posicion en Y
         for (int i = 0; i < followObjects.Count; i++)
@@ -154,7 +153,7 @@ public class CameraController : MonoBehaviour
         List<Collider> activePlayers = new List<Collider>();
         for (int i = 0; i < followObjects.Count; i++)
         {
-            if (followObjects[i].collider != null && (followObjects[i].player == null || followObjects[i].player.currentState != followObjects[i].player.deathState))
+            if (followObjects[i].collider != null && (followObjects[i].player == null || !followObjects[i].player.deathState.isDead))
                 activePlayers.Add(followObjects[i].collider);
 
         }
@@ -243,11 +242,8 @@ public class CameraController : MonoBehaviour
 
         for (int i = 0; i < followObjects.Count; i++)
         {
-            if (followObjects[i].collider != null && followObjects.Count > 0 
-                && (followObjects[i].player == null || followObjects[i].player.currentState != followObjects[i].player.deathState))
-            {
+            if (followObjects[i].collider != null && (followObjects[i].player == null || !followObjects[i].player.deathState.isDead))
                 middlePoint += followObjects[i].collider.transform.position * followObjects[i].weight;
-            }
         }
 
         if (middlePoint == Vector3.zero)
