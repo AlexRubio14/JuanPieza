@@ -3,17 +3,20 @@ using UnityEngine;
 public class DeathState : PlayerState
 {
 
-    public bool isSwimming;
+
     public Transform transform => controller.transform;
     private Rigidbody rb => controller.GetRB();
-
     public PlayerStateMachine deathStateMachine => stateMachine;
+
+    public bool isSwimming;
     public bool isDead {  get; private set; } = false;
 
+    private float timeDead;
 
     public override void EnterState()
     {
         isDead = false;
+        timeDead = 0;
 
         rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         transform.position = new Vector3(transform.position.x, FishingManager.instance.defaultYPos, transform.position.z);
@@ -35,6 +38,16 @@ public class DeathState : PlayerState
     }
     public override void FixedUpdateState()
     {
+        if(isDead)
+        {
+            timeDead += Time.fixedDeltaTime;
+
+            if (timeDead >= controller.timeToRespawn)
+            {
+                Respawn();
+            }
+            return;
+        }
         controller.Rotate(controller.movementDirection, controller.swimRotateSpeed);
 
         Vector3 moveDir = controller.movementInput != Vector2.zero ? transform.forward : Vector3.zero;
@@ -70,8 +83,7 @@ public class DeathState : PlayerState
     public void KillPlayer()
     {
         transform.position = new Vector3(-100, -100, -100);
-
-        controller.Invoke("Respawn", controller.timeToRespawn);
+        isDead = true;
     }
     private void Respawn()
     {

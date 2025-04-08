@@ -336,7 +336,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         //Gizmo del area de empujar
         Gizmos.color = Color.cyan;

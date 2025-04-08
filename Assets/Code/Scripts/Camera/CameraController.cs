@@ -153,7 +153,8 @@ public class CameraController : MonoBehaviour
         List<Collider> activePlayers = new List<Collider>();
         for (int i = 0; i < followObjects.Count; i++)
         {
-            if (followObjects[i].collider != null && (followObjects[i].player == null || !followObjects[i].player.deathState.isDead))
+            if (followObjects[i].collider != null && (followObjects[i].player == null ||
+                followObjects[i].player.currentState is DeathState && !(followObjects[i].player.currentState as DeathState).isDead))
                 activePlayers.Add(followObjects[i].collider);
 
         }
@@ -242,7 +243,8 @@ public class CameraController : MonoBehaviour
 
         for (int i = 0; i < followObjects.Count; i++)
         {
-            if (followObjects[i].collider != null && (followObjects[i].player == null || !followObjects[i].player.deathState.isDead))
+            if (followObjects[i].collider != null && (followObjects[i].player == null ||
+                followObjects[i].player.currentState is DeathState && !(followObjects[i].player.currentState as DeathState).isDead))
                 middlePoint += followObjects[i].collider.transform.position * followObjects[i].weight;
         }
 
@@ -254,7 +256,7 @@ public class CameraController : MonoBehaviour
         return middlePoint;
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.magenta;
         Gizmos.DrawSphere(GetMiddlePointBetweenPlayers(),0.4f);
