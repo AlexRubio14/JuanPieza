@@ -121,7 +121,7 @@ public class EnemyController : MonoBehaviour
         rb.AddForce((pushForward + pushUp), ForceMode.Impulse);
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, transform.position - transform.up * 1.5f);
