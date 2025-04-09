@@ -172,7 +172,7 @@ public class OrcaController : MonoBehaviour
     {
         Vector3 newForward = (posToHide - transform.position).normalized;
         transform.forward = Vector3.Lerp(transform.forward, newForward, Time.fixedDeltaTime * orcaRotationSpeed);
-        transform.position += newForward * orcaSpeed * Time.fixedDeltaTime;
+        transform.position += transform.forward * orcaSpeed * Time.fixedDeltaTime;
 
         
         Vector2 a = new Vector2(posToHide.x, posToHide.z);
