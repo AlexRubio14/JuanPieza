@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ClimateManager : MonoBehaviour
 {
@@ -14,8 +15,12 @@ public class ClimateManager : MonoBehaviour
     [SerializeField] private float ligthningSpawnTime;
     [SerializeField] private float ligthningStrikeTime;
     [SerializeField] private float lightningOrbMaxScale;
+    [SerializeField] private float holeRadius;
+    [SerializeField] private float cameraShakeDuration;
+    [SerializeField] private float cameraShakeMagnitude;
     [SerializeField] private GameObject lightningOrb;
     [SerializeField] private GameObject rain;
+    [SerializeField] private LayerMask hitLayer;
     private GameObject affectedObject;
     private GameObject _lightningOrb;
     private float currentTime = 0;
@@ -102,7 +107,17 @@ public class ClimateManager : MonoBehaviour
     {
         affectedObject.GetComponent<InteractableObject>().DestroyLightning();
         //Instanciar rayo
-        //Crear collision que si detecta a player lo stune
+        RaycastHit[] hits = Physics.SphereCastAll(affectedObject.transform.position, holeRadius, Vector3.forward, 0, hitLayer);
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider.TryGetComponent(out PlayerController player))
+            {
+                Debug.Log("stunned");
+            }
+        }
+
+        Camera.main.GetComponent<CameraShaker>().TriggerShake(cameraShakeDuration, cameraShakeMagnitude);
     }
 
     private void WaitSpawnLightning()
