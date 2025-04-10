@@ -20,6 +20,8 @@ public abstract class InteractableObject : MonoBehaviour
     protected Collider objectCollider;
 
     public bool hasToBeInTheShip = true;
+
+    private GameObject lightning;
     
     
     protected virtual void Awake()
@@ -79,6 +81,16 @@ public abstract class InteractableObject : MonoBehaviour
         yield return new WaitForEndOfFrame();
         if (ShipsManager.instance && hasToBeInTheShip && ShipsManager.instance.playerShip)
             ShipsManager.instance.playerShip.AddInteractuableObject(this);
+    }
+
+    public void SetLightning(GameObject _lightning)
+    {
+        lightning = _lightning;
+    }
+
+    public void DestroyLightning()
+    {
+        Destroy(lightning);
     }
 
 }

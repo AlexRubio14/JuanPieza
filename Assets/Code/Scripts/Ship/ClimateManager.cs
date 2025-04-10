@@ -3,12 +3,36 @@ using UnityEngine;
 
 public class ClimateManager : MonoBehaviour
 {
-    //Climate General
-    [SerializeField] private List<Material> skyboxs;
+    public static ClimateManager instance;
 
-    //Storm
-    [SerializeField] private GameObject rain;
+    [Header("General")]
+    [SerializeField] private List<Material> skyboxs;
+    private QuestData.QuestClimete currentClimate;
+
+    [Header("Storm")]
     [SerializeField] private float sunIntensity;
+    [SerializeField] private float ligthningSpawnTime;
+    [SerializeField] private float ligthningStrikeTime;
+    [SerializeField] private float lightningOrbMaxScale;
+    [SerializeField] private GameObject lightningOrb;
+    [SerializeField] private GameObject rain;
+    private GameObject affectedObject;
+    private GameObject _lightningOrb;
+    private float currentTime = 0;
+    private bool preparingStrike = false;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -34,5 +58,85 @@ public class ClimateManager : MonoBehaviour
         rain.SetActive(true);
         RenderSettings.sun.intensity = sunIntensity;
         RenderSettings.sun.color = Color.blue;
+    }
+
+    private void Update()
+    {
+        switch (currentClimate)
+        {
+            case QuestData.QuestClimete.SNOW:
+                break;
+            case QuestData.QuestClimete.STORM:
+                Lightning();
+                break;
+            default:
+                break;
+        }
+    }
+
+    #region storm 
+    private void Lightning()
+    {
+        if (preparingStrike)
+            PreparedStrike();
+        else
+            WaitSpawnLightning();
+    }
+
+    private void PreparedStrike()
+    {
+        currentTime += Time.deltaTime;
+        float progress = Mathf.Clamp01(currentTime / ligthningStrikeTime);
+        float scaleValue = Mathf.Lerp(0f, lightningOrbMaxScale, progress);
+        _lightningOrb.transform.localScale = Vector3.one * scaleValue;
+
+        if (currentTime >= ligthningStrikeTime)
+        {
+            currentTime = 0;
+            Strike();
+            preparingStrike = false;
+        }
+    }
+
+    private void Strike()
+    {
+        affectedObject.GetComponent<InteractableObject>().DestroyLightning();
+        //Instanciar rayo
+        //Crear collision que si detecta a player lo stune
+    }
+
+    private void WaitSpawnLightning()
+    {
+        currentTime += Time.deltaTime;
+        if (currentTime >= ligthningSpawnTime)
+        {
+            currentTime = 0;
+            ChooseAffectedItem();
+            preparingStrike = true;
+        }
+
+    }
+
+    private void ChooseAffectedItem()
+    {
+        List<InteractableObject> inventory = ShipsManager.instance.playerShip.GetInventory();
+        if (inventory.Count == 0) return;
+
+        int randomIndex = UnityEngine.Random.Range(0, inventory.Count);
+        affectedObject = inventory[randomIndex].gameObject;
+
+        GameObject newlightningOrb = Instantiate(lightningOrb, Vector3.zero, Quaternion.identity);
+        newlightningOrb.transform.SetParent(affectedObject.transform, true);
+        newlightningOrb.transform.localScale = Vector3.zero;
+        newlightningOrb.transform.localPosition = new Vector3(0,1,0);
+        _lightningOrb = newlightningOrb;
+        affectedObject.GetComponent<InteractableObject>().SetLightning(newlightningOrb);
+    }
+    #endregion
+
+
+    public void SetCurrentClimate()
+    {
+        currentClimate = NodeManager.instance.questData.questClimete;
     }
 }
