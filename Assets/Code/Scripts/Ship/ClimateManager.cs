@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UIElements;
 
 public class ClimateManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class ClimateManager : MonoBehaviour
 
     [Header("General")]
     [SerializeField] private List<Material> skyboxs;
+    [SerializeField] private List<AudioClip> ambientAudio;
     private QuestData.QuestClimete currentClimate;
 
     [Header("Storm")]
@@ -21,6 +23,9 @@ public class ClimateManager : MonoBehaviour
     [SerializeField] private GameObject lightningOrb;
     [SerializeField] private GameObject rain;
     [SerializeField] private LayerMask hitLayer;
+    [SerializeField] protected AudioClip strikeAudioClip;
+    [SerializeField] protected AudioClip lightningAudioClip;
+    private AudioSource lightningChargeAS;
     private GameObject affectedObject;
     private GameObject _lightningOrb;
     private float currentTime = 0;
@@ -50,9 +55,11 @@ public class ClimateManager : MonoBehaviour
                 break;
             case QuestData.QuestClimete.SNOW:
                 RenderSettings.skybox = skyboxs[1];
+                AudioManager.instance.Play2dLoop(ambientAudio[0], "Objects");
                 break;
             case QuestData.QuestClimete.STORM:
                 RenderSettings.skybox = skyboxs[2];
+                AudioManager.instance.Play2dLoop(ambientAudio[1], "Objects");
                 PreparedStorm();
                 break;
         }
@@ -94,12 +101,15 @@ public class ClimateManager : MonoBehaviour
         float progress = Mathf.Clamp01(currentTime / ligthningStrikeTime);
         float scaleValue = Mathf.Lerp(0f, lightningOrbMaxScale, progress);
         _lightningOrb.transform.localScale = Vector3.one * scaleValue;
+        lightningChargeAS.volume = progress;
 
         if (currentTime >= ligthningStrikeTime)
         {
             currentTime = 0;
             Strike();
             preparingStrike = false;
+            AudioManager.instance.StopLoopSound(lightningChargeAS);
+            lightningChargeAS = null;
         }
     }
 
@@ -107,6 +117,7 @@ public class ClimateManager : MonoBehaviour
     {
         affectedObject.GetComponent<InteractableObject>().DestroyLightning();
         //Instanciar rayo
+        AudioManager.instance.Play2dOneShotSound(strikeAudioClip, "Objects");
         RaycastHit[] hits = Physics.SphereCastAll(affectedObject.transform.position, holeRadius, Vector3.forward, 0, hitLayer);
 
         foreach (RaycastHit hit in hits)
@@ -143,9 +154,10 @@ public class ClimateManager : MonoBehaviour
         GameObject newlightningOrb = Instantiate(lightningOrb, Vector3.zero, Quaternion.identity);
         newlightningOrb.transform.SetParent(affectedObject.transform, true);
         newlightningOrb.transform.localScale = Vector3.zero;
-        newlightningOrb.transform.localPosition = new Vector3(0,1,0);
+        newlightningOrb.transform.localPosition = new Vector3(0,0.5f,0);
         _lightningOrb = newlightningOrb;
         affectedObject.GetComponent<InteractableObject>().SetLightning(newlightningOrb);
+        lightningChargeAS = AudioManager.instance.Play2dLoop(lightningAudioClip, "Objects", 0f);
     }
     #endregion
 
