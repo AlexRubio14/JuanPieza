@@ -98,7 +98,7 @@ public class FishingRod : Tool
         FishingManager.instance.FishingRodUsed(this);
         isFishing = true;
     }
-    private void GrabHook()
+    public void GrabHook()
     {
         FishingManager.instance.HookGrabbed(this);
 

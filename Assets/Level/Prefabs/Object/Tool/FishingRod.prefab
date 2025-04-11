@@ -394,7 +394,7 @@ CapsuleCollider:
   m_Radius: 0.15
   m_Height: 3.8
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: -0.1}
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!114 &4537605318894225425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,6 +439,7 @@ MonoBehaviour:
   - {fileID: 206757810140897529}
   - {fileID: 3670756461335698308}
   - {fileID: 5365778996092635808}
+  - {fileID: 5851207832448251957}
 --- !u!1 &7106000865450067045
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,6 +886,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7dc43e94782bf5f4b914060d8c3aa86c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3552009196765613390}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7dc43e94782bf5f4b914060d8c3aa86c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5851207832448251957}
   m_SourcePrefab: {fileID: 100100000, guid: 7dc43e94782bf5f4b914060d8c3aa86c, type: 3}
 --- !u!1 &7065017670454487405 stripped
 GameObject:
@@ -928,7 +932,7 @@ SpringJoint:
   serializedVersion: 3
   m_ConnectedBody: {fileID: 4998625932396824625}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0, z: 0.7}
+  m_Anchor: {x: 0, y: 0, z: 0.85}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
@@ -964,6 +968,24 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5851207832448251957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7065017670454487405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!4 &7584110766156706775 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7dc43e94782bf5f4b914060d8c3aa86c, type: 3}
