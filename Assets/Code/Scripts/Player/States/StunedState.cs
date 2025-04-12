@@ -5,11 +5,13 @@ public class StunedState : PlayerState
     public override void EnterState()
     {
         controller.currentTimeStunned = 0;
+        controller.animator.SetBool("IsStunned", true);
+        controller.animator.SetTrigger("Stun");
     }
 
     public override void ExitState()
     {
-
+        controller.animator.SetBool("IsStunned", false);
     }
 
     public override void FixedUpdateState()

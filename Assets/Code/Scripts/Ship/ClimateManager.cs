@@ -125,7 +125,6 @@ public class ClimateManager : MonoBehaviour
             if (hit.collider.TryGetComponent(out PlayerController player))
             {
                 player.stateMachine.ChangeState(player.stateMachine.stunedState);
-                //player.PlayerHitted(affectedObject.transform.position, 0.35f);
             }
         }
 
