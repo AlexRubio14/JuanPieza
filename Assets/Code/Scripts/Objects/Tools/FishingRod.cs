@@ -7,7 +7,7 @@ public class FishingRod : Tool
     public bool isFishing;
     private bool hookThrowed;
     private bool hookLanded;
-
+    private bool hookGrabbed;
     [Space, Header("Fishing Rod"), SerializeField]
     private GameObject idleFishingRod;
     [SerializeField]
@@ -15,10 +15,20 @@ public class FishingRod : Tool
 
     [Space, Header("Hook"), SerializeField]
     private GameObject hookPrefab;
+    public bool chargingHook {  get; private set; }
+    private float tiltProcess; 
     [SerializeField]
     private Transform hookSpawnPoint;
     [SerializeField]
-    private Vector2 throwForce;
+    private float tiltSpeed;
+    [SerializeField]
+    private Vector3 minTilt;
+    [SerializeField]
+    private Vector3 maxTilt;
+    [field: SerializeField]
+    public Vector2 throwForce { get; private set; }
+
+
 
     public HookController hook { get; private set; }
 
@@ -33,18 +43,63 @@ public class FishingRod : Tool
             fishingRodAdded = true;
         }
 
+        chargingHook = false;
         isFishing = false;
         hook = Instantiate(hookPrefab, transform.position, Quaternion.identity).GetComponent<HookController>();
         hook.gameObject.SetActive(false);
+
+        hookSpawnPoint.localRotation = Quaternion.Euler(minTilt);
+        tiltProcess = 0;
+    }
+    private void Update()
+    {
+        if (chargingHook)
+            ChargeHook();
+    }
+    protected override void OnEnable()
+    {
+        ShipsManager.instance.playerShip.AddInteractuableObject(this);
+
+        if (FishingManager.instance && !fishingRodAdded)
+        {
+            FishingManager.instance.AddFishingRod(this);
+            fishingRodAdded = true;
+        }
+    }
+    private void OnDisable()
+    {
+        FishingManager.instance.RemoveFishingRod(this);
     }
 
     public override void Use(ObjectHolder _objectHolder)
     {
-        if (!isFishing && !hookThrowed) //Tirar anzuelo
-            ThrowHook(_objectHolder);
+        if (!isFishing && !hookThrowed) //Cargar el anzuelo
+        {
+            chargingHook = true;
+            tiltProcess = 0;
+            if(player)
+                player.animator.SetBool("FishingCharge", true);
+            else 
+                _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("FishingCharge", true);
+        }
         else if (isFishing || hookLanded && !hook.onWater)//Recoger anzuelo
+        {
+            hookGrabbed = true;
             GrabHook();
+        }
     }
+    public override void StopUse(ObjectHolder _objectHolder)
+    {
+        if(hookGrabbed)
+            hookGrabbed = false;
+        else if(!isFishing && !hookThrowed)
+        {
+            chargingHook = false;
+            ThrowHook(_objectHolder);
+        }
+
+    }
+
     public override void Interact(ObjectHolder _objectHolder)
     {
 
@@ -61,6 +116,17 @@ public class FishingRod : Tool
         player.stateMachine.fishingState.fishingRod = this;
     }
 
+    private void ChargeHook()
+    {
+        tiltProcess = Mathf.Clamp01(tiltProcess + tiltSpeed * Time.deltaTime);
+        //Debug.Break();
+
+        hookSpawnPoint.localRotation = Quaternion.Lerp(
+            Quaternion.Euler(minTilt),
+            Quaternion.Euler(maxTilt),
+            tiltProcess
+            );
+    }
     private void ThrowHook(ObjectHolder _objectHolder)
     {
         PlayerController currentPlayer = _objectHolder.GetComponentInParent<PlayerController>();
@@ -78,6 +144,7 @@ public class FishingRod : Tool
         hook.rb.linearVelocity = Vector3.zero;
 
         Vector3 throwDirection = hookSpawnPoint.forward * throwForce.x + Vector3.up * throwForce.y;
+
         hook.rb.AddForce(throwDirection, ForceMode.Impulse);
 
         player.stateMachine.ChangeState(player.stateMachine.fishingState);
@@ -86,6 +153,8 @@ public class FishingRod : Tool
 
         idleFishingRod.SetActive(false);
         landedFishingRod.SetActive(true);
+
+        player.animator.SetBool("FishingCharge", false);
 
         Invoke("StartFishing", 0.75f);
     }
@@ -114,23 +183,10 @@ public class FishingRod : Tool
         idleFishingRod.SetActive(true);
         landedFishingRod.SetActive(false);
 
+        player.animator.SetTrigger("FishingStop");
     }
 
-    protected override void OnEnable()
-    {
-        ShipsManager.instance.playerShip.AddInteractuableObject(this);
-        
-        if (FishingManager.instance && !fishingRodAdded)
-        {
-            FishingManager.instance.AddFishingRod(this);
-            fishingRodAdded = true;
-        }
-    }
-    private void OnDisable()
-    {
-        FishingManager.instance.RemoveFishingRod(this);
-    }
-
+    
     public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();

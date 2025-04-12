@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class PlayerWeaponTrace : WeaponTracer
 {
     protected Weapon weapon;
@@ -11,7 +13,7 @@ public class PlayerWeaponTrace : WeaponTracer
     void FixedUpdate()
     {
         if (weapon.isPlayerMounted())
-            PredictTrajectory(weapon.bulletForce);
+            PredictTrajectory(weapon.bulletForce, Vector2.zero);
 
         lineRenderer.enabled = weapon.isPlayerMounted();
         decal.SetActive(weapon.isPlayerMounted());
