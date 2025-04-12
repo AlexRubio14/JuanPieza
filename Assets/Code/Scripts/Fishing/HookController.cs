@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class HookController : MonoBehaviour
 {
+
+    [field: SerializeField]
+    public Transform hookStringPos {  get; private set; }
+
     public bool onWater {  get; private set; }
     public Rigidbody rb {  get; private set; }
 

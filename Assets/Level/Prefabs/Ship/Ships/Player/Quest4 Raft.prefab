@@ -919,11 +919,22 @@ MonoBehaviour:
   lowerY: 0.2
   destroyY: -5
   initY: 0.7
+  shipCameraBounds: []
+  boatDestroyed: {fileID: 0}
   playersSpawnPos:
   - {fileID: 3484732061700912472}
   - {fileID: 5802678920399674566}
   - {fileID: 6660465864009296589}
   - {fileID: 8118268182531643644}
+  <boardingPoints>k__BackingField: []
+  <startZPosition>k__BackingField: 0
+  <cameraInitPosition>k__BackingField: {x: 0, y: 0, z: 0}
+  speed: 0
+  minSpeed: 0
+  behaivour: {fileID: 0}
+  message: []
+  cannon: {fileID: 0}
+  fishingShelf: {fileID: 0}
 --- !u!54 &8365819680216379399
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2938,15 +2949,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2640195164968152856, guid: 1f14640193e70c04783093669b399f6b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2640195164968152856, guid: 1f14640193e70c04783093669b399f6b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2640195164968152856, guid: 1f14640193e70c04783093669b399f6b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2640195164968152856, guid: 1f14640193e70c04783093669b399f6b, type: 3}
       propertyPath: m_LocalPosition.x

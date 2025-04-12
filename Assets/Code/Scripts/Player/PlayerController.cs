@@ -323,7 +323,10 @@ public class PlayerController : MonoBehaviour
             currentObject = objectHolder.GetNearestInteractableObject();
 
         if (currentObject)
+        {
             currentObject.StopUse(objectHolder);
+            hintController.UpdateActionType(currentObject.ShowNeededInputHint(objectHolder));
+        }
     }
     #endregion
 
