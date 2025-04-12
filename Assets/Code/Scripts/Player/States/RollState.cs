@@ -47,7 +47,7 @@ public class RollState : PlayerState
     public override void StopUseAction() { /*No hace nada*/ }
 
    
-    public override void OnHit(Vector3 _hitPosition) { }
+    public override void OnHit(Vector3 _hitPosition, float forceMultiplier = 1) { }
     public override void OnCollisionEnter(Collision collision)
     {
         base.OnCollisionEnter(collision);

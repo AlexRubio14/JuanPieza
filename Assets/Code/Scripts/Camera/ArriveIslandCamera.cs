@@ -104,6 +104,7 @@ public class ArriveIslandCamera : MonoBehaviour
             GetComponent<CameraController>().enabled = true;
             ShipsManager.instance.GenerateEnemies();
             ActivePlayers();
+            ClimateManager.instance.SetCurrentClimate();
             enabled = false;
         }
     }
