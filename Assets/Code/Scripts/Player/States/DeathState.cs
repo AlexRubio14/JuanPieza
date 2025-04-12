@@ -1,8 +1,8 @@
+using UnityEditor;
 using UnityEngine;
 
 public class DeathState : PlayerState
 {
-
 
     public Transform transform => controller.transform;
     private Rigidbody rb => controller.GetRB();
@@ -15,6 +15,7 @@ public class DeathState : PlayerState
 
     public override void EnterState()
     {
+        isSwimming = true;
         isDead = false;
         timeDead = 0;
 
@@ -31,6 +32,9 @@ public class DeathState : PlayerState
         controller.transform.SetParent(null);
 
         AudioManager.instance.Play2dOneShotSound(controller.dieClip, "Objects");
+
+        controller.objectHolder.enabled = false;
+
     }
     public override void UpdateState()
     {
@@ -38,6 +42,9 @@ public class DeathState : PlayerState
     }
     public override void FixedUpdateState()
     {
+        if (!isSwimming)
+            return;
+        
         if(isDead)
         {
             timeDead += Time.fixedDeltaTime;
@@ -58,13 +65,16 @@ public class DeathState : PlayerState
     public override void ExitState()
     {
         isDead = false;
-
-        FishingManager.instance.RemoveDeadPlayer(this);
+        
         
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         
         controller.animator.SetBool("Swimming", false);
-        
+
+        controller.enabled = true;
+
+        FishingManager.instance.RemoveDeadPlayer(this);
+
         if(ShipsManager.instance.playerShip)
             controller.transform.SetParent(ShipsManager.instance.playerShip.transform);
     }
