@@ -20,7 +20,7 @@ public class RepairState : PlayerState
     {
         controller.StopUse();
     }
-    public override void OnHit(Vector3 _hitPosition)
+    public override void OnHit(Vector3 _hitPosition, float forceMultiplier = 1)
     {
         StopInteractAction();
         base.OnHit(_hitPosition);

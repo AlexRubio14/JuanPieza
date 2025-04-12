@@ -13,6 +13,7 @@ public class PlayerStateMachine : MonoBehaviour
     public CannonState cannonState { get; private set; }
     public RepairState repairState { get; private set; }
     public DeathState deathState { get; private set; }
+    public StunedState stunedState { get; private set; }
     
 
     public void InitializeStates(PlayerController _controller)
@@ -35,6 +36,8 @@ public class PlayerStateMachine : MonoBehaviour
         repairState.InitializeState(_controller, this);
         deathState = new DeathState();
         deathState.InitializeState(_controller, this);
+        stunedState = new StunedState();
+        stunedState.InitializeState(_controller, this);
 
         ChangeState(idleState);
     }

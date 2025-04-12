@@ -41,7 +41,7 @@ public class CannonState : PlayerState
         controller.StopUse();
     }
 
-    public override void OnHit(Vector3 _hitPosition)
+    public override void OnHit(Vector3 _hitPosition, float forceMultiplier = 1)
     {
         //controller.Interact(); // Bajarse del cañon
         base.OnHit(_hitPosition);

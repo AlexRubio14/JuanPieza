@@ -21,11 +21,11 @@ public abstract class PlayerState
     public abstract void StopInteractAction();
     public abstract void UseAction();
     public abstract void StopUseAction();
-    public virtual void OnHit(Vector3 _hitPosition)
+    public virtual void OnHit(Vector3 _hitPosition, float forceMultiplier = 1)
     {
         Vector3 knockbackDirection = (controller.transform.position - _hitPosition).normalized;
 
-        Vector3 knockbackForce = knockbackDirection * controller.bounceForce.x + Vector3.up * controller.bounceForce.y;
+        Vector3 knockbackForce = (knockbackDirection * controller.bounceForce.x + Vector3.up * controller.bounceForce.y) * forceMultiplier;
 
         controller.AddImpulse(knockbackForce, controller.rollSpeed);
         controller.animator.SetTrigger("Hitted");
