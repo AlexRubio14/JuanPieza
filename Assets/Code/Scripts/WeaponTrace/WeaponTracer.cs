@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponTracer : MonoBehaviour
@@ -24,26 +25,34 @@ public class WeaponTracer : MonoBehaviour
     protected virtual void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-
-        decal = Instantiate(decalPrefab);
+        if(decalPrefab)
+            decal = Instantiate(decalPrefab);
     }
 
-    protected void PredictTrajectory(float _force)
+    protected void PredictTrajectory(float _force, Vector2 _forceVector)
     {
-        Vector3 velocity = _force / rb.mass * starterPos.forward;
+
+        Vector3 velocity;
+        if (_force != 0)
+            velocity = _force / rb.mass * starterPos.forward;
+        else
+            velocity = starterPos.forward * (_forceVector.x / rb.mass) + Vector3.up * (_forceVector.y / rb.mass);
+
         Vector3 position = starterPos.position;
+        
         UpdateLineRenderer(1, (0, position));
         for (int i = 1; i <= maxSteps; i++)
         {
             velocity = CalculateNewVelocity(velocity, rb.linearDamping, Time.fixedDeltaTime);
             Vector3 nextPosition = position + velocity * Time.fixedDeltaTime;
 
-            if (Physics.Raycast(position, velocity.normalized, out RaycastHit hit, 5f, hitLayers))
+            if (Physics.Raycast(position, velocity.normalized, out RaycastHit hit, stepSize, hitLayers))
             {
-                if(i != 0)
+                if(i != 1)
                     UpdateLineRenderer(i, (i - 1, hit.point));
-                 
-                decal.transform.position = hit.point;
+                
+                if(decal)
+                    decal.transform.position = hit.point;
                 collisionNormal = hit.normal;
                 break;
             }
