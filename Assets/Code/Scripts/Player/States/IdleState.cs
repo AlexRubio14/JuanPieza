@@ -16,7 +16,7 @@ public class IdleState : PlayerState
     }
     public override void FixedUpdateState()
     {
-        
+
     }
     public override void ExitState()
     {

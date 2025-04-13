@@ -107,6 +107,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public float maxTimeStunned;
     public float currentTimeStunned;
 
+    [Header("Ice")]
+    private bool isOnIce;
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -220,6 +224,7 @@ public class PlayerController : MonoBehaviour
     {
         rb.AddForce(_direction * _speed, ForceMode.Force);
     }
+
     public bool CheckSlope()
     {
         float angle = 0;
@@ -362,6 +367,11 @@ public class PlayerController : MonoBehaviour
             endPos = startPos + (Vector3.down * (capsuleCollider.height / 2 + slopeCheckDistance));
             Gizmos.DrawLine(startPos, endPos);
         }
+    }
+
+    public void SetOnIce(bool value)
+    {
+        isOnIce = value;
     }
 
     public void SetBaseMovementSpeed(float speed)

@@ -31,6 +31,9 @@ public class ClimateManager : MonoBehaviour
     private float currentTime = 0;
     private bool preparingStrike = false;
 
+    [Header("Snow")]
+    [SerializeField] private GameObject snow;
+
     private void Awake()
     {
         if (instance == null)
@@ -47,6 +50,7 @@ public class ClimateManager : MonoBehaviour
     private void Start()
     {
         rain.SetActive(false);
+        snow.SetActive(false);
 
         switch (NodeManager.instance.questData.questClimete)
         {
@@ -55,21 +59,15 @@ public class ClimateManager : MonoBehaviour
                 break;
             case QuestData.QuestClimete.SNOW:
                 RenderSettings.skybox = skyboxs[1];
-                AudioManager.instance.Play2dLoop(ambientAudio[0], "Objects");
+                PrepareSnow();
+                //AudioManager.instance.Play2dLoop(ambientAudio[0], "Objects");
                 break;
             case QuestData.QuestClimete.STORM:
                 RenderSettings.skybox = skyboxs[2];
                 AudioManager.instance.Play2dLoop(ambientAudio[1], "Objects");
-                PreparedStorm();
+                PrepareStorm();
                 break;
         }
-    }
-
-    private void PreparedStorm()
-    {
-        rain.SetActive(true);
-        RenderSettings.sun.intensity = sunIntensity;
-        RenderSettings.sun.color = Color.blue;
     }
 
     private void Update()
@@ -87,6 +85,12 @@ public class ClimateManager : MonoBehaviour
     }
 
     #region storm 
+    private void PrepareStorm()
+    {
+        rain.SetActive(true);
+        RenderSettings.sun.intensity = sunIntensity;
+        RenderSettings.sun.color = Color.blue;
+    }
     private void Lightning()
     {
         if (preparingStrike)
@@ -160,6 +164,14 @@ public class ClimateManager : MonoBehaviour
         lightningChargeAS = AudioManager.instance.Play2dLoop(lightningAudioClip, "Objects", 0f);
     }
     #endregion
+
+    #region Snow
+    private void PrepareSnow()
+    {
+        snow.SetActive(true);
+    }
+    #endregion
+
 
 
     public void SetCurrentClimate()
