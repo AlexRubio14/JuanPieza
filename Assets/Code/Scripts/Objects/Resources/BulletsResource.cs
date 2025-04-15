@@ -1,9 +1,7 @@
 using UnityEngine;
 
 public class BulletsResource : Resource
-{
-
-    public override void Interact(ObjectHolder _objectHolder)
+{    public override void Interact(ObjectHolder _objectHolder)
     {
 
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();

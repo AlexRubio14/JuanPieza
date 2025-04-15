@@ -46,7 +46,7 @@ public class WeaponTracer : MonoBehaviour
             velocity = CalculateNewVelocity(velocity, rb.linearDamping, Time.fixedDeltaTime);
             Vector3 nextPosition = position + velocity * Time.fixedDeltaTime;
 
-            if (Physics.Raycast(position, velocity.normalized, out RaycastHit hit, stepSize, hitLayers))
+            if (Physics.Raycast(position, velocity.normalized, out RaycastHit hit, Time.fixedDeltaTime, hitLayers))
             {
                 if(i != 1)
                     UpdateLineRenderer(i, (i - 1, hit.point));
