@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2333979435240202064}
   - component: {fileID: 9005621479896354901}
   - component: {fileID: 4558582423060755620}
-  - component: {fileID: 7942977990336435635}
+  - component: {fileID: 4773838027067841839}
   m_Layer: 10
   m_Name: CatapultWeakAmmo
   m_TagString: Bullet
@@ -82,7 +82,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &7942977990336435635
+--- !u!114 &4773838027067841839
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,14 +91,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9052637822518565095}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5382f9a9056096342b6722f18a25e7f1, type: 3}
+  m_Script: {fileID: 11500000, guid: 83c39a76b6d5eb548a74e59c2ed88661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitParticles>k__BackingField: {fileID: 2433282508537954060, guid: 598810743fe216b498771da93bc8b66c, type: 3}
+  <hitParticles>k__BackingField: {fileID: 2433282508537954060, guid: cff7aa303f377724cbb85bcf4a772ec2, type: 3}
   hitClip: {fileID: 8300000, guid: 131cf6e344d650240b4feebd01036d96, type: 3}
-  explosionRadius: 5
+  explosionRadius: 0
   createHole: 0
-  explosionForce: {x: 0, y: 500}
-  pushLayers:
-    serializedVersion: 2
-    m_Bits: 2048

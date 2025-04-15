@@ -5,7 +5,6 @@ using VInspector.Libs;
 
 public class Catapult : Weapon
 {
-    public enum AmmoType { USELESS, EXPLOSIVE }
     [Space, Header("Catapult"), SerializeField]
     [SerializedDictionary("Action", "Device Sprites")]
     private SerializedDictionary<ObjectSO, GameObject> ammoPrefabs;
@@ -18,8 +17,9 @@ public class Catapult : Weapon
     [SerializeField]
     private GameObject spoonObject;
 
+    [Space, SerializeField]
+    private float midDamageBullet;
     private ObjectSO shootObject;
-    private Mesh meshToThrow;
 
     protected override void Shoot()
     {
@@ -39,16 +39,16 @@ public class Catapult : Weapon
 
         GameObject newBullet = Instantiate(ammoPrefab, catapultAmmoSpawnPos.transform.position, Quaternion.identity);
 
-        if (weakObject)
+        for (int i = 0; i < spoonObject.transform.childCount; i++)
         {
-            //Desactivamos todos los hijos del spoon 
-            for (int i = 0; i < spoonObject.transform.childCount; i++)
-            {
-                Transform currentChild = spoonObject.transform.GetChild(0);
+            Transform currentChild = spoonObject.transform.GetChild(0);
+            if (weakObject)
+            { //Movemos todos los objetos del Spoon
                 currentChild.SetParent(newBullet.transform);
                 currentChild.transform.localPosition = Vector3.zero;
+            }else
+                Destroy(currentChild.gameObject);
 
-            }
         }
 
         Rigidbody bulletRB =  newBullet.GetComponent<Rigidbody>();
@@ -60,7 +60,13 @@ public class Catapult : Weapon
                 Random.Range(-catapultAmmoRotationSpeed, catapultAmmoRotationSpeed) 
                 )
             , ForceMode.VelocityChange);
-        newBullet.GetComponent<Bullet>().SetDamage(weaponDamage);
+        float currentWeaponDamage;
+        if (weakObject)
+            currentWeaponDamage = 1;
+        else
+            currentWeaponDamage = weaponDamage;
+
+        newBullet.GetComponent<Bullet>().SetDamage(currentWeaponDamage);
         hasAmmo = false;
         AudioManager.instance.Play2dOneShotSound(weaponShootClip, "Objects", 0.4f, 0.9f, 1.1f);
     }
