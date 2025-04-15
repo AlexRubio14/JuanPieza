@@ -186,7 +186,7 @@ public abstract class Weapon : RepairObject
 
         mountedPlayerId = -1;
     }
-    public void Reload(ObjectHolder _objectHolder)
+    public virtual void Reload(ObjectHolder _objectHolder)
     {
         //Settear a true la municion
         hasAmmo = true;

@@ -87,7 +87,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.3
+        value: 0.25
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -128,7 +128,7 @@ LineRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
-    numCapVertices: 0
+    numCapVertices: 30
     alignment: 0
     textureMode: 0
     textureScale: {x: 1, y: 1}
@@ -156,8 +156,8 @@ MonoBehaviour:
     m_Bits: 272
   rb: {fileID: 762032817644874531, guid: 2a261842a67d1e44ba76ff80b57942df, type: 3}
   starterPos: {fileID: 5582390124912673489}
-  maxSteps: 100
-  stepSize: 0.01
+  maxSteps: 1000
+  stepSize: 1
   lineRenderer: {fileID: 5508756780848498580}
 --- !u!1 &6138140573608144328
 GameObject:
