@@ -1,5 +1,5 @@
 using UnityEngine;
-public class FishingRod : Tool
+public class FishingRod : Tool, ICatapultAmmo
 {
     private bool fishingRodAdded = false;
 
@@ -99,11 +99,12 @@ public class FishingRod : Tool
         }
 
     }
-
     public override void Interact(ObjectHolder _objectHolder)
     {
+        if ((this as ICatapultAmmo).LoadItemInCatapult(_objectHolder, this))
+            return;
 
-        FishingManager.instance.ResetFishingRodData(this);
+       FishingManager.instance.ResetFishingRodData(this);
 
         PlayerController currentPlayer = _objectHolder.GetComponentInParent<PlayerController>();
         

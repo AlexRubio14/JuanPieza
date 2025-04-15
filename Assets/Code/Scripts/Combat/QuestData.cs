@@ -3,13 +3,14 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "QuestData", menuName = "Scriptable Objects/QuestData")]
 public class QuestData : ScriptableObject
-{    public enum QuestObjective { BATTLE, TRANSPORT, RESCUE, BOARDING };
-
+{    
+    public enum QuestObjective { BATTLE, TRANSPORT, RESCUE, BOARDING };
+    public enum QuestClimete { CLEAR, SNOW, STORM };
+    
     public string title;
     public string description;
     public QuestObjective questObjective;
     public PlayerShip ship;
-    public int questReward;
     public int rescueCuantity;
 
     public List<QuestData> questsToComplete;
@@ -17,6 +18,9 @@ public class QuestData : ScriptableObject
     public bool completed;
 
     public BattleQuestNodeData battleInformation;
+
+    public QuestClimete questClimete;
+    public bool hasWhirlwind;
 }
 
 [System.Serializable]

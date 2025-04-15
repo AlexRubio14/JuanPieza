@@ -103,7 +103,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] public LayerMask objectLayer;
 
-
+    [Header("Stun")]
+    [SerializeField] public float maxTimeStunned;
+    public float currentTimeStunned;
 
     private void Awake()
     {
@@ -207,9 +209,9 @@ public class PlayerController : MonoBehaviour
         cannonTilt = _axis;
     }
 
-    public void PlayerHitted(Vector3 _hitPosition)
+    public void PlayerHitted(Vector3 _hitPosition, float forceMultiplier = 1)
     {
-        stateMachine.currentState.OnHit(_hitPosition);
+        stateMachine.currentState.OnHit(_hitPosition, forceMultiplier);
     }
     #endregion
 
