@@ -27,6 +27,8 @@ public class WeaponTracer : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         if(decalPrefab)
             decal = Instantiate(decalPrefab);
+
+        collisionNormal = Vector3.down;
     }
 
     protected void PredictTrajectory(float _force, Vector2 _forceVector)

@@ -1,8 +1,8 @@
-using UnityEngine;
-
-public class BulletsResource : Resource
+public class BulletsResource : Resource, ICatapultAmmo
 {    public override void Interact(ObjectHolder _objectHolder)
     {
+        if ((this as ICatapultAmmo).LoadItemInCatapult(_objectHolder, this))
+            return;
 
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         InteractableObject nearestObj = _objectHolder.GetNearestInteractableObject();

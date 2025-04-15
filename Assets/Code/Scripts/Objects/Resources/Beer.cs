@@ -1,10 +1,11 @@
-using UnityEngine;
-
-public class Beer : Resource
+public class Beer : Resource, ICatapultAmmo
 {
 
     public override void Interact(ObjectHolder _objectHolder)
     {
+        if ((this as ICatapultAmmo).LoadItemInCatapult(_objectHolder, this))
+            return;
+
         base.Interact(_objectHolder);
         _objectHolder.hintController.UpdateActionType(ShowNeededInputHint(_objectHolder));
     }
