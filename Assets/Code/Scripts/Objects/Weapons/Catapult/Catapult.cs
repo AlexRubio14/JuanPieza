@@ -75,7 +75,8 @@ public class Catapult : Weapon
 
         //Copiar el mesh del objeto que tienes en la mano y lo ponemos en la bala
         GameObject newMesh = CopyMeshRecursive(handObject.transform, spoonObject.transform);
-        newMesh.transform.localPosition = Vector3.zero;
+        newMesh.transform.localPosition = -handObject.GetComponentInChildren<MeshFilter>().sharedMesh.bounds.center;
+        newMesh.transform.localRotation = Quaternion.identity;
         
         shootObject = handObject.objectSO;
 
