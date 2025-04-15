@@ -108,8 +108,9 @@ public class PlayerController : MonoBehaviour
     public float currentTimeStunned;
 
     [Header("Ice")]
+    [SerializeField] private float iceDrag;
+    private float realDrag;
     private bool isOnIce;
-
 
     private void Awake()
     {
@@ -120,6 +121,7 @@ public class PlayerController : MonoBehaviour
 
         stateMachine = GetComponent<PlayerStateMachine>();
         stateMachine.InitializeStates(this);
+        realDrag = rb.linearDamping;
     }
 
     private void Start()
@@ -371,8 +373,17 @@ public class PlayerController : MonoBehaviour
 
     public void SetOnIce(bool value)
     {
+        if (value == isOnIce)
+            return;
+
         isOnIce = value;
+        if (isOnIce)
+            rb.linearDamping = iceDrag;
+        else
+            rb.linearDamping = realDrag;
+
     }
+
 
     public void SetBaseMovementSpeed(float speed)
     {

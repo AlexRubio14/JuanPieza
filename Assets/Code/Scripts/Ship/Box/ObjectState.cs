@@ -11,12 +11,13 @@ public class ObjectState : MonoBehaviour
 
     private bool oneHit;
 
-    public void SetIsBroke(bool state)
+    public void SetIsBroke(bool state, bool freezing = false)
     {
-        if(isBroken == state)
+        isBroken = state;
+
+        if (freezing)
             return;
 
-        isBroken = state;
         if (fixedSibling)
             fixedSibling.SetActive(!state);
         if(brokenSibling)

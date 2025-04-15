@@ -392,6 +392,10 @@ public class FishingManager : MonoBehaviour
         //Instanciarlo
         GameObject newItem = Instantiate(itemData.prefab, _fishingRod.hook.transform.position, Quaternion.identity);
 
+        //Si esta 
+        if (newItem.TryGetComponent(out FreezeWeapon freezeWeapon) && NodeManager.instance.questData.questClimete == QuestData.QuestClimete.SNOW)
+            freezeWeapon.SetFreeze(true);
+
         InteractableObject currentItem = newItem.GetComponent<InteractableObject>();
         currentItem.hasToBeInTheShip = true;
         ShipsManager.instance.playerShip.AddInteractuableObject(currentItem);

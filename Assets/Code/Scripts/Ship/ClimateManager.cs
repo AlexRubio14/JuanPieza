@@ -60,7 +60,7 @@ public class ClimateManager : MonoBehaviour
             case QuestData.QuestClimete.SNOW:
                 RenderSettings.skybox = skyboxs[1];
                 PrepareSnow();
-                //AudioManager.instance.Play2dLoop(ambientAudio[0], "Objects");
+                AudioManager.instance.Play2dLoop(ambientAudio[0], "Objects");
                 break;
             case QuestData.QuestClimete.STORM:
                 RenderSettings.skybox = skyboxs[2];
@@ -75,6 +75,8 @@ public class ClimateManager : MonoBehaviour
         switch (currentClimate)
         {
             case QuestData.QuestClimete.SNOW:
+                FreezeWeapon();
+                currentClimate = QuestData.QuestClimete.CLEAR;
                 break;
             case QuestData.QuestClimete.STORM:
                 Lightning();
@@ -169,6 +171,19 @@ public class ClimateManager : MonoBehaviour
     private void PrepareSnow()
     {
         snow.SetActive(true);
+    }
+
+    public void FreezeWeapon()
+    {
+        List<InteractableObject> inventory = ShipsManager.instance.playerShip.GetInventory();
+        foreach (InteractableObject item in inventory)
+        {
+            if(item.TryGetComponent(out FreezeWeapon freezeWeapon))
+            {
+                freezeWeapon.SetFreeze(true);
+            }
+        }
+
     }
     #endregion
 

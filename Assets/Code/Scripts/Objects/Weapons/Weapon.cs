@@ -46,6 +46,8 @@ public abstract class Weapon : RepairObject
     protected AudioClip weaponShootClip;
     [SerializeField] protected AudioClip weaponReloadClip;
 
+    private bool freeze;
+
 
     protected override void Awake()
     {
@@ -66,7 +68,7 @@ public abstract class Weapon : RepairObject
     {
         base.Interact(_objectHolder);
 
-        if (!CanInteract(_objectHolder) || state.GetIsBroken())
+        if (!CanInteract(_objectHolder) || state.GetIsBroken() || freeze)
             return;
 
         PlayerController player = _objectHolder.transform.parent.gameObject.GetComponent<PlayerController>();
@@ -107,7 +109,7 @@ public abstract class Weapon : RepairObject
 
     public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
-        if (state.GetIsBroken())
+        if (state.GetIsBroken() || freeze)
             return base.ShowNeededInputHint(_objectHolder);
 
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
@@ -250,5 +252,15 @@ public abstract class Weapon : RepairObject
 
         if (_enable)
             tiltInputHint.ChangeDeviceType(PlayersManager.instance.players[mountedPlayerId].Item1.devices[0] is Gamepad , PlayersManager.instance.ingamePlayers[mountedPlayerId].transform);
+    }
+
+    public void SetFreeze(bool _freeze)
+    {
+        freeze = _freeze;
+    }
+
+    public bool GetFreeze()
+    {
+        return freeze;
     }
 }

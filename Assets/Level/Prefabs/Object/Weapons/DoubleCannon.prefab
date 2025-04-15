@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 3242741993357289315}
   - component: {fileID: 1774029561049129063}
   - component: {fileID: 529470515122847821}
+  - component: {fileID: 6965027316235540239}
   m_Layer: 9
   m_Name: DoubleCannon
   m_TagString: Object
@@ -258,6 +259,21 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.82, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &6965027316235540239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687742630878781227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e16d270b56192fb4dae875f6f1fd9cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponFreezePercentage: 50
+  increaseFreezePercentage: 10
+  freezeMaxTime: 5
 --- !u!1 &3426756992027230203
 GameObject:
   m_ObjectHideFlags: 0
