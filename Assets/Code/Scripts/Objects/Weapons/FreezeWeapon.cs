@@ -15,7 +15,10 @@ public class FreezeWeapon : MonoBehaviour
 
     [Header("Ice")]
     [SerializeField] private GameObject iceCube;
+    [SerializeField] private Vector3 initPosition;
+    [SerializeField] private float maxScale;
     [SerializeField] private AudioClip breakIce;
+    private GameObject iceCubeWeapon;
 
     private void Start()
     {
@@ -34,7 +37,9 @@ public class FreezeWeapon : MonoBehaviour
             return;
 
         freezeCurrentTime += Time.deltaTime;
-        if(freezeCurrentTime > freezeMaxTime)
+        ScaleIceCube();
+
+        if (freezeCurrentTime > freezeMaxTime)
         {
             weaponCurrentFreezePercentage += increaseFreezePercentage;
             freezeCurrentTime = 0;
@@ -47,8 +52,27 @@ public class FreezeWeapon : MonoBehaviour
         }
     }
 
+    private void ScaleIceCube()
+    {
+        float nextFreezePercentage = weaponCurrentFreezePercentage + increaseFreezePercentage;
+        float t = freezeCurrentTime / freezeMaxTime;
+        float visualFreezePercentage = Mathf.Lerp(weaponCurrentFreezePercentage, nextFreezePercentage, t);
+        float scale = Mathf.Lerp(0, maxScale, visualFreezePercentage / 100f);
+        iceCubeWeapon.transform.localScale = new Vector3(scale, scale, scale);
+    }
+
+    private void GenerateIceCube()
+    {
+        iceCubeWeapon = Instantiate(iceCube);
+        iceCubeWeapon.transform.SetParent(this.transform, true);
+        iceCubeWeapon.transform.localScale = Vector3.zero;
+        iceCubeWeapon.transform.localPosition = initPosition;
+    }
+
     public void SetFreeze(bool _freeze)
     { 
-        freeze = _freeze; 
+        freeze = _freeze;
+        if (freeze)
+            GenerateIceCube();
     }
 }

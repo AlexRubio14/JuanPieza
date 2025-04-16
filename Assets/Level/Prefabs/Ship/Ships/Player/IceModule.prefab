@@ -12,10 +12,11 @@ GameObject:
   - component: {fileID: 4427619428527285633}
   - component: {fileID: 1915972818532323659}
   - component: {fileID: 1552543008985515113}
+  - component: {fileID: 3774469014856860718}
   - component: {fileID: 6465759420747940766}
   - component: {fileID: 4605213433106331669}
   m_Layer: 8
-  m_Name: Module
+  m_Name: IceModule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,6 +112,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 576
   holeRadius: 2
+--- !u!114 &3774469014856860718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114308874064097438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5eb1d305fba59847ab398f72fc21ae2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!65 &6465759420747940766
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -118,7 +134,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 114308874064097438}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 121fc9ee0d3613d40b6e9735cdc20d20, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
