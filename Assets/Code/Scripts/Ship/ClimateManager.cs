@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -22,6 +23,7 @@ public class ClimateManager : MonoBehaviour
     [SerializeField] private float cameraShakeMagnitude;
     [SerializeField] private GameObject lightningOrb;
     [SerializeField] private GameObject rain;
+    [SerializeField] private GameObject thunder;
     [SerializeField] private LayerMask hitLayer;
     [SerializeField] protected AudioClip strikeAudioClip;
     [SerializeField] protected AudioClip lightningAudioClip;
@@ -30,6 +32,9 @@ public class ClimateManager : MonoBehaviour
     private GameObject _lightningOrb;
     private float currentTime = 0;
     private bool preparingStrike = false;
+
+    [Header("Snow")]
+    [SerializeField] private GameObject snow;
 
     private void Awake()
     {
@@ -47,6 +52,7 @@ public class ClimateManager : MonoBehaviour
     private void Start()
     {
         rain.SetActive(false);
+        snow.SetActive(false);
 
         switch (NodeManager.instance.questData.questClimete)
         {
@@ -55,21 +61,15 @@ public class ClimateManager : MonoBehaviour
                 break;
             case QuestData.QuestClimete.SNOW:
                 RenderSettings.skybox = skyboxs[1];
+                PrepareSnow();
                 AudioManager.instance.Play2dLoop(ambientAudio[0], "Objects");
                 break;
             case QuestData.QuestClimete.STORM:
                 RenderSettings.skybox = skyboxs[2];
                 AudioManager.instance.Play2dLoop(ambientAudio[1], "Objects");
-                PreparedStorm();
+                PrepareStorm();
                 break;
         }
-    }
-
-    private void PreparedStorm()
-    {
-        rain.SetActive(true);
-        RenderSettings.sun.intensity = sunIntensity;
-        RenderSettings.sun.color = Color.blue;
     }
 
     private void Update()
@@ -77,6 +77,8 @@ public class ClimateManager : MonoBehaviour
         switch (currentClimate)
         {
             case QuestData.QuestClimete.SNOW:
+                FreezeWeapon();
+                currentClimate = QuestData.QuestClimete.CLEAR;
                 break;
             case QuestData.QuestClimete.STORM:
                 Lightning();
@@ -87,6 +89,12 @@ public class ClimateManager : MonoBehaviour
     }
 
     #region storm 
+    private void PrepareStorm()
+    {
+        rain.SetActive(true);
+        RenderSettings.sun.intensity = sunIntensity;
+        RenderSettings.sun.color = Color.blue;
+    }
     private void Lightning()
     {
         if (preparingStrike)
@@ -116,7 +124,8 @@ public class ClimateManager : MonoBehaviour
     private void Strike()
     {
         affectedObject.GetComponent<InteractableObject>().DestroyLightning();
-        //Instanciar rayo
+        GameObject strike = Instantiate(thunder, affectedObject.transform.position, Quaternion.identity);
+        StartCoroutine(DestroyStrike(strike, 2f));
         AudioManager.instance.Play2dOneShotSound(strikeAudioClip, "Objects");
         RaycastHit[] hits = Physics.SphereCastAll(affectedObject.transform.position, holeRadius, Vector3.forward, 0, hitLayer);
 
@@ -129,6 +138,12 @@ public class ClimateManager : MonoBehaviour
         }
 
         Camera.main.GetComponent<CameraShaker>().TriggerShake(cameraShakeDuration, cameraShakeMagnitude);
+    }
+
+    IEnumerator DestroyStrike(GameObject strike, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        Destroy(strike);
     }
 
     private void WaitSpawnLightning()
@@ -160,6 +175,27 @@ public class ClimateManager : MonoBehaviour
         lightningChargeAS = AudioManager.instance.Play2dLoop(lightningAudioClip, "Objects", 0f);
     }
     #endregion
+
+    #region Snow
+    private void PrepareSnow()
+    {
+        snow.SetActive(true);
+    }
+
+    public void FreezeWeapon()
+    {
+        List<InteractableObject> inventory = ShipsManager.instance.playerShip.GetInventory();
+        foreach (InteractableObject item in inventory)
+        {
+            if(item.TryGetComponent(out FreezeWeapon freezeWeapon))
+            {
+                freezeWeapon.SetFreeze(true);
+            }
+        }
+
+    }
+    #endregion
+
 
 
     public void SetCurrentClimate()

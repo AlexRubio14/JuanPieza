@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 6445755766757112614}
   - component: {fileID: 807546827017697251}
   - component: {fileID: 3968191370556537233}
+  - component: {fileID: 5492471132555604836}
   - component: {fileID: 7575848392866323742}
   - component: {fileID: 4986079673123290112}
   - component: {fileID: 3894281368699678792}
@@ -391,6 +392,25 @@ MonoBehaviour:
   brokenSibling: {fileID: 5789010701521627497}
   isBroken: 0
   brokeClip: {fileID: 8300000, guid: 131cf6e344d650240b4feebd01036d96, type: 3}
+--- !u!114 &5492471132555604836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7945949425479645119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e16d270b56192fb4dae875f6f1fd9cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponFreezePercentage: 50
+  increaseFreezePercentage: 10
+  freezeMaxTime: 5
+  iceCube: {fileID: 4371653817622060990, guid: cf77fa7dbace0ea49b0c2d35b02f0101, type: 3}
+  initPosition: {x: 0, y: 1.36, z: 0}
+  maxScale: 1.4
+  breakIce: {fileID: 0}
 --- !u!114 &7575848392866323742
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -107,6 +107,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public float maxTimeStunned;
     public float currentTimeStunned;
 
+    [Header("Ice")]
+    [SerializeField] private float iceDrag;
+    private float realDrag;
+    private bool isOnIce;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -116,6 +121,7 @@ public class PlayerController : MonoBehaviour
 
         stateMachine = GetComponent<PlayerStateMachine>();
         stateMachine.InitializeStates(this);
+        realDrag = rb.linearDamping;
     }
 
     private void Start()
@@ -220,6 +226,7 @@ public class PlayerController : MonoBehaviour
     {
         rb.AddForce(_direction * _speed, ForceMode.Force);
     }
+
     public bool CheckSlope()
     {
         float angle = 0;
@@ -363,6 +370,20 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawLine(startPos, endPos);
         }
     }
+
+    public void SetOnIce(bool value)
+    {
+        if (value == isOnIce)
+            return;
+
+        isOnIce = value;
+        if (isOnIce)
+            rb.linearDamping = iceDrag;
+        else
+            rb.linearDamping = realDrag;
+
+    }
+
 
     public void SetBaseMovementSpeed(float speed)
     {

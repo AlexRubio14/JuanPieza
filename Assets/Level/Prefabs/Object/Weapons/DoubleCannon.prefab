@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 843094923078740295}
   - component: {fileID: 4722550664854406627}
   - component: {fileID: 4533079699732526716}
+  - component: {fileID: 6965027316235540239}
   - component: {fileID: 2884378185280330747}
   - component: {fileID: 1173568168622258923}
   - component: {fileID: 3242741993357289315}
@@ -152,6 +153,25 @@ MonoBehaviour:
   - {fileID: 6468099076945302988}
   - {fileID: 5516252857265830728}
   - {fileID: 6340498098351865959}
+--- !u!114 &6965027316235540239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687742630878781227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e16d270b56192fb4dae875f6f1fd9cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponFreezePercentage: 50
+  increaseFreezePercentage: 10
+  freezeMaxTime: 5
+  iceCube: {fileID: 4371653817622060990, guid: cf77fa7dbace0ea49b0c2d35b02f0101, type: 3}
+  initPosition: {x: -0.116, y: 1.15, z: 0}
+  maxScale: 1.2
+  breakIce: {fileID: 0}
 --- !u!65 &2884378185280330747
 BoxCollider:
   m_ObjectHideFlags: 0
