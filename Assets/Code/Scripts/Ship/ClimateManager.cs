@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -22,6 +23,7 @@ public class ClimateManager : MonoBehaviour
     [SerializeField] private float cameraShakeMagnitude;
     [SerializeField] private GameObject lightningOrb;
     [SerializeField] private GameObject rain;
+    [SerializeField] private GameObject thunder;
     [SerializeField] private LayerMask hitLayer;
     [SerializeField] protected AudioClip strikeAudioClip;
     [SerializeField] protected AudioClip lightningAudioClip;
@@ -122,7 +124,8 @@ public class ClimateManager : MonoBehaviour
     private void Strike()
     {
         affectedObject.GetComponent<InteractableObject>().DestroyLightning();
-        //Instanciar rayo
+        GameObject strike = Instantiate(thunder, affectedObject.transform.position, Quaternion.identity);
+        StartCoroutine(DestroyStrike(strike, 2f));
         AudioManager.instance.Play2dOneShotSound(strikeAudioClip, "Objects");
         RaycastHit[] hits = Physics.SphereCastAll(affectedObject.transform.position, holeRadius, Vector3.forward, 0, hitLayer);
 
@@ -135,6 +138,12 @@ public class ClimateManager : MonoBehaviour
         }
 
         Camera.main.GetComponent<CameraShaker>().TriggerShake(cameraShakeDuration, cameraShakeMagnitude);
+    }
+
+    IEnumerator DestroyStrike(GameObject strike, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        Destroy(strike);
     }
 
     private void WaitSpawnLightning()
