@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VFolders.Libs;
 
 public class Ship : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class Ship : MonoBehaviour
     [SerializeField] private List<ParticleSystem> destructionParticles;
     [SerializeField] float delayBetweenGroups = 0.5f;
     [SerializeField] int particlesPerGroup;
-    private bool destroyed;
+    protected bool destroyed;
 
 
     public virtual void Start()

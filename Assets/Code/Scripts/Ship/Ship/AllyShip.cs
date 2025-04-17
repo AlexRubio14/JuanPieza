@@ -65,9 +65,11 @@ public class AllyShip : Ship
 
     private void DancePlayers()
     {
+        leaving = false;
         foreach (PlayerController item in PlayersManager.instance.ingamePlayers)
         {
-            item.animator.SetTrigger("Celebrate");
+            item.animator.SetTrigger("Win");
+            item.animator.SetBool("Celebrating", true);
         }
 
         Invoke("WinCondition", 3);
@@ -76,7 +78,11 @@ public class AllyShip : Ship
     private void WinCondition()
     {
         ShipsManager.instance.gameObject.GetComponent<TransitionController>().EndLevelTransition();
-        leaving = false;
+
+        foreach (PlayerController item in PlayersManager.instance.ingamePlayers)
+        {
+            item.animator.SetBool("Celebrating", false);
+        }
     }
 
     public override void SetCurrentHealth(float amount)
@@ -187,6 +193,9 @@ public class AllyShip : Ship
 
     public void GenerateCannon()
     {
+        if (destroyed)
+            return;
+
         if (fishingShelf == null && !ShipsManager.instance.playerShip.GetTotalWeaponsInShip())
         {
             Instantiate(cannon, new Vector3(0,5,0), Quaternion.identity).transform.SetParent(this.gameObject.transform);
