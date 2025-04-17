@@ -22,22 +22,16 @@ public class SinkModuleController : MonoBehaviour
 
         if (timer >= interval)
         {
-            MoveModule();
+            ActivateGeiser();
+
             timer = 0f;
         }
     }
 
-    private void MoveModule()
+    private void ActivateGeiser()
     {
         SinkModule module = modules[GetRandomChild()].GetComponent<SinkModule>();
-        if (!module.isMoving)
-        {
-            module.Move();
-        }
-        else
-        {
-            MoveModule();
-        }
+        module.Move();
     }
 
     private int GetRandomChild()
