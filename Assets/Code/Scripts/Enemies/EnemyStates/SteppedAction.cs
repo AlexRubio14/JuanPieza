@@ -40,8 +40,9 @@ public abstract class SteppedAction : EnemyAction
 
 
 
-    public override void StateUpdate()
+    public override void StateUpdate(bool _onNavLink)
     {
+        onNavLink = _onNavLink;
         if (!agent)
             return;
 

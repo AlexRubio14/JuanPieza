@@ -20,15 +20,16 @@ public abstract class EnemyAction
     protected float timeToInteract;
     protected float timeWaited = 0;
 
+    protected bool onNavLink;
 
     public Action<bool> onActionEnd;
 
-    public abstract void StateUpdate();
+    public abstract void StateUpdate(bool _onNavLink);
     
     protected bool IsNearToDestiny(Vector3 _destiny)
     {
         _destiny.y = transform.position.y;
-        return Vector3.Distance(transform.position, _destiny) <= distanceToInteract;
+        return Vector3.Distance(transform.position, _destiny) <= distanceToInteract && !onNavLink;
     }
 
     public void SetEnemyController(EnemyController _enemyController)

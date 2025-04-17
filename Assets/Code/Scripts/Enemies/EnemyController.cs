@@ -62,7 +62,7 @@ public class EnemyController : MonoBehaviour
         {
             SetNavLinkSpeed();
             if (currentAction != null)
-                currentAction.StateUpdate();
+                currentAction.StateUpdate(agent.isOnOffMeshLink);
         }
 
         if(!rb.isKinematic && Physics.Raycast(transform.position, Vector3.down, 1.5f, floorLayer))
