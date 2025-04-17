@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 
 public class AllyShip : Ship
 {
@@ -48,7 +50,7 @@ public class AllyShip : Ship
         if (arriving)
             MoveShip(startZ, 0);
         if (leaving)
-            MoveShip(0, startZ * -1);
+            DancePlayers();
     }
 
     private void MoveShip(float firstZ, float secondZ)
@@ -58,12 +60,23 @@ public class AllyShip : Ship
         currentSpeed = Mathf.Lerp(speed, minSpeed, t);
         transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
         if (t >= 1)
-            arriving = false;
-        if (t >= 0.3 && leaving)
+            arriving = false;     
+    }
+
+    private void DancePlayers()
+    {
+        foreach (PlayerController item in PlayersManager.instance.ingamePlayers)
         {
-            ShipsManager.instance.gameObject.GetComponent<TransitionController>().EndLevelTransition();
-            leaving = false;
-        }        
+            item.animator.SetTrigger("Celebrate");
+        }
+
+        Invoke("WinCondition", 3);
+    }
+
+    private void WinCondition()
+    {
+        ShipsManager.instance.gameObject.GetComponent<TransitionController>().EndLevelTransition();
+        leaving = false;
     }
 
     public override void SetCurrentHealth(float amount)

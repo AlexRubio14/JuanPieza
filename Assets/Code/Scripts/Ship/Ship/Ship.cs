@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Ship : MonoBehaviour
@@ -15,19 +17,22 @@ public class Ship : MonoBehaviour
     protected float targetHeight;
     private float currentHeight;
 
-    protected Animator animator;
     public Action<GameObject> onDamageRecieved;
 
     [Space, SerializeField]
     private Collider[] shipCameraBounds;
 
     [SerializeField] private AudioClip boatDestroyed;
+    [SerializeField] private List<ParticleSystem> destructionParticles;
+    [SerializeField] float delayBetweenGroups = 0.5f;
+    [SerializeField] int particlesPerGroup;
+    private bool destroyed;
 
 
     public virtual void Start()
     {
         Initialize();
-        animator = GetComponent<Animator>();
+        destroyed = false;
     }
 
     protected void AddShipBounds()
@@ -58,6 +63,8 @@ public class Ship : MonoBehaviour
     {
         currentHeight = Mathf.Lerp(currentHeight, targetHeight, Time.deltaTime * heightChangeSpeed);
         transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
+        if (destroyed && currentHeight - 0.5 <= destroyY)
+            DestroyShip();
     }
 
     public virtual void DestroyShip()
@@ -78,16 +85,14 @@ public class Ship : MonoBehaviour
     }
     private void CheckHealth()
     {
+        if (destroyed)
+            return;
+
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            targetHeight = destroyY;
-            if (animator)
-            {
-                animator.SetBool("Dead", true);
-                AudioManager.instance.Play2dOneShotSound(boatDestroyed, "SFX", 1, 0.8f, 1.2f);
-
-            }
+            destroyed = true;
+            StartCoroutine(ExplodeShipRecursive(0));
         }
         if (currentHealth > maxHealth)
         {
@@ -96,7 +101,28 @@ public class Ship : MonoBehaviour
     }
     #endregion
 
-    
+    private IEnumerator ExplodeShipRecursive(int startIndex)
+    {
+        int remaining = destructionParticles.Count - startIndex;
+
+        if (remaining <= 3)
+            targetHeight = destroyY;
+        else if(remaining <= 0)
+            yield break;
+
+        int currentGroup = Mathf.Min(particlesPerGroup, remaining);
+
+        for (int i = 0; i < currentGroup; i++)
+        {
+            destructionParticles[startIndex + i].gameObject.SetActive(true);
+            destructionParticles[startIndex + i].Play();
+            AudioManager.instance.Play2dOneShotSound(boatDestroyed, "SFX", 1, 0.8f, 1.2f);
+        }
+
+        yield return new WaitForSeconds(delayBetweenGroups);
+
+        StartCoroutine(ExplodeShipRecursive(startIndex + currentGroup));
+    }
 
     public float GetInitY()
     {
