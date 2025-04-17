@@ -12,6 +12,8 @@ public class GameInput : MonoBehaviour
     public Action OnPushAction;
     public Action OnRollAction;
     public Action OnThrowAction;
+    public Action OnGrabAction;
+    public Action OnReleaseAction;
 
     public Action<float> OnWeaponTiltAction;
     public int playerReference { get;  set; }
@@ -62,6 +64,20 @@ public class GameInput : MonoBehaviour
         {
             if (OnThrowAction != null)
                 OnThrowAction();
+        }
+    }
+
+    public void GrabAction(InputAction.CallbackContext obj)
+    {
+        if(obj.started)
+        {
+            if (OnGrabAction != null)
+                OnGrabAction();
+        }
+        else if(obj.canceled)
+        {
+            if(OnReleaseAction != null)
+                OnReleaseAction();
         }
     }
 

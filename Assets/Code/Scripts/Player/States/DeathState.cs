@@ -101,5 +101,9 @@ public class DeathState : PlayerState
         stateMachine.ChangeState(stateMachine.idleState);
     }
 
-    
+    public override void GrabAction()
+    {
+    }
+
+    public override void ReleaseAction() { /*No puedes soltar nada*/ }
 }

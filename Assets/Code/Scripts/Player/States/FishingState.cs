@@ -45,4 +45,14 @@ public class FishingState : PlayerState
 
         //Te pueden golpear y hacer daño
     }
+
+    public override void GrabAction()
+    {
+        
+    }
+
+    public override void ReleaseAction()
+    {
+        
+    }
 }

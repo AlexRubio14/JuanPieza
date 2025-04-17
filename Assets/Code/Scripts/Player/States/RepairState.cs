@@ -13,7 +13,7 @@ public class RepairState : PlayerState
     public override void StopInteractAction() 
     {
         //Para de reparar
-        controller.StopInteract();
+        controller.Release();
     }
     public override void UseAction() { /*No puedes usar ningun objeto*/ }
     public override void StopUseAction()
@@ -28,5 +28,13 @@ public class RepairState : PlayerState
     public override void OnCollisionEnter(Collision collision)
     {
         //Si te golpea algo llamar al controller.StopInteract();
+    }
+
+    public override void GrabAction()
+    {
+    }
+
+    public override void ReleaseAction()
+    {
     }
 }

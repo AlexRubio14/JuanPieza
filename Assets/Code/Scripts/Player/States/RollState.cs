@@ -68,4 +68,12 @@ public class RollState : PlayerState
         controller.animator.SetTrigger("Hitted");
         AudioManager.instance.Play2dOneShotSound(controller.dashHitClip, "Player", 0.7f, 0.95f, 1.05f);
     }
+
+    public override void GrabAction()
+    {
+    }
+
+    public override void ReleaseAction()
+    {
+    }
 }

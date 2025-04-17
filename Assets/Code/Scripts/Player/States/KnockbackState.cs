@@ -65,4 +65,12 @@ public class KnockbackState : PlayerState
     {
         base.OnCollisionEnter(collision);
     }
+
+    public override void GrabAction()
+    {
+    }
+
+    public override void ReleaseAction()
+    {
+    }
 }

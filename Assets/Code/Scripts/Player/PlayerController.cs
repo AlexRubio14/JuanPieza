@@ -151,6 +151,10 @@ public class PlayerController : MonoBehaviour
         playerInput.OnStopUseAction += StopUseAction;
 
         playerInput.OnWeaponTiltAction += CannonTiltAction;
+
+        playerInput.OnGrabAction += GrabAction;
+
+        playerInput.OnReleaseAction += ReleaseAction;
     }
 
     private void OnDisable()
@@ -166,6 +170,10 @@ public class PlayerController : MonoBehaviour
         playerInput.OnUseAction -= UseAction;
 
         playerInput.OnWeaponTiltAction -= CannonTiltAction;
+
+        playerInput.OnGrabAction -= GrabAction;
+
+        playerInput.OnReleaseAction -= ReleaseAction;
 
         movementInput = Vector2.zero;
         movementDirection = Vector3.zero;
@@ -204,6 +212,17 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.currentState.StopUseAction();
     }
+
+    private void GrabAction()
+    {
+        stateMachine.currentState.GrabAction();
+    }
+
+    private void ReleaseAction()
+    {
+        stateMachine.currentState.ReleaseAction();
+    }
+
     private void CannonTiltAction(float _axis)
     {
         cannonTilt = _axis;
@@ -260,7 +279,7 @@ public class PlayerController : MonoBehaviour
     {
         canPush = true;
     }
-    public void Interact()
+    public void Grab()
     {
         InteractableObject handObject = objectHolder.GetHandInteractableObject();
         InteractableObject nearestObject = objectHolder.GetNearestInteractableObject();
@@ -282,7 +301,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Pick", objectHolder.GetHandInteractableObject());
 
     }
-    public void StopInteract()
+    public void Release()
     {
         InteractableObject currentObject = objectHolder.GetHandInteractableObject();
         

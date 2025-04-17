@@ -28,11 +28,9 @@ public class IdleState : PlayerState
     }
     public override void InteractAction()
     {
-        controller.Interact();
     }
     public override void StopInteractAction() 
     {
-        controller.StopInteract();
     }
 
     public override void UseAction()
@@ -53,5 +51,14 @@ public class IdleState : PlayerState
         base.OnCollisionEnter(collision);
     }
 
-    
+    public override void GrabAction()
+    {
+        controller.Grab();
+
+    }
+
+    public override void ReleaseAction()
+    {
+        controller.Release();
+    }
 }

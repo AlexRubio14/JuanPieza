@@ -200,6 +200,66 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 04d5ebc7-0b8b-4c67-8d5b-164e6b229e1d
     m_ActionName: 'CannonGameplay/TiltWeapon[/Mouse/rightButton,/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7037647223120207762}
+        m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
+        m_MethodName: GrabAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ba2f870f-eb37-4886-8476-4f5796ac3f2f
+    m_ActionName: 'Gameplay/Grab[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 35dcb16d-404a-4802-bad9-ebd5298cb697
+    m_ActionName: 'Dialogue/PassDialogue[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 05486066-6182-4e92-845e-994112effe3f
+    m_ActionName: 'MapMenu/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0258e531-510a-4146-a87b-d3dc6782fdde
+    m_ActionName: 'MapMenu/Submit[/Keyboard/enter,/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ef4a0a01-4f41-4f08-8f87-0373b19d659d
+    m_ActionName: 'MapMenu/Cancel[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ceb0b3ed-7ac9-42e9-a6bc-8804b759d48e
+    m_ActionName: 'MapMenu/Point[/Mouse/position]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5d2efcf6-1b23-4fe4-9dc1-40740cd3a89c
+    m_ActionName: 'MapMenu/Click[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 113e8f84-ea3e-4a67-9a1f-be83460cb275
+    m_ActionName: 'MapMenu/ScrollWheel[/Mouse/scroll]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c0f55f2e-b221-444b-b28f-c08ef4cd3398
+    m_ActionName: 'MapMenu/MiddleClick[/Mouse/middleButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 232f5ed7-50ef-4160-8474-3deac1a5f2b1
+    m_ActionName: 'MapMenu/RightClick[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 19032ac3-c109-408d-8c58-029b0eb9b498
+    m_ActionName: MapMenu/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c9d9288e-05e2-4cb1-aeef-4d92c34e2f2a
+    m_ActionName: MapMenu/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerSelectMenu
@@ -218,6 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <currentPlayerSelectorObject>k__BackingField: {fileID: 8897048477050318486}
+  currentColor: 0
 --- !u!114 &7037647223120207762
 MonoBehaviour:
   m_ObjectHideFlags: 0

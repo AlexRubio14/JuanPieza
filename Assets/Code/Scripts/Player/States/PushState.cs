@@ -102,5 +102,11 @@ public class PushState : PlayerState
         base.OnCollisionEnter(collision);
     }
 
+    public override void GrabAction()
+    {
+    }
 
+    public override void ReleaseAction()
+    {
+    }
 }

@@ -25,11 +25,11 @@ public class CannonState : PlayerState
     public override void RollAction() { /*No puedes rodar*/ }
     public override void InteractAction() 
     {
-        controller.Interact();
+        controller.Grab();
     }
     public override void StopInteractAction() 
     {
-        controller.StopInteract();    
+        controller.Release();    
     }
     public override void UseAction()
     {
@@ -125,5 +125,13 @@ public class CannonState : PlayerState
     public void SetWeapon(Weapon _weapon)
     {
         currentWeapon = _weapon;
+    }
+
+    public override void GrabAction()
+    {
+    }
+
+    public override void ReleaseAction()
+    {
     }
 }

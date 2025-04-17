@@ -21,6 +21,8 @@ public abstract class PlayerState
     public abstract void StopInteractAction();
     public abstract void UseAction();
     public abstract void StopUseAction();
+    public abstract void GrabAction();
+    public abstract void ReleaseAction();
     public virtual void OnHit(Vector3 _hitPosition, float forceMultiplier = 1)
     {
         Vector3 knockbackDirection = (controller.transform.position - _hitPosition).normalized;

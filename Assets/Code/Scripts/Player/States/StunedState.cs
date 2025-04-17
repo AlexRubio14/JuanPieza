@@ -19,9 +19,17 @@ public class StunedState : PlayerState
 
     }
 
+    public override void GrabAction()
+    {
+    }
+
     public override void InteractAction()
     {
 
+    }
+
+    public override void ReleaseAction()
+    {
     }
 
     public override void RollAction()
