@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviour
     }
     private void RollAction()
     {
-        if (canRoll)
+        if (canRoll && !objectHolder.GetHasObjectPicked())
         {
             stateMachine.currentState.RollAction();
             canRoll = false;

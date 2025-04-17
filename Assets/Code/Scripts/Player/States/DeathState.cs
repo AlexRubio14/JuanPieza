@@ -66,12 +66,10 @@ public class DeathState : PlayerState
     {
         isDead = false;
         
-        
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         
+        controller.objectHolder.enabled = transform;
         controller.animator.SetBool("Swimming", false);
-
-        controller.enabled = true;
 
         FishingManager.instance.RemoveDeadPlayer(this);
 
