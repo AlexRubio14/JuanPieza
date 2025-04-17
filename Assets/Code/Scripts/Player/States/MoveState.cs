@@ -5,6 +5,8 @@ public class MoveState : PlayerState
     public override void EnterState()
     {
         controller.animator.SetBool("Moving", true);
+        controller.rb.constraints = RigidbodyConstraints.FreezeRotation;
+        controller.rb.useGravity = true;
     }
 
     public override void UpdateState()
@@ -14,12 +16,7 @@ public class MoveState : PlayerState
     }
     public override void FixedUpdateState()
     {
-        controller.rb.constraints = RigidbodyConstraints.FreezeRotation;
-
-
         controller.Rotate(controller.movementDirection, controller.rotationSpeed);
-        
-        controller.rb.useGravity = true;
 
         Vector3 moveDir = controller.movementDirection;
 

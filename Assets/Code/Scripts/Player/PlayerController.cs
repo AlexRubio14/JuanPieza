@@ -328,9 +328,6 @@ public class PlayerController : MonoBehaviour
     {
         InteractableObject currentObject = objectHolder.GetHandInteractableObject();
 
-        if (!currentObject)
-            currentObject = objectHolder.GetNearestInteractableObject();
-
         if (currentObject)
         {
             currentObject.StopUse(objectHolder);

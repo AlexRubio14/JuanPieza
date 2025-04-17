@@ -77,10 +77,13 @@ public class FishingRod : Tool, ICatapultAmmo
         {
             chargingHook = true;
             tiltProcess = 0;
-            if(player)
-                player.animator.SetBool("FishingCharge", true);
-            else 
-                _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("FishingCharge", true);
+            if (!player)
+                player = _objectHolder.GetComponentInParent<PlayerController>();
+
+
+            player.stateMachine.fishingState.fishingRod = this;
+            player.animator.SetBool("FishingCharge", true);
+            player.stateMachine.ChangeState(player.stateMachine.fishingState);
         }
         else if (isFishing || hookLanded && !hook.onWater)//Recoger anzuelo
         {
@@ -147,8 +150,6 @@ public class FishingRod : Tool, ICatapultAmmo
         Vector3 throwDirection = hookSpawnPoint.forward * throwForce.x + Vector3.up * throwForce.y;
 
         hook.rb.AddForce(throwDirection, ForceMode.Impulse);
-
-        player.stateMachine.ChangeState(player.stateMachine.fishingState);
 
         hookThrowed = true;
 
