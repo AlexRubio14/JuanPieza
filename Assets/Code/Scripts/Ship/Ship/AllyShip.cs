@@ -35,6 +35,11 @@ public class AllyShip : Ship
     [SerializeField] private GameObject cannon;
     [SerializeField] private WoodShelf fishingShelf;
 
+    [Header("Smoke")]
+    [SerializeField] private ParticleSystem smoke;
+    [SerializeField] private float rateOverTimeSum;
+    [SerializeField] private float radiusSum;
+
     public override void Start()
     {
         base.Start();
@@ -207,6 +212,25 @@ public class AllyShip : Ship
     }
     #endregion
 
+    public void Smoke()
+    {
+
+        if (!smoke.gameObject.activeSelf)
+        {
+            smoke.gameObject.SetActive(true);
+        }
+        else
+        {
+            var emission = smoke.emission;
+            float currentRate = emission.rateOverTime.constant;
+            emission.rateOverTime = currentRate + rateOverTimeSum;
+
+            var shape = smoke.shape;
+            shape.radius += radiusSum;
+        }
+        smoke.Clear();
+        smoke.Play();
+    }
     public List<Transform> GetSpawnPoints()
     {
         return playersSpawnPos;

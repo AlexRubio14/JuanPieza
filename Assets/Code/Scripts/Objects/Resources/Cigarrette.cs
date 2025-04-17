@@ -41,6 +41,7 @@ public class Cigarrette : Resource, ICatapultAmmo
     public override void Use(ObjectHolder _objectHolder)
     {
         //playear animacion player
+        ShipsManager.instance.playerShip.Smoke();
         _objectHolder.GetComponentInParent<CigarretteController>().ActivateCigarrette();
         _objectHolder.RemoveItemFromHand();
         _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
