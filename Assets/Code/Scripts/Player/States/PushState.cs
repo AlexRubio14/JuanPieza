@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class PushState : PlayerState
 {
@@ -7,10 +6,7 @@ public class PushState : PlayerState
     public override void EnterState()
     {
         if(!controller.canPush)
-        {
-            stateMachine.ChangeState(stateMachine.idleState);
             return;
-        }
 
         controller.canPush = false;
 
@@ -77,7 +73,7 @@ public class PushState : PlayerState
         pushTimePassed += Time.deltaTime;
         if (pushTimePassed >= controller.rollDuration)
         {
-            stateMachine.ChangeState(stateMachine.idleState);
+            stateMachine.ChangeState(stateMachine.lastState);
         }
     }
     public override void FixedUpdateState()
