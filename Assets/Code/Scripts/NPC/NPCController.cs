@@ -5,6 +5,9 @@ public class NPCController : MonoBehaviour
     private enum NpcAnimation {  SMOKE, MALBORO, MOVE_HEAD_SMOKE, DRINK, DANCE}
     [SerializeField] private NpcAnimation currentAnimation;
     private Animator animator;
+    [SerializeField] private AudioClip sound;
+    [SerializeField] private float maxValue;
+    [SerializeField] private ParticleSystem smokeParticles;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -32,6 +35,17 @@ public class NPCController : MonoBehaviour
                 animator.SetBool("DanceUp", true);
                 break;
         }
+    }
+
+    public void AmbientSound()
+    {
+        int randomValue = (int)Random.Range(1, maxValue + 1);
+
+        if(randomValue == 1)
+            AudioManager.instance.Play2dOneShotSound(sound, "Object");
+
+        if (currentAnimation == NpcAnimation.SMOKE)
+            smokeParticles.Play();
     }
 
 
