@@ -14,7 +14,12 @@ public class Beer : Resource, ICatapultAmmo
         //playear animacion player
 
         _objectHolder.RemoveItemFromHand();
-        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
+        PlayerController controller = _objectHolder.GetComponentInParent<PlayerController>();
+        controller.animator.SetBool("Pick", false);
+        if (controller.stateMachine.currentState != controller.stateMachine.drunkState)
+            controller.stateMachine.ChangeState(controller.stateMachine.drunkState);
+        else
+            controller.stateMachine.drunkState.DrinkBeer();
         Destroy(gameObject);
     }
 

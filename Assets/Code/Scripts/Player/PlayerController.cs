@@ -83,6 +83,22 @@ public class PlayerController : MonoBehaviour
     public float cannonRotationSpeed { get; private set; }
     public float cannonTilt {  get; private set; }
 
+    [field: Space, Header("Drunk"), SerializeField]
+    public float baseDrunkAngle {  get; private set; }
+    [field: SerializeField]
+    public float drunkAngleIncrement { get; private set; }
+    [field: SerializeField]
+    public float baseDrunkLookAtSpeed {  get; private set; }
+    [field: SerializeField]
+    public float drunkLookAtIncrement { get; private set; }
+    [field: SerializeField]
+    public float drunkMinAngleDiff { get; private set; }
+    [field: SerializeField]
+    public float drunkStateDuration {  get; private set; }
+    [field: SerializeField]
+    public ParticleSystem drunkParticles { get; private set; }
+
+
     [field: Space, Header("Audio"), SerializeField]
     public AudioClip dieClip;
     [SerializeField] public AudioClip dashClip;
@@ -132,8 +148,8 @@ public class PlayerController : MonoBehaviour
         objectHolder = GetComponentInChildren<ObjectHolder>();
         interactCanvas.worldCamera = Camera.main;
         interactCanvasObject.SetActive(false);
+        drunkParticles.Stop(true);
     }
-
     private void OnEnable()
     {
         SuscribeActions();
@@ -366,6 +382,35 @@ public class PlayerController : MonoBehaviour
             endPos = startPos + (Vector3.down * (capsuleCollider.height / 2 + slopeCheckDistance));
             Gizmos.DrawLine(startPos, endPos);
         }
+
+
+
+        Gizmos.color = Color.red;
+
+
+        Quaternion drunkRotation = Quaternion.Euler(0, baseDrunkAngle, 0);
+        Vector3 drunkDirection = drunkRotation * transform.forward;
+        Vector3 drunkEndPos1 = transform.position + drunkDirection * 3;
+        Gizmos.DrawLine(transform.position, drunkEndPos1);
+
+        drunkRotation = Quaternion.Euler(0, -baseDrunkAngle, 0);
+        drunkDirection = drunkRotation * transform.forward;
+        Vector3 drunkEndPos2 = transform.position + drunkDirection * 3;
+        Gizmos.DrawLine(transform.position, drunkEndPos2);
+
+        Gizmos.DrawLine(drunkEndPos1, drunkEndPos2);
+
+        Gizmos.color = Color.green;
+
+        drunkRotation = Quaternion.Euler(0, drunkMinAngleDiff / 2, 0);
+        drunkDirection = drunkRotation * transform.forward;
+        Vector3 drunkEndPos = transform.position + drunkDirection * 3;
+        Gizmos.DrawLine(transform.position, drunkEndPos);
+
+        drunkRotation = Quaternion.Euler(0, -drunkMinAngleDiff / 2, 0);
+        drunkDirection = drunkRotation * transform.forward;
+        drunkEndPos = transform.position + drunkDirection * 3;
+        Gizmos.DrawLine(transform.position, drunkEndPos);
     }
 
     public void SetOnIce(bool value)
