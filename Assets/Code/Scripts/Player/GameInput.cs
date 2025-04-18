@@ -12,6 +12,7 @@ public class GameInput : MonoBehaviour
     public Action OnPushAction;
     public Action OnRollAction;
     public Action OnThrowAction;
+    public Action OnDanceAction;
 
     public Action<float> OnWeaponTiltAction;
     public int playerReference { get;  set; }
@@ -65,6 +66,14 @@ public class GameInput : MonoBehaviour
         }
     }
 
+    public void DanceAction(InputAction.CallbackContext obj)
+    {
+        if (obj.started)
+        {
+            if (OnDanceAction != null)
+                OnDanceAction();
+        }
+    }
     public void TiltCannon(InputAction.CallbackContext obj)
     {
         if (OnWeaponTiltAction != null)

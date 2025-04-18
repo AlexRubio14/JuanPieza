@@ -12,7 +12,7 @@ public class RollState : PlayerState
         bounced = false;
         controller.animator.SetTrigger("Roll");
 
-        if (controller.movementInput != Vector2.zero)
+        if (controller.movementInput != Vector2.zero && stateMachine.lastState is not DrunkState)
             rollDir = controller.movementDirection;
         else
             rollDir = controller.transform.forward;
@@ -25,7 +25,7 @@ public class RollState : PlayerState
         //Contar el tiempo rodando
         rollTimePassed += Time.deltaTime;
         if(rollTimePassed >= controller.rollDuration)
-            stateMachine.ChangeState(stateMachine.idleState);
+            stateMachine.ChangeState(stateMachine.lastState);
     }
     public override void FixedUpdateState()
     {

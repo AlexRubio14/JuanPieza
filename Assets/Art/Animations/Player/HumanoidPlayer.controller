@@ -31,7 +31,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: Celebrating
+    m_ConditionEvent: Dancing
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1676815493334516710}
@@ -152,10 +152,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Win
+    m_ConditionEvent: Dance
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: Celebrating
+    m_ConditionEvent: Dancing
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2159293482882626767}
@@ -595,7 +595,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Celebrate
+    m_ConditionEvent: HandUp
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8884883938291252193}
@@ -723,7 +723,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Celebrate
+  m_Name: Dance
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -784,46 +784,46 @@ AnimatorStateMachine:
     m_Position: {x: 70, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3503649668761653135}
-    m_Position: {x: 0, y: 470, z: 0}
+    m_Position: {x: 370, y: 290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1513156482863873587}
-    m_Position: {x: -570, y: 430, z: 0}
+    m_Position: {x: -460, y: 330, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5709251276521402096}
-    m_Position: {x: -570, y: 120, z: 0}
+    m_Position: {x: -460, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3869674719547833369}
-    m_Position: {x: -330, y: 120, z: 0}
+    m_Position: {x: -220, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7258696735826657233}
-    m_Position: {x: -570, y: 240, z: 0}
+    m_Position: {x: -460, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5175947406856570359}
-    m_Position: {x: 140, y: 470, z: 0}
+    m_Position: {x: 370, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4325851226505761429}
-    m_Position: {x: 280, y: 470, z: 0}
+    m_Position: {x: 370, y: 230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8884883938291252193}
-    m_Position: {x: 220, y: 760, z: 0}
+    m_Position: {x: 850, y: 250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7419705295001289505}
-    m_Position: {x: -180, y: 470, z: 0}
+    m_Position: {x: 370, y: 320, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1272563929482242072}
-    m_Position: {x: -890, y: 120, z: 0}
+    m_Position: {x: -720, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 205683119787553144}
-    m_Position: {x: -880, y: 320, z: 0}
+    m_Position: {x: -720, y: 310, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 779592069463462669}
-    m_Position: {x: -890, y: 200, z: 0}
+    m_Position: {x: -720, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8634662292603684841}
-    m_Position: {x: 470, y: 470, z: 0}
+    m_Position: {x: 370, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2159293482882626767}
-    m_Position: {x: 670, y: 470, z: 0}
+    m_Position: {x: 370, y: 170, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -6462604576408165630}
@@ -836,7 +836,7 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 240, y: 610, z: 0}
+  m_AnyStatePosition: {x: 660, y: 250, z: 0}
   m_EntryPosition: {x: 90, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
@@ -957,7 +957,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Celebrate
+  - m_Name: HandUp
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -993,13 +993,13 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Win
+  - m_Name: Dance
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Celebrating
+  - m_Name: Dancing
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
