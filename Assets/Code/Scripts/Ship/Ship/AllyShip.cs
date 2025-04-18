@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 
 public class AllyShip : Ship
 {
@@ -73,8 +70,8 @@ public class AllyShip : Ship
         leaving = false;
         foreach (PlayerController item in PlayersManager.instance.ingamePlayers)
         {
-            item.animator.SetTrigger("Win");
-            item.animator.SetBool("Celebrating", true);
+            item.animator.SetTrigger("Dance");
+            item.animator.SetBool("Dancing", true);
         }
 
         Invoke("WinCondition", 3);
@@ -86,7 +83,7 @@ public class AllyShip : Ship
 
         foreach (PlayerController item in PlayersManager.instance.ingamePlayers)
         {
-            item.animator.SetBool("Celebrating", false);
+            item.animator.SetBool("Dancing", false);
         }
     }
 

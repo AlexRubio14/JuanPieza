@@ -94,7 +94,7 @@ public class StartMisionAnimation : MonoBehaviour
     {
         foreach (PlayerController playerController in PlayersManager.instance.ingamePlayers)
         {
-            playerController.animator.SetTrigger("Celebrate");
+            playerController.animator.SetTrigger("HandUp");
         }
         animationActivated = false;
     }

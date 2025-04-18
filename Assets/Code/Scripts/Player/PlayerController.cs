@@ -55,11 +55,9 @@ public class PlayerController : MonoBehaviour
 
     [field: SerializeField] public float pirateKnockbackForce { get; private set; }
     [field: SerializeField] public float pirateUpForce { get; private set; }
+    [SerializeField] public LayerMask objectLayer {  get; set; }
 
 
-    public Rigidbody rb { get; private set; }
-
-    [SerializeField] public ObjectHolder objectHolder;
 
 
     [field: Space, Header("Death"), SerializeField]
@@ -71,9 +69,8 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField]
     public float swimRotateSpeed { get; private set; }
 
-    [Space, Header("Interact"), SerializeField]
+    [Space, Header("Fishing"), SerializeField]
     private Canvas interactCanvas;
-
     public GameObject interactCanvasObject => interactCanvas.transform.gameObject;
 
 
@@ -98,6 +95,17 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField]
     public ParticleSystem drunkParticles { get; private set; }
 
+    [field: Space, Header("Dance"), SerializeField]
+    public AudioClip danceMusic { get; private set; }
+
+    [field: Space, Header("Stun"), SerializeField] 
+    public float maxTimeStunned { get; private set; }
+    public float currentTimeStunned {  get; set; }
+
+    [Space, Header("Ice"), SerializeField] 
+    private float iceDrag;
+    private float realDrag;
+    private bool isOnIce;
 
     [field: Space, Header("Audio"), SerializeField]
     public AudioClip dieClip;
@@ -107,33 +115,24 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public List<AudioClip> pushListClips;
 
     public Animator animator { get; private set; }
-    
     public HintController hintController { get; private set; }
-
-    [field: SerializeField]
-    //public ProgressBarController progressBar { get; private set; }
     private CapsuleCollider capsuleCollider;
+    public Rigidbody rb { get; private set; }
+
+    public ObjectHolder objectHolder { get; private set; }
 
     public bool movementBuffActive {  get; set; }
     public float currentKnockBackTime { get; set; }
 
-    [SerializeField] public LayerMask objectLayer;
 
-    [Header("Stun")]
-    [SerializeField] public float maxTimeStunned;
-    public float currentTimeStunned;
-
-    [Header("Ice")]
-    [SerializeField] private float iceDrag;
-    private float realDrag;
-    private bool isOnIce;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
-        hintController = GetComponent<HintController>();
         capsuleCollider = GetComponent<CapsuleCollider>();
+        hintController = GetComponent<HintController>();
+        animator = GetComponentInChildren<Animator>();
+        objectHolder = GetComponentInChildren<ObjectHolder>();
 
         stateMachine = GetComponent<PlayerStateMachine>();
         stateMachine.InitializeStates(this);
@@ -172,6 +171,8 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnStopUseAction += StopUseAction;
 
+        playerInput.OnDanceAction += DanceAcion;
+
         playerInput.OnWeaponTiltAction += CannonTiltAction;
     }
 
@@ -186,6 +187,8 @@ public class PlayerController : MonoBehaviour
         playerInput.OnStopInteractAction -= StopInteractAction;
 
         playerInput.OnUseAction -= UseAction;
+
+        playerInput.OnDanceAction -= DanceAcion;
 
         playerInput.OnWeaponTiltAction -= CannonTiltAction;
 
@@ -230,10 +233,14 @@ public class PlayerController : MonoBehaviour
     {
         cannonTilt = _axis;
     }
-
     public void PlayerHitted(Vector3 _hitPosition, float forceMultiplier = 1)
     {
         stateMachine.currentState.OnHit(_hitPosition, forceMultiplier);
+    }
+    public void DanceAcion()
+    {
+        if (stateMachine.currentState is IdleState)
+            stateMachine.ChangeState(stateMachine.danceState);
     }
     #endregion
 
