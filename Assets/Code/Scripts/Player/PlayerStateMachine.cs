@@ -15,7 +15,7 @@ public class PlayerStateMachine : MonoBehaviour
     public DeathState deathState { get; private set; }
     public StunedState stunedState { get; private set; }
     public DrunkState drunkState { get; private set; }
-    
+    public DanceState danceState { get; private set; }
 
     public void InitializeStates(PlayerController _controller)
     {
@@ -41,6 +41,8 @@ public class PlayerStateMachine : MonoBehaviour
         stunedState.InitializeState(_controller, this);
         drunkState = new DrunkState();
         drunkState.InitializeState(_controller, this);
+        danceState = new DanceState();
+        danceState.InitializeState(_controller, this);
 
         ChangeState(idleState);
     }
