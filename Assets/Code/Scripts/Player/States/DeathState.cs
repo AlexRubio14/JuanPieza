@@ -38,7 +38,7 @@ public class DeathState : PlayerState
     }
     public override void UpdateState()
     {
-
+        controller.animator.SetBool("Moving", controller.movementInput != Vector2.zero);
     }
     public override void FixedUpdateState()
     {
