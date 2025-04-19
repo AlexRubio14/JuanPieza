@@ -28,6 +28,7 @@ public class IdleState : PlayerState
     }
     public override void InteractAction()
     {
+        controller.Interact();
     }
     public override void StopInteractAction() 
     {

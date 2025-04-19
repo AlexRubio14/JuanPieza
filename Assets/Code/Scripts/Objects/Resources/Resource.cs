@@ -6,12 +6,6 @@ public abstract class Resource : InteractableObject
     [SerializeField] protected AudioClip dropItemClip;
     public override void Interact(ObjectHolder _objectHolder)
     {
-        if(!_objectHolder.GetHasObjectPicked())
-        {
-            PickItem(_objectHolder);
-            return;
-        }
-
         InteractableObject nearObj = _objectHolder.GetNearestInteractableObject();
 
         if (nearObj && nearObj is Box && nearObj.CanInteract(_objectHolder))
@@ -20,10 +14,30 @@ public abstract class Resource : InteractableObject
             InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
             Destroy(currentObject.gameObject);
         }
-        else
-            DropItem(_objectHolder);
-
     }
+
+    public override void Use(ObjectHolder _objectHolder)
+    {
+        Throw();
+    }
+
+  
+
+    public override void Grab(ObjectHolder _objectHolder)
+    {
+        if (!_objectHolder.GetHasObjectPicked())
+        {
+            PickItem(_objectHolder);
+            return;
+        }
+    }
+
+    public override void Release(ObjectHolder _objectHolder)
+    {
+        
+        DropItem(_objectHolder);
+    }
+
     private void PickItem(ObjectHolder _objectHolder)
     {
         _objectHolder.ChangeObjectInHand(this);
@@ -36,6 +50,11 @@ public abstract class Resource : InteractableObject
     {
         _objectHolder.RemoveItemFromHand();
         AudioManager.instance.Play2dOneShotSound(dropItemClip, "Objects");
+    }
+
+    public void Throw()
+    {
+
     }
 
     public override bool CanInteract(ObjectHolder _objectHolder)

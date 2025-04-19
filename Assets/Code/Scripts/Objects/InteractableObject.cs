@@ -42,6 +42,8 @@ public abstract class InteractableObject : MonoBehaviour
 
     public abstract void Use(ObjectHolder _objectHolder);
     public virtual void StopUse(ObjectHolder _objectHolder) { }
+    public virtual void Grab(ObjectHolder _objectHolder) { }
+    public virtual void Release(ObjectHolder _objectHolder) { }
     public SelectedVisual GetSelectedVisual()
     {
         return selectedVisual;

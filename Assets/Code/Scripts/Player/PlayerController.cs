@@ -279,40 +279,63 @@ public class PlayerController : MonoBehaviour
     {
         canPush = true;
     }
-    public void Grab()
+
+    public void Interact()
     {
         InteractableObject handObject = objectHolder.GetHandInteractableObject();
-        InteractableObject nearestObject = objectHolder.GetNearestInteractableObject();
-        
-        if (!handObject && (!nearestObject || nearestObject && !nearestObject.CanInteract(objectHolder)))
+
+        if (!handObject )
             return;
 
-        if(handObject)
-        {
-            handObject.Interact(objectHolder);
-            hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));
-        }else if (nearestObject && nearestObject.CanInteract(objectHolder))
-        {
-            nearestObject.Interact(objectHolder);
-            objectHolder.ChangeNearestInteractableObject(null);
-            hintController.UpdateActionType(nearestObject.ShowNeededInputHint(objectHolder));
-        }
-        
-        animator.SetBool("Pick", objectHolder.GetHandInteractableObject());
-
+        handObject.Interact(objectHolder);
+        hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));
     }
-    public void Release()
+
+    public void StopInteract()
     {
         InteractableObject currentObject = objectHolder.GetHandInteractableObject();
-        
-        if(currentObject == null)
-            currentObject = objectHolder.GetNearestInteractableObject();
 
         if (currentObject as Repair)
         {
             if (((Repair)currentObject).IsPlayerReparing(this))
                 currentObject.StopInteract(objectHolder);
         }
+    }
+
+    public void Grab()
+    {
+        InteractableObject handObject = objectHolder.GetHandInteractableObject();
+        InteractableObject nearestObject = objectHolder.GetNearestInteractableObject();
+
+        if (!handObject && (!nearestObject || nearestObject && !nearestObject.CanInteract(objectHolder)))
+            return;
+
+        if (handObject)
+        {
+            handObject.Grab(objectHolder);
+            hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));
+        }
+        else if (nearestObject && nearestObject.CanInteract(objectHolder))
+        {
+            nearestObject.Grab(objectHolder);
+            objectHolder.ChangeNearestInteractableObject(null);
+            hintController.UpdateActionType(nearestObject.ShowNeededInputHint(objectHolder));
+        }
+
+        animator.SetBool("Pick", objectHolder.GetHandInteractableObject());
+
+
+    }
+    public void Release()
+    {
+        InteractableObject handObject = objectHolder.GetHandInteractableObject();
+
+        if (!handObject)
+            return;
+
+        handObject.Release(objectHolder);
+        animator.SetBool("Pick", objectHolder.GetHandInteractableObject());
+
     }
     public void Use()
     {
