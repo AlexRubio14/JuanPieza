@@ -9,6 +9,8 @@ public class Hammer : Tool, ICatapultAmmo
     }
     public override void Use(ObjectHolder _objectHolder)
     {
+        //Hay que cambiarlo por hittear
+
         InteractableObject nearObject = _objectHolder.GetNearestInteractableObject();
 
         if (!nearObject)
@@ -19,7 +21,6 @@ public class Hammer : Tool, ICatapultAmmo
         else if (nearObject is RepairHole)
             (nearObject as RepairHole).AddPlayer(_objectHolder);
     }
-
     public override void StopUse(ObjectHolder _objectHolder)
     {
         InteractableObject nearObject = _objectHolder.GetNearestInteractableObject();
@@ -33,6 +34,10 @@ public class Hammer : Tool, ICatapultAmmo
             (nearObject as RepairHole).RemovePlayer(_objectHolder);
     }
 
+    public override bool CanInteract(ObjectHolder _objectHolder)
+    {
+        return _objectHolder.GetNearestInteractableObject() == this;
+    }
     public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();

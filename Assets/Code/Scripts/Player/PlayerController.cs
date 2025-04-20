@@ -173,6 +173,10 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnDanceAction += DanceAcion;
 
+        playerInput.OnGrabAction += GrabAction;
+        
+        playerInput.OnReleaseAction += ReleaseAction;
+
         playerInput.OnWeaponTiltAction += CannonTiltAction;
     }
 
@@ -189,6 +193,10 @@ public class PlayerController : MonoBehaviour
         playerInput.OnUseAction -= UseAction;
 
         playerInput.OnDanceAction -= DanceAcion;
+
+        playerInput.OnGrabAction -= GrabAction;
+
+        playerInput.OnReleaseAction -= ReleaseAction;
 
         playerInput.OnWeaponTiltAction -= CannonTiltAction;
 
@@ -237,10 +245,18 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.currentState.OnHit(_hitPosition, forceMultiplier);
     }
-    public void DanceAcion()
+    private void DanceAcion()
     {
         if (stateMachine.currentState is IdleState)
             stateMachine.ChangeState(stateMachine.danceState);
+    }
+    private void GrabAction()
+    {
+        stateMachine.currentState.GrabAction();
+    } 
+    private void ReleaseAction()
+    {
+        stateMachine.currentState.ReleaseAction();
     }
     #endregion
 
@@ -289,6 +305,19 @@ public class PlayerController : MonoBehaviour
     private void WaitCanPush()
     {
         canPush = true;
+    }
+    public void Grab()
+    {
+        InteractableObject handObject = objectHolder.GetHandInteractableObject();
+        InteractableObject nearObject = objectHolder.GetNearestInteractableObject();
+        if (!handObject && nearObject && nearObject.CanGrab(objectHolder))
+            nearObject.Grab(objectHolder);
+    }
+    public void Release()
+    {
+        InteractableObject handObject = objectHolder.GetHandInteractableObject();
+        if (handObject)
+            handObject.Release(objectHolder);
     }
     public void Interact()
     {

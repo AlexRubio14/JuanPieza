@@ -71,6 +71,25 @@ public class FishingRod : Tool, ICatapultAmmo
         FishingManager.instance.RemoveFishingRod(this);
     }
 
+    public override void Grab(ObjectHolder _objectHolder)
+    {
+
+        FishingManager.instance.ResetFishingRodData(this);
+
+        PlayerController currentPlayer = _objectHolder.GetComponentInParent<PlayerController>();
+
+        base.Grab(_objectHolder);
+
+        if (player == currentPlayer)
+            return;
+
+        player = currentPlayer;
+        player.stateMachine.fishingState.fishingRod = this;
+    }
+    public override void Release(ObjectHolder _objectHolder)
+    {
+        base.Release(_objectHolder);
+    }
     public override void Use(ObjectHolder _objectHolder)
     {
         if (!isFishing && !hookThrowed) //Cargar el anzuelo
@@ -107,18 +126,47 @@ public class FishingRod : Tool, ICatapultAmmo
         if ((this as ICatapultAmmo).LoadItemInCatapult(_objectHolder, this))
             return;
 
-       FishingManager.instance.ResetFishingRodData(this);
-
-        PlayerController currentPlayer = _objectHolder.GetComponentInParent<PlayerController>();
-        
         base.Interact(_objectHolder);
-
-        if (player == currentPlayer)
-            return;
-
-        player = currentPlayer;
-        player.stateMachine.fishingState.fishingRod = this;
     }
+
+    public override bool CanInteract(ObjectHolder _objectHolder)
+    {
+        return _objectHolder.GetHandInteractableObject() == this;
+    }
+    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    {
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+        if (handObject && handObject == this)
+        {
+            if (!hookThrowed)
+                return new HintController.Hint[]
+                {
+                    new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
+                    new HintController.Hint(HintController.ActionType.USE, "throw_hook")
+                };
+            else
+                return new HintController.Hint[]
+                {
+                    new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
+                    new HintController.Hint(HintController.ActionType.USE, "recover_hook")
+                };
+        }
+        else if (!handObject)
+            return new HintController.Hint[]
+            {
+                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
+                new HintController.Hint(HintController.ActionType.CANT_USE, "")
+            };
+
+
+
+
+        return new HintController.Hint[]
+        {
+            new HintController.Hint(HintController.ActionType.NONE, "")
+        };
+    }
+
 
     private void ChargeHook()
     {
@@ -189,37 +237,4 @@ public class FishingRod : Tool, ICatapultAmmo
     }
 
     
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-        if (handObject && handObject == this)
-        {
-            if(!hookThrowed)
-                return new HintController.Hint[]
-                {
-                    new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
-                    new HintController.Hint(HintController.ActionType.USE, "throw_hook")
-                };
-            else
-                return new HintController.Hint[]
-                {
-                    new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
-                    new HintController.Hint(HintController.ActionType.USE, "recover_hook")
-                };
-        }
-        else if (!handObject)
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-
-
-
-
-        return new HintController.Hint[]
-        {
-            new HintController.Hint(HintController.ActionType.NONE, "")
-        };
-    }
 }

@@ -13,6 +13,8 @@ public class GameInput : MonoBehaviour
     public Action OnRollAction;
     public Action OnThrowAction;
     public Action OnDanceAction;
+    public Action OnGrabAction;
+    public Action OnReleaseAction;
 
     public Action<float> OnWeaponTiltAction;
     public int playerReference { get;  set; }
@@ -65,7 +67,6 @@ public class GameInput : MonoBehaviour
                 OnThrowAction();
         }
     }
-
     public void DanceAction(InputAction.CallbackContext obj)
     {
         if (obj.started)
@@ -74,6 +75,20 @@ public class GameInput : MonoBehaviour
                 OnDanceAction();
         }
     }
+    public void GrabAction(InputAction.CallbackContext obj)
+    {
+        if (obj.started)
+        {
+            if (OnGrabAction != null)
+                OnGrabAction();
+        }
+        else if (obj.canceled)
+        {
+            if (OnReleaseAction != null)
+                OnReleaseAction();
+        }
+    }
+
     public void TiltCannon(InputAction.CallbackContext obj)
     {
         if (OnWeaponTiltAction != null)

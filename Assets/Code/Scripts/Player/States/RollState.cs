@@ -41,6 +41,8 @@ public class RollState : PlayerState
     {
         //No puedes volver a rodar
     }
+    public override void GrabAction() { }
+    public override void ReleaseAction() { /* No deberias tener nada en la mano */}
     public override void InteractAction() { /*No puedes interactuar*/ }
     public override void StopInteractAction() { /*No hace nada*/ }
     public override void UseAction() { /*No puedes usar ningun objeto*/ }

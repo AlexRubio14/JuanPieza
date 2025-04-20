@@ -4,16 +4,19 @@ public abstract class Tool : InteractableObject
 {
     [SerializeField] protected AudioClip dropItemClip;
 
-    public bool addToolAtDestroy = true;
+    protected bool addToolAtDestroy = true;
+
+    public override void Grab(ObjectHolder _objectHolder)
+    {
+        if (!_objectHolder.GetHasObjectPicked())
+            PickItem(_objectHolder);
+    }
+    public override void Release(ObjectHolder _objectHolder)
+    {
+        DropItem(_objectHolder);
+    }
     public override void Interact(ObjectHolder _objectHolder)
     {
-
-        if(!_objectHolder.GetHasObjectPicked())
-        {
-            PickItem(_objectHolder);
-            return;
-        }
-
         InteractableObject nearObj = _objectHolder.GetNearestInteractableObject();
 
         if (nearObj && nearObj is WoodShelf && nearObj.CanInteract(_objectHolder))
@@ -23,24 +26,20 @@ public abstract class Tool : InteractableObject
             InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
             Destroy(currentObject.gameObject);
         }
-        else
-            DropItem(_objectHolder);
-
     }
-
     private void PickItem(ObjectHolder _objectHolder)
     {
         _objectHolder.ChangeObjectInHand(this);
-
+        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", true);
         selectedVisual.Hide();
     }
-
     public void DropItem(ObjectHolder _objectHolder)
     {
         _objectHolder.RemoveItemFromHand();
+        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
         AudioManager.instance.Play2dOneShotSound(dropItemClip, "Objects");
+
     }
-    public override void Use(ObjectHolder _objectHolder) { }
 
     protected override void OnDestroy()
     {

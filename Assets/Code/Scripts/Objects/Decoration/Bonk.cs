@@ -26,11 +26,14 @@ public class Bonk : RepairObject
         AudioManager.instance.Play2dOneShotSound(bonkClip, "Objects", 0.2f, 0.9f, 1.1f);
     }
 
+    public override bool CanGrab(ObjectHolder _objectHolder)
+    {
+        return false;
+    }
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
         if (state.GetIsBroken())
             return base.CanInteract(_objectHolder);
-
 
         return !_objectHolder.GetHandInteractableObject();
     }

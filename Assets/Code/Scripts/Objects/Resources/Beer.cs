@@ -1,18 +1,15 @@
 public class Beer : Resource, ICatapultAmmo
 {
 
-    public override void Interact(ObjectHolder _objectHolder)
+    public override void Release(ObjectHolder _objectHolder)
     {
         if ((this as ICatapultAmmo).LoadItemInCatapult(_objectHolder, this))
             return;
 
-        base.Interact(_objectHolder);
-        _objectHolder.hintController.UpdateActionType(ShowNeededInputHint(_objectHolder));
+        base.Release(_objectHolder);
     }
-    public override void Use(ObjectHolder _objectHolder)
+    public override void Interact(ObjectHolder _objectHolder) 
     {
-        //playear animacion player
-
         _objectHolder.RemoveItemFromHand();
         PlayerController controller = _objectHolder.GetComponentInParent<PlayerController>();
         controller.animator.SetBool("Pick", false);
@@ -20,9 +17,15 @@ public class Beer : Resource, ICatapultAmmo
             controller.stateMachine.ChangeState(controller.stateMachine.drunkState);
         else
             controller.stateMachine.drunkState.DrinkBeer();
+
         Destroy(gameObject);
     }
+    public override void Use(ObjectHolder _objectHolder) { }
 
+    public override bool CanInteract(ObjectHolder _objectHolder)
+    {
+        return _objectHolder.GetHandInteractableObject() == this;
+    }
     public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         if (!_objectHolder.GetHasObjectPicked())

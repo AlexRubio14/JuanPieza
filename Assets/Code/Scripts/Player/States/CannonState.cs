@@ -1,4 +1,3 @@
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class CannonState : PlayerState
@@ -23,6 +22,12 @@ public class CannonState : PlayerState
         controller.animator.SetBool("OnCannon", false);
     }
     public override void RollAction() { /*No puedes rodar*/ }
+    public override void GrabAction() { /* Esta agarrando algo no puedes coger nada mas */ }
+
+    public override void ReleaseAction()
+    {
+        
+    }
     public override void InteractAction() 
     {
         controller.Interact();

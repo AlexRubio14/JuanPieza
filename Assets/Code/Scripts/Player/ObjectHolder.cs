@@ -57,7 +57,10 @@ public class ObjectHolder : MonoBehaviour
 
             InteractableObject tempObject = item.collider.GetComponent<InteractableObject>();
 
-            if (!tempObject || tempObject.isBeingUsed || !tempObject.CanInteract(this) && (tempObject is not Repair || !(tempObject as Repair).GetObjectState().GetIsBroken()))
+            if (!tempObject || 
+                tempObject.isBeingUsed ||
+                !tempObject.CanGrab(this) && !tempObject.CanInteract(this) &&
+                (tempObject is not Repair || !(tempObject as Repair).GetObjectState().GetIsBroken()))
                 continue;
 
             lastDistance = Vector3.Distance(transform.parent.position, item.collider.transform.position);
@@ -168,7 +171,7 @@ public class ObjectHolder : MonoBehaviour
             return;
         }
 
-        if (_nearestObject.CanInteract(this))
+        if (_nearestObject.CanGrab(this) || _nearestObject.CanInteract(this))
         {
             _nearestObject.GetSelectedVisual().Show();
             if (_nearestObject.GetTooltip() != null)

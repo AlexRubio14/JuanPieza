@@ -12,6 +12,8 @@ public abstract class InteractableObject : MonoBehaviour
     [SerializeField] 
     protected ObjectsTooltip tooltip;
     public bool isBeingUsed { get; protected set; }
+    [field: SerializeField]
+    protected bool canGrab;
 
     [SerializeField]
     public Rigidbody rb;
@@ -37,6 +39,9 @@ public abstract class InteractableObject : MonoBehaviour
         StartCoroutine(AddObjectToShip());
     }
 
+
+    public abstract void Grab(ObjectHolder _objectHolder);
+    public abstract void Release(ObjectHolder _objectHolder);
     public abstract void Interact(ObjectHolder _objectHolder);
     public virtual void StopInteract(ObjectHolder _objectHolder) { }
 
@@ -56,14 +61,11 @@ public abstract class InteractableObject : MonoBehaviour
         isBeingUsed = _value;
     }
 
-    public virtual bool CanInteract(ObjectHolder _objectHolder)
+    public virtual bool CanGrab(ObjectHolder _objectHolder)
     {
-        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-        
-        return 
-            handObject && objectToInteract == handObject.objectSO || 
-            !handObject && !objectToInteract;
+        return !_objectHolder.GetHandInteractableObject() && canGrab;
     }
+    public abstract bool CanInteract(ObjectHolder _objectHolder);
 
     protected virtual void OnEnable()
     {

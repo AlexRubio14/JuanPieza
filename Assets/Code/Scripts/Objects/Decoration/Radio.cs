@@ -14,11 +14,21 @@ public class Radio : Resource
         isPlaying = false;
     }
 
+    public override void Interact(ObjectHolder _objectHolder)
+    {
+        if (isPlaying)
+            StopPlaying();
+        else
+            Play();
+
+        _objectHolder.hintController.UpdateActionType(ShowNeededInputHint(_objectHolder));
+    }
+    public override void Use(ObjectHolder _objectHolder) { }
+
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
-        return !_objectHolder.GetHasObjectPicked();
+        return _objectHolder.GetHasObjectPicked() == this;
     }
-
     public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         if (!_objectHolder.GetHasObjectPicked())
@@ -49,24 +59,7 @@ public class Radio : Resource
             new HintController.Hint(HintController.ActionType.NONE, "")
         };
     }
-
-    public override void Interact(ObjectHolder _objectHolder)
-    {
-        base.Interact(_objectHolder); 
-        _objectHolder.hintController.UpdateActionType(ShowNeededInputHint(_objectHolder));
-
-    }
-
-    public override void Use(ObjectHolder _objectHolder)
-    {
-        if (isPlaying)
-            StopPlaying();
-        else
-            Play();
-
-        _objectHolder.hintController.UpdateActionType(ShowNeededInputHint(_objectHolder));
-    }
-
+ 
     private void Play()
     {
         int randomMusic = Random.Range(0, musicsList.Count);
@@ -75,11 +68,10 @@ public class Radio : Resource
         audioSource = AudioManager.instance.Play2dLoop(musicsList[randomMusic], "Radio", 1, 1, 1);
         isPlaying = true;
     }
-
     private void StopPlaying()
     {
         AudioManager.instance.musicAs.UnPause();
-        audioSource.clip = null; 
+        audioSource.clip = null;
         audioSource.Stop();
         isPlaying = false;
     }
