@@ -83,17 +83,28 @@ public class Catapult : Weapon
         base.Reload(_objectHolder);
     }
 
+    public override void Interact(ObjectHolder _objectHolder)
+    {
+        if (!CanInteract(_objectHolder) || state.GetIsBroken() || freeze)
+            return;
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+        if (handObject is ICatapultAmmo && (handObject as ICatapultAmmo).LoadItemInCatapult(_objectHolder, handObject))
+            return;
+        base.Interact(_objectHolder);
+    }
+
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
         if (state.GetIsBroken())
-        {
             return base.CanInteract(_objectHolder);
-        }
 
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
 
-        return !isPlayerMounted() && !handObject /*Montarse*/ || isPlayerMounted() && playerCont.playerInput.playerReference == mountedPlayerId /*Bajarse*/ || !hasAmmo && handObject /*Recargar*/ ;
+        return !isPlayerMounted() && !handObject /*Montarse*/ 
+            || isPlayerMounted() && playerCont.playerInput.playerReference == mountedPlayerId /*Bajarse*/ 
+            || !hasAmmo && handObject /*Recargar*/ 
+            || handObject is ICatapultAmmo;
 
     }
     public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)

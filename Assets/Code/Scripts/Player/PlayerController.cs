@@ -327,7 +327,7 @@ public class PlayerController : MonoBehaviour
         if (!handObject && (!nearestObject || nearestObject && !nearestObject.CanInteract(objectHolder)))
             return;
 
-        if(handObject)
+        if(handObject && handObject.CanInteract(objectHolder))
         {
             handObject.Interact(objectHolder);
             hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));

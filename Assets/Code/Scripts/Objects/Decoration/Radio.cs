@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Radio : Resource
+public class Radio : Resource, ICatapultAmmo
 {
     [Space, Header("Radio"), SerializeField] private List<AudioClip> musicsList;
     private AudioSource audioSource;
@@ -14,7 +14,8 @@ public class Radio : Resource
         isPlaying = false;
     }
 
-    public override void Interact(ObjectHolder _objectHolder)
+    public override void Interact(ObjectHolder _objectHolder) { }
+    public override void Use(ObjectHolder _objectHolder) 
     {
         if (isPlaying)
             StopPlaying();
@@ -23,7 +24,6 @@ public class Radio : Resource
 
         _objectHolder.hintController.UpdateActionType(ShowNeededInputHint(_objectHolder));
     }
-    public override void Use(ObjectHolder _objectHolder) { }
 
     public override bool CanInteract(ObjectHolder _objectHolder)
     {

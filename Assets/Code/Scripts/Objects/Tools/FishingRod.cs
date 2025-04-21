@@ -77,7 +77,8 @@ public class FishingRod : Tool, ICatapultAmmo
         FishingManager.instance.ResetFishingRodData(this);
 
         PlayerController currentPlayer = _objectHolder.GetComponentInParent<PlayerController>();
-
+        currentPlayer.animator.ResetTrigger("FishingStop");
+        hookGrabbed = false;
         base.Grab(_objectHolder);
 
         if (player == currentPlayer)
@@ -88,6 +89,14 @@ public class FishingRod : Tool, ICatapultAmmo
     }
     public override void Release(ObjectHolder _objectHolder)
     {
+        chargingHook = false;
+        hookGrabbed = true;
+        GrabHook();
+        idleFishingRod.SetActive(true);
+        landedFishingRod.SetActive(false);
+        PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
+        playerCont.stateMachine.ChangeState(playerCont.stateMachine.idleState);
+        playerCont.animator.SetBool("FishingCharge", false);
         base.Release(_objectHolder);
     }
     public override void Use(ObjectHolder _objectHolder)
@@ -129,10 +138,6 @@ public class FishingRod : Tool, ICatapultAmmo
         base.Interact(_objectHolder);
     }
 
-    public override bool CanInteract(ObjectHolder _objectHolder)
-    {
-        return _objectHolder.GetHandInteractableObject() == this;
-    }
     public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
@@ -223,7 +228,8 @@ public class FishingRod : Tool, ICatapultAmmo
 
         if (!hook.onWater)
         {
-            player.stateMachine.ChangeState(player.stateMachine.idleState);
+            if(player)
+                player.stateMachine.ChangeState(player.stateMachine.idleState);
             isFishing = false;
         }
         hook.gameObject.SetActive(false);
@@ -233,7 +239,8 @@ public class FishingRod : Tool, ICatapultAmmo
         idleFishingRod.SetActive(true);
         landedFishingRod.SetActive(false);
 
-        player.animator.SetTrigger("FishingStop");
+        if(player)
+            player.animator.SetTrigger("FishingStop");
     }
 
     

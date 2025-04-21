@@ -4,7 +4,7 @@ public abstract class Tool : InteractableObject
 {
     [SerializeField] protected AudioClip dropItemClip;
 
-    protected bool addToolAtDestroy = true;
+    public bool addToolAtDestroy { set; get; } = true;
 
     public override void Grab(ObjectHolder _objectHolder)
     {
@@ -17,16 +17,14 @@ public abstract class Tool : InteractableObject
     }
     public override void Interact(ObjectHolder _objectHolder)
     {
-        InteractableObject nearObj = _objectHolder.GetNearestInteractableObject();
-
-        if (nearObj && nearObj is WoodShelf && nearObj.CanInteract(_objectHolder))
-        {
-            addToolAtDestroy = false;
-            (nearObj as Box).AddItemInBox();
-            InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
-            Destroy(currentObject.gameObject);
-        }
+        
     }
+
+    public override bool CanInteract(ObjectHolder _objectHolder)
+    {
+        return false;
+    }
+
     private void PickItem(ObjectHolder _objectHolder)
     {
         _objectHolder.ChangeObjectInHand(this);

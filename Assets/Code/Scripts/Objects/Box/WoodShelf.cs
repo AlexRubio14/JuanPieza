@@ -19,6 +19,20 @@ public class WoodShelf : Box
         for (int i = 0; i < 4; i++)
             AddItemInBox(false);
     }
+
+    public override void Interact(ObjectHolder _objectHolder)
+    {
+        if (!CanInteract(_objectHolder))
+            return;
+
+        Tool handObject = _objectHolder.GetHandInteractableObject() as Tool;
+        handObject.addToolAtDestroy = false;
+        AddItemInBox(true);
+        InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
+        Destroy(currentObject.gameObject);
+        base.Interact(_objectHolder);
+    }
+
     public override void AddItemInBox(bool _makeSound, int cuantity = 1)
     {
         base.AddItemInBox(_makeSound);

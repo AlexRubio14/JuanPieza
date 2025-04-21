@@ -9,15 +9,8 @@ public class BulletBag : Resource, ICatapultAmmo
     [SerializeField]
     private float bulletSpawnOffset;
 
-
-    public override void Release(ObjectHolder _objectHolder)
-    {
-        if ((this as ICatapultAmmo).LoadItemInCatapult(_objectHolder, this))
-            return;
-
-        base.Release(_objectHolder);
-    }
-    public override void Interact(ObjectHolder _objectHolder)
+    public override void Interact(ObjectHolder _objectHolder) { }
+    public override void Use(ObjectHolder _objectHolder) 
     {
         _objectHolder.RemoveItemFromHand();
         PlayerController controller = _objectHolder.GetComponentInParent<PlayerController>();
@@ -40,7 +33,6 @@ public class BulletBag : Resource, ICatapultAmmo
 
         Destroy(gameObject);
     }
-    public override void Use(ObjectHolder _objectHolder) { }
 
     public override bool CanInteract(ObjectHolder _objectHolder)
     {

@@ -13,8 +13,6 @@ public class Bonk : RepairObject
 
     public override void Interact(ObjectHolder _objectHolder)
     {
-        base.Interact(_objectHolder);
-
         if (!CanInteract(_objectHolder) || state.GetIsBroken())
             return;
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Box : RepairObject
+public abstract class Box : RepairObject
 {
     [Space, Header("Item"), SerializeField] protected ObjectSO itemDropped;
     [SerializeField] protected int itemsInBox;
@@ -18,12 +18,6 @@ public class Box : RepairObject
 
         }
     }
-    public override void Interact(ObjectHolder _objectHolder)
-    {
-        if (!CanInteract(_objectHolder) || state.GetIsBroken())
-            return;
-    }
-    public override void Use(ObjectHolder _objectHolder) { }
 
     public override bool CanGrab(ObjectHolder _objectHolder)
     {
@@ -39,7 +33,6 @@ public class Box : RepairObject
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         return handObject && handObject.objectSO == objectToInteract; //Si tengo un objeto en la mano y es del mismo tipo que el que dropea
     }
-
     public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         if (state.GetIsBroken())
