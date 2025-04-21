@@ -21,6 +21,7 @@ public class QuestData : ScriptableObject
 
     public QuestClimete questClimete;
     public bool hasWhirlwind;
+    public bool hasGeyser;
 }
 
 [System.Serializable]
