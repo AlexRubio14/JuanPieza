@@ -9,6 +9,8 @@ public class Hammer : Tool, ICatapultAmmo
     [SerializeField]
     private float hitRadius;
     [SerializeField]
+    private float repairAmmount;
+    [SerializeField]
     private LayerMask hitLayers;
     private bool canHit = true;
 
@@ -20,6 +22,7 @@ public class Hammer : Tool, ICatapultAmmo
     private AudioClip hitClip;
 
     private PlayerController playerCont;
+
     public override void Use(ObjectHolder _objectHolder)
     {
         if (!canHit)
@@ -47,19 +50,6 @@ public class Hammer : Tool, ICatapultAmmo
         //else if (nearObject is RepairHole)
         //    (nearObject as RepairHole).AddPlayer(_objectHolder);
     }
-    public override void StopUse(ObjectHolder _objectHolder)
-    {
-        InteractableObject nearObject = _objectHolder.GetNearestInteractableObject();
-
-        if (!nearObject)
-            return;
-
-        if (nearObject is RepairObject)
-            (nearObject as RepairObject).RemovePlayer(_objectHolder);
-        else if (nearObject is RepairHole)
-            (nearObject as RepairHole).RemovePlayer(_objectHolder);
-    }
-
     public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
@@ -101,7 +91,8 @@ public class Hammer : Tool, ICatapultAmmo
             if(hit.collider.TryGetComponent(out Repair _repair))
             {
                 //Objetos: Comprobar si son objetos rompibles y si estan rotos llamar a la funcion de RepairProgress
-
+                if(_repair.GetObjectState().GetIsBroken())
+                    _repair.RepairProgress(repairAmmount);
             }
             else if(hit.collider.TryGetComponent(out PlayerController _hittedPlayer))
             {

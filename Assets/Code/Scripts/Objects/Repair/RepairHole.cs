@@ -6,9 +6,9 @@ public class RepairHole : Repair
     private float damageDeal;
     [SerializeField] private bool hasToRecoverHP;
 
-    protected override void RepairEnded(ObjectHolder _objectHolder)
+    protected override void RepairEnded()
     {
-        _objectHolder.hintController.UpdateActionType(new HintController.Hint[] { new HintController.Hint(HintController.ActionType.NONE, "") });
+        base.RepairEnded();
         if(hasToRecoverHP)
             ship.SetCurrentHealth(damageDeal);
         Destroy(gameObject);

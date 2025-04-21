@@ -1,7 +1,8 @@
 public class RepairObject : Repair
 {
-    protected override void RepairEnded(ObjectHolder _objectHolder)
+    protected override void RepairEnded()
     {
+        base.RepairEnded();
         state.SetIsBroke(false);
     }
 

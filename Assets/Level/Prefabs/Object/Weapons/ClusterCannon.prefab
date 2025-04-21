@@ -283,22 +283,22 @@ MonoBehaviour:
   <objectToInteract>k__BackingField: {fileID: 11400000, guid: dffcfb1857ced7d4fb477cee9121a908, type: 2}
   selectedVisual: {fileID: 7038551062971641082}
   tooltip: {fileID: 7192271132973546406}
+  canGrab: 1
   rb: {fileID: 1201026868603936365}
   <grabPivot>k__BackingField: {fileID: 0}
   hasToBeInTheShip: 1
   repairItem: {fileID: 11400000, guid: 9e26296dc990cde42ba9934d00849992, type: 2}
   state: {fileID: 4300835090632305158}
-  repairDuration: 1
   repairParticles: {fileID: 6172242362404152285}
   repairClip: {fileID: 8300000, guid: 1e4e3078b3cd9f042ac17029ed429788, type: 3}
   ridingPos: {fileID: 938006466121223223}
-  coolDown: 2
+  <rideOffset>k__BackingField: 0.15
   weaponDamage: 20
   <bulletForce>k__BackingField: 750
   <tiltObject>k__BackingField: {fileID: 960932104432867843}
   <minWeaponTilt>k__BackingField: {x: 175, y: 0, z: -90}
   <maxWeaponTilt>k__BackingField: {x: 230, y: 0, z: -90}
-  <tiltSpeed>k__BackingField: 0.7
+  <tiltSpeed>k__BackingField: 0.4
   tiltProcess: 0
   tiltInputHint: {fileID: 1199549590248792815}
   shootParticles: {fileID: 725748389856807714, guid: 55f833a9d5fecfc49bd7ba9992bba2b5, type: 3}
@@ -386,8 +386,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.4751261, y: 1.5503086, z: 1.3874531}
-  m_Center: {x: -0.000000059604645, y: 0.7771428, z: 0.3308916}
+  m_Size: {x: 1.4751261, y: 1.5503086, z: 2.0024}
+  m_Center: {x: -0.000000059604645, y: 0.7771428, z: -0.09041789}
 --- !u!95 &503275928408252352
 Animator:
   serializedVersion: 7

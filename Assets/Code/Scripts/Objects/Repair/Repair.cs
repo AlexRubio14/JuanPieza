@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Repair : InteractableObject
@@ -6,26 +5,12 @@ public class Repair : InteractableObject
     [Space, Header("Repair Item")]
     [SerializeField] protected ObjectSO repairItem;
     [SerializeField] protected ObjectState state;
-    [SerializeField] private float repairDuration;
-    private float currentRepairTime;
-    private List<PlayerController> players = new List<PlayerController>();
-    [SerializeField]
-    private ParticleSystem repairParticles;
-    private AudioSource repairAudioSource;
-    private bool clipIsPlaying = false;
-
+    [SerializeField] protected GameObject repairParticles;
     [SerializeField] protected AudioClip repairClip;
 
-    protected override void Start()
-    {
-        base.Start();
-        repairParticles.Stop(true);
-    }
+    protected float repairProgress;
 
-    protected virtual void Update()
-    {
-        RepairObject();
-    }
+
 
     #region Object Fuctions
     public override void Grab(ObjectHolder _objectHolder) { }
@@ -49,103 +34,27 @@ public class Repair : InteractableObject
     #endregion
 
     #region Repair Functions
-    public void AddPlayer(ObjectHolder _objectHolder)
+
+    public void RepairProgress(float _repairProgressed)
     {
-        if (!state.GetIsBroken() || !CanInteract(_objectHolder))
-            return;
+        repairProgress += _repairProgressed;
+        tooltip.progressBar.EnableProgressBar(true);
+        tooltip.progressBar.SetProgress(repairProgress, 1);
 
-        PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
-        playerCont.animator.SetBool("Interacting", true);
-        //playerCont.progressBar.EnableProgressBar(true);
-        tooltip.SetState(ObjectsTooltip.ObjectState.Repairing);
-        
-        players.Add(playerCont);
-        playerCont.stateMachine.ChangeState(playerCont.stateMachine.repairState);
-
-        if (!clipIsPlaying)
+        if (repairProgress >= 1)
         {
-            repairAudioSource = AudioManager.instance.Play2dLoop(repairClip, "Objects");
-            clipIsPlaying = true;
-        }
-
-    }
-    public void RemovePlayer(ObjectHolder _objectHolder)
-    {
-        PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
-        playerCont.animator.SetBool("Interacting", false);
-        //playerCont.progressBar.EnableProgressBar(false);
-        players.Remove(playerCont);
-        playerCont.stateMachine.ChangeState(playerCont.stateMachine.idleState);
-
-        if (players.Count == 0)
-        {
-            AudioManager.instance.StopLoopSound(repairAudioSource);
-            clipIsPlaying = false;
+            RepairEnded();
         }
     }
-    private void RepairObject()
-    {
-        if (players.Count > 0)
-        {
-            if (repairParticles.isStopped)
-                repairParticles.Play(true);
-            
-            currentRepairTime += players.Count * Time.deltaTime;
-            if (currentRepairTime >= repairDuration)
-            {
-                FinishRepairing();
-                currentRepairTime = 0;
-            }
-            tooltip.progressBar.SetProgress(currentRepairTime, repairDuration);
-            
-            //foreach (PlayerController player in players)
-                //player.progressBar.SetProgress(currentRepairTime, repairDuration);
-        }
-        else
-        {
-            if (repairParticles.isPlaying)
-            {
-                repairParticles.Stop(true);
-                tooltip.SetState(ObjectsTooltip.ObjectState.None);
-            }
-            
-            currentRepairTime = 0;
-        }
-    }
-    private void FinishRepairing()
-    {
-        for (int i = players.Count - 1; i >= 0; i--)
-        {
-            ObjectHolder objHolder = players[i].objectHolder;
-            InteractableObject handObject = objHolder.GetHandInteractableObject();
 
-            StopInteract(objHolder);
-            StopUse(objHolder);
-            if (handObject)
-            {
-                handObject.StopInteract(objHolder);
-                handObject.StopUse(objHolder);
-            }
-            RepairEnded(objHolder);
-        }
-
-        tooltip.SetState(ObjectsTooltip.ObjectState.None);
-    }
-    public bool IsPlayerReparing(PlayerController _playerController)
-    {
-        if (players.Count <= 0)
-            return false;
-
-        return players.Contains(_playerController);
-    }
     public ObjectSO GetRepairItem() { return repairItem; }
     public ObjectState GetObjectState() { return state; }
     public virtual void OnBreakObject() { }
-    protected virtual void RepairEnded(ObjectHolder _objectHolder)
+    protected virtual void RepairEnded() 
     {
-        _objectHolder.hintController.UpdateActionType(new HintController.Hint[] { new HintController.Hint(HintController.ActionType.NONE, "") });
+        tooltip.progressBar.EnableProgressBar(false);
+        repairProgress = 0;
     }
-
     #endregion
 
 }

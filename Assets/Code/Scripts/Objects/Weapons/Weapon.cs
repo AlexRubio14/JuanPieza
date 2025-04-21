@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 
 public abstract class Weapon : RepairObject
 {
     [Space, Header("Weapon"), SerializeField]
     protected Transform ridingPos;
-
-    [field: SerializeField] 
-    public float coolDown = 2;
-
+    [field: SerializeField]
+    public float rideOffset { get; protected set; }
     [Space, Header("Damage"), SerializeField]
     protected float weaponDamage;
 
@@ -25,9 +24,9 @@ public abstract class Weapon : RepairObject
     public Vector3 maxWeaponTilt { get; protected set; }
     [field: SerializeField]
     public float tiltSpeed { get; protected set; }
-
     [HideInInspector]
     public float tiltProcess;
+    public bool isTilting {  get; protected set; }
 
     [Header("Tilt Input Hint"), SerializeField]
     private TiltHintController tiltInputHint;
@@ -63,38 +62,67 @@ public abstract class Weapon : RepairObject
         tiltProcess = 0;
         tiltObject.localRotation = Quaternion.Euler(minWeaponTilt);
     }
+    protected void Update()
+    {
+        if (isTilting)
+            TiltWeapon();
+    }
 
+    public override void Grab(ObjectHolder _objectHolder)
+    {
+        if (state.GetIsBroken() || freeze)
+            return;
+
+        _objectHolder.ChangeObjectInHand(this ,false);
+        rb.isKinematic = false;
+        PlayerController player = _objectHolder.GetComponentInParent<PlayerController>();
+        //Cambia el estado
+        player.stateMachine.cannonState.SetWeapon(this);
+        player.stateMachine.ChangeState(player.stateMachine.cannonState);
+    }
+    public override void Release(ObjectHolder _objectHolder)
+    {
+        PlayerController player = _objectHolder.GetComponentInParent<PlayerController>();
+        //Cambia el estado
+        player.stateMachine.ChangeState(player.stateMachine.idleState);
+        _objectHolder.RemoveItemFromHand();
+    }
     public override void Interact(ObjectHolder _objectHolder)
     {
         if (!CanInteract(_objectHolder) || state.GetIsBroken() || freeze)
             return;
 
-        PlayerController player = _objectHolder.transform.parent.gameObject.GetComponent<PlayerController>();
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         InteractableObject nearestObj = _objectHolder.GetNearestInteractableObject();
-
-        if (isPlayerMounted() && player.playerInput.playerReference == mountedPlayerId) //Desmontarse
-            UnMount(player, _objectHolder);
-        else if (!isPlayerMounted()) //Montarse al arma
-            Mount(player, _objectHolder);
-        else if (hasAmmo)
-        {
+        
+        if(!hasAmmo && handObject && handObject.objectSO == objectToInteract)
             Reload(_objectHolder);
+        else if (hasAmmo && !handObject)
+        {
+            //Empezar a cargar el disparo
+            isTilting = true;
+            tiltProcess = 0;
+            tiltObject.localRotation = Quaternion.Euler(minWeaponTilt);
         }
     }
-    public override void Use(ObjectHolder _objectHolder)
+    public override void StopInteract(ObjectHolder _objectHolder)
     {
-        if (!hasAmmo)
+        if (!isTilting)
             return;
 
-        Shoot();            
+        isTilting = false;
+        Shoot();
         animator.SetTrigger("Shoot");
         animator.SetBool("HasAmmo", false);
-
+        _objectHolder.GetComponentInParent<PlayerController>().animator.SetTrigger("Shoot");
         foreach (ParticleSystem item in loadParticles)
         {
             item.Stop(true);
         }
+    }
+    public override void Use(ObjectHolder _objectHolder)
+    {
+        _objectHolder.GetComponentInParent<PlayerController>().stateMachine.cannonState.SwapIsRotating();
     }
 
     public override bool CanInteract(ObjectHolder _objectHolder)
@@ -107,7 +135,12 @@ public abstract class Weapon : RepairObject
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
 
-        return !isPlayerMounted() && !handObject /*Montarse*/ || isPlayerMounted() && playerCont.playerInput.playerReference == mountedPlayerId /*Bajarse*/ || !hasAmmo && handObject && handObject.objectSO == objectToInteract /*Recargar*/ ;
+        return !freeze && (!hasAmmo && handObject && handObject.objectSO == objectToInteract || hasAmmo && !handObject);
+        
+
+        return !isPlayerMounted() && !handObject /*Montarse*/ 
+            || isPlayerMounted() && playerCont.playerInput.playerReference == mountedPlayerId /*Bajarse*/ 
+            || !hasAmmo && handObject && handObject.objectSO == objectToInteract /*Recargar*/ ;
     }
 
     public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
@@ -199,7 +232,7 @@ public abstract class Weapon : RepairObject
         InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
         Destroy(currentObject.gameObject);
 
-        animator.ResetTrigger("Shot");
+        animator.ResetTrigger("Shoot");
         animator.SetBool("HasAmmo", true);
 
         _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
@@ -237,9 +270,9 @@ public abstract class Weapon : RepairObject
         currentPlayer.animator.SetBool("Pick", false);
         
     }
-    protected override void RepairEnded(ObjectHolder _objectHolder)
+    protected override void RepairEnded()
     {
-        base.RepairEnded(_objectHolder);
+        base.RepairEnded();
         foreach (ParticleSystem item in loadParticles)
             item.Stop(true);
     }
@@ -250,6 +283,15 @@ public abstract class Weapon : RepairObject
         return mountedPlayerId != -1;
     }
 
+    protected void TiltWeapon()
+    {
+        tiltProcess = Mathf.Clamp01(tiltProcess + tiltSpeed * Time.deltaTime);
+        tiltObject.localRotation = Quaternion.Lerp(
+            Quaternion.Euler(minWeaponTilt),
+            Quaternion.Euler(maxWeaponTilt),
+            tiltProcess
+            );
+    }
     protected void EnableTiltInputHint(bool _enable)
     {
         tiltInputHint.gameObject.SetActive(_enable);

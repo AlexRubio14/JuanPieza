@@ -12,11 +12,11 @@ public class PlayerWeaponTrace : WeaponTracer
 
     void FixedUpdate()
     {
-        if (weapon.isPlayerMounted())
+        if (weapon.isTilting)
             PredictTrajectory(weapon.bulletForce, Vector2.zero);
 
-        lineRenderer.enabled = weapon.isPlayerMounted();
-        decal.SetActive(weapon.isPlayerMounted());
+        lineRenderer.enabled = weapon.isTilting;
+        decal.SetActive(weapon.isTilting);
         if (decal.activeInHierarchy)
             decal.transform.forward = -collisionNormal;
     }

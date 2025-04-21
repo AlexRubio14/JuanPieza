@@ -78,7 +78,8 @@ public class PlayerController : MonoBehaviour
     public float cannonSpeed { get; private set; }
     [field:SerializeField]
     public float cannonRotationSpeed { get; private set; }
-    public float cannonTilt {  get; private set; }
+    [field:SerializeField]
+    public float cannonRotationOffset { get; private set; }
 
     [field: Space, Header("Drunk"), SerializeField]
     public float baseDrunkAngle {  get; private set; }
@@ -176,8 +177,6 @@ public class PlayerController : MonoBehaviour
         playerInput.OnGrabAction += GrabAction;
         
         playerInput.OnReleaseAction += ReleaseAction;
-
-        playerInput.OnWeaponTiltAction += CannonTiltAction;
     }
 
     private void OnDisable()
@@ -198,7 +197,6 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnReleaseAction -= ReleaseAction;
 
-        playerInput.OnWeaponTiltAction -= CannonTiltAction;
 
         movementInput = Vector2.zero;
         movementDirection = Vector3.zero;
@@ -236,10 +234,6 @@ public class PlayerController : MonoBehaviour
     private void StopUseAction()
     {
         stateMachine.currentState.StopUseAction();
-    }
-    private void CannonTiltAction(float _axis)
-    {
-        cannonTilt = _axis;
     }
     public void PlayerHitted(Vector3 _hitPosition, float forceMultiplier = 1)
     {
@@ -348,10 +342,9 @@ public class PlayerController : MonoBehaviour
         if(currentObject == null)
             currentObject = objectHolder.GetNearestInteractableObject();
 
-        if (currentObject as Repair)
+        if(currentObject && currentObject.CanInteract(objectHolder))
         {
-            if (((Repair)currentObject).IsPlayerReparing(this))
-                currentObject.StopInteract(objectHolder);
+            currentObject.StopInteract(objectHolder);
         }
     }
     public void Use()
