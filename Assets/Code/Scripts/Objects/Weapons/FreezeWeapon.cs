@@ -52,6 +52,17 @@ public class FreezeWeapon : MonoBehaviour
         }
     }
 
+    public void BreakIce()
+    {
+        if (!freeze)
+            return;
+        weapon.SetFreeze(false);
+        objectState.SetIsBroke(false, true);
+        freezeCurrentTime = 0;
+        weaponCurrentFreezePercentage = 0;
+        iceCubeWeapon.transform.localScale = Vector3.zero;
+    }
+
     private void ScaleIceCube()
     {
         float nextFreezePercentage = weaponCurrentFreezePercentage + increaseFreezePercentage;

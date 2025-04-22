@@ -35,8 +35,23 @@ public class Repair : InteractableObject
 
     #region Repair Functions
 
+    public void BreakIce()
+    {
+        if (TryGetComponent(out FreezeWeapon weapon))
+        {
+            weapon.BreakIce();
+            return;
+        }
+    }
+
     public void RepairProgress(float _repairProgressed)
     {
+        if (TryGetComponent(out Cannon cannon))
+        {
+            if(cannon.GetFreeze())
+                return;
+        }
+
         repairProgress += _repairProgressed;
         tooltip.progressBar.EnableProgressBar(true);
         tooltip.progressBar.SetProgress(repairProgress, 1);
