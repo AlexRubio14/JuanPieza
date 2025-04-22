@@ -316,22 +316,22 @@ MonoBehaviour:
   <objectToInteract>k__BackingField: {fileID: 0}
   selectedVisual: {fileID: 807546827017697251}
   tooltip: {fileID: 7575848392866323742}
+  canGrab: 1
   rb: {fileID: 4986079673123290112}
   <grabPivot>k__BackingField: {fileID: 103871828140907417}
   hasToBeInTheShip: 1
   repairItem: {fileID: 11400000, guid: 9e26296dc990cde42ba9934d00849992, type: 2}
   state: {fileID: 3968191370556537233}
-  repairDuration: 1
   repairParticles: {fileID: 2904809377459801192}
   repairClip: {fileID: 8300000, guid: 1e4e3078b3cd9f042ac17029ed429788, type: 3}
   ridingPos: {fileID: 6387550713895505024}
-  coolDown: 2
+  <rideOffset>k__BackingField: 0.2
   weaponDamage: 30
   <bulletForce>k__BackingField: 500
   <tiltObject>k__BackingField: {fileID: 2472425405071750603}
-  <minWeaponTilt>k__BackingField: {x: -68, y: 0, z: 0}
+  <minWeaponTilt>k__BackingField: {x: -70, y: 0, z: 0}
   <maxWeaponTilt>k__BackingField: {x: -45, y: 0, z: 0}
-  <tiltSpeed>k__BackingField: 0.7
+  <tiltSpeed>k__BackingField: 0.4
   tiltProcess: 0
   tiltInputHint: {fileID: 565063990672895586}
   shootParticles: {fileID: 0}
@@ -358,7 +358,7 @@ MonoBehaviour:
   catapultAmmoSpawnPos: {fileID: 2472425405071750603}
   catapultAmmoRotationSpeed: 3
   spoonObject: {fileID: 7637383873744831895}
-  midDamageBullet: 0
+  midDamageBullet: 1
 --- !u!114 &807546827017697251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,6 +625,18 @@ PrefabInstance:
     - target: {fileID: -5222234395613529177, guid: 20aab18b907a54245a4dd0bd2b7de270, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1868095295357706448, guid: 20aab18b907a54245a4dd0bd2b7de270, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: -1868095295357706448, guid: 20aab18b907a54245a4dd0bd2b7de270, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.653
+      objectReference: {fileID: 0}
+    - target: {fileID: -1868095295357706448, guid: 20aab18b907a54245a4dd0bd2b7de270, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.033
       objectReference: {fileID: 0}
     - target: {fileID: -1868095295357706448, guid: 20aab18b907a54245a4dd0bd2b7de270, type: 3}
       propertyPath: m_LocalRotation.w

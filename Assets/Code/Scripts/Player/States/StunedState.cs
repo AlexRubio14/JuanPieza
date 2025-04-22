@@ -19,6 +19,12 @@ public class StunedState : PlayerState
 
     }
 
+    public override void GrabAction() { }
+
+    public override void ReleaseAction() 
+    {
+        controller.Release();
+    }
     public override void InteractAction()
     {
 

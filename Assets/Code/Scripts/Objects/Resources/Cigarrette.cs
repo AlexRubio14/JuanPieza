@@ -1,63 +1,28 @@
-using UnityEngine;
-
 public class Cigarrette : Resource, ICatapultAmmo
 {
-    [Space, SerializeField] private float smokeTime;
-    private float currentTime;
-    private bool isSmoking;
-
-    protected override void Start()
-    {
-        base.Start();
-        isSmoking = false;
-        currentTime = smokeTime;
-    }
-    private void Update()
-    {
-        if (isSmoking)
-        {
-            //particulillas
-            currentTime -= Time.deltaTime;
-            if (currentTime <= 0) 
-            {
-                //cancelar animacion player
-            }
-        }
-    }
-
-
-    public override void Interact(ObjectHolder _objectHolder)
+    public override void Release(ObjectHolder _objectHolder)
     {
         if ((this as ICatapultAmmo).LoadItemInCatapult(_objectHolder, this))
             return;
 
-        base.Interact(_objectHolder);
-        _objectHolder.hintController.UpdateActionType(new HintController.Hint[]
-        {
-            new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
-            new HintController.Hint(HintController.ActionType.USE, "smoke")
-        });
+        base.Release(_objectHolder);
     }
-    public override void Use(ObjectHolder _objectHolder)
+    public override void Interact(ObjectHolder _objectHolder) { }
+    public override void Use(ObjectHolder _objectHolder) 
     {
         //playear animacion player
         ShipsManager.instance.playerShip.Smoke();
         _objectHolder.GetComponentInParent<CigarretteController>().ActivateCigarrette();
         _objectHolder.RemoveItemFromHand();
         _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
-
-        _objectHolder.hintController.UpdateActionType(new HintController.Hint[]
-        {
-            new HintController.Hint(HintController.ActionType.NONE, "")
-        });
+        _objectHolder.hintController.UpdateActionType(ShowNeededInputHint(_objectHolder));
 
         Destroy(gameObject);
-        
     }
 
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
-        return !_objectHolder.GetHasObjectPicked();
+        return _objectHolder.GetHasObjectPicked() == this;
     }
     public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {

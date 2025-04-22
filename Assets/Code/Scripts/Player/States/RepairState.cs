@@ -8,7 +8,11 @@ public class RepairState : PlayerState
     public override void ExitState() { }
 
     public override void RollAction() { /*No puedes rodar*/ }
-
+    public override void GrabAction() { /* Esta agarrando algo no puedes coger nada mas */ }
+    public override void ReleaseAction()
+    {
+        controller.Release();
+    }
     public override void InteractAction() { /*No puedes interactuar*/ }
     public override void StopInteractAction() 
     {

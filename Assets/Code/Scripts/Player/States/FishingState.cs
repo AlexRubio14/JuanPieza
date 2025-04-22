@@ -24,6 +24,11 @@ public class FishingState : PlayerState
         //No puedes rodar
     }
 
+    public override void GrabAction() { /* Esta agarrando algo no puedes coger nada mas */ }
+    public override void ReleaseAction()
+    {
+        controller.Release();
+    }
     public override void InteractAction() { /*No puedes interactuar*/ }
     public override void StopInteractAction() { /*No hace nada*/ }
     public override void UseAction() 

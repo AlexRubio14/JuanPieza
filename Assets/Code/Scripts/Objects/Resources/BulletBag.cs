@@ -8,16 +8,9 @@ public class BulletBag : Resource, ICatapultAmmo
     private float bulletsToSpawn;
     [SerializeField]
     private float bulletSpawnOffset;
-    public override void Interact(ObjectHolder _objectHolder)
-    {
-        if ((this as ICatapultAmmo).LoadItemInCatapult(_objectHolder, this))
-            return;
 
-        base.Interact(_objectHolder);
-        _objectHolder.hintController.UpdateActionType(ShowNeededInputHint(_objectHolder));
-    }
-
-    public override void Use(ObjectHolder _objectHolder)
+    public override void Interact(ObjectHolder _objectHolder) { }
+    public override void Use(ObjectHolder _objectHolder) 
     {
         _objectHolder.RemoveItemFromHand();
         PlayerController controller = _objectHolder.GetComponentInParent<PlayerController>();
@@ -38,12 +31,13 @@ public class BulletBag : Resource, ICatapultAmmo
             currentAngle += angleIncrement;
         }
 
-        
-
         Destroy(gameObject);
-
     }
 
+    public override bool CanInteract(ObjectHolder _objectHolder)
+    {
+        return _objectHolder.GetHandInteractableObject() == this;
+    }
     public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         if (!_objectHolder.GetHasObjectPicked())

@@ -30,8 +30,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2186107599280712938}
-  - {fileID: 7873971955118026621}
   - {fileID: 4396151346437372399}
+  - {fileID: 7873971955118026621}
   - {fileID: 6192824619830155942}
   - {fileID: 7390131038318617473}
   m_Father: {fileID: 2640195164968152856}
@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 2520685984182003923}
   - component: {fileID: 3566369965666568233}
   m_Layer: 9
-  m_Name: FishingRod.002
+  m_Name: FishingRod.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1820098089631333447}
+  - {fileID: 2737556165602119364}
   m_Father: {fileID: 2989525223335231368}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6011771192788777849
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 975349132733932594}
   - component: {fileID: 8629474666817290651}
   m_Layer: 9
-  m_Name: FishingRod.001
+  m_Name: FishingRod.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -274,12 +274,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2892036196811595183}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2737556165602119364}
+  - {fileID: 1820098089631333447}
   m_Father: {fileID: 2989525223335231368}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &477229955637448068
@@ -458,6 +458,7 @@ MonoBehaviour:
   <objectToInteract>k__BackingField: {fileID: 11400000, guid: 1a86068821e818c4e9e9b6e7d9016a4b, type: 2}
   selectedVisual: {fileID: 7631052473422567200}
   tooltip: {fileID: 0}
+  canGrab: 1
   rb: {fileID: 2057772964880838636}
   <grabPivot>k__BackingField: {fileID: 0}
   hasToBeInTheShip: 1
@@ -470,10 +471,10 @@ MonoBehaviour:
   itemsInBox: 4
   dropItemClip: {fileID: 8300000, guid: ca052a633d841bb40b287fd68e6abcfb, type: 3}
   decorations:
-  - {fileID: 2656534242775419946}
   - {fileID: 3572007709144386134}
-  - {fileID: 8389992496521864520}
   - {fileID: 2892036196811595183}
+  - {fileID: 2656534242775419946}
+  - {fileID: 8389992496521864520}
   forceMultiplier: 0.1
   message: {fileID: 0}
 --- !u!114 &7631052473422567200
@@ -797,7 +798,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 4396151346437372399}
+    m_TransformParent: {fileID: 7873971955118026621}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 7dc43e94782bf5f4b914060d8c3aa86c, type: 3}
       propertyPath: m_LocalScale.x
@@ -805,11 +806,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7dc43e94782bf5f4b914060d8c3aa86c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.40000004
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7dc43e94782bf5f4b914060d8c3aa86c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4
+      value: 0.39999998
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7dc43e94782bf5f4b914060d8c3aa86c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -879,7 +880,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 7873971955118026621}
+    m_TransformParent: {fileID: 4396151346437372399}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 7dc43e94782bf5f4b914060d8c3aa86c, type: 3}
       propertyPath: m_LocalScale.x
@@ -887,11 +888,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7dc43e94782bf5f4b914060d8c3aa86c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.40000004
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7dc43e94782bf5f4b914060d8c3aa86c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4
+      value: 0.39999998
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7dc43e94782bf5f4b914060d8c3aa86c, type: 3}
       propertyPath: m_LocalPosition.x

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class KnockbackState : PlayerState
@@ -46,6 +44,11 @@ public class KnockbackState : PlayerState
 
     public override void RollAction()
     {
+    }
+    public override void GrabAction() { }
+    public override void ReleaseAction()
+    {
+        controller.Release();
     }
     public override void InteractAction()
     {

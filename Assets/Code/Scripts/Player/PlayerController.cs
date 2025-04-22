@@ -78,7 +78,8 @@ public class PlayerController : MonoBehaviour
     public float cannonSpeed { get; private set; }
     [field:SerializeField]
     public float cannonRotationSpeed { get; private set; }
-    public float cannonTilt {  get; private set; }
+    [field:SerializeField]
+    public float cannonRotationOffset { get; private set; }
 
     [field: Space, Header("Drunk"), SerializeField]
     public float baseDrunkAngle {  get; private set; }
@@ -173,7 +174,9 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnDanceAction += DanceAcion;
 
-        playerInput.OnWeaponTiltAction += CannonTiltAction;
+        playerInput.OnGrabAction += GrabAction;
+        
+        playerInput.OnReleaseAction += ReleaseAction;
     }
 
     private void OnDisable()
@@ -190,7 +193,10 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnDanceAction -= DanceAcion;
 
-        playerInput.OnWeaponTiltAction -= CannonTiltAction;
+        playerInput.OnGrabAction -= GrabAction;
+
+        playerInput.OnReleaseAction -= ReleaseAction;
+
 
         movementInput = Vector2.zero;
         movementDirection = Vector3.zero;
@@ -229,18 +235,22 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.currentState.StopUseAction();
     }
-    private void CannonTiltAction(float _axis)
-    {
-        cannonTilt = _axis;
-    }
     public void PlayerHitted(Vector3 _hitPosition, float forceMultiplier = 1)
     {
         stateMachine.currentState.OnHit(_hitPosition, forceMultiplier);
     }
-    public void DanceAcion()
+    private void DanceAcion()
     {
         if (stateMachine.currentState is IdleState)
             stateMachine.ChangeState(stateMachine.danceState);
+    }
+    private void GrabAction()
+    {
+        stateMachine.currentState.GrabAction();
+    } 
+    private void ReleaseAction()
+    {
+        stateMachine.currentState.ReleaseAction();
     }
     #endregion
 
@@ -290,6 +300,19 @@ public class PlayerController : MonoBehaviour
     {
         canPush = true;
     }
+    public void Grab()
+    {
+        InteractableObject handObject = objectHolder.GetHandInteractableObject();
+        InteractableObject nearObject = objectHolder.GetNearestInteractableObject();
+        if (!handObject && nearObject && nearObject.CanGrab(objectHolder))
+            nearObject.Grab(objectHolder);
+    }
+    public void Release()
+    {
+        InteractableObject handObject = objectHolder.GetHandInteractableObject();
+        if (handObject)
+            handObject.Release(objectHolder);
+    }
     public void Interact()
     {
         InteractableObject handObject = objectHolder.GetHandInteractableObject();
@@ -298,7 +321,7 @@ public class PlayerController : MonoBehaviour
         if (!handObject && (!nearestObject || nearestObject && !nearestObject.CanInteract(objectHolder)))
             return;
 
-        if(handObject)
+        if(handObject && handObject.CanInteract(objectHolder))
         {
             handObject.Interact(objectHolder);
             hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));
@@ -319,10 +342,9 @@ public class PlayerController : MonoBehaviour
         if(currentObject == null)
             currentObject = objectHolder.GetNearestInteractableObject();
 
-        if (currentObject as Repair)
+        if(currentObject && currentObject.CanInteract(objectHolder))
         {
-            if (((Repair)currentObject).IsPlayerReparing(this))
-                currentObject.StopInteract(objectHolder);
+            currentObject.StopInteract(objectHolder);
         }
     }
     public void Use()

@@ -5,9 +5,18 @@ using UnityEngine.InputSystem;
 public class QuestBoardObject : InteractableObject
 {
     [SerializeField] private GameObject questCanvas;
+
+    public override void Grab(ObjectHolder _objectHolder)
+    {
+        throw new System.NotImplementedException();
+    }
+    public override void Release(ObjectHolder _objectHolder)
+    {
+        throw new System.NotImplementedException();
+    }
+    public override void Use(ObjectHolder _objectHolder) { }
     public override void Interact(ObjectHolder _objectHolder)
     {
-
         StartCoroutine(WaitEndOfFrame());
         IEnumerator WaitEndOfFrame()
         {
@@ -20,15 +29,15 @@ public class QuestBoardObject : InteractableObject
             }
         }
     }
-
-    public void StopInteracting()
+   
+    public override bool CanGrab(ObjectHolder _objectHolder)
     {
-        foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.players)
-        {
-            player.Item1.SwitchCurrentActionMap("Gameplay");
-        }
+        return false;
     }
-
+    public override bool CanInteract(ObjectHolder _objectHolder)
+    {
+        return !_objectHolder.GetHandInteractableObject();
+    }
     public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
     {
         if(_objectHolder.GetHandInteractableObject() != null)
@@ -44,13 +53,18 @@ public class QuestBoardObject : InteractableObject
         };
     }
 
-    public override void Use(ObjectHolder _objectHolder)
-    {
-        
-    }
 
     public GameObject GetQuestCanvas()
     {
         return questCanvas;
     }
+    public void StopInteracting()
+    {
+        foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.players)
+        {
+            player.Item1.SwitchCurrentActionMap("Gameplay");
+        }
+    }
+
+
 }

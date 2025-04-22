@@ -29,6 +29,14 @@ public class MoveState : PlayerState
     {
         stateMachine.ChangeState(stateMachine.rollState);
     }
+    public override void GrabAction() 
+    {
+        controller.Grab();
+    }
+    public override void ReleaseAction()
+    {
+        controller.Release();
+    }
     public override void InteractAction()
     {
         controller.Interact();

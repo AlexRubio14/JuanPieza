@@ -78,7 +78,8 @@ public class DeathState : PlayerState
     }
 
     public override void RollAction() { /*No puedes rodar*/ }
-
+    public override void GrabAction() { /* Esta agarrando algo no puedes coger nada mas */ }
+    public override void ReleaseAction() { }
     public override void InteractAction() { /*No puedes interactuar*/ }
     public override void StopInteractAction() { /*No hace nada*/ }
     public override void UseAction() { /*No puedes usar ningun objeto*/ }

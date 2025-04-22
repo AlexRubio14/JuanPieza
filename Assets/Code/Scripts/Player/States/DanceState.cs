@@ -26,6 +26,11 @@ public class DanceState : PlayerState
     }
 
     public override void RollAction() { }
+    public override void GrabAction() { /* Esta agarrando algo no puedes coger nada mas */ }
+    public override void ReleaseAction()
+{
+        controller.Release();
+    }
     public override void InteractAction() { }
     public override void StopInteractAction() { }
 

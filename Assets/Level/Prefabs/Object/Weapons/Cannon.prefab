@@ -284,22 +284,22 @@ MonoBehaviour:
   <objectToInteract>k__BackingField: {fileID: 11400000, guid: dffcfb1857ced7d4fb477cee9121a908, type: 2}
   selectedVisual: {fileID: 7038551062971641082}
   tooltip: {fileID: 669598109166265418}
+  canGrab: 1
   rb: {fileID: 1201026868603936365}
   <grabPivot>k__BackingField: {fileID: 0}
   hasToBeInTheShip: 1
   repairItem: {fileID: 11400000, guid: 9e26296dc990cde42ba9934d00849992, type: 2}
   state: {fileID: 4300835090632305158}
-  repairDuration: 1
-  repairParticles: {fileID: 6172242362404152285}
+  repairParticles: {fileID: 0}
   repairClip: {fileID: 8300000, guid: 1e4e3078b3cd9f042ac17029ed429788, type: 3}
   ridingPos: {fileID: 938006466121223223}
-  coolDown: 2
+  <rideOffset>k__BackingField: 0.15
   weaponDamage: 20
   <bulletForce>k__BackingField: 750
   <tiltObject>k__BackingField: {fileID: 9181302360641929845}
   <minWeaponTilt>k__BackingField: {x: 175, y: 0, z: -90}
-  <maxWeaponTilt>k__BackingField: {x: 230, y: 0, z: -90}
-  <tiltSpeed>k__BackingField: 0.7
+  <maxWeaponTilt>k__BackingField: {x: 210, y: 0, z: -90}
+  <tiltSpeed>k__BackingField: 0.4
   tiltProcess: 0
   tiltInputHint: {fileID: 2603590217036871774}
   shootParticles: {fileID: 725748389856807714, guid: 55f833a9d5fecfc49bd7ba9992bba2b5, type: 3}
@@ -527,11 +527,6 @@ PrefabInstance:
 --- !u!4 &4241454260954832685 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4036418579442813153, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
-  m_PrefabInstance: {fileID: 205073635071645644}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &6172242362404152285 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6300717128283190289, guid: 981a903265d9d25489cdef17f976db6e, type: 3}
   m_PrefabInstance: {fileID: 205073635071645644}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4673277035295551360

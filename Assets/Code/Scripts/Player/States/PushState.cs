@@ -88,6 +88,8 @@ public class PushState : PlayerState
     {
         //No puedes rodar
     }
+    public override void GrabAction() { /* No puedes coger nada */ }
+    public override void ReleaseAction() { /* No deberias tener nada en la mano */}
     public override void InteractAction() { /*No puede interactuar aqui*/ }
     public override void StopInteractAction() { /*No hace nada*/ }
     public override void UseAction() { /*No puede usar nada aqui*/ }
