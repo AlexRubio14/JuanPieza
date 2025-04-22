@@ -105,6 +105,15 @@ public class ClimateManager : MonoBehaviour
 
     private void PreparedStrike()
     {
+        if(_lightningOrb == null)
+        {
+            preparingStrike = false;
+            currentTime = 0;
+            AudioManager.instance.StopLoopSound(lightningChargeAS);
+            lightningChargeAS = null;
+            return;
+        }
+
         currentTime += Time.deltaTime;
         float progress = Mathf.Clamp01(currentTime / ligthningStrikeTime);
         float scaleValue = Mathf.Lerp(0f, lightningOrbMaxScale, progress);
