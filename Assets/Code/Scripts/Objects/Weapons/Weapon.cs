@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 
 public abstract class Weapon : RepairObject
 {
@@ -46,7 +45,8 @@ public abstract class Weapon : RepairObject
     [SerializeField] protected AudioClip weaponReloadClip;
 
     protected bool freeze;
-
+    [HideInInspector]
+    public bool isRotating;
 
     protected override void Awake()
     {
@@ -56,9 +56,8 @@ public abstract class Weapon : RepairObject
         hasAmmo = false;
     }
 
-    protected override void Start()
+    protected virtual void Start()
     {
-        base.Start();
         tiltProcess = 0;
         tiltObject.localRotation = Quaternion.Euler(minWeaponTilt);
     }
@@ -79,6 +78,8 @@ public abstract class Weapon : RepairObject
         //Cambia el estado
         player.stateMachine.cannonState.SetWeapon(this);
         player.stateMachine.ChangeState(player.stateMachine.cannonState);
+        isRotating = false;
+        isBeingUsed = true;
     }
     public override void Release(ObjectHolder _objectHolder)
     {
@@ -86,6 +87,7 @@ public abstract class Weapon : RepairObject
         //Cambia el estado
         player.stateMachine.ChangeState(player.stateMachine.idleState);
         _objectHolder.RemoveItemFromHand();
+        isBeingUsed = false;
     }
     public override void Interact(ObjectHolder _objectHolder)
     {
@@ -115,6 +117,7 @@ public abstract class Weapon : RepairObject
         animator.SetTrigger("Shoot");
         animator.SetBool("HasAmmo", false);
         _objectHolder.GetComponentInParent<PlayerController>().animator.SetTrigger("Shoot");
+        hint.interactType = HintController.ActionType.INTERACT;
         foreach (ParticleSystem item in loadParticles)
         {
             item.Stop(true);
@@ -122,7 +125,7 @@ public abstract class Weapon : RepairObject
     }
     public override void Use(ObjectHolder _objectHolder)
     {
-        _objectHolder.GetComponentInParent<PlayerController>().stateMachine.cannonState.SwapIsRotating();
+        isRotating = !isRotating;
     }
 
     public override bool CanInteract(ObjectHolder _objectHolder)
@@ -141,48 +144,6 @@ public abstract class Weapon : RepairObject
         return !isPlayerMounted() && !handObject /*Montarse*/ 
             || isPlayerMounted() && playerCont.playerInput.playerReference == mountedPlayerId /*Bajarse*/ 
             || !hasAmmo && handObject && handObject.objectSO == objectToInteract /*Recargar*/ ;
-    }
-
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        if (state.GetIsBroken() || freeze)
-            return base.ShowNeededInputHint(_objectHolder);
-
-        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-        PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
-        
-        if (!hasAmmo)
-            tooltip.SetState(ObjectsTooltip.ObjectState.Empty);
-        
-        if (!handObject && !isPlayerMounted()) //No tiene nada en la mano y no hay nadie montado
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "mount"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-        else if (isPlayerMounted() && !hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId) //Si lo esta utilizando y no esta cargado
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "dismount"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-        else if (!hasAmmo && handObject && handObject.objectSO == objectToInteract)//Si no esta cargado y tiene la bala en la mano
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "load_bullet"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-        else if (hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId) //Si esta cargado y el player esta montado
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "dismount"),
-                new HintController.Hint(HintController.ActionType.USE, "shoot")
-            };        
-
-        return new HintController.Hint[] 
-        {
-            new HintController.Hint(HintController.ActionType.NONE, "") 
-        };
     }
 
     protected void Mount(PlayerController _player, ObjectHolder _objectHolder)
@@ -240,6 +201,8 @@ public abstract class Weapon : RepairObject
         foreach (ParticleSystem item in loadParticles)
             item.Play(true);
 
+        hint.interactType = HintController.ActionType.HOLD_INTERACT;
+
         AudioManager.instance.Play2dOneShotSound(weaponReloadClip, "Objects");
     }
 
@@ -266,7 +229,6 @@ public abstract class Weapon : RepairObject
             return;
 
         PlayerController currentPlayer = PlayersManager.instance.ingamePlayers[mountedPlayerId];
-        UnMount(currentPlayer, currentPlayer.objectHolder);
         currentPlayer.animator.SetBool("Pick", false);
         
     }

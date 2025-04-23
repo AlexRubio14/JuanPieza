@@ -23,14 +23,6 @@ public class Repair : InteractableObject
 
         return handObject && handObject.objectSO == repairItem;
     }
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        return new HintController.Hint[]
-        {
-            new HintController.Hint(HintController.ActionType.NONE, "")
-        };
-    }
-
     #endregion
 
     #region Repair Functions

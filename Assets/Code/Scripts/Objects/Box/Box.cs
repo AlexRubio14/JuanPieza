@@ -8,15 +8,23 @@ public abstract class Box : RepairObject
     
     public override void Grab(ObjectHolder _objectHolder)
     {
-        if (!_objectHolder.GetHasObjectPicked())
-        {
-            RemoveItemInBox();
-            InteractableObject boxObject = _objectHolder.InstantiateItemInHand(itemDropped);
-            ShipsManager.instance.playerShip.AddInteractuableObject(boxObject);
-            _objectHolder.ChangeObjectInHand(boxObject);
-            _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", true);
+        if (_objectHolder.GetHasObjectPicked() || state.GetIsBroken())
+            return;
+        RemoveItemInBox();
+        InteractableObject boxObject = _objectHolder.InstantiateItemInHand(itemDropped);
+        ShipsManager.instance.playerShip.AddInteractuableObject(boxObject);
+        _objectHolder.ChangeObjectInHand(boxObject);
+        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", true);
+    }
+    public override void Interact(ObjectHolder _objectHolder)
+    {
+        if (!CanInteract(_objectHolder) || state.GetIsBroken())
+            return;
 
-        }
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+        AddItemInBox(true);
+        InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
+        Destroy(currentObject.gameObject);
     }
 
     public override bool CanGrab(ObjectHolder _objectHolder)
@@ -32,31 +40,6 @@ public abstract class Box : RepairObject
 
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         return handObject && handObject.objectSO == objectToInteract; //Si tengo un objeto en la mano y es del mismo tipo que el que dropea
-    }
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        if (state.GetIsBroken())
-            return base.ShowNeededInputHint(_objectHolder);
-        
-        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-    
-        if (!handObject && HasItems())
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-        else if (handObject && handObject.objectSO == objectToInteract)
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "store"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-
-        return new HintController.Hint[]
-        {
-            new HintController.Hint(HintController.ActionType.NONE, "")
-        };
     }
 
     public virtual void AddItemInBox(bool _makeSound = true, int cuantity = 1)

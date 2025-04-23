@@ -36,23 +36,4 @@ public class Bonk : RepairObject
         return !_objectHolder.GetHandInteractableObject();
     }
     
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        if (state.GetIsBroken())
-            return base.ShowNeededInputHint(_objectHolder);
-
-        if (!_objectHolder.GetHandInteractableObject())
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "touch_bonk"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-
-            };
-
-        return new HintController.Hint[]
-        {
-            new HintController.Hint(HintController.ActionType.NONE, "")
-
-        };
-    }
 }

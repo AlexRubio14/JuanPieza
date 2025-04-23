@@ -21,43 +21,11 @@ public class Radio : Resource, ICatapultAmmo
             StopPlaying();
         else
             Play();
-
-        _objectHolder.hintController.UpdateActionType(ShowNeededInputHint(_objectHolder));
     }
 
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
         return _objectHolder.GetHasObjectPicked() == this;
-    }
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        if (!_objectHolder.GetHasObjectPicked())
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-        else if (_objectHolder.GetHandInteractableObject() == this)
-        {
-            if (!isPlaying)
-                return new HintController.Hint[]
-                {
-                    new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
-                    new HintController.Hint(HintController.ActionType.USE, "play_music")
-                };
-            else
-                return new HintController.Hint[]
-                {
-                    new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
-                    new HintController.Hint(HintController.ActionType.USE, "stop_music")
-                };
-
-
-        }
-        return new HintController.Hint[]
-        {
-            new HintController.Hint(HintController.ActionType.NONE, "")
-        };
     }
  
     private void Play()
