@@ -38,21 +38,6 @@ public class QuestBoardObject : InteractableObject
     {
         return !_objectHolder.GetHandInteractableObject();
     }
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        if(_objectHolder.GetHandInteractableObject() != null)
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.NONE, "")
-            };
-
-        return new HintController.Hint[]
-        {
-            new HintController.Hint(HintController.ActionType.INTERACT, "open_map"),
-            new HintController.Hint(HintController.ActionType.CANT_USE, "")
-        };
-    }
-
 
     public GameObject GetQuestCanvas()
     {

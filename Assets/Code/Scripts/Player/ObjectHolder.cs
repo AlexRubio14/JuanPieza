@@ -16,7 +16,6 @@ public class ObjectHolder : MonoBehaviour
     private InteractableObject handObject;
 
     [SerializeField] private Transform[] objectPickedPos;
-    public HintController hintController { private set;  get; }
 
     private bool hasPickedObject = false;
 
@@ -24,7 +23,6 @@ public class ObjectHolder : MonoBehaviour
 
     private void Awake()
     {
-        hintController = GetComponentInParent<HintController>();
         colliders = new RaycastHit[0];
     }
 
@@ -33,9 +31,6 @@ public class ObjectHolder : MonoBehaviour
     {
         InteractableObject neareastObject = CheckItemsInRange();
         ChangeNearestInteractableObject(neareastObject);
-
-        if(!hintController.showingHints && handObject)
-            hintController.UpdateActionType(handObject.ShowNeededInputHint(this));
 
     }
 
@@ -142,6 +137,7 @@ public class ObjectHolder : MonoBehaviour
     {
         if (handObject && _nearestObject == handObject)
         {
+            nearestInteractableObject.hint.RemovePlayer();
             nearestInteractableObject = null;
             return;
         }
@@ -151,6 +147,7 @@ public class ObjectHolder : MonoBehaviour
 
         if (nearestInteractableObject)
         {
+            nearestInteractableObject.hint.RemovePlayer();
             nearestInteractableObject.GetSelectedVisual().Hide();
             if (nearestInteractableObject.GetTooltip() != null)
             {
@@ -163,13 +160,9 @@ public class ObjectHolder : MonoBehaviour
         if (!_nearestObject)
         {
             nearestInteractableObject = _nearestObject;
-            if (handObject)
-                hintController.UpdateActionType(handObject.ShowNeededInputHint(this));
-            else
-                hintController.UpdateActionType(new HintController.Hint[] { new HintController.Hint(HintController.ActionType.NONE, "") });
-
             return;
         }
+
 
         if (_nearestObject.CanGrab(this) || _nearestObject.CanInteract(this))
         {
@@ -198,11 +191,9 @@ public class ObjectHolder : MonoBehaviour
                 _nearestObject.GetSelectedVisual().Show();
             }
         }
-        
-        nearestInteractableObject = _nearestObject;
 
-        if (nearestInteractableObject.CanInteract(this))
-            hintController.UpdateActionType(nearestInteractableObject.ShowNeededInputHint(this));
+        _nearestObject.hint.AddPlayer();
+        nearestInteractableObject = _nearestObject;
     }
 
     #endregion

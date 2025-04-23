@@ -107,48 +107,7 @@ public class Catapult : Weapon
             || handObject is ICatapultAmmo;
 
     }
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        if (state.GetIsBroken())
-            return base.ShowNeededInputHint(_objectHolder);
-
-        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-        PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
-
-        if (!hasAmmo)
-            tooltip.SetState(ObjectsTooltip.ObjectState.Empty);
-
-        if (!handObject && !isPlayerMounted()) //No tiene nada en la mano y no hay nadie montado
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "mount"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-        else if (isPlayerMounted() && !hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId) //Si lo esta utilizando y no esta cargado
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "dismount"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-        else if (!hasAmmo && handObject)//Si no esta cargado y tiene la bala en la mano
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "load_bullet"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-        else if (hasAmmo && playerCont.playerInput.playerReference == mountedPlayerId) //Si esta cargado y el player esta montado
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "dismount"),
-                new HintController.Hint(HintController.ActionType.USE, "shoot")
-            };
-
-        return new HintController.Hint[]
-        {
-            new HintController.Hint(HintController.ActionType.NONE, "")
-        };
-    }
-
+  
     private GameObject CopyMeshRecursive(Transform _original, Transform _parent)
     {
         // Crear nuevo GameObject

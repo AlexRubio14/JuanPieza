@@ -116,7 +116,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public List<AudioClip> pushListClips;
 
     public Animator animator { get; private set; }
-    public HintController hintController { get; private set; }
     private CapsuleCollider capsuleCollider;
     public Rigidbody rb { get; private set; }
 
@@ -131,7 +130,6 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
-        hintController = GetComponent<HintController>();
         animator = GetComponentInChildren<Animator>();
         objectHolder = GetComponentInChildren<ObjectHolder>();
 
@@ -324,12 +322,10 @@ public class PlayerController : MonoBehaviour
         if(handObject && handObject.CanInteract(objectHolder))
         {
             handObject.Interact(objectHolder);
-            hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));
         }else if (nearestObject && nearestObject.CanInteract(objectHolder))
         {
             nearestObject.Interact(objectHolder);
             objectHolder.ChangeNearestInteractableObject(null);
-            hintController.UpdateActionType(nearestObject.ShowNeededInputHint(objectHolder));
         }
         
         animator.SetBool("Pick", objectHolder.GetHandInteractableObject());
@@ -359,15 +355,8 @@ public class PlayerController : MonoBehaviour
         InteractableObject nearestObj = objectHolder.GetNearestInteractableObject();
         if (nearestObj && nearestObj.CanInteract(objectHolder))
         {
-            hintController.UpdateActionType(nearestObj.ShowNeededInputHint(objectHolder));
             nearestObj.GetSelectedVisual().Show();
         }
-        else if (handObject == newHandObject)
-            hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));
-        else if (newHandObject)
-            hintController.UpdateActionType(newHandObject.ShowNeededInputHint(objectHolder));
-        else
-            hintController.UpdateActionType(new HintController.Hint[] { new HintController.Hint(HintController.ActionType.NONE, "") });
     }
     public void StopUse()
     {
@@ -376,7 +365,6 @@ public class PlayerController : MonoBehaviour
         if (currentObject)
         {
             currentObject.StopUse(objectHolder);
-            hintController.UpdateActionType(currentObject.ShowNeededInputHint(objectHolder));
         }
     }
     #endregion

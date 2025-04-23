@@ -33,9 +33,8 @@ public class FishingRod : Tool, ICatapultAmmo
     public HookController hook { get; private set; }
 
     public PlayerController player { get; private set; }
-    protected override void Start()
+    protected virtual void Start()
     {
-        base.Start();
 
         if (FishingManager.instance && !fishingRodAdded)
         {
@@ -56,7 +55,7 @@ public class FishingRod : Tool, ICatapultAmmo
         if (chargingHook)
             ChargeHook();
     }
-    protected override void OnEnable()
+    protected virtual void OnEnable()
     {
         ShipsManager.instance.playerShip.AddInteractuableObject(this);
 
@@ -79,6 +78,7 @@ public class FishingRod : Tool, ICatapultAmmo
         PlayerController currentPlayer = _objectHolder.GetComponentInParent<PlayerController>();
         currentPlayer.animator.ResetTrigger("FishingStop");
         hookGrabbed = false;
+        hint.useType = HintController.ActionType.HOLD_USE;
         base.Grab(_objectHolder);
 
         if (player == currentPlayer)
@@ -138,40 +138,6 @@ public class FishingRod : Tool, ICatapultAmmo
         base.Interact(_objectHolder);
     }
 
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-        if (handObject && handObject == this)
-        {
-            if (!hookThrowed)
-                return new HintController.Hint[]
-                {
-                    new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
-                    new HintController.Hint(HintController.ActionType.USE, "throw_hook")
-                };
-            else
-                return new HintController.Hint[]
-                {
-                    new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
-                    new HintController.Hint(HintController.ActionType.USE, "recover_hook")
-                };
-        }
-        else if (!handObject)
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-
-
-
-
-        return new HintController.Hint[]
-        {
-            new HintController.Hint(HintController.ActionType.NONE, "")
-        };
-    }
-
 
     private void ChargeHook()
     {
@@ -211,6 +177,8 @@ public class FishingRod : Tool, ICatapultAmmo
 
         player.animator.SetBool("FishingCharge", false);
 
+        hint.useType = HintController.ActionType.USE;
+
         Invoke("StartFishing", 0.75f);
     }
     private void StartFishing()
@@ -239,7 +207,9 @@ public class FishingRod : Tool, ICatapultAmmo
         idleFishingRod.SetActive(true);
         landedFishingRod.SetActive(false);
 
-        if(player)
+        hint.useType = HintController.ActionType.HOLD_USE;
+
+        if (player)
             player.animator.SetTrigger("FishingStop");
     }
 

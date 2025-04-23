@@ -13,16 +13,15 @@ public class WoodShelf : Box
     [Header("Tutorial")]
     [SerializeField] private ShowMessageRepair message;
 
-    protected override void Start()
+    protected virtual void Start()
     {
-        base.Start();
         for (int i = 0; i < 4; i++)
             AddItemInBox(false);
     }
 
     public override void Interact(ObjectHolder _objectHolder)
     {
-        if (!CanInteract(_objectHolder))
+        if (!CanInteract(_objectHolder) || state.GetIsBroken())
             return;
 
         Tool handObject = _objectHolder.GetHandInteractableObject() as Tool;
@@ -30,7 +29,6 @@ public class WoodShelf : Box
         AddItemInBox(true);
         InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
         Destroy(currentObject.gameObject);
-        base.Interact(_objectHolder);
     }
 
     public override void AddItemInBox(bool _makeSound, int cuantity = 1)

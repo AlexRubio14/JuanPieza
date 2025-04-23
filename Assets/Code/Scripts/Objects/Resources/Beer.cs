@@ -26,24 +26,4 @@ public class Beer : Resource, ICatapultAmmo
     {
         return _objectHolder.GetHandInteractableObject() == this;
     }
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        if (!_objectHolder.GetHasObjectPicked())
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-        else if (_objectHolder.GetHandInteractableObject() == this)
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
-                new HintController.Hint(HintController.ActionType.USE, "drink")
-            };
-
-        return new HintController.Hint[]
-        {
-            new HintController.Hint(HintController.ActionType.NONE, "")
-        };
-    }
 }

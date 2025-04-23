@@ -38,20 +38,5 @@ public class ColorChanger : InteractableObject
     {
         return !_objectHolder.GetHandInteractableObject();
     }
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        if (CanInteract(_objectHolder))
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "change_color"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-        else
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.NONE, "")
-            };
-    }
-
    
 }

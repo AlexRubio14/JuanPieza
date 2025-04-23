@@ -190,7 +190,7 @@ public class DialogueController : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         HintController.DeviceType device = PlayersManager.instance.ingamePlayers.Count > 0 
-            ? PlayersManager.instance.ingamePlayers[0].hintController.deviceType 
+            ? PlayersManager.instance.ingamePlayers[0].GetComponent<HintController>().deviceType 
             : HintController.DeviceType.KEYBOARD;
         foreach (KeyValuePair<Image, Sprite[]> item in actionsSprites)
         {

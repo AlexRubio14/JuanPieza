@@ -14,7 +14,8 @@ public abstract class InteractableObject : MonoBehaviour
     public bool isBeingUsed { get; protected set; }
     [field: SerializeField]
     protected bool canGrab;
-
+    [field: SerializeField]
+    public bool canUse {  get; protected set; }
     [SerializeField]
     public Rigidbody rb;
     [field: SerializeField]
@@ -22,6 +23,8 @@ public abstract class InteractableObject : MonoBehaviour
     protected Collider objectCollider;
 
     public bool hasToBeInTheShip = true;
+
+    public ItemHint hint {  get; protected set; }
     
     protected virtual void Awake()
     {
@@ -30,10 +33,7 @@ public abstract class InteractableObject : MonoBehaviour
         
         rb = GetComponent<Rigidbody>();
         isBeingUsed = false;
-    }
-    protected virtual void Start()
-    {
-        StartCoroutine(AddObjectToShip());
+        hint = GetComponent<ItemHint>();
     }
 
 
@@ -64,22 +64,10 @@ public abstract class InteractableObject : MonoBehaviour
     }
     public abstract bool CanInteract(ObjectHolder _objectHolder);
 
-    protected virtual void OnEnable()
-    {
-        StartCoroutine(AddObjectToShip());
-    }
     protected virtual void OnDestroy()
     {
         if (ShipsManager.instance && hasToBeInTheShip && ShipsManager.instance.playerShip)
             ShipsManager.instance.playerShip.RemoveInteractuableObject(this);
-    }
-    public abstract HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder);
-    
-    protected IEnumerator AddObjectToShip()
-    {
-        yield return new WaitForEndOfFrame();
-        if (ShipsManager.instance && hasToBeInTheShip && ShipsManager.instance.playerShip)
-            ShipsManager.instance.playerShip.AddInteractuableObject(this);
     }
 
 }

@@ -350,7 +350,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9106431543205044296}
@@ -394,6 +394,9 @@ MonoBehaviour:
   - {fileID: 2632824918179043192}
   - {fileID: 4550316814541030183}
   boatDestroyed: {fileID: 8300000, guid: 0547658a6be1e7645b64360681c39c5e, type: 3}
+  destructionParticles: []
+  delayBetweenGroups: 0.5
+  particlesPerGroup: 0
   playersSpawnPos:
   - {fileID: 280691044958892880}
   - {fileID: 6074538686334501866}
@@ -408,6 +411,9 @@ MonoBehaviour:
   message: []
   cannon: {fileID: 8849408466616681510, guid: 279e1b58b6dc117449b41eda3ae35bec, type: 3}
   fishingShelf: {fileID: 2668099272576232319}
+  smoke: {fileID: 0}
+  rateOverTimeSum: 0
+  radiusSum: 0
 --- !u!114 &3787857318974121445
 MonoBehaviour:
   m_ObjectHideFlags: 0

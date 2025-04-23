@@ -5,7 +5,6 @@ public class CannonState : PlayerState
     private Weapon currentWeapon;
     private Vector3 weaponOffset;
 
-    private bool isRotating;
     private float currentAngle;
     public override void EnterState()
     {
@@ -15,7 +14,6 @@ public class CannonState : PlayerState
         currentWeapon.transform.position = controller.transform.position + weaponOffset;
         controller.animator.SetBool("OnCannon", true);
         controller.animator.SetBool("Pick", true);
-        isRotating = false;
         currentAngle = currentWeapon.transform.rotation.eulerAngles.y;
     }
     public override void UpdateState()
@@ -24,7 +22,7 @@ public class CannonState : PlayerState
     }
     public override void FixedUpdateState()
     {
-        if(!isRotating)
+        if(!currentWeapon.isRotating)
             MoveCannon();
         else
             RotateCannon();
@@ -118,10 +116,5 @@ public class CannonState : PlayerState
     public void SetWeapon(Weapon _weapon)
     {
         currentWeapon = _weapon;
-    }
-    public void SwapIsRotating()
-    {
-        isRotating = !isRotating;
-        currentAngle = currentWeapon.transform.rotation.eulerAngles.y;
     }
 }
