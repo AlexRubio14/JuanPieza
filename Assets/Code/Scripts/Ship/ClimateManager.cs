@@ -132,7 +132,7 @@ public class ClimateManager : MonoBehaviour
 
     private void Strike()
     {
-        affectedObject.GetComponent<InteractableObject>().DestroyLightning();
+        Destroy(_lightningOrb.gameObject);
         GameObject strike = Instantiate(thunder, affectedObject.transform.position, Quaternion.identity);
         StartCoroutine(DestroyStrike(strike, 2f));
         AudioManager.instance.Play2dOneShotSound(strikeAudioClip, "Objects");
@@ -180,7 +180,6 @@ public class ClimateManager : MonoBehaviour
         newlightningOrb.transform.localScale = Vector3.zero;
         newlightningOrb.transform.localPosition = new Vector3(0,0.5f,0);
         _lightningOrb = newlightningOrb;
-        affectedObject.GetComponent<InteractableObject>().SetLightning(newlightningOrb);
         lightningChargeAS = AudioManager.instance.Play2dLoop(lightningAudioClip, "Objects", 0f);
     }
     #endregion
