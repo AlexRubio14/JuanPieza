@@ -2,95 +2,71 @@ using UnityEngine;
 
 public class Geyser : MonoBehaviour
 {
-    public enum GeyserPhase { EMITTING_PARTICLES, ASCENDING, HOLDING_PEAK, DESCENDING };
-
-    //particulas
-    [SerializeField] private float particleDuration;
-    [SerializeField] private float geyserDuration;
-    private float timer;
-
     [SerializeField] private Vector3 geyserForce;
+    [SerializeField] private ParticleSystem geyserParticles;
+    [SerializeField] private LayerMask affectedLayers;
 
-    private GeyserPhase currentPhase;
+    [SerializeField] private float raycastRadius;
+    [SerializeField] private float raycastDistance;
+    private Vector3 raycastSize;
+
+    private ParticleSystem currentParticles;
+    private bool isRunning = false;
 
     private void OnEnable()
     {
-        timer = 0f;
-        currentPhase = GeyserPhase.EMITTING_PARTICLES;
+        currentParticles = Instantiate(geyserParticles, transform);
+        currentParticles.Play();
+        isRunning = true;
     }
 
     private void Update()
     {
-        timer += Time.deltaTime;
+        if (!isRunning)
+            return;
 
-        switch (currentPhase)
+        //if (currentParticles.IsAlive(false))
+        //{
+        //    Destroy(currentParticles.gameObject);
+        //    isRunning = false;
+        //    gameObject.SetActive(false);
+        //}
+
+        raycastSize = new Vector3(transform.position.x, transform.position.y + raycastDistance, transform.position.z);
+        Collider[] colliders = Physics.OverlapCapsule(transform.position, raycastSize, raycastRadius, affectedLayers);
+
+        foreach (Collider collider in colliders)
         {
-            case GeyserPhase.EMITTING_PARTICLES:
-                break;
-            case GeyserPhase.ASCENDING:
-                //subir el transform del geyser
-                break;
-            case GeyserPhase.HOLDING_PEAK:
-                break;
-            case GeyserPhase.DESCENDING:
-                //bajar el transform del geyser
-                break;
-            default:
-                break;
+            Rigidbody rb = collider.attachedRigidbody;
+            if (rb != null)
+            {
+                rb.AddForce(geyserForce * Time.deltaTime, ForceMode.Impulse);
+            }
         }
     }
 
-    public void ChangePhase(GeyserPhase phase)
-    {
-        switch (currentPhase)
-        {
-            case GeyserPhase.EMITTING_PARTICLES:
-                DeactivateParticles();
-                break;
-            case GeyserPhase.ASCENDING:
-                break;
-            case GeyserPhase.HOLDING_PEAK:
-                break;
-            case GeyserPhase.DESCENDING:
-                gameObject.SetActive(false);
-                break;
-            default:
-                break;
-        }
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.cyan;
 
-        switch (phase)
-        {
-            case GeyserPhase.EMITTING_PARTICLES:
-                ActivateParticles();
-                break;
-            case GeyserPhase.ASCENDING:
-                ActivateGeyser();
-                break;
-            case GeyserPhase.HOLDING_PEAK:
-                break;
-            case GeyserPhase.DESCENDING:
-                break;
-            default:
-                break;
-        }
+    //    Vector3 point1 = transform.position;
+    //    Vector3 point2 = raycastSize;
 
-        currentPhase = phase;
-    }
+    //    DrawVerticalCapsule(point1, point2, raycastRadius);
+    //}
 
-    private void ActivateParticles()
-    {
+    //private void DrawVerticalCapsule(Vector3 p1, Vector3 p2, float radius)
+    //{
+    //    // Dibuja la línea central
+    //    Gizmos.DrawLine(p1 + Vector3.left * radius, p2 + Vector3.left * radius);
+    //    Gizmos.DrawLine(p1 + Vector3.right * radius, p2 + Vector3.right * radius);
+    //    Gizmos.DrawLine(p1 + Vector3.forward * radius, p2 + Vector3.forward * radius);
+    //    Gizmos.DrawLine(p1 + Vector3.back * radius, p2 + Vector3.back * radius);
 
-    }
-
-    private void DeactivateParticles()
-    {
-
-    }
-
-    private void ActivateGeyser()
-    {
-
-    }
+    //    // Dibuja las esferas en los extremos
+    //    Gizmos.DrawWireSphere(p1, radius);
+    //    Gizmos.DrawWireSphere(p2, radius);
+    //}
 
 
 }
