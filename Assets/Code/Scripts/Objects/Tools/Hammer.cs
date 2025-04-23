@@ -93,6 +93,7 @@ public class Hammer : Tool, ICatapultAmmo
                 //Objetos: Comprobar si son objetos rompibles y si estan rotos llamar a la funcion de RepairProgress
                 if(_repair.GetObjectState().GetIsBroken())
                     _repair.RepairProgress(repairAmmount);
+                _repair.BreakIce();
             }
             else if(hit.collider.TryGetComponent(out PlayerController _hittedPlayer))
             {
