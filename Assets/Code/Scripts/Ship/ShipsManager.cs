@@ -29,14 +29,14 @@ public class ShipsManager : MonoBehaviour
     private void Start()
     {
         GenerateAllyShip();
-        enemiesHordes = new List<ShipData>(NodeManager.instance.questData.battleInformation.enemiesHordes);
+        enemiesHordes = new List<ShipData>(NodeManager.instance.questData.enemiesHordes);
         transitionController.InitLevelTransition();
     }
 
     public void GenerateEnemies()
     {
         if (NodeManager.instance.questData.questObjective != QuestData.QuestObjective.BATTLE || 
-            NodeManager.instance.questData.battleInformation.enemiesHordes[0].spawnShipCondition != ShipData.SpawnShipCondition.INIT)
+            NodeManager.instance.questData.enemiesHordes[0].spawnShipCondition != ShipData.SpawnShipCondition.INIT)
             return;
 
         GenerateEnemyShip();

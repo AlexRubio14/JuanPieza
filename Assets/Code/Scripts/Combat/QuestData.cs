@@ -17,7 +17,7 @@ public class QuestData : ScriptableObject
     public Vector2 positionInMap;
     public bool completed;
 
-    public BattleQuestNodeData battleInformation;
+    public List<ShipData> enemiesHordes;
 
     public QuestClimete questClimete;
     public bool hasWhirlwind;
