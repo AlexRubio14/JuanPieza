@@ -13,7 +13,7 @@ public class InteractNPC : InteractableObject
 
     protected bool canInteract;
 
-    protected override void Start()
+    protected virtual void Start()
     {
         text.gameObject.SetActive(false);
         backGround.fillAmount = 0;
@@ -72,14 +72,5 @@ public class InteractNPC : InteractableObject
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
         return canInteract;
-    }
-
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        return new HintController.Hint[]
-          {
-                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-          };
     }
 }
