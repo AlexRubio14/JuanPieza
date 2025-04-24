@@ -37,7 +37,7 @@ public abstract class Weapon : RepairObject
     [SerializeField]
     protected Vector2 recoilForce;
     [SerializeField]
-    protected float recoilRotation;
+    protected Vector2 recoilRotation;
     [Serializable]
     public struct RigidbodyRecoilPreset
     {
@@ -50,7 +50,10 @@ public abstract class Weapon : RepairObject
     [SerializeField]
     protected float stopRecoilMagnitude;
     protected bool onRecoil;
-    private float recoilTimePassed;
+    protected float recoilTimePassed;
+    [SerializeField]
+    protected float minRecoilDuration; 
+
     [Space, Header("Particles"), SerializeField]
     protected GameObject shootParticles;
     [SerializeField]
@@ -244,7 +247,10 @@ public abstract class Weapon : RepairObject
         Vector3 recoilToAdd = new Vector3(currentAxis.x * recoilForce.x, recoilForce.y, currentAxis.z * recoilForce.x);
         rb.AddForce(recoilToAdd , ForceMode.Impulse);
 
-        Vector3 recoilTorque = new Vector3(0, UnityEngine.Random.Range(-recoilRotation, recoilRotation), 0);
+        float recoilTorqueForce = UnityEngine.Random.Range(recoilRotation.x, recoilRotation.y);
+        float recoilTorqueDirection = GetClosestSign(UnityEngine.Random.Range(-1, 2));
+
+        Vector3 recoilTorque = new Vector3(0, recoilTorqueForce * recoilTorqueDirection, 0);
         rb.AddTorque(recoilTorque, ForceMode.Impulse);
         onRecoil = true;
         recoilTimePassed = 0;
@@ -252,7 +258,7 @@ public abstract class Weapon : RepairObject
     protected virtual void WaitRecoil()
     {
         recoilTimePassed += Time.deltaTime;
-        if (recoilTimePassed < 1f || rb.linearVelocity.magnitude > stopRecoilMagnitude)
+        if (recoilTimePassed < minRecoilDuration || rb.linearVelocity.magnitude > stopRecoilMagnitude)
             return;
 
         rb.linearVelocity = Vector3.zero;
@@ -263,6 +269,11 @@ public abstract class Weapon : RepairObject
         onRecoil = false;
 
     }
+    protected int GetClosestSign(float _value)
+    {
+        return Mathf.Abs(1 - _value) < Mathf.Abs(-1 - _value) ? 1 : -1;
+    }
+
     protected void AddLoadParticle(Transform _parent)
     {
         ParticleSystem loadParticleSystem = Instantiate(loadParticlesPrefab, _parent.position, Quaternion.identity).GetComponent<ParticleSystem>();

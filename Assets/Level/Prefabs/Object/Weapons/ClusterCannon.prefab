@@ -290,7 +290,7 @@ Transform:
   m_GameObject: {fileID: 8060378494165400214}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.47, y: -0.33, z: 3.41}
+  m_LocalPosition: {x: -0.011, y: 0.009, z: 1.31}
   m_LocalScale: {x: 0.02, y: 0.02065838, z: 0.023434736}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -380,16 +380,17 @@ MonoBehaviour:
   tiltProcess: 0
   tiltInputHint: {fileID: 1199549590248792815}
   forwardAxis: {x: 0, y: 0, z: -1}
-  recoilForce: {x: 0, y: 0}
-  recoilRotation: 0
+  recoilForce: {x: 40000, y: 4000}
+  recoilRotation: {x: 10000, y: 12000}
   rbPresets:
   - mass: 0
     drag: 0
     angularDrag: 0
-  - mass: 0
-    drag: 0
-    angularDrag: 0
-  stopRecoilMagnitude: 0
+  - mass: 500
+    drag: 15
+    angularDrag: 10
+  stopRecoilMagnitude: 5
+  minRecoilDuration: 1
   shootParticles: {fileID: 725748389856807714, guid: 55f833a9d5fecfc49bd7ba9992bba2b5, type: 3}
   loadParticlesPrefab: {fileID: 41254552372408826, guid: 25f39a3b5d1018d4b86a114f3fb50afd, type: 3}
   weaponShootClip: {fileID: 8300000, guid: eac65268023cca94bbad0812fd8a7ca9, type: 3}

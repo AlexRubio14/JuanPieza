@@ -403,7 +403,10 @@ public class FishingManager : MonoBehaviour
         newData.fishedObject = newItem;
         newData.parabolaStartPos = _fishingRod.hook.transform.position;
 
-        Vector3 targetPos = _fishingRod.player.transform.position + _fishingRod.player.transform.forward * 1 + Vector3.up * 1;
+        float itemOffset = 1;
+        if (newItem.TryGetComponent(out Weapon _weapon))
+            itemOffset = 2.3f;
+        Vector3 targetPos = _fishingRod.player.transform.position + _fishingRod.player.transform.forward * itemOffset + Vector3.up;
 
         newData.parabolaEndPos = targetPos;
         fishingData[_id] = newData;
