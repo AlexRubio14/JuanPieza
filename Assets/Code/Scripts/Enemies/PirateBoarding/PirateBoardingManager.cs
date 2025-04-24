@@ -51,7 +51,7 @@ public class PirateBoardingManager : MonoBehaviour
     {
         Vector3 playerShipPos = ShipsManager.instance.playerShip.transform.position;
 
-        raftsStartPos[0].transform.position = new Vector3(playerShipPos.x - xOffset, playerShipPos.y, playerShipPos.z - zOffset);
+        raftsStartPos[0].transform.position = new Vector3(playerShipPos.x - xOffset, playerShipPos.y, playerShipPos.z -  zOffset);
         raftsStartPos[1].transform.position = new Vector3(playerShipPos.x + xOffset, playerShipPos.y, playerShipPos.z - zOffset);
     }
 

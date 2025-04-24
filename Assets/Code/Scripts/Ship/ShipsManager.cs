@@ -127,7 +127,7 @@ public class ShipsManager : MonoBehaviour
         {
             if(ship)
                 enemiesHordes.Remove(enemiesHordes[0]);
-            if (enemiesHordes.Count == 0 && PirateBoardingManager.Instance.piratesBoarding.Count <= 0)
+            if (enemiesHordes.Count == 0 && PirateBoardingManager.Instance.piratesBoarding.Count <= 0 && NodeManager.instance.questData.questObjective != QuestData.QuestObjective.BOARDING)
             {
                 Camera.main.GetComponent<ArriveIslandCamera>().enabled = true;
                 Camera.main.GetComponent<ArriveIslandCamera>().SetIsRepositing();

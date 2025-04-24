@@ -46,7 +46,6 @@ public class RaftManager : MonoBehaviour
         nextEvent?.Invoke();
     }
 
-    //TODO: this method should be called everytime a battle is finished
     public void ResetQueue()
     {
         raftEventQueue.Clear();
