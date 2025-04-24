@@ -53,8 +53,6 @@ public class HintController : MonoBehaviour
         CheckObjectToGrab(handObject, nearObject);
         CheckObjectToUse(handObject);
         CheckObjetToInteract(handObject, nearObject);
-        if (handObject is Weapon)
-            ShowWeaponMovement(handObject as Weapon);
     }
 
     private void CheckObjectToGrab(InteractableObject _handObject, InteractableObject _nearestObject)
@@ -82,17 +80,6 @@ public class HintController : MonoBehaviour
         }
         //Mostrar el input hint en la cabeza del player
         playerHint.EnableHint(_handObject.hint.useType, deviceType);
-    }
-    private void ShowWeaponMovement(Weapon _weapon)
-    {
-        if(_weapon.isRotating)
-        {
-
-        }
-        else
-        {
-
-        }
     }
     private void CheckObjetToInteract(InteractableObject _handObject, InteractableObject _nearestObject)
     {

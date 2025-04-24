@@ -53,7 +53,7 @@ public class ObjectHolder : MonoBehaviour
             InteractableObject tempObject = item.collider.GetComponent<InteractableObject>();
 
             if (!tempObject || 
-                tempObject.isBeingUsed ||
+                tempObject.isBeginUsed ||
                 !tempObject.CanGrab(this) && !tempObject.CanInteract(this) &&
                 (tempObject is not Repair || !(tempObject as Repair).GetObjectState().GetIsBroken()))
                 continue;

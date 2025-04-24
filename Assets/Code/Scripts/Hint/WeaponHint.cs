@@ -21,8 +21,8 @@ public class WeaponHint : ItemHint
 
     private void FixedUpdate()
     {
-        movementImage.gameObject.SetActive(currentWeapon.isBeingUsed);
-        if (currentWeapon.isBeingUsed)
+        movementImage.gameObject.SetActive(currentWeapon.isBeginUsed);
+        if (currentWeapon.isBeginUsed)
         {
             if (currentWeapon.isRotating)
                 movementImage.sprite = rotationSprite;
