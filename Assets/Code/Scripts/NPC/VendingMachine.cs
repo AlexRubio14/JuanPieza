@@ -27,15 +27,6 @@ public class VendingMachine : InteractableObject
         throw new System.NotImplementedException();
     }
 
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        return new HintController.Hint[]
-  {
-                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-  };
-    }
-
     public override void Use(ObjectHolder _objectHolder)
     {
         throw new System.NotImplementedException();

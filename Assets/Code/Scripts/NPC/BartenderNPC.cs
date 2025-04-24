@@ -38,13 +38,4 @@ public class BartenderNPC : InteractNPC
 
         return !handObject && base.CanInteract(_objectHolder);
     }
-
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
-    {
-        return new HintController.Hint[]
-          {
-                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-          };
-    }
 }
