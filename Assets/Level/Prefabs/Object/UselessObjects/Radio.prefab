@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1420783066600405563}
   - component: {fileID: 4042366615927977883}
-  - component: {fileID: 6203328519240700976}
   - component: {fileID: 460597698741433702}
   - component: {fileID: 7385996254732630559}
   - component: {fileID: 2498971714603910142}
@@ -102,22 +101,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6169d01cf8eae1d40a3b94a2c334a3cf, type: 3}
   - {fileID: 8300000, guid: 7b9f2b55042b7cf43829ee1672d27496, type: 3}
   - {fileID: 8300000, guid: 0f18e284930e3be4292a79dbe5c7e1cd, type: 3}
---- !u!114 &6203328519240700976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8395515496249075971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd800e70723aeee4b81600ebd755ddf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fixedSibling: {fileID: 4230721016020094040}
-  brokenSibling: {fileID: 4230721016020094040}
-  isBroken: 0
-  brokeClip: {fileID: 0}
 --- !u!114 &460597698741433702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +155,7 @@ Rigidbody:
   m_GameObject: {fileID: 8395515496249075971}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 0.1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -189,7 +172,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &8631326649108920342
 BoxCollider:
   m_ObjectHideFlags: 0

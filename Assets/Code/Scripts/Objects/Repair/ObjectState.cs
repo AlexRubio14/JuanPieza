@@ -11,6 +11,11 @@ public class ObjectState : MonoBehaviour
 
     private bool oneHit;
 
+    private void Start()
+    {
+        SetIsBroke(isBroken);
+    }
+
     public void SetIsBroke(bool state, bool freezing = false)
     {
         isBroken = state;
