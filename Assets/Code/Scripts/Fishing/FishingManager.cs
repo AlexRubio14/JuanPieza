@@ -184,13 +184,9 @@ public class FishingManager : MonoBehaviour
 
         if (fishingData[_id].parabolaProcess >= 1)//Acabar la pesca
         {
+            fishingData[_id].fishedObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
             StopFishing(fishingData[_id].fishingRod);
-
-            //Dejar la caña anclada en el suelo
-            fishingData[_id].fishingRod.DropItem(fishingData[_id].fishingRod.player.objectHolder);
-            fishingData[_id].fishingRod.transform.position += -fishingData[_id].fishingRod.player.transform.forward * 1f;
-            //Poner el objeto en la mano                                                        
-            fishingData[_id].fishedObject.GetComponent<InteractableObject>().Interact(fishingData[_id].fishingRod.player.objectHolder);
+            
         }
     }
     #endregion
@@ -406,10 +402,11 @@ public class FishingManager : MonoBehaviour
         newData.fishingState = FishingState.HOOKED_OBJECT;
         newData.fishedObject = newItem;
         newData.parabolaStartPos = _fishingRod.hook.transform.position;
-        newData.parabolaEndPos = _fishingRod.player.transform.position;
+
+        Vector3 targetPos = _fishingRod.player.transform.position + _fishingRod.player.transform.forward * 1 + Vector3.up * 1;
+
+        newData.parabolaEndPos = targetPos;
         fishingData[_id] = newData;
-
-
     }
     #endregion
 

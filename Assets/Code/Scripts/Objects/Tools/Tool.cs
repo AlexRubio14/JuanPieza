@@ -6,6 +6,8 @@ public abstract class Tool : InteractableObject
 
     public bool addToolAtDestroy { set; get; } = true;
 
+
+
     public override void Grab(ObjectHolder _objectHolder)
     {
         if (!_objectHolder.GetHasObjectPicked())
@@ -41,13 +43,14 @@ public abstract class Tool : InteractableObject
 
     protected override void OnDestroy()
     {
-        base.OnDestroy();
         Box box = ShipsManager.instance.playerShip.GetObjectBoxByObject(objectSO);
 
+        Debug.Log(addToolAtDestroy);
         if (box != null && addToolAtDestroy)
             box.AddItemInBox();
         
 
+        base.OnDestroy();
     }
 
 }

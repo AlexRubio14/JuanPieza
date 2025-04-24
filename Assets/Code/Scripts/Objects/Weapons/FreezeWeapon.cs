@@ -57,7 +57,6 @@ public class FreezeWeapon : MonoBehaviour
         if (!freeze)
             return;
         weapon.SetFreeze(false);
-        objectState.SetIsBroke(false, true);
         freezeCurrentTime = 0;
         weaponCurrentFreezePercentage = 0;
         iceCubeWeapon.transform.localScale = Vector3.zero;

@@ -63,6 +63,16 @@ public abstract class InteractableObject : MonoBehaviour
         return !_objectHolder.GetHandInteractableObject() && canGrab;
     }
     public abstract bool CanInteract(ObjectHolder _objectHolder);
+    protected virtual void OnEnable()
+    {
+        StartCoroutine(AddObjectToShip());
+    }
+    protected IEnumerator AddObjectToShip()
+    {
+        yield return new WaitForEndOfFrame();
+        if (ShipsManager.instance && hasToBeInTheShip && ShipsManager.instance.playerShip)
+            ShipsManager.instance.playerShip.AddInteractuableObject(this);
+    }
 
     protected virtual void OnDestroy()
     {

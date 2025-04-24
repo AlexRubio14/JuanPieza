@@ -38,12 +38,6 @@ public class Repair : InteractableObject
 
     public void RepairProgress(float _repairProgressed)
     {
-        if (TryGetComponent(out Cannon cannon))
-        {
-            if(cannon.GetFreeze())
-                return;
-        }
-
         repairProgress += _repairProgressed;
         tooltip.progressBar.EnableProgressBar(true);
         tooltip.progressBar.SetProgress(repairProgress, 1);

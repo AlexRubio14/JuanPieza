@@ -28,10 +28,6 @@ public class AllyShip : Ship
     [SerializeField] private GameObject behaivour;
     [SerializeField] private ShowMessageRepair[] message;
 
-    [Header("GenerateCannon")]
-    [SerializeField] private GameObject cannon;
-    [SerializeField] private WoodShelf fishingShelf;
-
     [Header("Smoke")]
     [SerializeField] private ParticleSystem smoke;
     [SerializeField] private float rateOverTimeSum;
@@ -191,17 +187,6 @@ public class AllyShip : Ship
         if (objectList.Count > 1)
             return true;
         return false;
-    }
-
-    public void GenerateCannon()
-    {
-        if (destroyed)
-            return;
-
-        if (fishingShelf == null && !ShipsManager.instance.playerShip.GetTotalWeaponsInShip())
-        {
-            Instantiate(cannon, new Vector3(0,5,0), Quaternion.identity).transform.SetParent(this.gameObject.transform);
-        }
     }
     public List<InteractableObject> GetInventory()
     {
