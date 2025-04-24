@@ -26,4 +26,8 @@ public class RepairHole : Repair
     {
         return damageDeal;
     }
+    public override bool CanInteract(ObjectHolder _objectHolder)
+    {
+        return false;
+    }
 }

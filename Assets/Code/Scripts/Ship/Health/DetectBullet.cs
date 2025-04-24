@@ -3,7 +3,12 @@ using UnityEngine;
 public class DetectBullet : MonoBehaviour
 {
     [Header("ShipInformation")]
-    [SerializeField] protected Ship ship;
+    protected Ship ship;
+
+    private void Awake()
+    {
+        ship = GetComponentInParent<Ship>();
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
