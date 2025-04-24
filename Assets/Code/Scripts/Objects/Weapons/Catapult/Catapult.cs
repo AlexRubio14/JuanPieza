@@ -101,8 +101,8 @@ public class Catapult : Weapon
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
 
-        return !isPlayerMounted() && !handObject /*Montarse*/ 
-            || isPlayerMounted() && playerCont.playerInput.playerReference == mountedPlayerId /*Bajarse*/ 
+        return !IsPlayerMounted() && !handObject /*Montarse*/ 
+            || IsPlayerMounted() && playerCont.playerInput.playerReference == mountedPlayerId /*Bajarse*/ 
             || !hasAmmo && handObject /*Recargar*/ 
             || handObject is ICatapultAmmo;
 

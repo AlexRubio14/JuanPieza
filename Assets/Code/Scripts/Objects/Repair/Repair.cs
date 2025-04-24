@@ -10,7 +10,11 @@ public class Repair : InteractableObject
 
     protected float repairProgress;
 
-
+    protected virtual void Start()
+    {
+        if (state.GetIsBroken())
+            OnBreakObject();
+    }
 
     #region Object Fuctions
     public override void Grab(ObjectHolder _objectHolder) { }
@@ -19,9 +23,11 @@ public class Repair : InteractableObject
     public override void Use(ObjectHolder _objectHolder) { }
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
-        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-
-        return handObject && handObject.objectSO == repairItem;
+        return false;
+    }
+    public override bool CanGrab(ObjectHolder _objectHolder)
+    {
+        return base.CanGrab(_objectHolder) && !state.GetIsBroken(); 
     }
     #endregion
 

@@ -11,7 +11,7 @@ public class CannonState : PlayerState
         currentWeapon.rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         CalculateCannonDistance();
-        currentWeapon.transform.position = controller.transform.position + weaponOffset;
+        
         controller.animator.SetBool("OnCannon", true);
         controller.animator.SetBool("Pick", true);
         currentAngle = currentWeapon.transform.rotation.eulerAngles.y;
@@ -22,6 +22,8 @@ public class CannonState : PlayerState
     }
     public override void FixedUpdateState()
     {
+        if (currentWeapon.isTilting)
+            return;
         if(!currentWeapon.isRotating)
             MoveCannon();
         else
@@ -75,24 +77,25 @@ public class CannonState : PlayerState
     private void CalculateCannonDistance()
     {
         Vector3 weaponDistance = currentWeapon.transform.position - controller.transform.position;
-        Vector3 weaponDirection = weaponDistance.normalized;
+
+        Vector3 newPlayerForward = 
+            (
+                new Vector3(currentWeapon.transform.position.x, 0, currentWeapon.transform.position.z) 
+                - new Vector3(controller.transform.position.x, 0, controller.transform.position.z)
+            ).normalized;
+
+        controller.transform.forward = newPlayerForward;
+
 
         Vector3 newPos;
-        float dot = Vector3.Dot(weaponDirection, controller.transform.forward);
-        if (dot > 0.5f)
-        {
-            if (weaponDistance.magnitude <= 2f)
-                newPos = weaponDistance + controller.transform.forward * currentWeapon.rideOffset;
-            else
-                newPos = weaponDistance;
-        }
+        if (weaponDistance.magnitude <= 2f)
+            newPos = weaponDistance + controller.transform.forward * currentWeapon.rideOffset;
         else
         {
-            newPos = controller.transform.forward * weaponDistance.magnitude + controller.transform.forward * currentWeapon.rideOffset;
-            newPos.y = weaponDistance.y;
+            newPos = weaponDistance;
+            Vector3 weaponPos = new Vector3(currentWeapon.transform.position.x, controller.transform.position.y, currentWeapon.transform.position.z);
+            controller.transform.position = weaponPos - newPlayerForward * 2;
         }
-
-
 
         weaponOffset = newPos;
     }

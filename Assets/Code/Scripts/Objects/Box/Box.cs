@@ -31,15 +31,13 @@ public abstract class Box : RepairObject
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
 
-        return !handObject && HasItems(); //Si no tengo objetos en las manos y la caja tiene items
+        return base.CanGrab(_objectHolder) && !handObject && HasItems(); //Si no tengo objetos en las manos y la caja tiene items
     }
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
-        if (state.GetIsBroken())
-           return base.CanInteract(_objectHolder);
-
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-        return handObject && handObject.objectSO == objectToInteract; //Si tengo un objeto en la mano y es del mismo tipo que el que dropea
+
+        return !state.GetIsBroken() && handObject && handObject.objectSO == objectToInteract; //Si tengo un objeto en la mano y es del mismo tipo que el que dropea
     }
 
     public virtual void AddItemInBox(bool _makeSound = true, int cuantity = 1)

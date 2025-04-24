@@ -380,6 +380,17 @@ MonoBehaviour:
   <tiltSpeed>k__BackingField: 0.4
   tiltProcess: 0
   tiltInputHint: {fileID: 2603590217036871774}
+  forwardAxis: {x: 0, y: 0, z: -1}
+  recoilForce: {x: 20000, y: 2000}
+  recoilRotation: 9000
+  rbPresets:
+  - mass: 0
+    drag: 0
+    angularDrag: 0
+  - mass: 500
+    drag: 15
+    angularDrag: 10
+  stopRecoilMagnitude: 5
   shootParticles: {fileID: 725748389856807714, guid: 55f833a9d5fecfc49bd7ba9992bba2b5, type: 3}
   loadParticlesPrefab: {fileID: 41254552372408826, guid: 25f39a3b5d1018d4b86a114f3fb50afd, type: 3}
   weaponShootClip: {fileID: 8300000, guid: eac65268023cca94bbad0812fd8a7ca9, type: 3}
@@ -511,8 +522,8 @@ Rigidbody:
   m_GameObject: {fileID: 8849408466616681510}
   serializedVersion: 4
   m_Mass: 5
-  m_Drag: 3
-  m_AngularDrag: 2
+  m_Drag: 2
+  m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
