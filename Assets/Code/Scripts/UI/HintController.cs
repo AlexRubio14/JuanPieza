@@ -1,10 +1,6 @@
-using AYellowpaper.SerializedCollections;
-using AYellowpaper.SerializedCollections.Editor.Data;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
+
 
 public class HintController : MonoBehaviour
 {
