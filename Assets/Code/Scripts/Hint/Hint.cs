@@ -9,12 +9,6 @@ public class Hint : MonoBehaviour
     [Space, SerializeField] 
 	private Canvas canvas;
 
-    [Serializable]
-	public struct DeviceSprite
-	{
-		public HintController.DeviceType device;
-		public Sprite sprite;
-	}
 	[Serializable]
 	public struct ImageDeviceSprite
 	{
