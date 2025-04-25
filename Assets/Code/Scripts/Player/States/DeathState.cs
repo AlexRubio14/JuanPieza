@@ -95,7 +95,7 @@ public class DeathState : PlayerState
     }
     private void Respawn()
     {
-        transform.position = ShipsManager.instance.playerShip.GetSpawnPoints()[1].transform.position;
+        transform.position = ShipsManager.instance.playerShip.GetSpawnPoints()[controller.playerInput.playerReference].transform.position;
         stateMachine.ChangeState(stateMachine.idleState);
     }
 
