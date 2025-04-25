@@ -125,8 +125,6 @@ public class PlayerController : MonoBehaviour
     public bool movementBuffActive {  get; set; }
     public float currentKnockBackTime { get; set; }
 
-
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();

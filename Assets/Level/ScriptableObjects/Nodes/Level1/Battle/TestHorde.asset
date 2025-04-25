@@ -15,15 +15,16 @@ MonoBehaviour:
   spawnShipCondition: 0
   hpPercentage: 0
   enemyShips:
-  - _ship: {fileID: 4454167252338465661, guid: b98cc07b004fed945accb29d400551ce, type: 3}
-    enemiesCuantity: 0
-    initShipPosition: {x: 17.5, y: -0.7, z: -50}
-    cannons: []
+  - _ship: {fileID: 6245023586670514266, guid: d7a4b616d743d024f92e210e58121e9c, type: 3}
+    enemiesCuantity: 1
+    initShipPosition: {x: 20, y: -0.7, z: -50}
+    cannons:
+    - {fileID: 8849408466616681510, guid: 279e1b58b6dc117449b41eda3ae35bec, type: 3}
     canBoard: 0
     boardShips: []
     stats:
-      TimeToGetResources: 5
-      TimeToRepair: 5
-      TimeToInteract: 5
-      TimeToShoot: 4
-      Speed: 3
+      TimeToGetResources: 0.75
+      TimeToRepair: 3
+      TimeToInteract: 2.5
+      TimeToShoot: 2
+      Speed: 4.5
