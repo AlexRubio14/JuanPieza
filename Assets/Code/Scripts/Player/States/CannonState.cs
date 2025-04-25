@@ -18,23 +18,21 @@ public class CannonState : PlayerState
     }
     public override void UpdateState()
     {
-        currentWeapon.transform.position = controller.transform.position + controller.transform.forward * controller.cannonRotationOffset + new Vector3(0, weaponOffset.y, 0);
+        currentWeapon.transform.position = controller.transform.position + controller.transform.forward * controller.weaponRotationOffset + new Vector3(0, weaponOffset.y, 0);
     }
     public override void FixedUpdateState()
     {
         if (currentWeapon.isTilting)
             return;
-        if(!currentWeapon.isRotating)
-            MoveCannon();
-        else
-            RotateCannon();
+
+        MoveCannon();
+        RotateCannon();
     }
     public override void ExitState()
     {
         currentWeapon.rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         controller.animator.SetBool("OnCannon", false);
         controller.animator.SetBool("Pick", false);
-
     }
     public override void RollAction() { /*No puedes rodar*/ }
     public override void GrabAction() { /* Esta agarrando algo no puedes coger nada mas */ }
@@ -51,11 +49,7 @@ public class CannonState : PlayerState
     {
         controller.StopInteract();    
     }
-    public override void UseAction()
-    {
-        controller.Use();
-        controller.animator.SetTrigger("Shoot");
-    }
+    public override void UseAction() { }
     public override void StopUseAction() 
     { 
         controller.StopUse();
@@ -105,13 +99,14 @@ public class CannonState : PlayerState
 
 
         if (controller.movementDirection != Vector3.zero)
-            controller.Movement(controller.movementDirection, controller.cannonSpeed);
+            controller.Movement(controller.movementDirection, controller.weaponSpeed);
     }
     private void RotateCannon()
     {
-        if (controller.movementInput.x == 0)
+        if (controller.weaponRotationAxis == 0)
             return;
-        currentAngle += controller.movementInput.x * (controller.cannonRotationSpeed * Time.fixedDeltaTime);
+
+        currentAngle += controller.weaponRotationAxis * (controller.weaponRotationSpeed * Time.fixedDeltaTime);
         currentAngle %= 360;
         currentWeapon.transform.rotation = Quaternion.Euler(0, currentAngle, 0);
         

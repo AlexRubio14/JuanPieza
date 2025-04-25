@@ -4,11 +4,15 @@ using UnityEngine.UI;
 public class WeaponHint : ItemHint
 {
     [SerializeField]
-    private Image movementImage;
+    private GameObject movementImage;
+    [SerializeField] 
+    private Image movementHintImage;
     [SerializeField]
-    private Sprite movementSprite;
+    private Image rotationHintImage;
     [SerializeField]
-    private Sprite rotationSprite;
+    private Sprite[] movementSprite;
+    [SerializeField]
+    private Sprite[] rotationSprite;
     [SerializeField]
     private Vector3 offset;
 
@@ -19,16 +23,16 @@ public class WeaponHint : ItemHint
         currentWeapon = GetComponent<Weapon>();
     }
 
+
     private void FixedUpdate()
     {
         movementImage.gameObject.SetActive(currentWeapon.isBeginUsed);
         if (currentWeapon.isBeginUsed)
         {
-            if (currentWeapon.isRotating)
-                movementImage.sprite = rotationSprite;
-            else
-                movementImage.sprite = movementSprite;
-
+            PlayerController player = PlayersManager.instance.ingamePlayers[currentWeapon.GetMountedPlayerId()];
+            HintController.DeviceType device = player.GetComponent<HintController>().deviceType;
+            movementHintImage.sprite = movementSprite[(int)device];
+            rotationHintImage.sprite = rotationSprite[(int)device];
             movementImage.transform.position = transform.position + offset;
         }
     }

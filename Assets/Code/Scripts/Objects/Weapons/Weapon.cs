@@ -10,6 +10,7 @@ public abstract class Weapon : RepairObject
     protected Transform ridingPos;
     [field: SerializeField]
     public float rideOffset { get; protected set; }
+
     [Space, Header("Damage"), SerializeField]
     protected float weaponDamage;
 
@@ -38,13 +39,6 @@ public abstract class Weapon : RepairObject
     protected Vector2 recoilForce;
     [SerializeField]
     protected Vector2 recoilRotation;
-    [Serializable]
-    public struct RigidbodyRecoilPreset
-    {
-        public float mass;
-        public float drag;
-        public float angularDrag;
-    }
     [Tooltip("0 pressets default (dejar vacio), 1 presets para el recoil"), SerializeField]
     protected RigidbodyRecoilPreset[] rbPresets;
     [SerializeField]
@@ -52,7 +46,15 @@ public abstract class Weapon : RepairObject
     protected bool onRecoil;
     protected float recoilTimePassed;
     [SerializeField]
-    protected float minRecoilDuration; 
+    protected float minRecoilDuration;
+
+    [Serializable]
+    public struct RigidbodyRecoilPreset
+    {
+        public float mass;
+        public float drag;
+        public float angularDrag;
+    }
 
     [Space, Header("Particles"), SerializeField]
     protected GameObject shootParticles;
@@ -65,8 +67,6 @@ public abstract class Weapon : RepairObject
     [SerializeField] protected AudioClip weaponReloadClip;
 
     protected bool freeze;
-    [HideInInspector]
-    public bool isRotating;
     
     protected Animator animator;
     protected int mountedPlayerId = -1;
@@ -109,7 +109,6 @@ public abstract class Weapon : RepairObject
         //Cambia el estado
         player.stateMachine.cannonState.SetWeapon(this);
         player.stateMachine.ChangeState(player.stateMachine.cannonState);
-        isRotating = false;
         isBeginUsed = true;
         mountedPlayerId = player.playerInput.playerReference;
     }
@@ -163,10 +162,7 @@ public abstract class Weapon : RepairObject
 
         ApplyRecoil();
     }
-    public override void Use(ObjectHolder _objectHolder)
-    {
-        isRotating = !isRotating;
-    }
+
 
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
@@ -326,7 +322,10 @@ public abstract class Weapon : RepairObject
     {
         return mountedPlayerId != -1;
     }
-
+    public int GetMountedPlayerId()
+    {
+        return mountedPlayerId;
+    }
     protected void TiltWeapon()
     {
         tiltProcess = Mathf.Clamp01(tiltProcess + tiltSpeed * Time.deltaTime);

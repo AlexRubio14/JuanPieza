@@ -75,12 +75,13 @@ public class PlayerController : MonoBehaviour
     public GameObject interactCanvasObject => interactCanvas.transform.gameObject;
 
 
-    [field: Space, Header("Cannon"), SerializeField]
-    public float cannonSpeed { get; private set; }
+    [field: Space, Header("Weapon"), SerializeField]
+    public float weaponSpeed { get; private set; }
     [field:SerializeField]
-    public float cannonRotationSpeed { get; private set; }
+    public float weaponRotationSpeed { get; private set; }
     [field:SerializeField]
-    public float cannonRotationOffset { get; private set; }
+    public float weaponRotationOffset { get; private set; }
+    public float weaponRotationAxis { get; private set; }
 
     [field: Space, Header("Drunk"), SerializeField]
     public float baseDrunkAngle {  get; private set; }
@@ -174,6 +175,8 @@ public class PlayerController : MonoBehaviour
         playerInput.OnGrabAction += GrabAction;
         
         playerInput.OnReleaseAction += ReleaseAction;
+
+        playerInput.OnWeaponRotateAction += WeaponRotateAction;
     }
 
     private void OnDisable()
@@ -194,6 +197,7 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnReleaseAction -= ReleaseAction;
 
+        playerInput.OnWeaponRotateAction -= WeaponRotateAction;
 
         movementInput = Vector2.zero;
         movementDirection = Vector3.zero;
@@ -249,6 +253,11 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.currentState.ReleaseAction();
     }
+    private void WeaponRotateAction(float _axis)
+    {
+        weaponRotationAxis = _axis;
+    }
+
     #endregion
 
     #region Actions
