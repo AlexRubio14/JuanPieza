@@ -225,8 +225,7 @@ GameObject:
   - component: {fileID: 6036797146210223406}
   - component: {fileID: 7304327315729237766}
   - component: {fileID: 8989068304543053247}
-  - component: {fileID: -8287080114322396556}
-  - component: {fileID: 6136339223272347550}
+  - component: {fileID: 8069183324671387308}
   m_Layer: 9
   m_Name: CannonBox
   m_TagString: Scenario
@@ -332,7 +331,6 @@ MonoBehaviour:
   <objectSO>k__BackingField: {fileID: 11400000, guid: 28a9a632cf86f0c45a8da7a16225dd92, type: 2}
   <objectToInteract>k__BackingField: {fileID: 11400000, guid: dffcfb1857ced7d4fb477cee9121a908, type: 2}
   selectedVisual: {fileID: 8989068304543053247}
-  tooltip: {fileID: 0}
   canGrab: 1
   <canUse>k__BackingField: 0
   rb: {fileID: 2768330552373322967}
@@ -383,7 +381,7 @@ MonoBehaviour:
   - {fileID: 4402243769415029465}
   - {fileID: 4691505786016870215}
   - {fileID: 5538624978762935892}
---- !u!114 &-8287080114322396556
+--- !u!114 &8069183324671387308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -392,27 +390,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2125427756097205554}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c81df2381bb7219488602b295dd717d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectType: 1
-  progressBarGO: {fileID: 5568467514944838423, guid: 596cd99dcbfe3b449b4556b592e9decb, type: 3}
-  size: 1
-  offset: 2.2
-  interactingSprite: {fileID: 21300000, guid: cb5c25e389c90684a9a38bf7e8eededc, type: 3}
-  brokenSprite: {fileID: 21300000, guid: 3e4d24c0cb09c8e49ae1fc66d6ee86d3, type: 3}
-  emptySprite: {fileID: 0}
-  loadedSprite: {fileID: 0}
---- !u!114 &6136339223272347550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2125427756097205554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 701db30ef775f194e8efdac075dd3518, type: 3}
+  m_Script: {fileID: 11500000, guid: 87b4aabacb2fb9a43acfaef62ea995c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 5215693875322359255}
@@ -424,7 +402,7 @@ MonoBehaviour:
         offset: {x: 0, y: 0, z: -1}
         sprite:
         - {fileID: 21300000, guid: 7b559e7ba265e5d4db925453f2965ca9, type: 3}
-        - {fileID: 21300000, guid: 994762dc8c19c3249b97b8176169c92b, type: 3}
+        - {fileID: 21300000, guid: 34915d2ac897d9d4a94ebbcaabfd914a, type: 3}
     - Key: 3
       Value:
         image: {fileID: 7507214633745768666}
@@ -434,6 +412,11 @@ MonoBehaviour:
         - {fileID: 21300000, guid: 14488c487ac0de14c8d084a3ae35cc61, type: 3}
   <useType>k__BackingField: 1
   <interactType>k__BackingField: 3
+  itemImage: {fileID: 4955911917484892495}
+  itemImageOffset: {x: 0, y: 2, z: 0}
+  neededItemSprite: {fileID: 0}
+  <progressBar>k__BackingField: {fileID: 3313207709229430132}
+  progressBarOffset: {x: 1, y: 2, z: 0}
 --- !u!1 &2502555266850210586
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,11 +915,33 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 152560a78cace7e4c95f296735738d44, type: 3}
+--- !u!114 &3313207709229430132 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6790556488594165036, guid: 152560a78cace7e4c95f296735738d44, type: 3}
+  m_PrefabInstance: {fileID: 8342364145078089816}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ae3f96ecb69f8d428156a7ed2ee61ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3339769994936428042 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6746173305539272274, guid: 152560a78cace7e4c95f296735738d44, type: 3}
   m_PrefabInstance: {fileID: 8342364145078089816}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4955911917484892495 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3963423157638551831, guid: 152560a78cace7e4c95f296735738d44, type: 3}
+  m_PrefabInstance: {fileID: 8342364145078089816}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!223 &5215693875322359255 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 4298644129078883727, guid: 152560a78cace7e4c95f296735738d44, type: 3}

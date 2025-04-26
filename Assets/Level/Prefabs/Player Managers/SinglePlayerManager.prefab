@@ -140,70 +140,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7037647223120207762}
         m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
-        m_MethodName: ReadMovement
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 878f05c3-9cb2-4a4f-9846-020aa2e501fa
-    m_ActionName: 'CannonGameplay/MoveForward[/Keyboard/s,/Keyboard/w]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7037647223120207762}
-        m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
-        m_MethodName: InteractAction
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: c87b404b-3c93-445a-8518-4a98770b3dd1
-    m_ActionName: 'CannonGameplay/Interact[/Keyboard/e]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7037647223120207762}
-        m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
-        m_MethodName: UseAction
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 94cc6104-b448-49e3-9a96-f091566055fd
-    m_ActionName: 'CannonGameplay/Use[/Keyboard/q]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7037647223120207762}
-        m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
-        m_MethodName: TiltCannon
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 04d5ebc7-0b8b-4c67-8d5b-164e6b229e1d
-    m_ActionName: 'CannonGameplay/TiltWeapon[/Mouse/rightButton,/Mouse/leftButton]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7037647223120207762}
-        m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
         m_MethodName: DanceAction
         m_Mode: 0
         m_Arguments:
@@ -276,6 +212,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3e2d06fd-64cd-457c-b5e1-8922f9dd6d33
     m_ActionName: Gameplay/Grab & Release
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7037647223120207762}
+        m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
+        m_MethodName: RotateWeaponAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a9372c67-0d3c-4286-87d3-c22211dca1b2
+    m_ActionName: 'Gameplay/RotateWeapon[/Keyboard/leftArrow,/Keyboard/rightArrow,/DualSenseGamepadHID/rightStick/right,/DualSenseGamepadHID/rightStick/left]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerSelectMenu

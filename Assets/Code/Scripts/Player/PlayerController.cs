@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -74,12 +75,13 @@ public class PlayerController : MonoBehaviour
     public GameObject interactCanvasObject => interactCanvas.transform.gameObject;
 
 
-    [field: Space, Header("Cannon"), SerializeField]
-    public float cannonSpeed { get; private set; }
+    [field: Space, Header("Weapon"), SerializeField]
+    public float weaponSpeed { get; private set; }
     [field:SerializeField]
-    public float cannonRotationSpeed { get; private set; }
+    public float weaponRotationSpeed { get; private set; }
     [field:SerializeField]
-    public float cannonRotationOffset { get; private set; }
+    public float weaponRotationOffset { get; private set; }
+    public float weaponRotationAxis { get; private set; }
 
     [field: Space, Header("Drunk"), SerializeField]
     public float baseDrunkAngle {  get; private set; }
@@ -123,8 +125,6 @@ public class PlayerController : MonoBehaviour
 
     public bool movementBuffActive {  get; set; }
     public float currentKnockBackTime { get; set; }
-
-
 
     private void Awake()
     {
@@ -175,6 +175,8 @@ public class PlayerController : MonoBehaviour
         playerInput.OnGrabAction += GrabAction;
         
         playerInput.OnReleaseAction += ReleaseAction;
+
+        playerInput.OnWeaponRotateAction += WeaponRotateAction;
     }
 
     private void OnDisable()
@@ -195,6 +197,7 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnReleaseAction -= ReleaseAction;
 
+        playerInput.OnWeaponRotateAction -= WeaponRotateAction;
 
         movementInput = Vector2.zero;
         movementDirection = Vector3.zero;
@@ -210,7 +213,7 @@ public class PlayerController : MonoBehaviour
     }
     private void RollAction()
     {
-        if (canRoll && !objectHolder.GetHasObjectPicked())
+        if (canRoll && !objectHolder.GetHasObjectPicked() && OnFloor())
         {
             stateMachine.currentState.RollAction();
             canRoll = false;
@@ -250,6 +253,11 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.currentState.ReleaseAction();
     }
+    private void WeaponRotateAction(float _axis)
+    {
+        weaponRotationAxis = _axis;
+    }
+
     #endregion
 
     #region Actions
@@ -369,6 +377,39 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+
+    public bool OnFloor()
+    {
+        Vector3 raycastPos = transform.position;
+        raycastPos.y -= capsuleCollider.height / 2;
+
+        //Tirar Raycast contra el suelo
+        if (Physics.Raycast(raycastPos, Vector3.down, 0.2f, slopeCheckLayer))
+            return true;
+
+        raycastPos.x += capsuleCollider.radius;
+        raycastPos.z += capsuleCollider.radius;
+
+        float multiplyX = 1;
+        float multiplyZ = 1;
+
+        for (int i = 1; i<= 4; i++)
+        {
+            if (Physics.Raycast(raycastPos, Vector3.down, 0.2f, slopeCheckLayer))
+                return true;
+
+            raycastPos.x = transform.position.x + capsuleCollider.radius * multiplyX;
+            multiplyX *= -1;
+
+            if(i % 2 == 0)
+            {
+                multiplyZ *= -1;
+                raycastPos.z = transform.position.z + capsuleCollider.radius * multiplyZ;
+            }
+        }
+
+        return false;
+    }
     public Rigidbody GetRB() { return rb; }
 
     private void OnCollisionEnter(Collision collision)
@@ -393,14 +434,37 @@ public class PlayerController : MonoBehaviour
         if (capsuleCollider)
         {
             Gizmos.color = Color.green;
-            endPos = transform.position + (Vector3.down * (capsuleCollider.height / 2 + slopeCheckDistance));
+            startPos = transform.position;
+            startPos.y -= capsuleCollider.height / 2;
+            endPos = startPos + Vector3.down * 0.2f;
             Gizmos.DrawLine(startPos, endPos);
-            startPos = transform.position + transform.forward * capsuleCollider.radius;
-            endPos = startPos + (Vector3.down * (capsuleCollider.height / 2 + slopeCheckDistance));
-            Gizmos.DrawLine(startPos, endPos);
+
+            startPos.x += capsuleCollider.radius;
+            startPos.z += capsuleCollider.radius;
+            endPos.x += capsuleCollider.radius;
+            endPos.z += capsuleCollider.radius;
+
+            float multiplyX = 1;
+            float multiplyZ = 1;
+
+            for (int i = 1; i < 5; i++)
+            {
+
+                startPos.x = transform.position.x + capsuleCollider.radius * multiplyX;
+                endPos.x = startPos.x;
+
+                multiplyX *= -1;
+                if (i % 2 == 0)
+                {
+                    multiplyZ *= -1;
+                    startPos.z = transform.position.z + capsuleCollider.radius * multiplyZ;
+                    endPos.z = startPos.z;
+
+                }
+                Gizmos.DrawLine(startPos, endPos);
+
+            }
         }
-
-
 
         Gizmos.color = Color.red;
 
@@ -442,7 +506,6 @@ public class PlayerController : MonoBehaviour
             rb.linearDamping = realDrag;
 
     }
-
 
     public void SetBaseMovementSpeed(float speed)
     {

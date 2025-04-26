@@ -1,36 +1,41 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponHint : ItemHint
+public class WeaponHint : RepairItemHint
 {
+    [Space, Header("Weapon Hint"), SerializeField]
+    private GameObject movementImage;
+    [SerializeField] 
+    private Image movementHintImage;
     [SerializeField]
-    private Image movementImage;
+    private Image rotationHintImage;
     [SerializeField]
-    private Sprite movementSprite;
+    private Sprite[] movementSprite;
     [SerializeField]
-    private Sprite rotationSprite;
+    private Sprite[] rotationSprite;
     [SerializeField]
     private Vector3 offset;
-
+    
     private Weapon currentWeapon;
 
-    private void Awake()
+    protected override void Start()
     {
-        currentWeapon = GetComponent<Weapon>();
+        base.Start();
+        currentWeapon = currentObject as Weapon;
     }
-
     private void FixedUpdate()
     {
-        movementImage.gameObject.SetActive(currentWeapon.isBeingUsed);
-        if (currentWeapon.isBeingUsed)
-        {
-            if (currentWeapon.isRotating)
-                movementImage.sprite = rotationSprite;
-            else
-                movementImage.sprite = movementSprite;
+        movementImage.gameObject.SetActive(currentWeapon.isBeginUsed);
 
+        if (currentWeapon.isBeginUsed)
+        {
+            PlayerController player = PlayersManager.instance.ingamePlayers[currentWeapon.GetMountedPlayerId()];
+            HintController.DeviceType device = player.GetComponent<HintController>().deviceType;
+            movementHintImage.sprite = movementSprite[(int)device];
+            rotationHintImage.sprite = rotationSprite[(int)device];
             movementImage.transform.position = transform.position + offset;
         }
+
     }
 
     protected override void OnDrawGizmosSelected()

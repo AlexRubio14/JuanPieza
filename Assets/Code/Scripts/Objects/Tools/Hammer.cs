@@ -54,7 +54,7 @@ public class Hammer : Tool, ICatapultAmmo
 
     private void HitHammer()
     {
-        if (!isBeingUsed)
+        if (!isBeginUsed)
             return;
 
         //Esta funcion ha de hacer

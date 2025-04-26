@@ -9,12 +9,6 @@ public class Hint : MonoBehaviour
     [Space, SerializeField] 
 	private Canvas canvas;
 
-    [Serializable]
-	public struct DeviceSprite
-	{
-		public HintController.DeviceType device;
-		public Sprite sprite;
-	}
 	[Serializable]
 	public struct ImageDeviceSprite
 	{
@@ -30,7 +24,13 @@ public class Hint : MonoBehaviour
     [field: SerializeField]
     public HintController.ActionType interactType { get; set; }
 
-    protected void Start()
+	protected InteractableObject currentObject;
+
+    protected virtual void Awake()
+    {
+        currentObject = GetComponent<InteractableObject>();
+    }
+    protected virtual void Start()
     {
         canvas.worldCamera = Camera.main;
     }

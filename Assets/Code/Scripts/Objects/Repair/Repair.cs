@@ -10,7 +10,11 @@ public class Repair : InteractableObject
 
     protected float repairProgress;
 
-
+    protected virtual void Start()
+    {
+        if (state.GetIsBroken())
+            OnBreakObject();
+    }
 
     #region Object Fuctions
     public override void Grab(ObjectHolder _objectHolder) { }
@@ -19,8 +23,16 @@ public class Repair : InteractableObject
     public override void Use(ObjectHolder _objectHolder) { }
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
-        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+        return false;
+    }
+    public override bool CanGrab(ObjectHolder _objectHolder)
+    {
+        return base.CanGrab(_objectHolder) && !state.GetIsBroken(); 
+    }
 
+    public virtual bool CanRepair(ObjectHolder _objectHolder)
+    {
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         return handObject && handObject.objectSO == repairItem;
     }
     #endregion
@@ -39,8 +51,7 @@ public class Repair : InteractableObject
     public void RepairProgress(float _repairProgressed)
     {
         repairProgress += _repairProgressed;
-        tooltip.progressBar.EnableProgressBar(true);
-        tooltip.progressBar.SetProgress(repairProgress, 1);
+        (hint as RepairItemHint).progressBar.SetProgress(repairProgress, 1);
 
         if (repairProgress >= 1)
         {
@@ -53,7 +64,7 @@ public class Repair : InteractableObject
     public virtual void OnBreakObject() { }
     protected virtual void RepairEnded() 
     {
-        tooltip.progressBar.EnableProgressBar(false);
+        (hint as RepairItemHint).progressBar.EnableProgressBar(false);
         repairProgress = 0;
     }
     #endregion

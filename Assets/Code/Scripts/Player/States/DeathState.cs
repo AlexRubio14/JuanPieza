@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class DeathState : PlayerState
 {
-
     public Transform transform => controller.transform;
     private Rigidbody rb => controller.GetRB();
     public PlayerStateMachine deathStateMachine => stateMachine;
@@ -96,7 +95,7 @@ public class DeathState : PlayerState
     }
     private void Respawn()
     {
-        transform.position = ShipsManager.instance.playerShip.transform.position + new Vector3(0f, 2f, 0f);
+        transform.position = ShipsManager.instance.playerShip.GetSpawnPoints()[controller.playerInput.playerReference].transform.position;
         stateMachine.ChangeState(stateMachine.idleState);
     }
 

@@ -57,7 +57,8 @@ public class EnemieManager : MonoBehaviour
                 newEnemy.enemieManager = this;
                 newEnemy.gameObject.transform.SetParent(transform, true);
                 newEnemy.GetComponent<NavMeshAgent>().enabled = false;
-                newEnemy.GetComponent<NavMeshAgent>().speed = stats.Speed;
+                //newEnemy.GetComponent<NavMeshAgent>().speed = stats.Speed;
+                newEnemy.GetComponent<NavMeshAgent>().speed = 3f;
                 enemyList.Add(newEnemy);
             }
         }
@@ -198,10 +199,15 @@ public class EnemieManager : MonoBehaviour
 
     public void SetStats(EnemiesStats stats)
     {
-        timeToGetResource = stats.TimeToGetResources;
-        timeToRepair = stats.TimeToRepair;
-        timeToInteract = stats.TimeToInteract;
-        timeToShoot = stats.TimeToShoot;
+        //timeToGetResource = stats.TimeToGetResources;
+        //timeToRepair = stats.TimeToRepair;
+        //timeToInteract = stats.TimeToInteract;
+        //timeToShoot = stats.TimeToShoot;
+
+        timeToGetResource = 2f;
+        timeToRepair = 3f;
+        timeToInteract = 3f;
+        timeToShoot = 3.5f;
     }
 
 

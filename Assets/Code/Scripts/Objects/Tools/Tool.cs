@@ -45,7 +45,6 @@ public abstract class Tool : InteractableObject
     {
         Box box = ShipsManager.instance.playerShip.GetObjectBoxByObject(objectSO);
 
-        Debug.Log(addToolAtDestroy);
         if (box != null && addToolAtDestroy)
             box.AddItemInBox();
         

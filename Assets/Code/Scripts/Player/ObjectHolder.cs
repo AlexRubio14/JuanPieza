@@ -21,9 +21,12 @@ public class ObjectHolder : MonoBehaviour
 
     private RaycastHit[] colliders;
 
+    public PlayerController playerController {  get; private set; }
+
     private void Awake()
     {
         colliders = new RaycastHit[0];
+        playerController = GetComponentInParent<PlayerController>(); 
     }
 
     // Update is called once per frame
@@ -53,7 +56,7 @@ public class ObjectHolder : MonoBehaviour
             InteractableObject tempObject = item.collider.GetComponent<InteractableObject>();
 
             if (!tempObject || 
-                tempObject.isBeingUsed ||
+                tempObject.isBeginUsed ||
                 !tempObject.CanGrab(this) && !tempObject.CanInteract(this) &&
                 (tempObject is not Repair || !(tempObject as Repair).GetObjectState().GetIsBroken()))
                 continue;
@@ -137,7 +140,7 @@ public class ObjectHolder : MonoBehaviour
     {
         if (handObject && _nearestObject == handObject)
         {
-            nearestInteractableObject.hint.RemovePlayer();
+            nearestInteractableObject.hint.RemovePlayer(playerController.playerInput.playerReference);
             nearestInteractableObject = null;
             return;
         }
@@ -147,14 +150,8 @@ public class ObjectHolder : MonoBehaviour
 
         if (nearestInteractableObject)
         {
-            nearestInteractableObject.hint.RemovePlayer();
+            nearestInteractableObject.hint.RemovePlayer(playerController.playerInput.playerReference);
             nearestInteractableObject.GetSelectedVisual().Hide();
-            if (nearestInteractableObject.GetTooltip() != null)
-            {
-                nearestInteractableObject.GetTooltip().RemovePlayer();
-                if (nearestInteractableObject.GetTooltip().GetTotalPlayers() <= 0)
-                    nearestInteractableObject.GetTooltip().SetState(ObjectsTooltip.ObjectState.None);
-            }
         }
 
         if (!_nearestObject)
@@ -165,34 +162,16 @@ public class ObjectHolder : MonoBehaviour
 
 
         if (_nearestObject.CanGrab(this) || _nearestObject.CanInteract(this))
-        {
             _nearestObject.GetSelectedVisual().Show();
-            if (_nearestObject.GetTooltip() != null)
-            {
-                _nearestObject.GetTooltip().AddPlayer();
-                if (_nearestObject.GetTooltip().GetTotalPlayers() > 0)
-                    _nearestObject.GetTooltip().SetState(ObjectsTooltip.ObjectState.Interacting);
-            }
-        }
         
         if (_nearestObject is Repair)
         {
             Repair repair = _nearestObject as Repair;
             if (repair.GetObjectState().GetIsBroken())
-            {
-                if (repair.GetTooltip() != null)
-                {
-                    if (!repair.CanInteract(this))
-                        repair.GetTooltip().AddPlayer();
-                    
-                    if (repair.GetTooltip().GetTotalPlayers() > 0)
-                        repair.GetTooltip().SetState(ObjectsTooltip.ObjectState.Broken);
-                }
                 _nearestObject.GetSelectedVisual().Show();
-            }
         }
 
-        _nearestObject.hint.AddPlayer();
+        _nearestObject.hint.AddPlayer(playerController.playerInput.playerReference);
         nearestInteractableObject = _nearestObject;
     }
 
@@ -202,7 +181,7 @@ public class ObjectHolder : MonoBehaviour
     {
         InteractableObject item = Instantiate(_interactableObject.prefab).GetComponent<InteractableObject>();
         item.SetIsBeingUsed(true);
-        item.GetComponent<Rigidbody>().isKinematic = true;
+        item.rb.isKinematic = true;
         StartCoroutine(SetItemParent(item));
         AudioManager.instance.Play2dOneShotSound(pickUpClip, "Objects");
 

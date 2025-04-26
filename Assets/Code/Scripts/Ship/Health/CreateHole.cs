@@ -6,16 +6,22 @@ public class CreateHole : DetectBullet
     [SerializeField] private GameObject hole;
 
     [SerializeField]
+    private LayerMask floorLayer;
+
+    [SerializeField]
     private LayerMask hitLayer;
     [SerializeField]
     private float holeRadius;
+
     protected override void DetectCollision(Collision collision, Bullet _bullet)
     {
         base.DetectCollision(collision, _bullet);
         if(_bullet.createHole)
         {
-            GenerateHole(collision.contacts[0].point, _bullet);
-            BreakNearbyObjects(collision.contacts[0].point);
+            Vector3 startRayPoint = collision.contacts[0].point + Vector3.up;
+            Physics.Raycast(startRayPoint, Vector3.down, out RaycastHit hit, 1.5f, floorLayer);
+            GenerateHole(hit.point, _bullet);
+            BreakNearbyObjects(hit.point);
         }
     }
 

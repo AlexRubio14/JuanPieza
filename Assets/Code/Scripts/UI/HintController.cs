@@ -1,10 +1,6 @@
-using AYellowpaper.SerializedCollections;
-using AYellowpaper.SerializedCollections.Editor.Data;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
+
 
 public class HintController : MonoBehaviour
 {
@@ -20,7 +16,8 @@ public class HintController : MonoBehaviour
     [field: SerializeField]
     public DeviceType deviceType {  get; private set; }
 
-    
+    private InteractableObject lastInteractObject;
+
     private ObjectHolder objectHolder;
 
     private Hint playerHint;
@@ -53,8 +50,6 @@ public class HintController : MonoBehaviour
         CheckObjectToGrab(handObject, nearObject);
         CheckObjectToUse(handObject);
         CheckObjetToInteract(handObject, nearObject);
-        if (handObject is Weapon)
-            ShowWeaponMovement(handObject as Weapon);
     }
 
     private void CheckObjectToGrab(InteractableObject _handObject, InteractableObject _nearestObject)
@@ -83,24 +78,44 @@ public class HintController : MonoBehaviour
         //Mostrar el input hint en la cabeza del player
         playerHint.EnableHint(_handObject.hint.useType, deviceType);
     }
-    private void ShowWeaponMovement(Weapon _weapon)
-    {
-        if(_weapon.isRotating)
-        {
-
-        }
-        else
-        {
-
-        }
-    }
     private void CheckObjetToInteract(InteractableObject _handObject, InteractableObject _nearestObject)
     {
-        if (!_nearestObject || _nearestObject && !_nearestObject.CanInteract(objectHolder))
+        /*
+         * Esta comprobacion se hace por si dos players estan mirando a un objeto y uno puede hacer una accion que el otro no.
+         * Asi aunque el que puede no la mire el objeto el hint no se quede de forma permanente
+         */
+
+        if(lastInteractObject != _nearestObject && lastInteractObject)
+        {
+            if (!lastInteractObject.hint.SomePlayerCanInteract(lastInteractObject))
+            {
+                lastInteractObject.hint.DisableHint(lastInteractObject.hint.interactType);
+            }
+        }
+
+        lastInteractObject = _nearestObject;
+
+        if (!_nearestObject)
             return;
+
+        if (_nearestObject && !_nearestObject.CanInteract(objectHolder))
+        {
+            if (_nearestObject.hint is RepairItemHint && (_nearestObject as Repair).GetObjectState().GetIsBroken())
+            {
+                Repair repairItem = _nearestObject as Repair;
+                RepairItemHint repairItemHint = _nearestObject.hint as RepairItemHint;
+
+                if(repairItem.CanRepair(objectHolder))
+                {
+                    //Mostrar progress bar
+                    repairItemHint.progressBar.gameObject.SetActive(true);
+                }
+                else
+                    repairItemHint.ShowRepairSprite();
+            }
+            return;
+        }
         //Mostrar el hint de interactuar en el objeto mas cercano
         _nearestObject.hint.EnableHint(_nearestObject.hint.interactType, deviceType);
-    }
-    
-    
+    }   
 }

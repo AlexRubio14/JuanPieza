@@ -1,6 +1,9 @@
+using AYellowpaper.SerializedCollections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayersManager : MonoBehaviour
 {
@@ -12,6 +15,9 @@ public class PlayersManager : MonoBehaviour
 
     [Space, SerializeField]
     private Material[] characterMat;
+
+    [field: Space, SerializeField]
+    public Sprite repairSprite {  get; private set; }
     private void Awake()
     {
         if (instance != null && instance != this)
