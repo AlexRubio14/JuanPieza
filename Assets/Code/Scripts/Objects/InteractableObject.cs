@@ -9,8 +9,6 @@ public abstract class InteractableObject : MonoBehaviour
     public ObjectSO objectToInteract {  get; protected set; }
     [SerializeField] 
     protected SelectedVisual selectedVisual;
-    [SerializeField] 
-    protected ObjectsTooltip tooltip;
     public bool isBeginUsed { get; protected set; }
     [field: SerializeField]
     protected bool canGrab;
@@ -28,8 +26,7 @@ public abstract class InteractableObject : MonoBehaviour
     
     protected virtual void Awake()
     {
-        if (TryGetComponent(out ObjectsTooltip _tooltip))
-            tooltip = _tooltip;
+        //tooltip = GetComponent<ObjectsTooltip>();
         
         rb = GetComponent<Rigidbody>();
         isBeginUsed = false;
@@ -47,11 +44,6 @@ public abstract class InteractableObject : MonoBehaviour
     public SelectedVisual GetSelectedVisual()
     {
         return selectedVisual;
-    }
-
-    public ObjectsTooltip GetTooltip()
-    {
-        return tooltip;
     }
     public void SetIsBeingUsed(bool _value)
     {

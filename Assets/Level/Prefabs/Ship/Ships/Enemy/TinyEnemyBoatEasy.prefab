@@ -2242,8 +2242,8 @@ GameObject:
   - component: {fileID: 2006132802343337939}
   - component: {fileID: 3559848425187832485}
   - component: {fileID: 1236565792734148851}
-  - component: {fileID: 8702560652668402089}
   - component: {fileID: 7689443985849982933}
+  - component: {fileID: 8702560652668402089}
   m_Layer: 8
   m_Name: FloorLower
   m_TagString: Floor
@@ -2368,23 +2368,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8702560652668402089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4086182033197049970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6140746f33cef5749a6fef9a7f119698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hole: {fileID: 6933031838757936066, guid: b3627defe9c0dc74cb61cc6eb5f0674f, type: 3}
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 576
-  holeRadius: 2
 --- !u!114 &7689443985849982933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2417,6 +2400,26 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: b3c5b8a8d110554488f2285d94248360, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &8702560652668402089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4086182033197049970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6140746f33cef5749a6fef9a7f119698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hole: {fileID: 6933031838757936066, guid: b3627defe9c0dc74cb61cc6eb5f0674f, type: 3}
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 576
+  holeRadius: 2
 --- !u!1 &4118103546086504361
 GameObject:
   m_ObjectHideFlags: 0
@@ -3930,6 +3933,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hole: {fileID: 6933031838757936066, guid: b3627defe9c0dc74cb61cc6eb5f0674f, type: 3}
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 256
   hitLayer:
     serializedVersion: 2
     m_Bits: 576

@@ -24,7 +24,13 @@ public class Hint : MonoBehaviour
     [field: SerializeField]
     public HintController.ActionType interactType { get; set; }
 
-    protected void Start()
+	protected InteractableObject currentObject;
+
+    protected virtual void Awake()
+    {
+        currentObject = GetComponent<InteractableObject>();
+    }
+    protected virtual void Start()
     {
         canvas.worldCamera = Camera.main;
     }
