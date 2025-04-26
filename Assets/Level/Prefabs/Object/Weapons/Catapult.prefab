@@ -265,7 +265,6 @@ GameObject:
   - component: {fileID: 807546827017697251}
   - component: {fileID: 3968191370556537233}
   - component: {fileID: 5492471132555604836}
-  - component: {fileID: 7575848392866323742}
   - component: {fileID: 5803642790174461112}
   - component: {fileID: 4986079673123290112}
   - component: {fileID: 3894281368699678792}
@@ -317,7 +316,6 @@ MonoBehaviour:
   <objectSO>k__BackingField: {fileID: 11400000, guid: a3bc7d82416c2c74e808f04858acc334, type: 2}
   <objectToInteract>k__BackingField: {fileID: 0}
   selectedVisual: {fileID: 807546827017697251}
-  tooltip: {fileID: 7575848392866323742}
   canGrab: 1
   <canUse>k__BackingField: 1
   rb: {fileID: 4986079673123290112}
@@ -426,26 +424,6 @@ MonoBehaviour:
   initPosition: {x: 0, y: 1.36, z: 0}
   maxScale: 1.4
   breakIce: {fileID: 0}
---- !u!114 &7575848392866323742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7945949425479645119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c81df2381bb7219488602b295dd717d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectType: 1
-  progressBarGO: {fileID: 5568467514944838423, guid: 596cd99dcbfe3b449b4556b592e9decb, type: 3}
-  size: 1
-  offset: 2
-  interactingSprite: {fileID: 21300000, guid: b179f95fb4de5f14daf1f4e2de0230ba, type: 3}
-  brokenSprite: {fileID: 21300000, guid: 3e4d24c0cb09c8e49ae1fc66d6ee86d3, type: 3}
-  emptySprite: {fileID: 0}
-  loadedSprite: {fileID: 0}
 --- !u!114 &5803642790174461112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,6 +462,11 @@ MonoBehaviour:
         - {fileID: 21300000, guid: c4da30f3629e7ec40aaccac2f46ea6fc, type: 3}
   <useType>k__BackingField: 1
   <interactType>k__BackingField: 3
+  itemImage: {fileID: 7793527288632608846}
+  itemImageOffset: {x: 0, y: 2.5, z: 0}
+  neededItemSprite: {fileID: 0}
+  <progressBar>k__BackingField: {fileID: 365957860371848309}
+  progressBarOffset: {x: 1, y: 2.5, z: 0}
   movementImage: {fileID: 8918774761158977751}
   movementHintImage: {fileID: 3325484296042810841}
   rotationHintImage: {fileID: 5635189670881788241}
@@ -1032,6 +1015,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 152560a78cace7e4c95f296735738d44, type: 3}
+--- !u!114 &365957860371848309 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6790556488594165036, guid: 152560a78cace7e4c95f296735738d44, type: 3}
+  m_PrefabInstance: {fileID: 6568715123514986841}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ae3f96ecb69f8d428156a7ed2ee61ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &484131989628964619 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6746173305539272274, guid: 152560a78cace7e4c95f296735738d44, type: 3}
@@ -1086,6 +1080,17 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 4298644129078883727, guid: 152560a78cace7e4c95f296735738d44, type: 3}
   m_PrefabInstance: {fileID: 6568715123514986841}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7793527288632608846 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3963423157638551831, guid: 152560a78cace7e4c95f296735738d44, type: 3}
+  m_PrefabInstance: {fileID: 6568715123514986841}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8918774761158977751 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2372581157696010638, guid: 152560a78cace7e4c95f296735738d44, type: 3}

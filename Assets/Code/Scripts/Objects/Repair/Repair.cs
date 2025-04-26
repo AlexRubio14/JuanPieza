@@ -29,6 +29,12 @@ public class Repair : InteractableObject
     {
         return base.CanGrab(_objectHolder) && !state.GetIsBroken(); 
     }
+
+    public virtual bool CanRepair(ObjectHolder _objectHolder)
+    {
+        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
+        return handObject && handObject.objectSO == repairItem;
+    }
     #endregion
 
     #region Repair Functions
@@ -45,8 +51,7 @@ public class Repair : InteractableObject
     public void RepairProgress(float _repairProgressed)
     {
         repairProgress += _repairProgressed;
-        tooltip.progressBar.EnableProgressBar(true);
-        tooltip.progressBar.SetProgress(repairProgress, 1);
+        (hint as RepairItemHint).progressBar.SetProgress(repairProgress, 1);
 
         if (repairProgress >= 1)
         {
@@ -59,7 +64,7 @@ public class Repair : InteractableObject
     public virtual void OnBreakObject() { }
     protected virtual void RepairEnded() 
     {
-        tooltip.progressBar.EnableProgressBar(false);
+        (hint as RepairItemHint).progressBar.EnableProgressBar(false);
         repairProgress = 0;
     }
     #endregion
