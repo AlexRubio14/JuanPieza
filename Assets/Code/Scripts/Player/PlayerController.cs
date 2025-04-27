@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -381,10 +380,10 @@ public class PlayerController : MonoBehaviour
     public bool OnFloor()
     {
         Vector3 raycastPos = transform.position;
-        raycastPos.y -= capsuleCollider.height / 2;
+        raycastPos.y -= capsuleCollider.height / 2 - 0.1f;
 
         //Tirar Raycast contra el suelo
-        if (Physics.Raycast(raycastPos, Vector3.down, 0.2f, slopeCheckLayer))
+        if (Physics.Raycast(raycastPos, Vector3.down, 0.3f, slopeCheckLayer))
             return true;
 
         raycastPos.x += capsuleCollider.radius;
@@ -395,7 +394,7 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 1; i<= 4; i++)
         {
-            if (Physics.Raycast(raycastPos, Vector3.down, 0.2f, slopeCheckLayer))
+            if (Physics.Raycast(raycastPos, Vector3.down, 0.3f, slopeCheckLayer))
                 return true;
 
             raycastPos.x = transform.position.x + capsuleCollider.radius * multiplyX;
@@ -435,8 +434,8 @@ public class PlayerController : MonoBehaviour
         {
             Gizmos.color = Color.green;
             startPos = transform.position;
-            startPos.y -= capsuleCollider.height / 2;
-            endPos = startPos + Vector3.down * 0.2f;
+            startPos.y -= capsuleCollider.height / 2 - 0.1f;
+            endPos = startPos + Vector3.down * 0.3f;
             Gizmos.DrawLine(startPos, endPos);
 
             startPos.x += capsuleCollider.radius;

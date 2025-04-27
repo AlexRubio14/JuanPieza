@@ -367,7 +367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponFreezePercentage: 50
   increaseFreezePercentage: 10
-  freezeMaxTime: 5
+  freezeMaxTime: 10
   iceCube: {fileID: 4371653817622060990, guid: cf77fa7dbace0ea49b0c2d35b02f0101, type: 3}
   initPosition: {x: 0, y: 1.15, z: -0.085}
   maxScale: 1.05
@@ -412,7 +412,6 @@ MonoBehaviour:
   <interactType>k__BackingField: 3
   itemImage: {fileID: 2817852982436986038}
   itemImageOffset: {x: 0, y: 2.5, z: 0}
-  neededItemSprite: {fileID: 0}
   <progressBar>k__BackingField: {fileID: 5631479897514125453}
   progressBarOffset: {x: 1, y: 2.5, z: 0}
   movementImage: {fileID: 3528280008314674223}
@@ -507,10 +506,10 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 1, y: 0.985, z: 1.05}
   m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
   m_Center: {x: 0, y: 0.82, z: -0.05}
-  m_TimeToStationary: 0.5
+  m_TimeToStationary: 0.3
 --- !u!1001 &205073635071645644
 PrefabInstance:
   m_ObjectHideFlags: 0

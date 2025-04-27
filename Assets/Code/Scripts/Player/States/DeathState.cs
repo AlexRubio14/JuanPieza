@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 public class DeathState : PlayerState
@@ -10,6 +9,7 @@ public class DeathState : PlayerState
     public bool isSwimming;
     public bool isDead {  get; private set; } = false;
 
+    public float timeAtWater {  get; private set; }
     private float timeDead;
 
     public override void EnterState()
@@ -17,6 +17,7 @@ public class DeathState : PlayerState
         isSwimming = true;
         isDead = false;
         timeDead = 0;
+        timeAtWater = 0;
 
         rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         transform.position = new Vector3(transform.position.x, FishingManager.instance.defaultYPos, transform.position.z);
@@ -38,6 +39,7 @@ public class DeathState : PlayerState
     public override void UpdateState()
     {
         controller.animator.SetBool("Moving", controller.movementInput != Vector2.zero);
+        timeAtWater += Time.deltaTime;
     }
     public override void FixedUpdateState()
     {
