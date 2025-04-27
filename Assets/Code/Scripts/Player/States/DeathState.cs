@@ -12,10 +12,20 @@ public class DeathState : PlayerState
     public float timeAtWater {  get; private set; }
     private float timeDead;
 
+    private float respawnDuration = 2;
+    private float respawnProcess = 0;
+    private bool isRespawning = false;
+    private Vector3 startRespawnPos;
+    private Vector3 endRespawnPos;
+    private ParticleSystem respawnParticles;
+
     public override void EnterState()
     {
         isSwimming = true;
         isDead = false;
+        isRespawning = false;
+
+        respawnProcess = 0;
         timeDead = 0;
         timeAtWater = 0;
 
@@ -38,22 +48,35 @@ public class DeathState : PlayerState
     }
     public override void UpdateState()
     {
-        controller.animator.SetBool("Moving", controller.movementInput != Vector2.zero);
-        timeAtWater += Time.deltaTime;
+        if (isSwimming)
+        {
+            controller.animator.SetBool("Moving", controller.movementInput != Vector2.zero);
+            timeAtWater += Time.deltaTime;
+        }
+
+        if (isRespawning)
+        {
+            respawnProcess += Time.deltaTime / respawnDuration;
+            controller.transform.position = Vector3.Lerp(startRespawnPos, endRespawnPos, respawnProcess);
+            if(respawnProcess >= 1)
+            {
+                stateMachine.ChangeState(stateMachine.idleState);
+            }
+        }
+
     }
     public override void FixedUpdateState()
     {
         if (!isSwimming)
             return;
         
-        if(isDead)
+        if(isDead && !isRespawning)
         {
             timeDead += Time.fixedDeltaTime;
 
             if (timeDead >= controller.timeToRespawn)
-            {
-                Respawn();
-            }
+                StartRespawn();
+
             return;
         }
         controller.Rotate(controller.movementDirection, controller.swimRotateSpeed);
@@ -74,7 +97,9 @@ public class DeathState : PlayerState
 
         FishingManager.instance.RemoveDeadPlayer(this);
 
-        if(ShipsManager.instance.playerShip && !controller.gameObject.activeInHierarchy)
+        respawnParticles.Stop(true);
+
+        if (ShipsManager.instance.playerShip && !controller.gameObject.activeInHierarchy)
             controller.transform.SetParent(ShipsManager.instance.playerShip.transform);
     }
 
@@ -95,11 +120,19 @@ public class DeathState : PlayerState
         transform.position = new Vector3(-100, -100, -100);
         isDead = true;
     }
-    private void Respawn()
+    private void StartRespawn()
     {
-        transform.position = ShipsManager.instance.playerShip.GetSpawnPoints()[controller.playerInput.playerReference].transform.position;
-        stateMachine.ChangeState(stateMachine.idleState);
-    }
+        isRespawning = true;
 
+        startRespawnPos = ShipsManager.instance.playerShip.GetSpawnPoints()[controller.playerInput.playerReference].transform.position; 
+        Physics.Raycast(startRespawnPos, Vector3.down, out RaycastHit hit, Mathf.Infinity, controller.slopeCheckLayer);
+
+        endRespawnPos = hit.point;
+
+        respawnParticles = GameObject.Instantiate(controller.respawnParticles, endRespawnPos, Quaternion.identity).GetComponent<ParticleSystem>();
+
+        respawnParticles.transform.position = endRespawnPos;
+        respawnParticles.Play(true);
+    }
     
 }
