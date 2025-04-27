@@ -13,7 +13,7 @@ public class WoodShelf : Box
     [Header("Tutorial")]
     [SerializeField] private ShowMessageRepair message;
 
-    protected virtual void Start()
+    protected override void Start()
     {
         for (int i = 0; i < 4; i++)
             AddItemInBox(false);
@@ -51,7 +51,6 @@ public class WoodShelf : Box
     }
     public override void OnBreakObject()
     {
-        base.OnBreakObject();
         switch (itemsInBox)
         {
             case 0:
