@@ -148,16 +148,23 @@ public abstract class Weapon : RepairObject
             return;
 
         isTilting = false;
+        
         Shoot();
+
         animator.SetTrigger("Shoot");
         animator.SetBool("HasAmmo", false);
+
         PlayerController controller = PlayersManager.instance.ingamePlayers[mountedPlayerId];
         controller.stateMachine.ChangeState(controller.stateMachine.idleState);
         controller.animator.SetTrigger("Shoot");
         mountedPlayerId = -1;
+        
         hint.interactType = HintController.ActionType.INTERACT;
+
         foreach (ParticleSystem item in loadParticles)
             item.Stop(true);
+
+        tiltObject.localRotation = Quaternion.Euler(minWeaponTilt);
 
         ApplyRecoil();
     }
@@ -173,45 +180,6 @@ public abstract class Weapon : RepairObject
     public override bool CanGrab(ObjectHolder _objectHolder)
     {
         return base.CanGrab(_objectHolder) && !onRecoil && !isTilting && !freeze; 
-    }
-    protected void Mount(PlayerController _player, ObjectHolder _objectHolder)
-    {
-        _objectHolder.ChangeObjectInHand(this, false);
-
-        mountedPlayerId = _player.playerInput.playerReference;
-        //Cambiar el mapa de inputs
-        PlayersManager.instance.players[mountedPlayerId].Item1.SwitchCurrentActionMap("CannonGameplay");
-        //Cambiar estado del player
-        PlayerStateMachine playerSM = _objectHolder.GetComponentInParent<PlayerStateMachine>();
-        playerSM.cannonState.SetWeapon(this);
-        playerSM.ChangeState(playerSM.cannonState);
-        //Hacer Tp al player a la posicion de montar al ca�on
-        _player.transform.position = ridingPos.position;
-        _player.transform.forward = ridingPos.forward;
-        //El padre del arma sera el player 
-        transform.SetParent(_player.transform);
-
-        selectedVisual.Hide();
-
-
-        EnableTiltInputHint(true);
-
-    }
-    protected void UnMount(PlayerController _player, ObjectHolder _objectHolder)
-    {
-        //Cambiar el mapa de inputs
-        PlayersManager.instance.players[_player.playerInput.playerReference].Item1.SwitchCurrentActionMap("Gameplay");
-
-        EnableTiltInputHint(false);
-
-        //Cambiar estado del player
-        PlayerStateMachine playerSM = _objectHolder.GetComponentInParent<PlayerStateMachine>();
-        playerSM.ChangeState(playerSM.idleState);
-
-        //Quitar el ca�on del player
-        _objectHolder.RemoveItemFromHand();
-
-        mountedPlayerId = -1;
     }
     public virtual void Reload(ObjectHolder _objectHolder)
     {
