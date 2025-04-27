@@ -40,7 +40,12 @@ public class RescueNPC : MonoBehaviour
                 WaitToGetRescued();
             else
                 SwimToHook();
+        }else
+        {
+            animator.SetBool("Moving", false);
         }
+
+        animator.SetBool("Moving", isSwimming);
     }
     private void WaitToGetRescued()
     {
@@ -52,6 +57,7 @@ public class RescueNPC : MonoBehaviour
         transform.position = transform.position + (endPosition - transform.position).normalized * 2.3f * Time.deltaTime;
         transform.forward = (endPosition - transform.position).normalized;
         isSwimming = true;
+        animator.SetBool("Moving", true);
     }
     public void HookRemoved()
     {

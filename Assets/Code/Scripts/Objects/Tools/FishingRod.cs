@@ -99,6 +99,7 @@ public class FishingRod : Tool, ICatapultAmmo
         PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
         playerCont.stateMachine.ChangeState(playerCont.stateMachine.idleState);
         playerCont.animator.SetBool("FishingCharge", false);
+        playerCont.animator.ResetTrigger("FishingStop");
         base.Release(_objectHolder);
     }
     public override void Use(ObjectHolder _objectHolder)

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class FishingManager : MonoBehaviour
@@ -407,7 +406,7 @@ public class FishingManager : MonoBehaviour
         float itemOffset = 1;
         if (newItem.TryGetComponent(out Weapon _weapon))
             itemOffset = 2.3f;
-        Vector3 targetPos = _fishingRod.player.transform.position + _fishingRod.player.transform.forward * itemOffset + Vector3.up;
+        Vector3 targetPos = _fishingRod.player.transform.position - _fishingRod.player.transform.forward * itemOffset + Vector3.up;
 
         newData.parabolaEndPos = targetPos;
         fishingData[_id] = newData;

@@ -87,8 +87,10 @@ public class CannonState : PlayerState
         else
         {
             newPos = weaponDistance;
-            Vector3 weaponPos = new Vector3(currentWeapon.transform.position.x, controller.transform.position.y, currentWeapon.transform.position.z);
-            controller.transform.position = weaponPos - newPlayerForward * 2;
+            Vector3 playerPos = new Vector3(controller.transform.position.x, currentWeapon.transform.position.y, controller.transform.position.z);
+
+            currentWeapon.transform.position = playerPos + newPlayerForward * 2;
+            //controller.transform.position = weaponPos - newPlayerForward * 2;
         }
 
         weaponOffset = newPos;

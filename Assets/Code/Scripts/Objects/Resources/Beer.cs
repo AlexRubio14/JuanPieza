@@ -12,12 +12,13 @@ public class Beer : Resource, ICatapultAmmo
     public override void Use(ObjectHolder _objectHolder) 
     {
         _objectHolder.RemoveItemFromHand();
-        PlayerController controller = _objectHolder.GetComponentInParent<PlayerController>();
-        controller.animator.SetBool("Pick", false);
-        if (controller.stateMachine.currentState != controller.stateMachine.drunkState)
-            controller.stateMachine.ChangeState(controller.stateMachine.drunkState);
+        _objectHolder.playerController.animator.SetTrigger("Consume"); //Animacion de beber
+        if (_objectHolder.playerController.stateMachine.currentState != _objectHolder.playerController.stateMachine.drunkState)
+            _objectHolder.playerController.stateMachine.ChangeState(_objectHolder.playerController.stateMachine.drunkState);
         else
-            controller.stateMachine.drunkState.DrinkBeer();
+            _objectHolder.playerController.stateMachine.drunkState.DrinkBeer();
+
+        _objectHolder.playerController.animator.SetBool("Pick", false);
 
         Destroy(gameObject);
     }
