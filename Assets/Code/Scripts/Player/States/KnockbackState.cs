@@ -22,13 +22,8 @@ public class KnockbackState : PlayerState
 
         if(currentTime >= timeToCheckGrounded)
         {
-            sphereCastPos = controller.transform.position - new Vector3(0, 0.75f, 0);
-
-            if (Physics.SphereCast(sphereCastPos, radiusSphereCast, Vector3.down,
-                out RaycastHit hitInfo, radiusSphereCast, objectAndScenarioLayer))
-            {
+            if(controller.rb.linearVelocity.magnitude >= 5)
                 stateMachine.ChangeState(stateMachine.idleState);
-            }
         }
 
         currentTime += Time.deltaTime;
