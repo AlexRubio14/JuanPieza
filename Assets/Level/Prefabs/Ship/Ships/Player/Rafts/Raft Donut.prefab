@@ -321,6 +321,7 @@ GameObject:
   - component: {fileID: 5086272767061891365}
   - component: {fileID: 6858010608241455676}
   - component: {fileID: 5593746682110917611}
+  - component: {fileID: 8346890226748797644}
   m_Layer: 8
   m_Name: Raft Donut
   m_TagString: Untagged
@@ -362,7 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 545e131d25258c443a50685a25080760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 120
   heightChangeSpeed: 1
   lowerY: 0.2
   destroyY: -5
@@ -421,6 +422,38 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8346890226748797644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3288292874140128996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.1
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 73e749a61c8cae447b4f7ee0c76b2169, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &3792902120315564280
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,6 +916,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -953,6 +990,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1023,6 +1064,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1224,6 +1269,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1294,6 +1343,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1364,6 +1417,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1434,6 +1491,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1504,6 +1565,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1574,6 +1639,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1644,6 +1713,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1665,10 +1738,6 @@ PrefabInstance:
     - target: {fileID: 114308874064097438, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
       propertyPath: m_Name
       value: Module
-      objectReference: {fileID: 0}
-    - target: {fileID: 114308874064097438, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
-      propertyPath: m_Layer
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 783006194027702820, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1710,10 +1779,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1552543008985515113, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
-      propertyPath: ship
-      value: 
-      objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1784,6 +1853,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1854,6 +1927,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2121,6 +2198,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2191,6 +2272,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2261,6 +2346,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2331,6 +2420,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2401,6 +2494,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2471,6 +2568,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2672,6 +2773,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2873,6 +2978,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2943,6 +3052,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 6858010608241455676}
+    - target: {fileID: 3454231212047592737, guid: c3097f257e3153d42a41ad83457edd11, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
