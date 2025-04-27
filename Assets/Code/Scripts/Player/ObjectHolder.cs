@@ -58,7 +58,7 @@ public class ObjectHolder : MonoBehaviour
             if (!tempObject || 
                 tempObject.isBeginUsed ||
                 !tempObject.CanGrab(this) && !tempObject.CanInteract(this) &&
-                (tempObject is not Repair || !(tempObject as Repair).GetObjectState().GetIsBroken()))
+                (tempObject is not Repair || !(tempObject as Repair).GetObjectState().GetIsBroken()) && (tempObject is not Weapon || !(tempObject as Weapon).GetFreeze()))
                 continue;
 
             lastDistance = Vector3.Distance(transform.parent.position, item.collider.transform.position);

@@ -11,7 +11,6 @@ public class FreezeWeapon : MonoBehaviour
     private float freezeCurrentTime;
     private bool freeze;
     private Weapon weapon;
-    private ObjectState objectState;
 
     [Header("Ice")]
     [SerializeField] private GameObject iceCube;
@@ -23,7 +22,6 @@ public class FreezeWeapon : MonoBehaviour
     private void Start()
     {
         weapon = GetComponent<Weapon>();
-        objectState = GetComponent<ObjectState>();
     }
 
     private void Update()
@@ -48,7 +46,7 @@ public class FreezeWeapon : MonoBehaviour
         if(weaponCurrentFreezePercentage >= weaponFreezePercentage && !weapon.GetFreeze())
         {
             weapon.SetFreeze(true);
-            objectState.SetIsBroke(true, true);
+            weapon.OnBreakObject();
         }
     }
 
@@ -60,6 +58,8 @@ public class FreezeWeapon : MonoBehaviour
         freezeCurrentTime = 0;
         weaponCurrentFreezePercentage = 0;
         iceCubeWeapon.transform.localScale = Vector3.zero;
+        weapon.rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        AudioManager.instance.Play2dOneShotSound(breakIce, "Objects");
     }
 
     private void ScaleIceCube()
@@ -77,6 +77,7 @@ public class FreezeWeapon : MonoBehaviour
         iceCubeWeapon.transform.SetParent(this.transform, true);
         iceCubeWeapon.transform.localScale = Vector3.zero;
         iceCubeWeapon.transform.localPosition = initPosition;
+        iceCubeWeapon.transform.localRotation = Quaternion.identity;
     }
 
     public void SetFreeze(bool _freeze)
