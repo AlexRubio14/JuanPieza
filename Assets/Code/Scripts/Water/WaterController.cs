@@ -17,9 +17,6 @@ public class WaterController : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
-
-        
-
         //Instanciar particulas
         Vector3 splashPosition = new Vector3(collision.transform.position.x, transform.position.y, collision.transform.position.z);
         Instantiate(waterSplashParticles, splashPosition, Quaternion.identity);

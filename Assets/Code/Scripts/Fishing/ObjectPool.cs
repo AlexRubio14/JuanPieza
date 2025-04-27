@@ -1,6 +1,7 @@
 using AYellowpaper.SerializedCollections;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
@@ -30,6 +31,13 @@ public class ObjectPool : MonoBehaviour
         totalPercentage = 0;
         foreach (KeyValuePair<ObjectSO.ItemRarity, float> item in rarityPercentages)
             totalPercentage += item.Value;
+
+        StartCoroutine(WaitEndOfFrame());
+        IEnumerator WaitEndOfFrame()
+        {
+            yield return new WaitForEndOfFrame();
+            priorityList[0] = FindFirstObjectByType<Weapon>().objectSO;
+        }
     }
 
     private void Update()

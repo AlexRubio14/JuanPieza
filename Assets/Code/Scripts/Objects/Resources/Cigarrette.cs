@@ -12,9 +12,12 @@ public class Cigarrette : Resource, ICatapultAmmo
     {
         if (ShipsManager.instance != null)
             ShipsManager.instance.playerShip.Smoke();
+
+        _objectHolder.playerController.animator.SetTrigger("Consume"); //Animacion de empezar a fumar
         _objectHolder.GetComponentInParent<CigarretteController>().ActivateCigarrette();
         _objectHolder.RemoveItemFromHand();
-        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
+
+        _objectHolder.playerController.animator.SetBool("Pick", false);
 
         Destroy(gameObject);
     }
