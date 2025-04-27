@@ -55,7 +55,7 @@ public class FishingRod : Tool, ICatapultAmmo
         if (chargingHook)
             ChargeHook();
     }
-    protected virtual void OnEnable()
+    protected override void OnEnable()
     {
         ShipsManager.instance.playerShip.AddInteractuableObject(this);
 
@@ -90,7 +90,9 @@ public class FishingRod : Tool, ICatapultAmmo
     public override void Release(ObjectHolder _objectHolder)
     {
         chargingHook = false;
-        hookGrabbed = true;
+        hookGrabbed = false;
+        isFishing = false;
+        hookThrowed = false;
         GrabHook();
         idleFishingRod.SetActive(true);
         landedFishingRod.SetActive(false);
@@ -183,6 +185,9 @@ public class FishingRod : Tool, ICatapultAmmo
     }
     private void StartFishing()
     {
+        if (!hookThrowed)
+            return;
+
         hookLanded = true;
         if (!hook.onWater)
             return;
@@ -192,7 +197,8 @@ public class FishingRod : Tool, ICatapultAmmo
     }
     public void GrabHook()
     {
-        FishingManager.instance.HookGrabbed(this);
+
+        StartCoroutine(FishingManager.instance.HookGrabbed(this));
 
         if (!hook.onWater)
         {

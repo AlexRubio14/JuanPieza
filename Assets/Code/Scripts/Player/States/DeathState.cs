@@ -74,7 +74,7 @@ public class DeathState : PlayerState
 
         FishingManager.instance.RemoveDeadPlayer(this);
 
-        if(ShipsManager.instance.playerShip)
+        if(ShipsManager.instance.playerShip && !controller.gameObject.activeInHierarchy)
             controller.transform.SetParent(ShipsManager.instance.playerShip.transform);
     }
 
