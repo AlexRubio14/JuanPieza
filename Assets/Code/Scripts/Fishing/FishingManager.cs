@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -268,31 +269,31 @@ public class FishingManager : MonoBehaviour
         //Toca pescar objetos
         GenerateWaitObjectValues(id);
     }
-    public void HookGrabbed(FishingRod _fishingRod)
+    public IEnumerator HookGrabbed(FishingRod _fishingRod)
     {
+        yield return new WaitForEndOfFrame();
+
         int id = GetFisingRodId(_fishingRod);
-        if (id == -1)
-            return;
-
-        switch (fishingData[id].fishingState)
+        if (id != -1)
         {
-            case FishingState.WAITING_NPC:
-                GrabWhileWaitingHumanoid(id, _fishingRod);
-                break;
-            case FishingState.CAN_HOOK_NPC:
-                GrabHumanoid(id, _fishingRod);
-                break;
-            case FishingState.WAITING_OBJECT:
-                StopFishing(_fishingRod);
-                break;
-            case FishingState.CAN_HOOK_OBJECT://Sacar el objeto del agua
-                GrabObject(id, _fishingRod);
-                break;
-            default:
-                break;
+            switch (fishingData[id].fishingState)
+            {
+                case FishingState.WAITING_NPC:
+                    GrabWhileWaitingHumanoid(id, _fishingRod);
+                    break;
+                case FishingState.CAN_HOOK_NPC:
+                    GrabHumanoid(id, _fishingRod);
+                    break;
+                case FishingState.WAITING_OBJECT:
+                    StopFishing(_fishingRod);
+                    break;
+                case FishingState.CAN_HOOK_OBJECT://Sacar el objeto del agua
+                    GrabObject(id, _fishingRod);
+                    break;
+                default:
+                    break;
+            }
         }
-
-
     }
     private void StopFishing(FishingRod _fishingRod)
     {
