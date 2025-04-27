@@ -58,8 +58,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public LayerMask objectLayer {  get; set; }
 
 
-
-
     [field: Space, Header("Death"), SerializeField]
     public float timeToDie { get; private set; }
     [field: SerializeField]
@@ -68,6 +66,9 @@ public class PlayerController : MonoBehaviour
     public float swimSpeed { get; private set; }
     [field: SerializeField]
     public float swimRotateSpeed { get; private set; }
+    [field: SerializeField]
+    public GameObject respawnParticles { get; private set; }
+
 
     [Space, Header("Fishing"), SerializeField]
     private Canvas interactCanvas;
@@ -81,6 +82,7 @@ public class PlayerController : MonoBehaviour
     [field:SerializeField]
     public float weaponRotationOffset { get; private set; }
     public float weaponRotationAxis { get; private set; }
+
 
     [field: Space, Header("Drunk"), SerializeField]
     public float baseDrunkAngle {  get; private set; }
@@ -97,12 +99,15 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField]
     public ParticleSystem drunkParticles { get; private set; }
 
+
     [field: Space, Header("Dance"), SerializeField]
     public AudioClip danceMusic { get; private set; }
+
 
     [field: Space, Header("Stun"), SerializeField] 
     public float maxTimeStunned { get; private set; }
     public float currentTimeStunned {  get; set; }
+
 
     [Space, Header("Ice"), SerializeField] 
     private float iceDrag;
@@ -115,6 +120,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public AudioClip dashHitClip;
     [SerializeField] public AudioClip pushGameObjectClip;
     [SerializeField] public List<AudioClip> pushListClips;
+
 
     public Animator animator { get; private set; }
     private CapsuleCollider capsuleCollider;
