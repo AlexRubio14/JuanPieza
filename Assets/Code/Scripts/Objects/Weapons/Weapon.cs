@@ -172,7 +172,7 @@ public abstract class Weapon : RepairObject
     }
     public override bool CanGrab(ObjectHolder _objectHolder)
     {
-        return base.CanGrab(_objectHolder) && !onRecoil && !isTilting; 
+        return base.CanGrab(_objectHolder) && !onRecoil && !isTilting && !freeze; 
     }
     protected void Mount(PlayerController _player, ObjectHolder _objectHolder)
     {

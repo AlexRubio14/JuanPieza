@@ -95,17 +95,8 @@ public class Catapult : Weapon
 
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
-        if (state.GetIsBroken())
-            return base.CanInteract(_objectHolder);
-
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-        PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
-
-        return !IsPlayerMounted() && !handObject /*Montarse*/ 
-            || IsPlayerMounted() && playerCont.playerInput.playerReference == mountedPlayerId /*Bajarse*/ 
-            || !hasAmmo && handObject /*Recargar*/ 
-            || handObject is ICatapultAmmo;
-
+        return !state.GetIsBroken() && !freeze && !onRecoil && (!hasAmmo && handObject && handObject is ICatapultAmmo || hasAmmo && !handObject);
     }
   
     private GameObject CopyMeshRecursive(Transform _original, Transform _parent)

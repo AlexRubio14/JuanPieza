@@ -100,12 +100,12 @@ public class HintController : MonoBehaviour
 
         if (_nearestObject && !_nearestObject.CanInteract(objectHolder))
         {
-            if (_nearestObject.hint is RepairItemHint && (_nearestObject as Repair).GetObjectState().GetIsBroken())
+            if (_nearestObject.hint is RepairItemHint && ((_nearestObject as Repair).GetObjectState().GetIsBroken() || _nearestObject is Weapon && (_nearestObject as Weapon).GetFreeze()))
             {
                 Repair repairItem = _nearestObject as Repair;
                 RepairItemHint repairItemHint = _nearestObject.hint as RepairItemHint;
 
-                if(repairItem.CanRepair(objectHolder))
+                if (repairItem.CanRepair(objectHolder) && repairItem.GetObjectState().GetIsBroken())
                 {
                     //Mostrar progress bar
                     repairItemHint.progressBar.gameObject.SetActive(true);
@@ -115,6 +115,7 @@ public class HintController : MonoBehaviour
             }
             return;
         }
+
         //Mostrar el hint de interactuar en el objeto mas cercano
         _nearestObject.hint.EnableHint(_nearestObject.hint.interactType, deviceType);
     }   
