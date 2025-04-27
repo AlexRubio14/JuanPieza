@@ -23,6 +23,18 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+            UnLockLevels();
+    }
+
+    private void UnLockLevels()
+    {
+        foreach (QuestData quests in allQuests)
+            quests.completed = true;
+    }
+
     public void UpdateAvailableQuests()
     {
         availableQuests = new List<QuestData>();
