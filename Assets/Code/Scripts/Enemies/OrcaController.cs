@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Experimental.AI;
 
 public class OrcaController : MonoBehaviour
 {
@@ -24,7 +22,9 @@ public class OrcaController : MonoBehaviour
     private float distanceToEat;
     [SerializeField]
     private float eatDuration;
-    
+    [Space, SerializeField]
+    private float timeToEatPlayers;
+
     private float orbitValue;
     private PlayerController playerToChase;
     private Vector3 posToHide;
@@ -135,7 +135,7 @@ public class OrcaController : MonoBehaviour
 
             float distance = Vector2.Distance(a, b);
 
-            if(distance >= playerBoatRange)
+            if(distance >= playerBoatRange || timeToEatPlayers <= (player.stateMachine.currentState as DeathState).timeAtWater)
             {
                 playerToChase = player;
                 ChangeState(OrcaState.GOING);
