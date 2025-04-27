@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.XR;
 
 public class PirateBoardingController : MonoBehaviour
 {
@@ -10,8 +8,6 @@ public class PirateBoardingController : MonoBehaviour
 
     [SerializeField] private Rigidbody rb;
     [SerializeField] private NavMeshAgent navMeshAgent;
-
-    private Vector3 targetPos;
 
     [Space, Header("Parabola")]
     [SerializeField] private float jumpHeigt;
@@ -90,7 +86,6 @@ public class PirateBoardingController : MonoBehaviour
         {
             ActivateNavMesh();
             ChangeState(PirateState.CHASING);
-
         }
     }
 
@@ -153,7 +148,7 @@ public class PirateBoardingController : MonoBehaviour
 
     private void KnockbackUpdate()
     {
-        if(isKnockbacking && rb.linearVelocity.magnitude <= Vector3.zero.magnitude)
+        if(isKnockbacking && rb.linearVelocity.magnitude <= 2)
         {
             navMeshAgent.enabled = true;
             ChangeState(PirateState.CHASING);
