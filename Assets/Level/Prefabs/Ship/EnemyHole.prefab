@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 564236777976643556}
   - component: {fileID: 5571609234363602070}
-  - component: {fileID: 4402505752540122351}
   - component: {fileID: 3350394948463006617}
   - component: {fileID: 151085796318817600}
   - component: {fileID: 1130389676284387214}
@@ -56,32 +55,16 @@ MonoBehaviour:
   <objectSO>k__BackingField: {fileID: 11400000, guid: 99a98560166594a48b944a8a62302210, type: 2}
   <objectToInteract>k__BackingField: {fileID: 11400000, guid: d1a4f89d8d9efee4db14633f515fcdee, type: 2}
   selectedVisual: {fileID: 151085796318817600}
-  tooltip: {fileID: 0}
+  canGrab: 0
+  <canUse>k__BackingField: 0
   rb: {fileID: 1130389676284387214}
   <grabPivot>k__BackingField: {fileID: 0}
   hasToBeInTheShip: 0
   repairItem: {fileID: 11400000, guid: d1a4f89d8d9efee4db14633f515fcdee, type: 2}
   state: {fileID: 3350394948463006617}
-  repairDuration: 1.5
   repairParticles: {fileID: 5255137299113674165}
   repairClip: {fileID: 8300000, guid: 1e4e3078b3cd9f042ac17029ed429788, type: 3}
   hasToRecoverHP: 0
---- !u!114 &4402505752540122351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6933031838757936066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b97565a6039044b4793cc6e4763d516c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waterParticles: {fileID: 6402271229732428591}
-  maxDamageTime: 3
-  maxTimeLosingHealth: 10
-  isPlayerHole: 0
 --- !u!114 &3350394948463006617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,11 +430,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b79681a71c8f734a9a6e71fe79a11a1, type: 3}
---- !u!198 &6402271229732428591 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 694953310467908699, guid: 2b79681a71c8f734a9a6e71fe79a11a1, type: 3}
-  m_PrefabInstance: {fileID: 5872016176137928564}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8867491144608577005 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3058577118282418841, guid: 2b79681a71c8f734a9a6e71fe79a11a1, type: 3}

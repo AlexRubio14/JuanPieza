@@ -421,7 +421,11 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log("Colisiona contra " + collision.contacts[0].otherCollider.gameObject.name + " | El estado es " + stateMachine.currentState.ToString());
         stateMachine.currentState.OnCollisionEnter(collision);
+    }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        stateMachine.currentState.OnCollisionStay(collision);
     }
 
     private void OnDrawGizmosSelected()

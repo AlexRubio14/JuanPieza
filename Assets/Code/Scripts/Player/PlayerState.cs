@@ -40,4 +40,5 @@ public abstract class PlayerState
         }
     }
 
+    public virtual void OnCollisionStay(Collision collision) {}
 }
