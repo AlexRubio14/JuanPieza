@@ -4,20 +4,18 @@ using UnityEngine;
 public class Radio : Resource, ICatapultAmmo
 {
     [Space, Header("Radio"), SerializeField] private List<AudioClip> musicsList;
-    private AudioSource audioSource;
-
-    private bool isPlaying;
+    private List<float> musicsPlayed = new List<float>();
 
     protected override void Awake()
     {
         base.Awake();
-        isPlaying = false;
     }
 
     public override void Interact(ObjectHolder _objectHolder) { }
+
     public override void Use(ObjectHolder _objectHolder) 
     {
-        if (isPlaying)
+        if (AudioManager.instance.radioAs.isPlaying)
             StopPlaying();
         else
             Play();
@@ -30,25 +28,27 @@ public class Radio : Resource, ICatapultAmmo
  
     private void Play()
     {
-        int randomMusic = Random.Range(0, musicsList.Count);
+        int randomMusic;
+
+        do
+        {
+            randomMusic = Random.Range(0, musicsList.Count);
+        } 
+        while (musicsPlayed.Contains(randomMusic));
+        musicsPlayed.Add(randomMusic);
+        if (musicsPlayed.Count > 3)
+        {
+            musicsPlayed.RemoveAt(0);
+        }
 
         AudioManager.instance.musicAs.Pause();
-        audioSource = AudioManager.instance.Play2dLoop(musicsList[randomMusic], "Radio", 1, 1, 1);
-        isPlaying = true;
+        AudioManager.instance.PlayLoopSound(AudioManager.instance.radioAs, musicsList[randomMusic], "Radio", 1f, 1f, 1f);
     }
+
     private void StopPlaying()
     {
         AudioManager.instance.musicAs.UnPause();
-        audioSource.clip = null;
-        audioSource.Stop();
-        isPlaying = false;
-    }
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-
-        if (isPlaying)
-            StopPlaying();
-    }
+        AudioManager.instance.radioAs.clip = null;
+        AudioManager.instance.radioAs.Stop();
+    }    
 }
