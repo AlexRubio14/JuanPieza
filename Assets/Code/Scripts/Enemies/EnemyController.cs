@@ -113,12 +113,18 @@ public class EnemyController : MonoBehaviour
 
     public void Knockback(Vector2 _force, Vector2 _direction)
     {
-        agent.enabled = false;
-        rb.isKinematic = false;
-        Vector3 pushForward = _direction * _force.x;
-        Vector3 pushUp = Vector3.up * _force.y;
-        transform.position += Vector3.up * 0.5f;
-        rb.AddForce((pushForward + pushUp), ForceMode.Impulse);
+        if(agent)
+            agent.enabled = false;
+
+        if (rb)
+        {
+            rb.isKinematic = false;
+
+            Vector3 pushForward = _direction * _force.x;
+            Vector3 pushUp = Vector3.up * _force.y;
+            transform.position += Vector3.up * 0.5f;
+            rb.AddForce((pushForward + pushUp), ForceMode.Impulse);
+        }
     }
 
     private void OnDrawGizmosSelected()
