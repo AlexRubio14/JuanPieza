@@ -36,7 +36,9 @@ public class ObjectPool : MonoBehaviour
         IEnumerator WaitEndOfFrame()
         {
             yield return new WaitForEndOfFrame();
-            priorityList[0] = FindFirstObjectByType<Weapon>().objectSO;
+            Weapon tmpWeapon = FindFirstObjectByType<Weapon>();
+            if (tmpWeapon != null)
+                priorityList[0] = tmpWeapon.objectSO;
         }
     }
 
