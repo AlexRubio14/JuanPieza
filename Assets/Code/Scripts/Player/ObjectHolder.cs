@@ -34,7 +34,6 @@ public class ObjectHolder : MonoBehaviour
     {
         InteractableObject neareastObject = CheckItemsInRange();
         ChangeNearestInteractableObject(neareastObject);
-
     }
 
     // Crea un sphereRaycast, te pilla el interactableObject mas cercano que no este siendo utilizado y te devuelve su script y su collider a la vez.
@@ -56,9 +55,11 @@ public class ObjectHolder : MonoBehaviour
             InteractableObject tempObject = item.collider.GetComponent<InteractableObject>();
 
             if (!tempObject || 
-                tempObject.isBeginUsed ||
+                (tempObject.isBeginUsed && (tempObject is not Weapon)) ||
                 !tempObject.CanGrab(this) && !tempObject.CanInteract(this) &&
-                (tempObject is not Repair || !(tempObject as Repair).GetObjectState().GetIsBroken()) && (tempObject is not Weapon || !(tempObject as Weapon).GetFreeze()))
+                (tempObject is not Repair || !(tempObject as Repair).GetObjectState().GetIsBroken()) &&
+                (tempObject is not Weapon || !(tempObject as Weapon).GetFreeze())
+                )
                 continue;
 
             lastDistance = Vector3.Distance(transform.parent.position, item.collider.transform.position);
@@ -138,7 +139,7 @@ public class ObjectHolder : MonoBehaviour
     }
     public void ChangeNearestInteractableObject(InteractableObject _nearestObject)
     {
-        if (handObject && _nearestObject == handObject)
+        if (handObject && nearestInteractableObject && _nearestObject == handObject)
         {
             nearestInteractableObject.hint.RemovePlayer(playerController.playerInput.playerReference);
             nearestInteractableObject = null;

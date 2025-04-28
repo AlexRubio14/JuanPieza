@@ -95,7 +95,7 @@ public class HintController : MonoBehaviour
 
         lastInteractObject = _nearestObject;
 
-        if (!_nearestObject)
+        if (!_nearestObject && _handObject is not Weapon)
             return;
 
         if (_nearestObject && !_nearestObject.CanInteract(objectHolder))
@@ -116,7 +116,15 @@ public class HintController : MonoBehaviour
             return;
         }
 
+        //En caso de tener un arma en la mano y que se pueda usar mostraremos el input
+        if (_handObject && _handObject is Weapon && _handObject.CanInteract(objectHolder))
+        {
+            _handObject.hint.EnableHint(_handObject.hint.interactType, deviceType);
+            return;
+        }
+
         //Mostrar el hint de interactuar en el objeto mas cercano
-        _nearestObject.hint.EnableHint(_nearestObject.hint.interactType, deviceType);
+        if(_nearestObject)
+            _nearestObject.hint.EnableHint(_nearestObject.hint.interactType, deviceType);
     }   
 }

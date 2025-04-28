@@ -18,20 +18,27 @@ public class CannonState : PlayerState
     }
     public override void UpdateState()
     {
+        if (!currentWeapon)
+        {
+            controller.stateMachine.ChangeState(controller.stateMachine.idleState);
+            return;
+        }
+
         currentWeapon.transform.position = controller.transform.position + controller.transform.forward * controller.weaponRotationOffset + new Vector3(0, weaponOffset.y, 0);
     }
     public override void FixedUpdateState()
     {
-        if (currentWeapon.isTilting)
-            return;
-
-        MoveCannon();
-        RotateCannon();
+        if (currentWeapon.GetMountedPlayerId() == controller.playerInput.playerReference)
+        {
+            MoveCannon();
+            RotateCannon();
+        }
     }
     public override void ExitState()
     {
         if(currentWeapon)
             currentWeapon.rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+
         controller.animator.SetBool("OnCannon", false);
         controller.animator.SetBool("Pick", false);
     }
@@ -44,11 +51,16 @@ public class CannonState : PlayerState
     }
     public override void InteractAction() 
     {
-        controller.Interact();
+        if(currentWeapon.CanInteract(controller.objectHolder))
+            currentWeapon.Interact(controller.objectHolder);
     }
     public override void StopInteractAction() 
     {
-        controller.StopInteract();    
+        
+        if (currentWeapon.GetMountedPlayerId() == -1)
+            controller.stateMachine.ChangeState(controller.stateMachine.idleState);
+
+        currentWeapon.StopInteract(controller.objectHolder);
     }
     public override void UseAction() { }
     public override void StopUseAction() 

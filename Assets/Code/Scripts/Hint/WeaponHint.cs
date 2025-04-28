@@ -25,9 +25,9 @@ public class WeaponHint : RepairItemHint
     }
     private void FixedUpdate()
     {
-        movementImage.gameObject.SetActive(currentWeapon.isBeginUsed);
+        movementImage.gameObject.SetActive(currentWeapon.GetMountedPlayerId() != -1);
 
-        if (currentWeapon.isBeginUsed)
+        if (currentWeapon.GetMountedPlayerId() != -1)
         {
             PlayerController player = PlayersManager.instance.ingamePlayers[currentWeapon.GetMountedPlayerId()];
             HintController.DeviceType device = player.GetComponent<HintController>().deviceType;
