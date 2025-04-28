@@ -29,9 +29,6 @@ public abstract class Weapon : RepairObject
     public float tiltProcess;
     public bool isTilting {  get; protected set; }
 
-    [Space, Header("Tilt Input Hint"), SerializeField]
-    private TiltHintController tiltInputHint;
-
     [Space, Header("Recoil"), SerializeField]
     protected Vector3 forwardAxis;
     [SerializeField]
@@ -102,12 +99,13 @@ public abstract class Weapon : RepairObject
 
     public override void Grab(ObjectHolder _objectHolder)
     {
-        if (state.GetIsBroken() || freeze)
+        if (state.GetIsBroken() || freeze || mountedPlayerId != -1)
             return;
 
         _objectHolder.ChangeObjectInHand(this ,false);
         rb.isKinematic = false;
         PlayerController player = _objectHolder.playerController;
+
         //Cambia el estado
         player.stateMachine.cannonState.SetWeapon(this);
         player.stateMachine.ChangeState(player.stateMachine.cannonState);
@@ -133,14 +131,13 @@ public abstract class Weapon : RepairObject
         
         if(!hasAmmo && handObject && handObject.objectSO == objectToInteract)
             Reload(_objectHolder);
-        else if (hasAmmo && !handObject)
+        else if (hasAmmo && (!handObject || handObject == this))
         {
             //Empezar a cargar el disparo
             isTilting = true;
             tiltProcess = 0;
             tiltObject.localRotation = Quaternion.Euler(minWeaponTilt);
             PlayerController currentPlayer = _objectHolder.playerController;
-            mountedPlayerId = currentPlayer.playerInput.playerReference;
             currentPlayer.stateMachine.cannonState.SetWeapon(this);
             currentPlayer.stateMachine.ChangeState(currentPlayer.stateMachine.cannonState);
         }
@@ -150,26 +147,7 @@ public abstract class Weapon : RepairObject
         if (!isTilting)
             return;
 
-        isTilting = false;
-        
-        Shoot();
-
-        animator.SetTrigger("Shoot");
-        animator.SetBool("HasAmmo", false);
-
-        PlayerController controller = PlayersManager.instance.ingamePlayers[mountedPlayerId];
-        controller.stateMachine.ChangeState(controller.stateMachine.idleState);
-        controller.animator.SetTrigger("Shoot");
-        mountedPlayerId = -1;
-        
-        hint.interactType = HintController.ActionType.INTERACT;
-
-        foreach (ParticleSystem item in loadParticles)
-            item.Stop(true);
-
-        tiltObject.localRotation = Quaternion.Euler(minWeaponTilt);
-
-        ApplyRecoil();
+        ShootWeapon();
     }
 
     public override bool CanInteract(ObjectHolder _objectHolder)
@@ -177,11 +155,17 @@ public abstract class Weapon : RepairObject
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
         PlayerController playerCont = _objectHolder.playerController;
 
-        return !state.GetIsBroken() && !freeze && !onRecoil && (!hasAmmo && handObject && handObject.objectSO == objectToInteract || hasAmmo && !handObject);
+        return !state.GetIsBroken() && !freeze && !onRecoil //Si no esta roto ni congelado ni en medio del retroceso
+            && (
+            !hasAmmo && handObject && handObject.objectSO == objectToInteract || //Si puede recargar
+            hasAmmo &&
+            (!handObject && mountedPlayerId == -1 || //Si tiene municion y no hay nadie montado
+            _objectHolder.playerController.playerInput.playerReference == mountedPlayerId) //Si tiene municion y el que esta montado es el mismo player
+            );
     }
     public override bool CanGrab(ObjectHolder _objectHolder)
     {
-        return base.CanGrab(_objectHolder) && !onRecoil && !isTilting && !freeze; 
+        return base.CanGrab(_objectHolder) && !onRecoil && !isTilting && !freeze && mountedPlayerId == -1; 
     }
     public virtual void Reload(ObjectHolder _objectHolder)
     {
@@ -285,6 +269,33 @@ public abstract class Weapon : RepairObject
 
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
+
+    protected void ShootWeapon()
+    {
+        isTilting = false;
+
+        Shoot();
+
+        animator.SetTrigger("Shoot");
+        animator.SetBool("HasAmmo", false);
+
+        if(mountedPlayerId != -1)
+        {
+            PlayerController controller = PlayersManager.instance.ingamePlayers[mountedPlayerId];
+            controller.stateMachine.ChangeState(controller.stateMachine.idleState);
+        }
+
+        mountedPlayerId = -1;
+
+        hint.interactType = HintController.ActionType.INTERACT;
+
+        foreach (ParticleSystem item in loadParticles)
+            item.Stop(true);
+
+        tiltObject.localRotation = Quaternion.Euler(minWeaponTilt);
+
+        ApplyRecoil();
+    }
     protected abstract void Shoot();
 
     public bool IsPlayerMounted()
@@ -309,14 +320,7 @@ public abstract class Weapon : RepairObject
         if (tiltProcess < 1)
             return;
 
-        StopInteract(PlayersManager.instance.ingamePlayers[mountedPlayerId].objectHolder);
-    }
-    protected void EnableTiltInputHint(bool _enable)
-    {
-        tiltInputHint.gameObject.SetActive(_enable);
-
-        if (_enable)
-            tiltInputHint.ChangeDeviceType(PlayersManager.instance.players[mountedPlayerId].Item1.devices[0] is Gamepad , PlayersManager.instance.ingamePlayers[mountedPlayerId].transform);
+        ShootWeapon();
     }
 
     public void SetFreeze(bool _freeze)

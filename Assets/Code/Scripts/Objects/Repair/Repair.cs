@@ -7,7 +7,6 @@ public class Repair : InteractableObject
     [SerializeField] protected ObjectState state;
     [SerializeField] protected GameObject repairParticles;
     [SerializeField] protected AudioClip repairClip;
-
     protected float repairProgress;
 
     protected virtual void Start()
@@ -66,6 +65,8 @@ public class Repair : InteractableObject
     {
         (hint as RepairItemHint).progressBar.EnableProgressBar(false);
         repairProgress = 0;
+
+        Instantiate(repairParticles, transform.position + Vector3.up, Quaternion.identity);
     }
     #endregion
 
