@@ -91,7 +91,10 @@ public abstract class Weapon : RepairObject
     protected void Update()
     {
         if (isTilting)
+        {
             TiltWeapon();
+            CheckIfReachedMaxTilt();
+        }
         
         if (onRecoil)
             WaitRecoil();
@@ -168,7 +171,6 @@ public abstract class Weapon : RepairObject
 
         ApplyRecoil();
     }
-
 
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
@@ -301,6 +303,13 @@ public abstract class Weapon : RepairObject
             Quaternion.Euler(maxWeaponTilt),
             tiltProcess
             );
+    }
+    protected void CheckIfReachedMaxTilt()
+    {
+        if (tiltProcess < 1)
+            return;
+
+        StopInteract(PlayersManager.instance.ingamePlayers[mountedPlayerId].objectHolder);
     }
     protected void EnableTiltInputHint(bool _enable)
     {
