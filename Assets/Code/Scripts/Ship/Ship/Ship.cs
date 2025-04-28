@@ -70,6 +70,8 @@ public class Ship : MonoBehaviour
     public virtual void DestroyShip()
     {
         ShipsManager.instance.RemoveEnemyShip(this);
+        foreach (EnemyController enemies in GetComponent<EnemieManager>().GetEnemyList())
+            Destroy(enemies.gameObject);
         Destroy(gameObject);
     }
     virtual public void SetCurrentHealth(float amount)
