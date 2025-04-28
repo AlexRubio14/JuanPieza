@@ -1,27 +1,58 @@
-using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Button playButton;
+    [SerializeField] protected Button newGameButton;
     [SerializeField] private Button optionsButton;
+    [SerializeField] private Button exitButton;
     [SerializeField] private Slider audioSlider;
 
     private Animator _anim;
 
-    
+    private Button lastButton;
+
     private void Awake()
     {
         _anim = GetComponent<Animator>();
+
     }
 
     private void Start()
     {
         _anim.SetBool("OpenMainMenu", true);
         _anim.SetBool("OpenOptionsMenu", false);
+
+        AudioManager.instance.musicAs.volume = 0.2f;
+        AudioManager.instance.musicAs.outputAudioMixerGroup = AudioManager.instance.GetMixer().FindMatchingGroups("Game Theme")[0];
+        AudioManager.instance.musicAs.loop = true;
+        AudioManager.instance.musicAs.pitch = 1;
+        AudioManager.instance.musicAs.clip = AudioManager.instance.musicClip;
+        AudioManager.instance.musicAs.Play();
+
+        AudioManager.instance.seagullAs = AudioManager.instance.Play2dLoop(AudioManager.instance.seagullClip, "Ambient", 1.5f, 1, 1);
+
+        if (!PlayerPrefs.HasKey("Hub_Tutorial"))
+        {
+            playButton.interactable = false;
+            Navigation newNav = newGameButton.navigation;
+
+            newNav.selectOnUp = exitButton;
+            newGameButton.navigation = newNav;
+
+            newNav = exitButton.navigation;
+            newNav.selectOnDown = newGameButton;
+            exitButton.navigation = newNav;
+        }
+    }
+
+    public void NewGame()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("Hub");
     }
 
     public void PlayGame()
@@ -33,6 +64,7 @@ public class MainMenu : MonoBehaviour
     {
         _anim.SetBool("OpenMainMenu", false);
         _anim.SetBool("OpenOptionsMenu", true);
+        lastButton = optionsButton;
     }
 
     public void CloseOptions()
@@ -45,9 +77,14 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
-    public void SelectOptionsButton()
+    public void SelectLastButtonButton()
     {
-        optionsButton.Select();
+        if (lastButton)
+            lastButton.Select();
+        else if (playButton.interactable)
+            playButton.Select();
+        else
+            newGameButton.Select();        
     }
     public void SelectAudioSlider()
     {

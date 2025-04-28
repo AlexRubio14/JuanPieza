@@ -107,7 +107,7 @@ public abstract class Weapon : RepairObject
 
         _objectHolder.ChangeObjectInHand(this ,false);
         rb.isKinematic = false;
-        PlayerController player = _objectHolder.GetComponentInParent<PlayerController>();
+        PlayerController player = _objectHolder.playerController;
         //Cambia el estado
         player.stateMachine.cannonState.SetWeapon(this);
         player.stateMachine.ChangeState(player.stateMachine.cannonState);
@@ -116,7 +116,7 @@ public abstract class Weapon : RepairObject
     }
     public override void Release(ObjectHolder _objectHolder)
     {
-        PlayerController player = _objectHolder.GetComponentInParent<PlayerController>();
+        PlayerController player = _objectHolder.playerController;
         //Cambia el estado
         player.stateMachine.ChangeState(player.stateMachine.idleState);
         _objectHolder.RemoveItemFromHand();
@@ -139,7 +139,7 @@ public abstract class Weapon : RepairObject
             isTilting = true;
             tiltProcess = 0;
             tiltObject.localRotation = Quaternion.Euler(minWeaponTilt);
-            PlayerController currentPlayer = _objectHolder.GetComponentInParent<PlayerController>();
+            PlayerController currentPlayer = _objectHolder.playerController;
             mountedPlayerId = currentPlayer.playerInput.playerReference;
             currentPlayer.stateMachine.cannonState.SetWeapon(this);
             currentPlayer.stateMachine.ChangeState(currentPlayer.stateMachine.cannonState);
@@ -175,7 +175,7 @@ public abstract class Weapon : RepairObject
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-        PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
+        PlayerController playerCont = _objectHolder.playerController;
 
         return !state.GetIsBroken() && !freeze && !onRecoil && (!hasAmmo && handObject && handObject.objectSO == objectToInteract || hasAmmo && !handObject);
     }
@@ -194,7 +194,7 @@ public abstract class Weapon : RepairObject
         animator.ResetTrigger("Shoot");
         animator.SetBool("HasAmmo", true);
 
-        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
+        _objectHolder.playerController.animator.SetBool("Pick", false);
 
         foreach (ParticleSystem item in loadParticles)
             item.Play(true);

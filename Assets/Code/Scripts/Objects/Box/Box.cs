@@ -14,7 +14,7 @@ public abstract class Box : RepairObject
         InteractableObject boxObject = _objectHolder.InstantiateItemInHand(itemDropped);
         ShipsManager.instance.playerShip.AddInteractuableObject(boxObject);
         _objectHolder.ChangeObjectInHand(boxObject);
-        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", true);
+        _objectHolder.playerController.animator.SetBool("Pick", true);
     }
     public override void Interact(ObjectHolder _objectHolder)
     {

@@ -121,7 +121,6 @@ public class FishingManager : MonoBehaviour
         }
 
     }
-
     private void HookedHumanoid(int _id)
     {
         FishingData parabolaData = fishingData[_id];

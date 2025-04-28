@@ -30,13 +30,13 @@ public abstract class Tool : InteractableObject
     private void PickItem(ObjectHolder _objectHolder)
     {
         _objectHolder.ChangeObjectInHand(this);
-        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", true);
+        _objectHolder.playerController.animator.SetBool("Pick", true);
         selectedVisual.Hide();
     }
     public void DropItem(ObjectHolder _objectHolder)
     {
         _objectHolder.RemoveItemFromHand();
-        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
+        _objectHolder.playerController.animator.SetBool("Pick", false);
         AudioManager.instance.Play2dOneShotSound(dropItemClip, "Objects");
 
     }

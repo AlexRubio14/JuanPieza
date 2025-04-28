@@ -16,7 +16,7 @@ public class ColorChanger : InteractableObject
     }
     public override void Interact(ObjectHolder _objectHolder)
     {
-        int playerId = _objectHolder.GetComponentInParent<PlayerController>().playerInput.playerReference;
+        int playerId = _objectHolder.playerController.playerInput.playerReference;
 
         int colorId = PlayersManager.instance.GetNextMaterial(PlayersManager.instance.players[playerId].singlePlayer.currentColor);
         PlayersManager.instance.players[playerId].singlePlayer.ChangePlayerColor(colorId);

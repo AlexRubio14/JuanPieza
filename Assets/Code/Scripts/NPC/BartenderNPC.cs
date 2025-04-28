@@ -14,7 +14,7 @@ public class BartenderNPC : InteractNPC
         base.Interact((_objectHolder));
         InteractableObject boxObject = _objectHolder.InstantiateItemInHand(itemDropped);
         _objectHolder.ChangeObjectInHand(boxObject);
-        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", true);
+        _objectHolder.playerController.animator.SetBool("Pick", true);
     }
 
     public override void Release(ObjectHolder _objectHolder)

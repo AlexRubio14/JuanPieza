@@ -23,13 +23,13 @@ public abstract class Resource : InteractableObject
 
         AudioManager.instance.Play2dOneShotSound(_objectHolder.pickUpClip, "Objects");
 
-        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", true);
+        _objectHolder.playerController.animator.SetBool("Pick", true);
     }
     private void DropItem(ObjectHolder _objectHolder)
     {
         _objectHolder.RemoveItemFromHand();
         AudioManager.instance.Play2dOneShotSound(dropItemClip, "Objects");
-        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
+        _objectHolder.playerController.animator.SetBool("Pick", false);
 
     }
 

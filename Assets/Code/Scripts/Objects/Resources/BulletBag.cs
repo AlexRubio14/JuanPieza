@@ -13,7 +13,7 @@ public class BulletBag : Resource, ICatapultAmmo
     public override void Use(ObjectHolder _objectHolder) 
     {
         _objectHolder.RemoveItemFromHand();
-        PlayerController controller = _objectHolder.GetComponentInParent<PlayerController>();
+        PlayerController controller = _objectHolder.playerController;
         controller.animator.SetBool("Pick", false);
 
         //Spawnear X balas

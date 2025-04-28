@@ -12,7 +12,7 @@ public interface ICatapultAmmo
 
             if (!currentCatapult.hasAmmo)
                 currentCatapult.Reload(_objectHolder);
-            _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
+            _objectHolder.playerController.animator.SetBool("Pick", false);
 
             return true;
         }

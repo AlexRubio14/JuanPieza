@@ -28,8 +28,6 @@ public class FishingRod : Tool, ICatapultAmmo
     [field: SerializeField]
     public Vector2 throwForce { get; private set; }
 
-
-
     public HookController hook { get; private set; }
 
     public PlayerController player { get; private set; }
@@ -75,9 +73,9 @@ public class FishingRod : Tool, ICatapultAmmo
 
         FishingManager.instance.ResetFishingRodData(this);
 
-        PlayerController currentPlayer = _objectHolder.GetComponentInParent<PlayerController>();
+        PlayerController currentPlayer = _objectHolder.playerController;
         currentPlayer.animator.ResetTrigger("FishingStop");
-        hookGrabbed = false;
+        hookGrabbed = false;    
         hint.useType = HintController.ActionType.HOLD_USE;
         base.Grab(_objectHolder);
 
@@ -96,10 +94,10 @@ public class FishingRod : Tool, ICatapultAmmo
         GrabHook();
         idleFishingRod.SetActive(true);
         landedFishingRod.SetActive(false);
-        PlayerController playerCont = _objectHolder.GetComponentInParent<PlayerController>();
-        playerCont.stateMachine.ChangeState(playerCont.stateMachine.idleState);
-        playerCont.animator.SetBool("FishingCharge", false);
-        playerCont.animator.ResetTrigger("FishingStop");
+        _objectHolder.playerController.stateMachine.ChangeState(_objectHolder.playerController.stateMachine.idleState);
+        _objectHolder.playerController.animator.SetBool("FishingCharge", false);
+        _objectHolder.playerController.animator.ResetTrigger("FishingStop");
+        _objectHolder.playerController.interactCanvasObject.SetActive(false);
         base.Release(_objectHolder);
     }
     public override void Use(ObjectHolder _objectHolder)
@@ -109,7 +107,7 @@ public class FishingRod : Tool, ICatapultAmmo
             chargingHook = true;
             tiltProcess = 0;
             if (!player)
-                player = _objectHolder.GetComponentInParent<PlayerController>();
+                player = _objectHolder.playerController;
 
 
             player.stateMachine.fishingState.fishingRod = this;
@@ -155,7 +153,7 @@ public class FishingRod : Tool, ICatapultAmmo
     }
     private void ThrowHook(ObjectHolder _objectHolder)
     {
-        PlayerController currentPlayer = _objectHolder.GetComponentInParent<PlayerController>();
+        PlayerController currentPlayer = _objectHolder.playerController;
             
         if (!player || player != currentPlayer)
         {

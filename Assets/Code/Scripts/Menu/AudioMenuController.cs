@@ -19,7 +19,12 @@ public class AudioMenuController : MonoBehaviour
     private Button settingsStartSelectedButton;
     [SerializeField]
     private Button menuSettingsButton;
-    
+
+    private void Start()
+    {
+        UpdateMusicVolume();
+        UpdateSfxVolume();
+    }
     public void UpdateMusicVolume()
     {
         float volume = (musicSlider.value / 10) + 0.0001f;

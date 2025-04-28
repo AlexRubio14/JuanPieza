@@ -31,7 +31,7 @@ public class Hammer : Tool, ICatapultAmmo
         canHit = false;
         
         //Hay que cambiarlo por hittear
-        playerCont = _objectHolder.GetComponentInParent<PlayerController>();
+        playerCont = _objectHolder.playerController;
         //Playear Anim de Golpear
         playerCont.animator.SetTrigger("HitHammer");
 
