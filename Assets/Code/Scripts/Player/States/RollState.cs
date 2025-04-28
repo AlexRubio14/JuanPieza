@@ -50,11 +50,9 @@ public class RollState : PlayerState
 
    
     public override void OnHit(Vector3 _hitPosition, float forceMultiplier = 1) { }
-    public override void OnCollisionEnter(Collision collision)
+    public override void OnCollisionStay(Collision collision)
     {
-        base.OnCollisionEnter(collision);
-
-        if (bounced || !collision.gameObject.CompareTag("Scenario") && !collision.gameObject.CompareTag("Object"))
+        if (bounced || !collision.gameObject.CompareTag("Scenario"))
             return;
 
         Vector3 bounceNormal = new Vector3(collision.contacts[0].normal.x, 0, collision.contacts[0].normal.z);

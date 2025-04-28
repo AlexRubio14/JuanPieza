@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 564236777976643556}
   - component: {fileID: 5571609234363602070}
-  - component: {fileID: 4402505752540122351}
   - component: {fileID: 3350394948463006617}
   - component: {fileID: 151085796318817600}
   - component: {fileID: 6054775659262519009}
@@ -67,22 +66,6 @@ MonoBehaviour:
   repairParticles: {fileID: 0}
   repairClip: {fileID: 8300000, guid: 1e4e3078b3cd9f042ac17029ed429788, type: 3}
   hasToRecoverHP: 1
---- !u!114 &4402505752540122351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6933031838757936066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b97565a6039044b4793cc6e4763d516c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waterParticles: {fileID: 6402271229732428591}
-  maxDamageTime: 3
-  maxTimeLosingHealth: 3
-  isPlayerHole: 1
 --- !u!114 &3350394948463006617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,11 +428,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b79681a71c8f734a9a6e71fe79a11a1, type: 3}
---- !u!198 &6402271229732428591 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 694953310467908699, guid: 2b79681a71c8f734a9a6e71fe79a11a1, type: 3}
-  m_PrefabInstance: {fileID: 5872016176137928564}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8867491144608577005 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3058577118282418841, guid: 2b79681a71c8f734a9a6e71fe79a11a1, type: 3}

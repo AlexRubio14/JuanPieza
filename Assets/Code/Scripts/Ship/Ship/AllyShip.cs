@@ -196,7 +196,6 @@ public class AllyShip : Ship
 
     public void Smoke()
     {
-
         if (!smoke.gameObject.activeSelf)
         {
             smoke.gameObject.SetActive(true);

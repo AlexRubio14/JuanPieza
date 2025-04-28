@@ -25,6 +25,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioClip musicClip;
     [HideInInspector] public AudioSource seagullAs;
     [HideInInspector] public AudioSource musicAs;
+    [HideInInspector] public AudioSource radioAs;
 
 
     private void Awake()
@@ -51,7 +52,11 @@ public class AudioManager : MonoBehaviour
 
         musicAs = actions2dASObj.AddComponent<AudioSource>();
         musicAs.playOnAwake = false;
-        musicAs.outputAudioMixerGroup = mixerGroup;
+        musicAs.outputAudioMixerGroup = mixer.FindMatchingGroups("Game Theme")[0];
+
+        radioAs = actions2dASObj.AddComponent<AudioSource>();
+        radioAs.playOnAwake = false;
+        radioAs.outputAudioMixerGroup = mixer.FindMatchingGroups("Radio")[0];
 
         for (int i = 0; i < total3DAS; i++)
         {
