@@ -22,6 +22,8 @@ public class QuestData : ScriptableObject
     public QuestClimete questClimete;
     public bool hasWhirlwind;
     public bool hasGeyser;
+
+    public EnemiesStats stats;
 }
 
 [System.Serializable]
@@ -35,4 +37,14 @@ public class ResourceQuantity
 {
     public ObjectSO resource;  
     public int quantity;
+}
+
+[System.Serializable]
+public class EnemiesStats
+{
+    public float TimeToGetResources;
+    public float TimeToRepair;
+    public float TimeToInteract;
+    public float TimeToShoot;
+    public float Speed;
 }

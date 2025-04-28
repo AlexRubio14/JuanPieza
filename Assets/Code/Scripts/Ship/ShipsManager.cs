@@ -71,10 +71,10 @@ public class ShipsManager : MonoBehaviour
             GameObject enemyShip = Instantiate(enemy._ship, enemy.initShipPosition, rotation);
 
             enemyShip.GetComponent<EnemieManager>().SetTotalEnemies(enemy.enemiesCuantity);
-            enemyShip.GetComponent<EnemieManager>().SetStats(enemy.stats);
+            enemyShip.GetComponent<EnemieManager>().SetStats(NodeManager.instance.questData.stats);
 
             enemiesShips.Add(enemyShip.GetComponent<Ship>());
-            enemyShip.GetComponent<EnemieManager>().GenerateEnemies(enemy.stats);
+            enemyShip.GetComponent<EnemieManager>().GenerateEnemies(NodeManager.instance.questData.stats);
             GenerateCannons(enemy, enemyShip);
             ShipEnemy controller = enemyShip.GetComponent<ShipEnemy>();
 
