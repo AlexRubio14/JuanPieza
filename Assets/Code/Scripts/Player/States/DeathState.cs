@@ -88,21 +88,38 @@ public class DeathState : PlayerState
     }
     public override void ExitState()
     {
+        //En este exit state suele crashear, se comprueba que todas sus variables existan para evitar posibles crashes
+
+        if (ShipsManager.instance 
+            && ShipsManager.instance.playerShip 
+            && ShipsManager.instance.playerShip.transform 
+            && controller 
+            && controller.transform
+            )
+        {
+            controller.transform.SetParent(ShipsManager.instance.playerShip.transform);
+        }
+
         isDead = false;
         isSwimming = false;
         isRespawning = false;
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
         
-        controller.objectHolder.enabled = transform;
-        controller.animator.SetBool("Swimming", false);
-
-        FishingManager.instance.RemoveDeadPlayer(this);
+        if(rb)
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+        
+        if(controller)
+        {
+            controller.objectHolder.enabled = true;
+            controller.animator.SetBool("Swimming", false);
+        }
+        
+        if(FishingManager.instance)
+            FishingManager.instance.RemoveDeadPlayer(this);
 
         if(respawnParticles)
             respawnParticles.Stop(true);
 
-        if (ShipsManager.instance != null && ShipsManager.instance.playerShip != null && controller != null && controller.transform != null)
-            controller.transform.SetParent(ShipsManager.instance.playerShip.transform);
+        
     }
 
     public override void RollAction() { /*No puedes rodar*/ }
