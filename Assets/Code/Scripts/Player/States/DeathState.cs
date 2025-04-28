@@ -89,7 +89,8 @@ public class DeathState : PlayerState
     public override void ExitState()
     {
         isDead = false;
-        
+        isSwimming = false;
+        isRespawning = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         
         controller.objectHolder.enabled = transform;
@@ -97,7 +98,8 @@ public class DeathState : PlayerState
 
         FishingManager.instance.RemoveDeadPlayer(this);
 
-        respawnParticles.Stop(true);
+        if(respawnParticles)
+            respawnParticles.Stop(true);
 
         if (ShipsManager.instance.playerShip && !controller.gameObject.activeInHierarchy)
             controller.transform.SetParent(ShipsManager.instance.playerShip.transform);

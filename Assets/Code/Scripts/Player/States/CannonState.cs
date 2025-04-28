@@ -30,7 +30,8 @@ public class CannonState : PlayerState
     }
     public override void ExitState()
     {
-        currentWeapon.rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        if(currentWeapon)
+            currentWeapon.rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         controller.animator.SetBool("OnCannon", false);
         controller.animator.SetBool("Pick", false);
     }

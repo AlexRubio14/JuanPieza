@@ -34,9 +34,9 @@ public class WoodShelf : Box
     public override void AddItemInBox(bool _makeSound, int cuantity = 1)
     {
         base.AddItemInBox(_makeSound);
-        if(currentDecorationInShelf < 4)
+        if(currentDecorationInShelf < decorations.Count)
         {
-            currentDecorationInShelf++;
+            currentDecorationInShelf = Mathf.Clamp(currentDecorationInShelf + 1, 0, decorations.Count);
             decorations[currentDecorationInShelf - 1].SetActive(true);
         }
     }
@@ -44,9 +44,11 @@ public class WoodShelf : Box
     {
         base.RemoveItemInBox();
 
-        currentDecorationInShelf--;
+        currentDecorationInShelf = Mathf.Clamp(currentDecorationInShelf - 1, 0, decorations.Count);
+
         if(message)
             message.TakeHarmer();
+        
         decorations[currentDecorationInShelf].SetActive(false);
     }
     public override void OnBreakObject()
