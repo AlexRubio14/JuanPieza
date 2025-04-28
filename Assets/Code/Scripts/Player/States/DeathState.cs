@@ -101,7 +101,7 @@ public class DeathState : PlayerState
         if(respawnParticles)
             respawnParticles.Stop(true);
 
-        if (ShipsManager.instance.playerShip && !controller.gameObject.activeInHierarchy)
+        if (ShipsManager.instance != null && ShipsManager.instance.playerShip != null && controller != null && controller.transform != null)
             controller.transform.SetParent(ShipsManager.instance.playerShip.transform);
     }
 
