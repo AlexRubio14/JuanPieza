@@ -29,7 +29,13 @@ public class OrcaController : MonoBehaviour
     private PlayerController playerToChase;
     private Vector3 posToHide;
     private Animator animator;
+    private AudioSource swimSource;
 
+
+    [Space, SerializeField]
+    private AudioClip swimClip;
+    [SerializeField]
+    private AudioClip eatClip;
 
     private void Awake()
     {
@@ -72,10 +78,14 @@ public class OrcaController : MonoBehaviour
             case OrcaState.WAITING:
                 break;
             case OrcaState.GOING:
+                if (swimSource)
+                    AudioManager.instance.StopLoopSound(swimSource);
                 break;
             case OrcaState.EATING:
                 break;
             case OrcaState.HIDING:
+                if (swimSource)
+                    AudioManager.instance.StopLoopSound(swimSource);
                 break;
             default:
                 break;
@@ -88,16 +98,19 @@ public class OrcaController : MonoBehaviour
             case OrcaState.WAITING:
                 break;
             case OrcaState.GOING:
+                    swimSource = AudioManager.instance.Play2dLoop(swimClip, "Orca", 0.5f, 0.95f, 1.05f);
                 break;
             case OrcaState.EATING:
                 (playerToChase.stateMachine.currentState as DeathState).KillPlayer();
                 //Empezar animacion de comer
                 animator.SetTrigger("Eat");
+                AudioManager.instance.Play2dOneShotSound(eatClip, "Orca", 1, 0.8f, 1.2f);
                 Invoke("StopEat", eatDuration);
                 playerToChase = null;
                 break;
             case OrcaState.HIDING:
                 posToHide = GetOrbitPos();
+                swimSource = AudioManager.instance.Play2dLoop(swimClip, "Orca", 0.25f, 0.95f, 1.05f);
                 break;
             default:
                 break;

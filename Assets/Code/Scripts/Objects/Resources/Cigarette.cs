@@ -1,5 +1,8 @@
-public class Cigarrette : Resource, ICatapultAmmo
+using UnityEngine;
+public class Cigarette : Resource, ICatapultAmmo
 {
+    [SerializeField]
+    private AudioClip smokeClip;
     public override void Release(ObjectHolder _objectHolder)
     {
         if ((this as ICatapultAmmo).LoadItemInCatapult(_objectHolder, this))
@@ -14,11 +17,11 @@ public class Cigarrette : Resource, ICatapultAmmo
             ShipsManager.instance.playerShip.Smoke();
 
         _objectHolder.playerController.animator.SetTrigger("Consume"); //Animacion de empezar a fumar
-        _objectHolder.GetComponentInParent<CigarretteController>().ActivateCigarrette();
+        _objectHolder.GetComponentInParent<CigaretteController>().ActivateCigarrette();
         _objectHolder.RemoveItemFromHand();
 
         _objectHolder.playerController.animator.SetBool("Pick", false);
-
+        AudioManager.instance.Play2dOneShotSound(smokeClip, "Objects", 0.8f);
         Destroy(gameObject);
     }
 

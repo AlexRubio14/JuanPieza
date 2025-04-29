@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-public class CigarretteController : MonoBehaviour
+public class CigaretteController : MonoBehaviour
 {
     [SerializeField] private List<GameObject> cigarrettes;
 

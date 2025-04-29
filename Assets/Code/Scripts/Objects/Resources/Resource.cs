@@ -21,7 +21,7 @@ public abstract class Resource : InteractableObject
 
         selectedVisual.Hide();
 
-        AudioManager.instance.Play2dOneShotSound(_objectHolder.pickUpClip, "Objects");
+        //AudioManager.instance.Play2dOneShotSound(_objectHolder.pickUpClip, "Objects");
 
         _objectHolder.playerController.animator.SetBool("Pick", true);
     }

@@ -245,20 +245,7 @@ public abstract class Weapon : RepairObject
         
         rb.constraints = RigidbodyConstraints.FreezeAll;
 
-        if (mountedPlayerId == -1)
-        {
-            isTilting = false;
-            return;
-        }
-
-        PlayerController currentPlayer = PlayersManager.instance.ingamePlayers[mountedPlayerId];
-        if(isTilting)
-            currentPlayer.stateMachine.ChangeState(currentPlayer.stateMachine.idleState);
-        
-        isTilting = false;
-        currentPlayer.animator.SetBool("Pick", false);
-        currentPlayer.Release();
-        mountedPlayerId = -1;
+        UnMountPlayer();
 
     }
     protected override void RepairEnded()
@@ -323,11 +310,27 @@ public abstract class Weapon : RepairObject
         ShootWeapon();
     }
 
+    public void UnMountPlayer()
+    {
+        if (mountedPlayerId == -1)
+        {
+            isTilting = false;
+            return;
+        }
+
+        PlayerController currentPlayer = PlayersManager.instance.ingamePlayers[mountedPlayerId];
+        if (isTilting)
+            currentPlayer.stateMachine.ChangeState(currentPlayer.stateMachine.idleState);
+
+        isTilting = false;
+        currentPlayer.animator.SetBool("Pick", false);
+        currentPlayer.Release();
+        mountedPlayerId = -1;
+    }
     public void SetFreeze(bool _freeze)
     {
         freeze = _freeze;
     }
-
     public bool GetFreeze()
     {
         return freeze;

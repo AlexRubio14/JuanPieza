@@ -101,6 +101,8 @@ public class ObjectHolder : MonoBehaviour
         
         _interactableObject.rb.isKinematic = true;
 
+        AudioManager.instance.Play2dOneShotSound(pickUpClip, "Objects");
+
         if (!_setParent)
             return;
 
@@ -184,7 +186,6 @@ public class ObjectHolder : MonoBehaviour
         item.SetIsBeingUsed(true);
         item.rb.isKinematic = true;
         StartCoroutine(SetItemParent(item));
-        AudioManager.instance.Play2dOneShotSound(pickUpClip, "Objects");
 
         IEnumerator SetItemParent(InteractableObject interactableObject)
         {

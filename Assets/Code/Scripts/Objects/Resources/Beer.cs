@@ -1,6 +1,10 @@
+using UnityEngine;
+
 public class Beer : Resource, ICatapultAmmo
 {
 
+    [Space, SerializeField]
+    private AudioClip drinkClip;
     public override void Release(ObjectHolder _objectHolder)
     {
         if ((this as ICatapultAmmo).LoadItemInCatapult(_objectHolder, this))
@@ -19,6 +23,8 @@ public class Beer : Resource, ICatapultAmmo
             _objectHolder.playerController.stateMachine.drunkState.DrinkBeer();
 
         _objectHolder.playerController.animator.SetBool("Pick", false);
+
+        AudioManager.instance.Play2dOneShotSound(drinkClip, "Objects", 0.8f);
 
         Destroy(gameObject);
     }

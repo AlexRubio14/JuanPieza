@@ -46,7 +46,7 @@ public class FreezeWeapon : MonoBehaviour
         if(weaponCurrentFreezePercentage >= weaponFreezePercentage && !weapon.GetFreeze())
         {
             weapon.SetFreeze(true);
-            weapon.OnBreakObject();
+            weapon.UnMountPlayer();
         }
     }
 

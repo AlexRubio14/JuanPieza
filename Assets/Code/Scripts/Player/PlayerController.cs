@@ -68,6 +68,11 @@ public class PlayerController : MonoBehaviour
     public float swimRotateSpeed { get; private set; }
     [field: SerializeField]
     public GameObject respawnParticles { get; private set; }
+    [field: SerializeField]
+    public AudioClip swimClip {  get; private set; }
+    [field: SerializeField]
+    public AudioClip respawnClip {  get; private set; }
+    
 
 
     [Space, Header("Fishing"), SerializeField]
