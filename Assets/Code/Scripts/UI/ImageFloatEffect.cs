@@ -15,6 +15,8 @@ public class ImageFloatEffect : MonoBehaviour
     [field: SerializeField]
     public bool canFloat { get;  set; }
 
+    private float currentTime;
+    
     void Awake()
     {
         scaleComp = transform.localScale;
@@ -24,7 +26,7 @@ public class ImageFloatEffect : MonoBehaviour
     {
         if (canFloat)
         {
-            transform.localScale = Vector3.Lerp(scaleComp * minExpand, scaleComp * maxExpand, Mathf.PingPong(Time.time * speed, 1));
+            transform.localScale = Vector3.Lerp(scaleComp * minExpand, scaleComp * maxExpand, Mathf.PingPong(Time.unscaledTime * speed, 1));
         }
         else
         {

@@ -17,7 +17,7 @@ public class GameInput : MonoBehaviour
     public Action OnDanceAction;
     public Action OnGrabAction;
     public Action OnReleaseAction;
-
+    
     public Action<float> OnWeaponRotateAction;
     public int playerReference { get;  set; }
 
@@ -101,4 +101,11 @@ public class GameInput : MonoBehaviour
             OnWeaponRotateAction(obj.ReadValue<float>());
     }
 
+    public void PauseAction(InputAction.CallbackContext obj)
+    {
+        if (obj.started)
+        {
+            PauseManager.Instance.TogglePause();
+        }
+    }
 }
