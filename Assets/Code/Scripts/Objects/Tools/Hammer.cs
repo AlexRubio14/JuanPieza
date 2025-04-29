@@ -21,6 +21,9 @@ public class Hammer : Tool, ICatapultAmmo
     [SerializeField]
     private AudioClip hitClip;
 
+    [SerializeField]
+    private float stunnedTime;
+
     private PlayerController playerCont;
 
     public override void Use(ObjectHolder _objectHolder)
@@ -76,6 +79,7 @@ public class Hammer : Tool, ICatapultAmmo
                 if(_hittedPlayer != playerCont)
                 {
                     //Players: Llamar a una funcion del player controler para stunearlo
+                    _hittedPlayer.stateMachine.stunedState.maxTimeStunned = stunnedTime;
                     _hittedPlayer.stateMachine.ChangeState(_hittedPlayer.stateMachine.stunedState);
                 }
             }

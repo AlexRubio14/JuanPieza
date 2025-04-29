@@ -19,6 +19,7 @@ public class ClimateManager : MonoBehaviour
     [SerializeField] private float holeRadius;
     [SerializeField] private float cameraShakeDuration;
     [SerializeField] private float cameraShakeMagnitude;
+    [SerializeField] private float stunnedTime;
     [SerializeField] private GameObject lightningOrb;
     [SerializeField] private GameObject rain;
     [SerializeField] private GameObject thunder;
@@ -140,6 +141,7 @@ public class ClimateManager : MonoBehaviour
         {
             if (hit.collider.TryGetComponent(out PlayerController player))
             {
+                player.stateMachine.stunedState.maxTimeStunned = stunnedTime;
                 player.stateMachine.ChangeState(player.stateMachine.stunedState);
             }
         }
