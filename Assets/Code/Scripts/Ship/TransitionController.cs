@@ -26,12 +26,14 @@ public class TransitionController : MonoBehaviour
             float progresStart = Mathf.Clamp01(timer / transitionDuration);
 
             transitionImage.rectTransform.localScale = Vector3.Lerp(initialScale, targetScale, progresStart);
-            if(timer >= 1)
+            if (timer >= 1)
+            {
                 isStarting = false;
+            }
             else if(timer >= 0.5)
             {
-                Camera.main.GetComponent<ArriveIslandCamera>().SetIsArriving();
-                ShipsManager.instance.playerShip.SetArriving(true);
+                Camera.main.GetComponent<ArriveIslandCamera>()?.SetIsArriving();
+                ShipsManager.instance?.playerShip.SetArriving(true);
             }
 
         }
@@ -44,7 +46,7 @@ public class TransitionController : MonoBehaviour
             if(timer >= 1)
             {
                 isEnding = false;
-                NodeManager.instance.CompleteQuest();
+                NodeManager.instance?.CompleteQuest();
                 SceneManager.LoadScene("HUB");
             }
 

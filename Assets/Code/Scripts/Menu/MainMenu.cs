@@ -9,7 +9,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button optionsButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private Slider audioSlider;
-
+    [SerializeField] private TransitionController transition;
+    
     private bool _isCreditsOpen = false;
     
     private Animator _anim;
@@ -18,7 +19,7 @@ public class MainMenu : MonoBehaviour
     private void Awake()
     {
         _anim = GetComponent<Animator>();
-
+        transition.InitLevelTransition();
     }
 
     private void Start()
@@ -57,12 +58,14 @@ public class MainMenu : MonoBehaviour
         foreach (QuestData item in QuestManager.Instance.allQuests)
             item.completed = false;
 
-        SceneManager.LoadScene("Hub");
+        transition.EndLevelTransition();
+        //SceneManager.LoadScene("Hub");
     }
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("Hub");
+        transition.EndLevelTransition();
+        //SceneManager.LoadScene("Hub");
     }
     
     public void OpenOptions()
