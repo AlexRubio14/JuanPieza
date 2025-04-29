@@ -10,8 +10,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button exitButton;
     [SerializeField] private Slider audioSlider;
 
+    private bool _isCreditsOpen = false;
+    
     private Animator _anim;
-
     private Button lastButton;
 
     private void Awake()
@@ -67,6 +68,12 @@ public class MainMenu : MonoBehaviour
         lastButton = optionsButton;
     }
 
+    public void OpenCredits()
+    {
+        _isCreditsOpen = !_isCreditsOpen;
+        _anim.SetBool("OpenCreditsMenu", _isCreditsOpen);
+    }
+    
     public void CloseOptions()
     {
         _anim.SetBool("OpenOptionsMenu", false);
