@@ -23,8 +23,6 @@ public class AllyShip : Ship
     private bool arriving;
     private bool leaving;
 
-    private float recoverHealth;
-
     [SerializeField] private GameObject behaivour;
     [SerializeField] private ShowMessageRepair[] message;
 
@@ -87,21 +85,7 @@ public class AllyShip : Ship
     {
         base.SetCurrentHealth(amount);
 
-        ShipsManager.instance.playerHealthController.SetHealthBar(GetCurrentHealth() / GetMaxHealth());
-        
-        if(amount < 0)
-            recoverHealth += -1 * amount;
-        else
-            recoverHealth -= amount;
-        
-
-    }
-
-    public void SetRecoverHealth(float amount)
-    {
-        recoverHealth -= amount;
-        
-        ShipsManager.instance.playerHealthController.SetEaseHealthbar((recoverHealth + GetCurrentHealth()) / GetMaxHealth());
+        ShipsManager.instance.playerHealthController.SetHealthBar(GetCurrentHealth() / GetMaxHealth());    
     }
 
     public override void DestroyShip()

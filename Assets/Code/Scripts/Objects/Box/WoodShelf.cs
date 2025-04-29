@@ -34,7 +34,7 @@ public class WoodShelf : Box
     public override void AddItemInBox(bool _makeSound, int cuantity = 1)
     {
         base.AddItemInBox(_makeSound);
-        if(currentDecorationInShelf < decorations.Count)
+        if (currentDecorationInShelf < decorations.Count)
         {
             currentDecorationInShelf = Mathf.Clamp(currentDecorationInShelf + 1, 0, decorations.Count);
             decorations[currentDecorationInShelf - 1].SetActive(true);

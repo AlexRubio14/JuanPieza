@@ -7,7 +7,7 @@ public class InteractNPC : InteractableObject
 {
     [SerializeField] private Image backGround;
     [SerializeField] private TextMeshProUGUI text;
-    [SerializeField] private string message;
+    [SerializeField, TextArea] private string message;
     [SerializeField] private float maxTimeSpawnMessage;
     [SerializeField] private float maxTimeShowMessage;
 
