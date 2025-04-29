@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2168151650703997304}
+  - component: {fileID: 5936111155294328360}
+  - component: {fileID: 2697664383320593507}
   - component: {fileID: 5584225666454755404}
   - component: {fileID: 6775657601242043976}
   - component: {fileID: 5603389093554727101}
-  - component: {fileID: 5936111155294328360}
-  - component: {fileID: 2697664383320593507}
   m_Layer: 9
   m_Name: NPC5
   m_TagString: Object
@@ -39,74 +39,6 @@ Transform:
   - {fileID: 6970244678646227859}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5584225666454755404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2489160462446331799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7759604d3562164d82aededb0b0ca37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <objectSO>k__BackingField: {fileID: 11400000, guid: e0028f8bb804b3c43b5ca7a18829b3f3, type: 2}
-  <objectToInteract>k__BackingField: {fileID: 0}
-  selectedVisual: {fileID: 5603389093554727101}
-  canGrab: 0
-  <canUse>k__BackingField: 0
-  rb: {fileID: 5936111155294328360}
-  <grabPivot>k__BackingField: {fileID: 0}
-  hasToBeInTheShip: 0
-  backGround: {fileID: 4105494923462478478}
-  text: {fileID: 3074676637445153779}
-  message: "De esta m\xE1quina se puede conseguir Malboro gratis"
-  maxTimeSpawnMessage: 0.25
-  maxTimeShowMessage: 4
---- !u!114 &6775657601242043976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2489160462446331799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 701db30ef775f194e8efdac075dd3518, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 1920065345460986396}
-  actionImages:
-    _serializedList:
-    - Key: 3
-      Value:
-        image: {fileID: 4245301664610750225}
-        offset: {x: -0.7, y: 2.5, z: 0}
-        sprite:
-        - {fileID: 21300000, guid: 3d321e4a7084c0c42822a86f840ac45f, type: 3}
-        - {fileID: 21300000, guid: 067805bc15567b64bac59f1a07a268d0, type: 3}
-  <useType>k__BackingField: 3
-  <interactType>k__BackingField: 3
---- !u!114 &5603389093554727101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2489160462446331799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2ad746d5a6581945ab61ea7f4501189, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineArray:
-  - {fileID: 5892597510209557302}
-  - {fileID: 7665533582595915927}
-  - {fileID: 1794233789751327721}
-  - {fileID: 4877562885495411907}
-  - {fileID: 4353265013482204448}
-  - {fileID: 5937281737245266827}
 --- !u!54 &5936111155294328360
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -157,6 +89,83 @@ CapsuleCollider:
   m_Height: 2.254517
   m_Direction: 1
   m_Center: {x: 0, y: 1.0767868, z: 0}
+--- !u!114 &5584225666454755404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2489160462446331799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7759604d3562164d82aededb0b0ca37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <objectSO>k__BackingField: {fileID: 11400000, guid: e0028f8bb804b3c43b5ca7a18829b3f3, type: 2}
+  <objectToInteract>k__BackingField: {fileID: 0}
+  selectedVisual: {fileID: 5603389093554727101}
+  canGrab: 0
+  <canUse>k__BackingField: 0
+  rb: {fileID: 5936111155294328360}
+  <grabPivot>k__BackingField: {fileID: 0}
+  hasToBeInTheShip: 0
+  backGround: {fileID: 4105494923462478478}
+  text: {fileID: 3074676637445153779}
+  message: "De esta m\xE1quina se puede conseguir Malboro gratis"
+  maxTimeSpawnMessage: 0.1
+  maxTimeShowMessage: 2
+  silabsNPC:
+  - {fileID: 8300000, guid: 2861abe7e8b85e946b99293d3b99dd66, type: 3}
+  - {fileID: 8300000, guid: efc3478063020aa4db762a2977857796, type: 3}
+  - {fileID: 8300000, guid: 1e190e922dbf9ff47878ae9c22ed9449, type: 3}
+  - {fileID: 8300000, guid: 207f4e15576528443803f7196e1da5ae, type: 3}
+  - {fileID: 8300000, guid: 113341b07e0bca545867e9766cacd8f0, type: 3}
+  speakingDuration: 1.3
+  timeToSaySilab: 0.1
+  pitch: {x: 1, y: 1.2}
+--- !u!114 &6775657601242043976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2489160462446331799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701db30ef775f194e8efdac075dd3518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 1920065345460986396}
+  actionImages:
+    _serializedList:
+    - Key: 3
+      Value:
+        image: {fileID: 4245301664610750225}
+        offset: {x: -0.7, y: 2.5, z: 0}
+        sprite:
+        - {fileID: 21300000, guid: 3d321e4a7084c0c42822a86f840ac45f, type: 3}
+        - {fileID: 21300000, guid: 067805bc15567b64bac59f1a07a268d0, type: 3}
+  <useType>k__BackingField: 3
+  <interactType>k__BackingField: 3
+--- !u!114 &5603389093554727101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2489160462446331799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ad746d5a6581945ab61ea7f4501189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineArray:
+  - {fileID: 5892597510209557302}
+  - {fileID: 7665533582595915927}
+  - {fileID: 1794233789751327721}
+  - {fileID: 4877562885495411907}
+  - {fileID: 4353265013482204448}
+  - {fileID: 5937281737245266827}
 --- !u!1001 &2081784926631087824
 PrefabInstance:
   m_ObjectHideFlags: 0

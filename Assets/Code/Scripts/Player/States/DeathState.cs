@@ -20,6 +20,8 @@ public class DeathState : PlayerState
     private Vector3 endRespawnPos;
     private ParticleSystem respawnParticles;
 
+    private AudioSource swimSource;
+
     public override void EnterState()
     {
         isSwimming = true;
@@ -62,6 +64,16 @@ public class DeathState : PlayerState
         {
             controller.animator.SetBool("Moving", controller.movementInput != Vector2.zero);
             timeAtWater += Time.deltaTime;
+
+            if(controller.movementInput != Vector2.zero && (!swimSource || !swimSource.isPlaying))
+            {
+                swimSource = AudioManager.instance.Play2dLoop(controller.swimClip, "Player", 0.6f, 0.95f, 1.05f);
+            }
+            else if(controller.movementInput == Vector2.zero && swimSource && swimSource.isPlaying)
+            {
+                AudioManager.instance.StopLoopSound(swimSource);
+                swimSource = null;
+            }
         }
 
         
@@ -92,15 +104,15 @@ public class DeathState : PlayerState
     {
         //En este exit state suele crashear, se comprueba que todas sus variables existan para evitar posibles crashes
 
-        if (ShipsManager.instance 
-            && ShipsManager.instance.playerShip 
-            && ShipsManager.instance.playerShip.transform 
-            && controller 
-            && controller.transform
-            )
-        {
-            controller.transform.SetParent(ShipsManager.instance.playerShip.transform);
-        }
+        //if (ShipsManager.instance 
+        //    && ShipsManager.instance.playerShip 
+        //    && ShipsManager.instance.playerShip.transform 
+        //    && controller 
+        //    && controller.transform
+        //    )
+        //{
+        //    controller.transform.SetParent(ShipsManager.instance.playerShip.transform);
+        //}
 
         isDead = false;
         isSwimming = false;
@@ -121,7 +133,11 @@ public class DeathState : PlayerState
         if(respawnParticles)
             respawnParticles.Stop(true);
 
-        
+        if (swimSource)
+        {
+            AudioManager.instance.StopLoopSound(swimSource);
+            swimSource = null;
+        }
     }
 
     public override void RollAction() { /*No puedes rodar*/ }
@@ -140,6 +156,12 @@ public class DeathState : PlayerState
     {
         transform.position = new Vector3(-100, -100, -100);
         isDead = true;
+
+        if (swimSource)
+        {
+            AudioManager.instance.StopLoopSound(swimSource);
+            swimSource = null;
+        }
     }
     public void StartRespawn()
     {
@@ -157,6 +179,8 @@ public class DeathState : PlayerState
         respawnParticles.Play(true);
 
         controller.animator.SetBool("Moving", false);
+
+        AudioManager.instance.Play2dOneShotSound(controller.respawnClip, "Objects", 0.3f, 0.95f, 1.05f);
     }
 
 }

@@ -67,6 +67,8 @@ public class Repair : InteractableObject
         repairProgress = 0;
 
         Instantiate(repairParticles, transform.position + Vector3.up, Quaternion.identity);
+        AudioManager.instance.Play2dOneShotSound(repairClip, "Objects", 0.6f, 0.85f, 1.15f);
+
     }
     #endregion
 

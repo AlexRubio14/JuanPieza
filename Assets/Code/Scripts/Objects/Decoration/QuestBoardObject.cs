@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 public class QuestBoardObject : InteractableObject
 {
     [SerializeField] private GameObject questCanvas;
-
+    [SerializeField]
+    private AudioClip openBoardClip;
     public override void Grab(ObjectHolder _objectHolder)
     {
         throw new System.NotImplementedException();
@@ -28,8 +29,10 @@ public class QuestBoardObject : InteractableObject
                 player.Item1.SwitchCurrentActionMap("MapMenu");
             }
         }
+
+        AudioManager.instance.Play2dOneShotSound(openBoardClip, "Objects", 0.75f, 0.9f, 1.1f);
     }
-   
+
     public override bool CanGrab(ObjectHolder _objectHolder)
     {
         return false;

@@ -3,6 +3,8 @@ using UnityEngine;
 public class BartenderNPC : InteractNPC
 {
     [Space, Header("Item"), SerializeField] protected ObjectSO itemDropped;
+    [SerializeField]
+    private AudioClip serveDrinkClip;
     protected override void Start()
     {
         base.Start();
@@ -13,8 +15,8 @@ public class BartenderNPC : InteractNPC
     {
         base.Interact((_objectHolder));
         InteractableObject boxObject = _objectHolder.InstantiateItemInHand(itemDropped);
-        _objectHolder.ChangeObjectInHand(boxObject);
         _objectHolder.playerController.animator.SetBool("Pick", true);
+        AudioManager.instance.Play2dOneShotSound(serveDrinkClip, "Objects", 0.4f, 0.95f, 1.05f);
     }
 
     public override void Release(ObjectHolder _objectHolder)

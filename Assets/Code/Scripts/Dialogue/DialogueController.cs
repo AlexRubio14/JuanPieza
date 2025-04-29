@@ -22,7 +22,7 @@ public class DialogueController : MonoBehaviour
     private bool showingText = false;
     private bool displayingDialogue = false;
     private Dictionary<string, Action> actionList = new Dictionary<string, Action>();
-    public int sequenceIndex = -1;
+    private int sequenceIndex = -1;
 
 
     [Space, SerializeField]
@@ -32,6 +32,8 @@ public class DialogueController : MonoBehaviour
 
     [Space, Header("Audio"), SerializeField]
     private AudioClip letterSpawnSound;
+    [SerializeField]
+    private AudioClip[] wordSpawnSound;
     [SerializeField]
     private AudioClip clickSound;
     private int dialogueSoundIndex;
@@ -168,6 +170,12 @@ public class DialogueController : MonoBehaviour
             Invoke("DisplayLetter", timeBetweenLetters);
             if (dialogueSoundIndex % 4 == 0)
                 AudioManager.instance.Play2dOneShotSound(letterSpawnSound, "SFX", 0.35f, 2f, 2.5f);
+
+            if (dialogueSoundIndex % 9 == 0)
+            {
+                AudioClip randClip = wordSpawnSound[UnityEngine.Random.Range(0, wordSpawnSound.Length)];
+                AudioManager.instance.Play2dOneShotSound(randClip, "SFX", 1.5f, 0.8f, 1f);
+            }
 
             dialogueSoundIndex++;
         }

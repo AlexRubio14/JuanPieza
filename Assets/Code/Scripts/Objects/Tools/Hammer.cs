@@ -20,6 +20,12 @@ public class Hammer : Tool, ICatapultAmmo
     private GameObject hitParticles;
     [SerializeField]
     private AudioClip hitClip;
+    [SerializeField]
+    private AudioClip hitObjectClip;
+    [SerializeField]
+    private AudioClip hitIceClip;
+    [SerializeField]
+    private AudioClip hitPlayerClip;
 
     [SerializeField]
     private float stunnedTime;
@@ -70,9 +76,14 @@ public class Hammer : Tool, ICatapultAmmo
             if(hit.collider.TryGetComponent(out Repair _repair))
             {
                 //Objetos: Comprobar si son objetos rompibles y si estan rotos llamar a la funcion de RepairProgress
-                if(_repair.GetObjectState().GetIsBroken())
+                if (_repair.GetObjectState().GetIsBroken())
+                {
                     _repair.RepairProgress(repairAmmount);
-                _repair.BreakIce();
+                    AudioManager.instance.Play2dOneShotSound(hitObjectClip, "Objects", 0.1f, 0.8f, 1.2f);
+                }
+
+                if ((_repair is Weapon) && (_repair as Weapon).GetFreeze())
+                    _repair.BreakIce();
             }
             else if(hit.collider.TryGetComponent(out PlayerController _hittedPlayer))
             {
@@ -81,19 +92,20 @@ public class Hammer : Tool, ICatapultAmmo
                     //Players: Llamar a una funcion del player controler para stunearlo
                     _hittedPlayer.stateMachine.stunedState.maxTimeStunned = stunnedTime;
                     _hittedPlayer.stateMachine.ChangeState(_hittedPlayer.stateMachine.stunedState);
+                    AudioManager.instance.Play2dOneShotSound(hitPlayerClip, "Objects", 1, 0.9f, 1.1f);
+
                 }
             }
             else if (hit.collider.TryGetComponent(out PirateBoardingController _enemy))
             {
                 //Enemigos: Stunear a los enemigos
-
             }
         }
 
         //Poner particulas
         Instantiate(hitParticles, hitPosition.position, Quaternion.identity);
         //Hacer sonido
-        AudioManager.instance.Play2dOneShotSound(hitClip, "Objects", 1, 0.95f, 1.05f);
+        AudioManager.instance.Play2dOneShotSound(hitClip, "Objects", 0.4f, 0.75f, 1.25f);
     }
     private void HammerCD()
     {

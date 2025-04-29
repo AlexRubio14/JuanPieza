@@ -5,6 +5,8 @@ public class Radio : Resource, ICatapultAmmo
 {
     [Space, Header("Radio"), SerializeField] private List<AudioClip> musicsList;
     private List<float> musicsPlayed = new List<float>();
+    [SerializeField]
+    private AudioClip radioClip;
 
     protected override void Awake()
     {
@@ -43,6 +45,7 @@ public class Radio : Resource, ICatapultAmmo
 
         AudioManager.instance.musicAs.Pause();
         AudioManager.instance.PlayLoopSound(AudioManager.instance.radioAs, musicsList[randomMusic], "Radio", 1f, 1f, 1f);
+        AudioManager.instance.Play2dOneShotSound(radioClip, "Objects", 0.8f, 0.6f, 0.8f);
     }
 
     private void StopPlaying()
@@ -50,5 +53,7 @@ public class Radio : Resource, ICatapultAmmo
         AudioManager.instance.musicAs.UnPause();
         AudioManager.instance.radioAs.clip = null;
         AudioManager.instance.radioAs.Stop();
-    }    
+        AudioManager.instance.Play2dOneShotSound(radioClip, "Objects", 0.8f, 1.1f, 1.3f);
+
+    }
 }
