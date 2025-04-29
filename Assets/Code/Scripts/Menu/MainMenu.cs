@@ -53,6 +53,10 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
+
+        foreach (QuestData item in QuestManager.Instance.allQuests)
+            item.completed = false;
+
         SceneManager.LoadScene("Hub");
     }
 

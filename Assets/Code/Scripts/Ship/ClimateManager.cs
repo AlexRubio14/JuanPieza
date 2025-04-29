@@ -35,6 +35,8 @@ public class ClimateManager : MonoBehaviour
     [Header("Snow")]
     [SerializeField] private GameObject snow;
 
+
+    private AudioSource ambientSource;
     private void Awake()
     {
         if (instance == null)
@@ -61,11 +63,11 @@ public class ClimateManager : MonoBehaviour
             case QuestData.QuestClimete.SNOW:
                 RenderSettings.skybox = skyboxs[1];
                 PrepareSnow();
-                AudioManager.instance.Play2dLoop(ambientAudio[0], "Objects");
+                ambientSource = AudioManager.instance.Play2dLoop(ambientAudio[0], "Objects");
                 break;
             case QuestData.QuestClimete.STORM:
                 RenderSettings.skybox = skyboxs[2];
-                AudioManager.instance.Play2dLoop(ambientAudio[1], "Objects");
+                ambientSource = AudioManager.instance.Play2dLoop(ambientAudio[1], "Objects");
                 PrepareStorm();
                 break;
         }
@@ -207,5 +209,11 @@ public class ClimateManager : MonoBehaviour
     public void SetCurrentClimate()
     {
         currentClimate = NodeManager.instance.questData.questClimete;
+    }
+
+    private void OnDestroy()
+    {
+        if(ambientSource)
+            ambientSource.Stop();
     }
 }
