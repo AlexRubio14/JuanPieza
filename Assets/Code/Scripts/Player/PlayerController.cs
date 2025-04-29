@@ -103,12 +103,6 @@ public class PlayerController : MonoBehaviour
     [field: Space, Header("Dance"), SerializeField]
     public AudioClip danceMusic { get; private set; }
 
-
-    [field: Space, Header("Stun"), SerializeField] 
-    public float maxTimeStunned { get; private set; }
-    public float currentTimeStunned {  get; set; }
-
-
     [Space, Header("Ice"), SerializeField] 
     private float iceDrag;
     private float realDrag;

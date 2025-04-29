@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class StunedState : PlayerState
 {
+    private float currentTimeStunned;
+    public float maxTimeStunned;
     public override void EnterState()
     {
-        controller.currentTimeStunned = 0;
+        currentTimeStunned = 0;
         controller.animator.SetBool("IsStunned", true);
         controller.animator.SetTrigger("Stun");
     }
@@ -47,8 +49,8 @@ public class StunedState : PlayerState
 
     public override void UpdateState()
     {
-        controller.currentTimeStunned += Time.deltaTime;
-        if (controller.currentTimeStunned >= controller.maxTimeStunned)
+        currentTimeStunned += Time.deltaTime;
+        if (currentTimeStunned >= maxTimeStunned)
             stateMachine.ChangeState(stateMachine.idleState);
     }
 
