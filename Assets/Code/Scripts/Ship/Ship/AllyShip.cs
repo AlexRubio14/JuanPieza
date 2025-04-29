@@ -31,6 +31,8 @@ public class AllyShip : Ship
     [SerializeField] private float rateOverTimeSum;
     [SerializeField] private float radiusSum;
 
+    private bool godMode;
+
     public override void Start()
     {
         base.Start();
@@ -42,6 +44,9 @@ public class AllyShip : Ship
     protected override void Update()
     {
         base.Update();
+
+        if (Input.GetKeyDown(KeyCode.G))
+            godMode = !godMode;
 
         if (arriving)
             MoveShip(startZ, 0);
@@ -83,6 +88,9 @@ public class AllyShip : Ship
 
     public override void SetCurrentHealth(float amount)
     {
+        if (godMode)
+            return;
+
         base.SetCurrentHealth(amount);
 
         ShipsManager.instance.playerHealthController.SetHealthBar(GetCurrentHealth() / GetMaxHealth());    

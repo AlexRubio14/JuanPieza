@@ -152,6 +152,16 @@ public class PlayerController : MonoBehaviour
         SuscribeActions();
         PlayersManager.instance.ingamePlayers.Add(this);
     }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            stateMachine.ChangeState(stateMachine.deathState);
+            stateMachine.deathState.StartRespawn();
+        }
+
+    }
     private void SuscribeActions()
     {
         if (!playerInput)
