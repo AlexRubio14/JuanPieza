@@ -8,7 +8,6 @@ public class QuestData : ScriptableObject
     public enum QuestClimete { CLEAR, SNOW, STORM };
     
     public string title;
-    public string description;
     public QuestObjective questObjective;
     public PlayerShip ship;
     public int rescueCuantity;
