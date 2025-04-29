@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,16 +14,56 @@ public class InteractNPC : InteractableObject
 
     protected bool canInteract;
 
+    [Space, SerializeField]
+    protected AudioClip[] silabsNPC;
+    [SerializeField]
+    protected float speakingDuration;
+    [SerializeField]
+    protected float timeToSaySilab;
+    [SerializeField]
+    protected Vector2 pitch;
+    protected List<AudioClip> lastSilabs;
+    protected float currentSilabTime;
+    protected float currentTime;
+    protected int lastSilabsIndex;
+
     protected virtual void Start()
     {
         text.gameObject.SetActive(false);
         backGround.fillAmount = 0;
         canInteract = true;
+        lastSilabs = new List<AudioClip>
+        {
+            null,
+            null,
+            null
+        };
+    }
+
+    private void Update()
+    {
+        if (!canInteract)
+        {
+            currentSilabTime += Time.deltaTime;
+            currentTime += Time.deltaTime;
+
+            if (currentTime <= speakingDuration && currentSilabTime >= timeToSaySilab)
+            {
+                currentSilabTime -= timeToSaySilab;
+                AudioClip silab = GetValidSilab();
+                lastSilabs[lastSilabsIndex] = silab;
+                lastSilabsIndex = (lastSilabsIndex + 1) % lastSilabs.Count;
+                AudioManager.instance.Play2dOneShotSound(silab, "NPC", 1, pitch.x, pitch.y);                
+            }
+        }
     }
 
     protected virtual IEnumerator FillAndShowMessage()
     {
         canInteract = false;
+        currentSilabTime = 0;
+        currentTime = 0;
+
         float timer = 0f;
         while (timer < maxTimeSpawnMessage)
         {
@@ -47,6 +88,18 @@ public class InteractNPC : InteractableObject
         }
 
         canInteract = true;
+    }
+    protected AudioClip GetValidSilab()
+    {
+        int silabId = Random.Range(0, silabsNPC.Length);
+        AudioClip silab = silabsNPC[silabId];
+
+        if (lastSilabs.Contains(silab))
+        {
+            silab = GetValidSilab();
+        }
+
+        return silab;
     }
 
     public override void Grab(ObjectHolder _objectHolder)

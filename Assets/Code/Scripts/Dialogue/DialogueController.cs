@@ -171,10 +171,10 @@ public class DialogueController : MonoBehaviour
             if (dialogueSoundIndex % 4 == 0)
                 AudioManager.instance.Play2dOneShotSound(letterSpawnSound, "SFX", 0.35f, 2f, 2.5f);
 
-            if (dialogueSoundIndex % 15 == 0)
+            if (dialogueSoundIndex % 9 == 0)
             {
                 AudioClip randClip = wordSpawnSound[UnityEngine.Random.Range(0, wordSpawnSound.Length)];
-                AudioManager.instance.Play2dOneShotSound(randClip, "SFX", 1f, 0.9f, 1.15f);
+                AudioManager.instance.Play2dOneShotSound(randClip, "SFX", 1.5f, 0.8f, 1f);
             }
 
             dialogueSoundIndex++;
