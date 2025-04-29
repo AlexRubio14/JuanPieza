@@ -33,6 +33,13 @@ public class ShipsManager : MonoBehaviour
         transitionController.InitLevelTransition();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H) && enemiesHordes.Count != 0)
+            for (int i = enemiesShips.Count - 1; i >= 0; i--)
+                enemiesShips[i].SetCurrentHealth(-300);
+    }
+
     public void GenerateEnemies()
     {
         if (NodeManager.instance.questData.questObjective != QuestData.QuestObjective.BATTLE || 

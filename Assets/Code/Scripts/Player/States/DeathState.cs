@@ -15,7 +15,7 @@ public class DeathState : PlayerState
     private float respawnDuration = 2;
     private float respawnProcess = 0;
     private float respawnHeight = 6;
-    private bool isRespawning = false;
+    public bool isRespawning = false;
     private Vector3 startRespawnPos;
     private Vector3 endRespawnPos;
     private ParticleSystem respawnParticles;
@@ -141,7 +141,7 @@ public class DeathState : PlayerState
         transform.position = new Vector3(-100, -100, -100);
         isDead = true;
     }
-    private void StartRespawn()
+    public void StartRespawn()
     {
         isRespawning = true;
 
