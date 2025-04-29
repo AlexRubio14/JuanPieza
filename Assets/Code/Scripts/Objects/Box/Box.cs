@@ -3,9 +3,8 @@ using UnityEngine;
 public abstract class Box : RepairObject
 {
     [Space, Header("Item"), SerializeField] protected ObjectSO itemDropped;
-    [SerializeField] protected int itemsInBox;
     [SerializeField] protected AudioClip dropItemClip;
-    
+    protected int itemsInBox;
     public override void Grab(ObjectHolder _objectHolder)
     {
         if (_objectHolder.GetHasObjectPicked() || state.GetIsBroken())

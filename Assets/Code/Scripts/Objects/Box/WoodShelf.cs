@@ -15,8 +15,7 @@ public class WoodShelf : Box
 
     protected override void Start()
     {
-        for (int i = 0; i < 4; i++)
-            AddItemInBox(false);
+        AddItemInBox(false, 4);
     }
 
     public override void Interact(ObjectHolder _objectHolder)
@@ -33,7 +32,14 @@ public class WoodShelf : Box
 
     public override void AddItemInBox(bool _makeSound, int cuantity = 1)
     {
-        base.AddItemInBox(_makeSound);
+        if (itemsInBox > 4)
+            return;
+
+        if(itemsInBox + cuantity > 4)
+            cuantity = 4 - itemsInBox;
+
+
+        base.AddItemInBox(_makeSound, cuantity);
         if (currentDecorationInShelf < decorations.Count)
         {
             currentDecorationInShelf = Mathf.Clamp(currentDecorationInShelf + 1, 0, decorations.Count);
