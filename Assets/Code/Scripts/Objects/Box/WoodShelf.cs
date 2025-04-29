@@ -59,17 +59,13 @@ public class WoodShelf : Box
     }
     public override void OnBreakObject()
     {
-        switch (itemsInBox)
-        {
-            case 0:
-                break;
-            case 1:
-                ThrowItems(1);
-                break;
-            default:
-                ThrowItems(2);
-                break;
-        }
+        if (itemsInBox == 0)
+            return;
+
+        if(itemsInBox >= 2)
+            ThrowItems(2);
+        else if(itemsInBox == 1)
+            ThrowItems(1);
     }
 
     private void ThrowItems(int cuantity)
