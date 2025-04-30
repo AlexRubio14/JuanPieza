@@ -15,9 +15,7 @@ public class FishingState : PlayerState
         if(fishingRod.chargingHook)
             controller.Rotate(controller.movementDirection, controller.rotationSpeed / 5);
     }
-    public override void ExitState()
-    {
-    }
+    public override void ExitState() { }
 
     public override void RollAction()
     {

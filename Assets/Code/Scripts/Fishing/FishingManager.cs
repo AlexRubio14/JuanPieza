@@ -243,7 +243,7 @@ public class FishingManager : MonoBehaviour
         if (rescueNPC)
         {
             //Setear en el player muerto el target
-            rescueNPC.SetHookPosition(fishingData[id].fishingRod.hook.transform.position);
+            rescueNPC.SetHookPosition(fishingData[id].fishingRod.hook.gameObject);
             rescueNPC.isSwimming = true;
             FishingData newData = fishingData[id];
             newData.currentPlayer = null;
@@ -257,9 +257,8 @@ public class FishingManager : MonoBehaviour
         {
             if (!rescueNPCs[i].rescued &&
             !rescueNPCs[i].isSwimming &&
-            rescueNPCs[i].hookPosition == Vector3.zero)
-            {
-                
+            rescueNPCs[i].hookToFollow == null)
+            {   
                 return;
             }
         }
@@ -340,7 +339,7 @@ public class FishingManager : MonoBehaviour
         {
             if(!rescueNPCs[i].rescued &&
             !rescueNPCs[i].isSwimming &&
-            rescueNPCs[i].hookPosition == Vector3.zero)
+            rescueNPCs[i].hookToFollow == null)
             {
                 float currentDitance = Vector3.Distance(rescueNPCs[i].transform.position, _fishingRod.hook.transform.position);
                 if (currentDitance < distance)
@@ -414,6 +413,8 @@ public class FishingManager : MonoBehaviour
 
     private void CheckNearPlayers(int _id)
     {
+        if (!fishingData[_id].fishingRod.hook)
+            return;
         foreach (DeathState item in deadPlayers)
         {
             if (!item.isSwimming)

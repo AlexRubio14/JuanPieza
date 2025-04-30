@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class HealthController : MonoBehaviour
 {
     [SerializeField] private Image healthBarImage;
-    [SerializeField, Range(0.05f, 0.5f)] private float lerpSpeed = 0.05f;
     [SerializeField, Range(0.01f, 10.0f)] private float disvanishSpeed = 7.0f;
 
     private bool enemyHealthBar;

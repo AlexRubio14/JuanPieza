@@ -2,18 +2,12 @@ using UnityEngine;
 
 public class KnockbackState : PlayerState
 {
-    private Vector3 sphereCastPos = Vector3.zero;
-    private float radiusSphereCast = 0.4f;
-
-    private LayerMask objectAndScenarioLayer;
-
     private float timeToCheckGrounded = 0.2f;
     private float currentTime;
 
     public override void EnterState()
     {
         controller.animator.SetBool("Moving", false);
-        objectAndScenarioLayer = controller.slopeCheckLayer | controller.objectLayer;
         currentTime = 0f;
     }
 
