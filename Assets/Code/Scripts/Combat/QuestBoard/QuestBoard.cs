@@ -43,8 +43,8 @@ public class QuestBoard : MonoBehaviour
             questIcons.Add(questButton);
         }
 
-        if(!selectedQuest)
-            QuestManager.Instance.availableQuests[0].GetComponent<Button>().Select();
+        if (!selectedQuest)
+            questIcons[0].GetComponent<Button>().Select();
     }
 
     private void OnDisable()
