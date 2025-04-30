@@ -31,8 +31,7 @@ public class QuestBoard : MonoBehaviour
 
                 Image iconImage = questButton.gameObject.GetComponent<Image>();
             }
-
-            if (questIcons.Count == 0)
+            else
                 questButton.GetComponent<Button>().Select();
 
             questIcons.Add(questButton);

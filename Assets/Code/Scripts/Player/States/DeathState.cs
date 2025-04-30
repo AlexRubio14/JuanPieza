@@ -24,6 +24,9 @@ public class DeathState : PlayerState
 
     public override void EnterState()
     {
+        controller.objectHolder.RemoveItemFromHand();
+
+
         isSwimming = true;
         isDead = false;
         isRespawning = false;
@@ -36,8 +39,6 @@ public class DeathState : PlayerState
         transform.position = new Vector3(transform.position.x, FishingManager.instance.defaultYPos, transform.position.z);
 
         FishingManager.instance.AddDeadPlayer(this);
-
-        controller.objectHolder.RemoveItemFromHand();
 
         controller.animator.SetTrigger("Dead");
         controller.animator.SetBool("Swimming", true);
@@ -102,18 +103,6 @@ public class DeathState : PlayerState
     }
     public override void ExitState()
     {
-        //En este exit state suele crashear, se comprueba que todas sus variables existan para evitar posibles crashes
-
-        //if (ShipsManager.instance 
-        //    && ShipsManager.instance.playerShip 
-        //    && ShipsManager.instance.playerShip.transform 
-        //    && controller 
-        //    && controller.transform
-        //    )
-        //{
-        //    controller.transform.SetParent(ShipsManager.instance.playerShip.transform);
-        //}
-
         isDead = false;
         isSwimming = false;
         isRespawning = false;

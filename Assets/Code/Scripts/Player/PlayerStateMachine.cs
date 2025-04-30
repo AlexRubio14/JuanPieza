@@ -72,7 +72,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void OnDisable()
     {
-        if(currentState is not DeathState)
-            currentState.ExitState();
+        currentState.ExitState();
     }
 }

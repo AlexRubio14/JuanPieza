@@ -39,11 +39,6 @@ public class NPCController : MonoBehaviour
 
     public void AmbientSound()
     {
-        int randomValue = (int)Random.Range(1, maxValue + 1);
-
-        if(randomValue == 1)
-            AudioManager.instance.Play2dOneShotSound(sound, "Object");
-
         if (currentAnimation == NpcAnimation.SMOKE)
             smokeParticles.Play();
     }

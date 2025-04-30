@@ -29,7 +29,12 @@ public class PushState : PlayerState
                 else if (hit.collider && hit.collider.CompareTag("Player"))
                 {
                     pushForce = controller.playerPushForce;
-                    hit.collider.GetComponentInChildren<Animator>().SetTrigger("Hitted");
+                    PlayerController hittedPlayer = hit.collider.GetComponent<PlayerController>();
+                    hittedPlayer.animator.SetTrigger("Hitted");
+                    if (hittedPlayer.stateMachine.currentState is FishingState)
+                    {
+                        hittedPlayer.stateMachine.ChangeState(hittedPlayer.stateMachine.idleState);
+                    }
                 }
 
                 Vector3 pushForward = controller.transform.forward * pushForce.x;

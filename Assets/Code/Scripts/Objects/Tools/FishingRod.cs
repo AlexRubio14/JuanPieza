@@ -65,7 +65,8 @@ public class FishingRod : Tool, ICatapultAmmo
     }
     private void OnDisable()
     {
-        FishingManager.instance.RemoveFishingRod(this);
+        if(hook != null)
+            Destroy(hook.gameObject);
     }
 
     public override void Grab(ObjectHolder _objectHolder)
@@ -94,7 +95,8 @@ public class FishingRod : Tool, ICatapultAmmo
         GrabHook();
         idleFishingRod.SetActive(true);
         landedFishingRod.SetActive(false);
-        _objectHolder.playerController.stateMachine.ChangeState(_objectHolder.playerController.stateMachine.idleState);
+        if(_objectHolder.playerController.stateMachine.currentState is FishingState)
+            _objectHolder.playerController.stateMachine.ChangeState(_objectHolder.playerController.stateMachine.idleState);
         _objectHolder.playerController.animator.SetBool("FishingCharge", false);
         _objectHolder.playerController.animator.ResetTrigger("FishingStop");
         _objectHolder.playerController.interactCanvasObject.SetActive(false);
@@ -217,6 +219,4 @@ public class FishingRod : Tool, ICatapultAmmo
         if (player)
             player.animator.SetTrigger("FishingStop");
     }
-
-    
 }

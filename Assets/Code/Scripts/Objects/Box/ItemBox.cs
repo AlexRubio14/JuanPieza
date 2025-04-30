@@ -7,8 +7,9 @@ public class ItemBox : Box
     [SerializeField] private List<GameObject> decorations;
     private int currentDecoration;
 
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
         UpdateDecorations();
     }
     public override void AddItemInBox(bool _makeSound = true, int cuantity = 1)

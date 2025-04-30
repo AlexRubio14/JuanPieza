@@ -7,7 +7,7 @@ public class RescueNPC : MonoBehaviour
 
     [HideInInspector]
     public bool isSwimming;
-    public Vector3 hookPosition { get; private set; }
+    public GameObject hookToFollow{ get; private set; }
     private Vector3 endPosition;
 
     private Animator animator;
@@ -21,8 +21,6 @@ public class RescueNPC : MonoBehaviour
     {
         isSwimming = false;
 
-        hookPosition = Vector3.zero;
-
         animator.SetTrigger("Dead");
         animator.SetBool("Swimming", true);
 
@@ -33,7 +31,8 @@ public class RescueNPC : MonoBehaviour
 
     void Update()
     {
-        if (!rescued && hookPosition != Vector3.zero)
+
+        if (!rescued && hookToFollow)
         {
             //Si la distancia hacia el  anzuelo es menor a X esperar a ser rescatado
             if (Vector3.Distance(transform.position, endPosition) <= 1)
@@ -61,16 +60,15 @@ public class RescueNPC : MonoBehaviour
     }
     public void HookRemoved()
     {
-        hookPosition = Vector3.zero;
+        hookToFollow = null;
         isSwimming = false;
     }
-    public void SetHookPosition(Vector3 _hookPos)
+    public void SetHookPosition(GameObject _hook)
     {
-        Vector3 finalHookPos = _hookPos;
+        hookToFollow = _hook;
+        Vector3 finalHookPos = hookToFollow.transform.position;
         finalHookPos.y = FishingManager.instance.defaultYPos;
-        hookPosition = finalHookPos;
-
-        endPosition = hookPosition;
+        endPosition = finalHookPos;
     }
 
     public void NPCRescued()
@@ -78,7 +76,7 @@ public class RescueNPC : MonoBehaviour
         transform.forward = (new Vector3(transform.position.x, 0, transform.position.z) -  new Vector3(endPosition.x, 0, endPosition.z)).normalized;
         rescued = true;
         isSwimming = false;
-        hookPosition = Vector3.zero;
+        hookToFollow = null;
         animator.SetBool("Swimming", false);
         transform.SetParent(ShipsManager.instance.playerShip.transform);
 
