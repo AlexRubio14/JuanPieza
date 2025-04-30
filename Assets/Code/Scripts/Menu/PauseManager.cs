@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -46,24 +46,36 @@ public class PauseManager : MonoBehaviour
         resumeButton.Select();
         IsPaused = true;
         Time.timeScale = 0f;
+        foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
+        {
+            if (PlayersManager.instance)
+                item.Item1.SwitchCurrentActionMap("MapMenu");
+        }
     }
 
     public void ResumeGame()
     {
         IsPaused = false;
         Time.timeScale = 1f;
+        foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
+        {
+            if (item.Item1.inputIsActive)
+            {
+                item.Item1.SwitchCurrentActionMap("Gameplay");
+            }
+        }
     }
     
     public void OnResumeButton()
     {
         ResumeGame();
-        pauseMenuUI.SetActive(PauseManager.Instance.IsPaused);
+        pauseMenuUI.SetActive(IsPaused);
     }
 
     public void OnHubButton()
     {
         ResumeGame();
-        pauseMenuUI.SetActive(PauseManager.Instance.IsPaused);
+        pauseMenuUI.SetActive(IsPaused);
         SceneManager.LoadScene("Hub");
     }
     
@@ -76,8 +88,8 @@ public class PauseManager : MonoBehaviour
         Destroy(PlayersManager.instance.gameObject);
         Destroy(gameObject);
         
-        PauseManager.Instance.ResumeGame();
-        pauseMenuUI.SetActive(PauseManager.Instance.IsPaused);
+        ResumeGame();
+        pauseMenuUI.SetActive(IsPaused);
         if (NodeManager.instance)
             Destroy(NodeManager.instance);
         SceneManager.LoadScene("MainMenu");

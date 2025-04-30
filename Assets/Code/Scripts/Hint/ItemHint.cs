@@ -6,9 +6,8 @@ public class ItemHint : Hint
     protected List<int> playersLooking;
     protected bool isEnabled;
 
-    protected override void Start()
+    protected virtual void Start()
     {
-        base.Start();
         playersLooking = new List<int>();
     }
     protected override void Update()

@@ -28,11 +28,8 @@ public class Hint : MonoBehaviour
 
     protected virtual void Awake()
     {
-        currentObject = GetComponent<InteractableObject>();
-    }
-    protected virtual void Start()
-    {
         canvas.worldCamera = Camera.main;
+        currentObject = GetComponent<InteractableObject>();
     }
     protected virtual void Update()
     {
