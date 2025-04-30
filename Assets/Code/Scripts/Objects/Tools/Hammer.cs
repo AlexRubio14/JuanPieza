@@ -82,7 +82,7 @@ public class Hammer : Tool, ICatapultAmmo
                     AudioManager.instance.Play2dOneShotSound(hitObjectClip, "Objects", 0.1f, 0.8f, 1.2f);
                 }
 
-                if ((_repair is Weapon) && (_repair as Weapon).GetFreeze())
+                if ((_repair is Weapon))
                     _repair.BreakIce();
             }
             else if(hit.collider.TryGetComponent(out PlayerController _hittedPlayer))
