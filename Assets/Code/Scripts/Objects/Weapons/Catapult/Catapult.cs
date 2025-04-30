@@ -24,6 +24,7 @@ public class Catapult : Weapon
         if (!ammoPrefabs.ContainsKey(shootObject))
         {
             hasAmmo = false;
+            canUse = false;
             return;
         }
 
@@ -66,6 +67,7 @@ public class Catapult : Weapon
 
         newBullet.GetComponent<Bullet>().SetDamage(currentWeaponDamage);
         hasAmmo = false;
+        canUse = false;
         AudioManager.instance.Play2dOneShotSound(weaponShootClip, "Objects", 0.4f, 0.9f, 1.1f);
     }
 

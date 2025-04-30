@@ -49,23 +49,15 @@ public class CannonState : PlayerState
     {
         controller.Release();
     }
-    public override void InteractAction() 
+    public override void InteractAction() { }
+    public override void StopInteractAction() { }
+    public override void UseAction() 
     {
-        if(currentWeapon.CanInteract(controller.objectHolder))
-            currentWeapon.Interact(controller.objectHolder);
+        currentWeapon.Use(controller.objectHolder);
     }
-    public override void StopInteractAction() 
-    {
-        
-        if (currentWeapon.GetMountedPlayerId() == -1)
-            controller.stateMachine.ChangeState(controller.stateMachine.idleState);
-
-        currentWeapon.StopInteract(controller.objectHolder);
-    }
-    public override void UseAction() { }
     public override void StopUseAction() 
     { 
-        controller.StopUse();
+        currentWeapon.StopUse(controller.objectHolder);
     }
 
     public override void OnHit(Vector3 _hitPosition, float forceMultiplier = 1)

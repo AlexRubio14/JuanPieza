@@ -17,7 +17,6 @@ public class Cannon : Weapon
         GameObject newBullet = Instantiate(bulletPrefab, bulletSpawnPos.transform.position, Quaternion.identity);
         newBullet.GetComponent<Bullet>().SetDamage(weaponDamage);
         newBullet.GetComponent<Rigidbody>().AddForce(bulletSpawnPos.forward * bulletForce, ForceMode.Impulse);
-        hasAmmo = false;
         Instantiate(shootParticles, bulletSpawnPos.position, Quaternion.identity);
         AudioManager.instance.Play2dOneShotSound(weaponShootClip, "Objects");
     }

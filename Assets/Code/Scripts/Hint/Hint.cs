@@ -44,6 +44,14 @@ public class Hint : MonoBehaviour
 	{
         actionImages[_action].image.gameObject.SetActive(true);
         actionImages[_action].image.sprite = actionImages[_action].sprite[(int)_device];
+        if (_action == HintController.ActionType.USE ||
+			_action == HintController.ActionType.HOLD_USE ||
+			_action == HintController.ActionType.INTERACT ||
+			_action == HintController.ActionType.HOLD_INTERACT
+			) { 
+            actionImages[_action].image.transform.GetChild(0).gameObject.SetActive(_action == HintController.ActionType.HOLD_USE || _action == HintController.ActionType.HOLD_INTERACT);
+		}
+		
 	}
 	public void DisableHint(HintController.ActionType _action)
 	{

@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,66 +34,44 @@ public class GameInput : MonoBehaviour
     }
     public void InteractAction(InputAction.CallbackContext obj)
     {
-        if (obj.started)
-        {
-            if (OnInteractAction != null)
+        if (obj.started && OnInteractAction != null)
                 OnInteractAction();
-        }
-        else if (obj.canceled)
-        {
-            if(OnStopInteractAction != null)
+        else if (obj.canceled && OnStopInteractAction != null)
                 OnStopInteractAction();
-        }
     }
     public void UseAction(InputAction.CallbackContext obj)
     {
-        if (obj.started)
-        {
-            if (OnUseAction != null)
-                OnUseAction();
-        }
-        else if (obj.canceled)
-        {
-            if(OnStopUseAction != null)
+        if (obj.started && OnUseAction != null)
+                OnUseAction(); 
+        else if (obj.canceled && OnStopUseAction != null)
                 OnStopUseAction();
-        }
     }
     public void RollAction(InputAction.CallbackContext obj)
     {
-        if (obj.started)
-        {
-            if (OnRollAction != null)
+        if (obj.started && OnRollAction != null)
                 OnRollAction();
-        }
     }
     public void ThrowAction(InputAction.CallbackContext obj)
     {
-        if (obj.started)
-        {
-            if (OnThrowAction != null)
+        if (obj.started && OnThrowAction != null)
                 OnThrowAction();
-        }
     }
     public void DanceAction(InputAction.CallbackContext obj)
     {
-        if (obj.started)
-        {
-            if (OnDanceAction != null)
-                OnDanceAction();
-        }
+        if (obj.started && OnDanceAction != null)
+            OnDanceAction();
     }
     public void GrabAction(InputAction.CallbackContext obj)
     {
-        if (obj.started)
-        {
-            if (OnGrabAction != null)
+        if (obj.started && OnGrabAction != null)
                 OnGrabAction();
-        }
-        else if (obj.canceled)
-        {
-            if (OnReleaseAction != null)
+        else if (obj.canceled && OnReleaseAction != null)
                 OnReleaseAction();
-        }
+    }
+    public void PushAction(InputAction.CallbackContext obj)
+    {
+        if (obj.started && OnPushAction != null)
+            OnPushAction();
     }
 
     public void RotateWeaponAction(InputAction.CallbackContext obj)
@@ -104,8 +83,6 @@ public class GameInput : MonoBehaviour
     public void PauseAction(InputAction.CallbackContext obj)
     {
         if (obj.started)
-        {
             PauseManager.Instance.TogglePause();
-        }
     }
 }

@@ -190,6 +190,8 @@ public class PlayerController : MonoBehaviour
         
         playerInput.OnReleaseAction += ReleaseAction;
 
+        playerInput.OnPushAction += PushAction;
+
         playerInput.OnWeaponRotateAction += WeaponRotateAction;
     }
 
@@ -211,7 +213,10 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnReleaseAction -= ReleaseAction;
 
+        playerInput.OnPushAction -= PushAction;
+
         playerInput.OnWeaponRotateAction -= WeaponRotateAction;
+
 
         movementInput = Vector2.zero;
         movementDirection = Vector3.zero;
@@ -249,6 +254,10 @@ public class PlayerController : MonoBehaviour
     private void StopUseAction()
     {
         stateMachine.currentState.StopUseAction();
+    }
+    private void PushAction()
+    {
+        stateMachine.currentState.PushAction();
     }
     public void PlayerHitted(Vector3 _hitPosition, float forceMultiplier = 1)
     {

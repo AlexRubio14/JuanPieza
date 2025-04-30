@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public abstract class Weapon : RepairObject
 {
@@ -73,6 +72,7 @@ public abstract class Weapon : RepairObject
         animator = GetComponent<Animator>();
 
         hasAmmo = false;
+        canUse = false;
     }
 
     protected override void Start()
@@ -121,17 +121,11 @@ public abstract class Weapon : RepairObject
         isBeginUsed = false;
         mountedPlayerId = -1;
     }
-    public override void Interact(ObjectHolder _objectHolder)
+    public override void Use(ObjectHolder _objectHolder)
     {
-        if (!CanInteract(_objectHolder))
-            return;
-
         InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-        InteractableObject nearestObj = _objectHolder.GetNearestInteractableObject();
-        
-        if(!hasAmmo && handObject && handObject.objectSO == objectToInteract)
-            Reload(_objectHolder);
-        else if (hasAmmo && (!handObject || handObject == this))
+
+        if (hasAmmo && handObject == this)
         {
             //Empezar a cargar el disparo
             isTilting = true;
@@ -142,12 +136,20 @@ public abstract class Weapon : RepairObject
             currentPlayer.stateMachine.ChangeState(currentPlayer.stateMachine.cannonState);
         }
     }
-    public override void StopInteract(ObjectHolder _objectHolder)
+    public override void StopUse(ObjectHolder _objectHolder)
     {
         if (!isTilting)
             return;
 
         ShootWeapon();
+    }
+    public override void Interact(ObjectHolder _objectHolder)
+    {
+        if (!CanInteract(_objectHolder))
+            return;
+
+        Reload(_objectHolder);
+       
     }
 
     public override bool CanInteract(ObjectHolder _objectHolder)
@@ -156,12 +158,7 @@ public abstract class Weapon : RepairObject
         PlayerController playerCont = _objectHolder.playerController;
 
         return !state.GetIsBroken() && !freeze && !onRecoil //Si no esta roto ni congelado ni en medio del retroceso
-            && (
-            !hasAmmo && handObject && handObject.objectSO == objectToInteract || //Si puede recargar
-            hasAmmo &&
-            (!handObject && mountedPlayerId == -1 || //Si tiene municion y no hay nadie montado
-            _objectHolder.playerController.playerInput.playerReference == mountedPlayerId) //Si tiene municion y el que esta montado es el mismo player
-            );
+            && !hasAmmo && handObject && handObject.objectSO == objectToInteract; //Si puede recargar
     }
     public override bool CanGrab(ObjectHolder _objectHolder)
     {
@@ -171,6 +168,7 @@ public abstract class Weapon : RepairObject
     {
         //Settear a true la municion
         hasAmmo = true;
+        canUse = true;
         //Borrar la bala de la mano
         InteractableObject currentObject = _objectHolder.RemoveItemFromHand();
         Destroy(currentObject.gameObject);
@@ -182,8 +180,6 @@ public abstract class Weapon : RepairObject
 
         foreach (ParticleSystem item in loadParticles)
             item.Play(true);
-
-        hint.interactType = HintController.ActionType.HOLD_INTERACT;
 
         AudioManager.instance.Play2dOneShotSound(weaponReloadClip, "Objects");
     }
@@ -241,6 +237,7 @@ public abstract class Weapon : RepairObject
             item.Stop(true);
 
         hasAmmo = false;
+        canUse = false;
         animator.SetBool("HasAmmo", false);
         
         rb.constraints = RigidbodyConstraints.FreezeAll;
@@ -260,6 +257,8 @@ public abstract class Weapon : RepairObject
     protected void ShootWeapon()
     {
         isTilting = false;
+        hasAmmo = false;
+        canUse = false;
 
         Shoot();
 
@@ -273,8 +272,6 @@ public abstract class Weapon : RepairObject
         }
 
         mountedPlayerId = -1;
-
-        hint.interactType = HintController.ActionType.INTERACT;
 
         foreach (ParticleSystem item in loadParticles)
             item.Stop(true);
