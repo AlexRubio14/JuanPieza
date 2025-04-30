@@ -16,6 +16,8 @@ public class FreezeWeapon : MonoBehaviour
     [SerializeField] private float maxScale;
     [SerializeField] private float scaleTime;
     [SerializeField] private AudioClip breakIce;
+    [SerializeField] private GameObject breakIceParticles;
+    private ParticleSystem iceParticles;
     private GameObject iceCubeWeapon;
 
     [Header("Material")]
@@ -82,6 +84,8 @@ public class FreezeWeapon : MonoBehaviour
         breakMaterial.color = brokenColor;
         weapon.rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         AudioManager.instance.Play2dOneShotSound(breakIce, "Objects");
+        
+        Instantiate(breakIceParticles, transform.position + Vector3.up, Quaternion.identity);
     }
 
     private IEnumerator ScaleIce()
@@ -92,6 +96,7 @@ public class FreezeWeapon : MonoBehaviour
         {
             if(iceCubeWeapon != null)
                 iceCubeWeapon.transform.localScale = Vector3.Lerp(Vector3.zero, new Vector3(maxScale, maxScale, maxScale), currentTime / scaleTime);
+            
             currentTime += Time.deltaTime;
             yield return null;
         }
