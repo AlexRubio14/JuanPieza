@@ -55,7 +55,7 @@ public class ObjectHolder : MonoBehaviour
             InteractableObject tempObject = item.collider.GetComponent<InteractableObject>();
 
             if (!tempObject || 
-                (tempObject.isBeginUsed && (tempObject is not Weapon)) ||
+                tempObject.isBeginUsed ||
                 !tempObject.CanGrab(this) && !tempObject.CanInteract(this) &&
                 (tempObject is not Repair || !(tempObject as Repair).GetObjectState().GetIsBroken()) &&
                 (tempObject is not Weapon || !(tempObject as Weapon).GetFreeze())

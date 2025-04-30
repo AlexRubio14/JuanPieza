@@ -75,8 +75,14 @@ public class HintController : MonoBehaviour
             playerHint.DisableHint(ActionType.HOLD_USE);
             return;
         }
+        
+        if(_handObject is Weapon)
+        {
+            _handObject.hint.EnableHint(_handObject.hint.useType, deviceType);
+            return;
+        }
         //Mostrar el input hint en la cabeza del player
-           playerHint.EnableHint(_handObject.hint.useType, deviceType);
+        playerHint.EnableHint(_handObject.hint.useType, deviceType);
     }
     private void CheckObjetToInteract(InteractableObject _handObject, InteractableObject _nearestObject)
     {

@@ -49,12 +49,15 @@ public class MoveState : PlayerState
     {
         if (controller.objectHolder.GetHandInteractableObject())
             controller.Use();
-        else
-            stateMachine.ChangeState(stateMachine.pushState);
     }
     public override void StopUseAction() 
     { 
         controller.StopUse();
+    }
+    public override void PushAction()
+    {
+        if (!controller.objectHolder.GetHandInteractableObject())
+            stateMachine.ChangeState(stateMachine.pushState);
     }
 
     public override void OnCollisionEnter(Collision collision)
