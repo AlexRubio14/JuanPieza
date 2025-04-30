@@ -76,7 +76,7 @@ public class HintController : MonoBehaviour
             return;
         }
         //Mostrar el input hint en la cabeza del player
-        playerHint.EnableHint(_handObject.hint.useType, deviceType);
+           playerHint.EnableHint(_handObject.hint.useType, deviceType);
     }
     private void CheckObjetToInteract(InteractableObject _handObject, InteractableObject _nearestObject)
     {
