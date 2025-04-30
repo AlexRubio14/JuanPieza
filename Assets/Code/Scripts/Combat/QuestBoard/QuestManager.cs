@@ -32,7 +32,7 @@ public class QuestManager : MonoBehaviour
     private void UnLockLevels()
     {
         foreach (QuestData quests in allQuests)
-            quests.completed = true;
+            quests.SetCompleted(true);
     }
 
     public void UpdateAvailableQuests()

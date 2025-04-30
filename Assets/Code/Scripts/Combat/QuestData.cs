@@ -23,6 +23,11 @@ public class QuestData : ScriptableObject
     public bool hasGeyser;
 
     public EnemiesStats stats;
+
+    public void SetCompleted(bool _completed)
+    {
+        completed = _completed;
+    }
 }
 
 [System.Serializable]
@@ -47,3 +52,5 @@ public class EnemiesStats
     public float TimeToShoot;
     public float Speed;
 }
+
+
