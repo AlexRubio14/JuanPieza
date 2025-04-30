@@ -8,7 +8,6 @@ public class CigaretteController : MonoBehaviour
     {
         foreach (GameObject cigarrete in cigarrettes)
             cigarrete.SetActive(false);
-
     }
 
     public void ActivateCigarrette()
