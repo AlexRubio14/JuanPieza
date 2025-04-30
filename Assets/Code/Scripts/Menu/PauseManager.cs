@@ -78,6 +78,8 @@ public class PauseManager : MonoBehaviour
         
         PauseManager.Instance.ResumeGame();
         pauseMenuUI.SetActive(PauseManager.Instance.IsPaused);
+        if (NodeManager.instance)
+            Destroy(NodeManager.instance);
         SceneManager.LoadScene("MainMenu");
     }
 }
