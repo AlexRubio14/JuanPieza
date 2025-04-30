@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,8 +13,10 @@ public class QuestBoard : MonoBehaviour
     private void OnEnable()
     {
         questIcons = new List<QuestIcon>();
-
+        
         QuestManager.Instance.UpdateAvailableQuests();
+
+        bool selectedQuest = false;
 
         foreach (QuestData quest in QuestManager.Instance.availableQuests)
         {
@@ -32,10 +35,16 @@ public class QuestBoard : MonoBehaviour
                 Image iconImage = questButton.gameObject.GetComponent<Image>();
             }
             else
+            {
                 questButton.GetComponent<Button>().Select();
+                selectedQuest = true;
+            }
 
             questIcons.Add(questButton);
         }
+
+        if(!selectedQuest)
+            QuestManager.Instance.availableQuests[0].GetComponent<Button>().Select();
     }
 
     private void OnDisable()
