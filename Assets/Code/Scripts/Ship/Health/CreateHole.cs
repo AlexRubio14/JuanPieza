@@ -47,7 +47,8 @@ public class CreateHole : DetectBullet
             {
                 _objectToRepair.GetObjectState().SetIsBroke(true);
                 _objectToRepair.OnBreakObject();
-            }else if (hit.collider.TryGetComponent(out PlayerController player))
+            }
+            else if (hit.collider.TryGetComponent(out PlayerController player))
             {
                 player.PlayerHitted(_position);
             }
