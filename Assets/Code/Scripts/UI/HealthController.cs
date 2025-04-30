@@ -22,6 +22,7 @@ public class HealthController : MonoBehaviour
         if (healthBarImage != null)
         {
             healthBarImage.fillAmount = health;
+            StartVanish();
         }
     }
 

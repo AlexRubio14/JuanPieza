@@ -690,7 +690,6 @@ GameObject:
   - component: {fileID: 1905868976298397844}
   - component: {fileID: 8198715438506072375}
   - component: {fileID: 7173462072847168120}
-  - component: {fileID: 8365578180337939964}
   - component: {fileID: 3523859855145287835}
   - component: {fileID: 9067808862167694599}
   - component: {fileID: 1600496339117219760}
@@ -778,7 +777,6 @@ MonoBehaviour:
   <drunkStateDuration>k__BackingField: 10
   <drunkParticles>k__BackingField: {fileID: 8234654707721435244}
   <danceMusic>k__BackingField: {fileID: 8300000, guid: f8f14d848fe6bb740b93e09a7cebd5af, type: 3}
-  <maxTimeStunned>k__BackingField: 4
   iceDrag: 6
   dieClip: {fileID: 8300000, guid: 936a4004a87f1e74cbdc582295462778, type: 3}
   dashClip: {fileID: 8300000, guid: e2e4410c5803930499b2a3e99cc5048d, type: 3}
@@ -825,24 +823,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <deviceType>k__BackingField: 0
---- !u!114 &8365578180337939964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3993809340238756677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0d171a3e82b9f7448a89abdd5341b29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cigarrettes:
-  - {fileID: 8053958402493639507}
-  - {fileID: 9042477178208634069}
-  - {fileID: 2391441240543716704}
-  - {fileID: 5056668628552280887}
-  - {fileID: 3613989571694055202}
 --- !u!114 &3523859855145287835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2214,16 +2194,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: CigarretteMouth (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6884069456097458879, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
---- !u!1 &5056668628552280887 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6884069456097458879, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
-  m_PrefabInstance: {fileID: 1848100796230947208}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5152921319989270779 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6784425733277682035, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
@@ -2293,6 +2272,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CigarretteMouth (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6884069456097458879, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2301,11 +2284,6 @@ PrefabInstance:
 --- !u!4 &8994650414824879897 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6784425733277682035, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
-  m_PrefabInstance: {fileID: 2518767455140970090}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &9042477178208634069 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6884069456097458879, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
   m_PrefabInstance: {fileID: 2518767455140970090}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3480236656209547756
@@ -2372,6 +2350,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CigarretteMouth
       objectReference: {fileID: 0}
+    - target: {fileID: 6884069456097458879, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2380,11 +2362,6 @@ PrefabInstance:
 --- !u!4 &7956549438214822047 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6784425733277682035, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
-  m_PrefabInstance: {fileID: 3480236656209547756}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8053958402493639507 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6884069456097458879, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
   m_PrefabInstance: {fileID: 3480236656209547756}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3690090440343610107
@@ -2580,16 +2557,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: CigarretteMouth (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6884069456097458879, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
---- !u!1 &3613989571694055202 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6884069456097458879, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
-  m_PrefabInstance: {fileID: 7903352167942354333}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3713578180461559022 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6784425733277682035, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
@@ -2659,6 +2635,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CigarretteMouth (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6884069456097458879, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2667,10 +2647,5 @@ PrefabInstance:
 --- !u!4 &2350356546020759212 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6784425733277682035, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
-  m_PrefabInstance: {fileID: 9131395213965516767}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2391441240543716704 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6884069456097458879, guid: ad44bdbda33f98e4394fee4d17992245, type: 3}
   m_PrefabInstance: {fileID: 9131395213965516767}
   m_PrefabAsset: {fileID: 0}
