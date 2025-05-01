@@ -5,7 +5,7 @@ public class RollState : PlayerState
     private float rollTimePassed;
     private bool bounced;
     private Vector3 rollDir;
-    
+    private ParticleSystem particles;
     public override void EnterState()
     {
         rollTimePassed = 0;
@@ -18,6 +18,11 @@ public class RollState : PlayerState
             rollDir = controller.transform.forward;
 
         AudioManager.instance.Play2dOneShotSound(controller.dashClip, "Player", 1, 0.95f, 1.05f);
+
+        Vector3 particlesSpawnPos = controller.transform.position;
+        particlesSpawnPos.y -= 0.3f;
+        particles = GameObject.Instantiate(controller.rollParticles, controller.transform).GetComponent<ParticleSystem>();
+        particles.transform.position = particlesSpawnPos;
     }
     public override void UpdateState()
     {
@@ -34,7 +39,8 @@ public class RollState : PlayerState
     }
     public override void ExitState()
     {
-
+        if(particles)
+            particles.Stop(true);
     }
 
     public override void RollAction()
@@ -55,17 +61,29 @@ public class RollState : PlayerState
         if (bounced || !collision.gameObject.CompareTag("Scenario"))
             return;
 
-        Vector3 bounceNormal = new Vector3(collision.contacts[0].normal.x, 0, collision.contacts[0].normal.z);
+        Bounce(collision);
+    }
+
+
+    private void Bounce(Collision _collision)
+    {
+        Vector3 bounceNormal = new Vector3(_collision.contacts[0].normal.x, 0, _collision.contacts[0].normal.z);
+
         //Rebotar
         if (bounceNormal.x == 0 && bounceNormal.z == 0)
             return;
 
+        Vector3 bounceDir = new Vector3(_collision.contacts[0].normal.x, 0, _collision.contacts[0].normal.z) * controller.bounceForce.x + Vector3.up * controller.bounceForce.y;
         bounced = true;
-        Vector3 bounceDir = new Vector3(collision.contacts[0].normal.x, 0, collision.contacts[0].normal.z) * controller.bounceForce.x + Vector3.up * controller.bounceForce.y;
         controller.rb.linearVelocity = Vector3.zero;
         controller.AddImpulse(bounceDir, controller.rollSpeed);
         rollTimePassed = -controller.rollDuration / 2;
         controller.animator.SetTrigger("Hitted");
         AudioManager.instance.Play2dOneShotSound(controller.dashHitClip, "Player", 0.7f, 0.95f, 1.05f);
+
+        GameObject bounceParticles = GameObject.Instantiate(controller.rollBounceParticles, _collision.contacts[0].point, Quaternion.identity);
+        bounceParticles.transform.forward = bounceNormal;
+
+        particles.Stop(true);
     }
 }
