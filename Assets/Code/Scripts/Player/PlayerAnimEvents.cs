@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +16,8 @@ public class PlayerAnimEvents : MonoBehaviour
     private bool playFootstep;
     [SerializeField]
     private float footstepVolume;
-
+    [SerializeField]
+    private GameObject footstepParticle;
     private PlayerController controller;
     private void Awake()
     {
@@ -34,6 +34,13 @@ public class PlayerAnimEvents : MonoBehaviour
 
     public void PlayFootstep()
     {
+        if (footstepParticle)
+        {
+            GameObject particles = Instantiate(footstepParticle, transform.position, Quaternion.identity);
+            particles.transform.forward = -transform.forward;
+
+        }
+
         if (!playFootstep || controller && controller.stateMachine.currentState is not MoveState or IdleState or DrunkState or CannonState)
             return;
 

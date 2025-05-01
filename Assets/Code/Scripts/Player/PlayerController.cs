@@ -34,7 +34,10 @@ public class PlayerController : MonoBehaviour
     private bool canRoll;
     [field: SerializeField]
     public Vector2 bounceForce { get; private set; }
-
+    [field: SerializeField]
+    public GameObject rollParticles {  get; private set; }
+    [field: SerializeField]
+    public GameObject rollBounceParticles {  get; private set; }
 
     [field: Space, Header("Push"), SerializeField]
     public float pushRadius { get; private set; }

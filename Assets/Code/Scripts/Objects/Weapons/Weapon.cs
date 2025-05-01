@@ -27,6 +27,8 @@ public abstract class Weapon : RepairObject
     [HideInInspector]
     public float tiltProcess;
     public bool isTilting {  get; protected set; }
+    protected float minTiltProcess = 0.2f;
+    protected bool shootReady;
 
     [Space, Header("Recoil"), SerializeField]
     protected Vector3 forwardAxis;
@@ -60,6 +62,8 @@ public abstract class Weapon : RepairObject
     [Space, Header("Weapon Audio"), SerializeField]
     protected AudioClip weaponShootClip;
     [SerializeField] protected AudioClip weaponReloadClip;
+    [SerializeField] protected AudioClip shootReadyClip;
+    [SerializeField] protected AudioClip shootStoppedClip;
 
     protected bool freeze;
     
@@ -78,6 +82,8 @@ public abstract class Weapon : RepairObject
     protected override void Start()
     {
         base.Start();
+
+        shootReady = false;
         tiltProcess = 0;
         tiltObject.localRotation = Quaternion.Euler(minWeaponTilt);
 
@@ -111,15 +117,20 @@ public abstract class Weapon : RepairObject
         player.stateMachine.ChangeState(player.stateMachine.cannonState);
         isBeginUsed = true;
         mountedPlayerId = player.playerInput.playerReference;
+        shootReady = false;
     }
     public override void Release(ObjectHolder _objectHolder)
     {
+        mountedPlayerId = -1;
+        StopUse(_objectHolder);
+
         PlayerController player = _objectHolder.playerController;
         //Cambia el estado
         player.stateMachine.ChangeState(player.stateMachine.idleState);
         _objectHolder.RemoveItemFromHand();
+
         isBeginUsed = false;
-        mountedPlayerId = -1;
+        shootReady = false;
     }
     public override void Use(ObjectHolder _objectHolder)
     {
@@ -132,6 +143,7 @@ public abstract class Weapon : RepairObject
             tiltProcess = 0;
             tiltObject.localRotation = Quaternion.Euler(minWeaponTilt);
             PlayerController currentPlayer = _objectHolder.playerController;
+            shootReady = false;
             currentPlayer.stateMachine.cannonState.SetWeapon(this);
             currentPlayer.stateMachine.ChangeState(currentPlayer.stateMachine.cannonState);
         }
@@ -140,6 +152,17 @@ public abstract class Weapon : RepairObject
     {
         if (!isTilting)
             return;
+
+        if (!shootReady)
+        {
+            //Hacer sonido 
+            AudioManager.instance.Play2dOneShotSound(shootStoppedClip, "Objects", 1, 0.8f, 1.2f);
+            //Resetear rotacion al 0
+            tiltObject.localRotation = Quaternion.Euler(minWeaponTilt);
+            isTilting = false;
+            return;
+        }
+
 
         ShootWeapon();
     }
@@ -298,6 +321,13 @@ public abstract class Weapon : RepairObject
             Quaternion.Euler(maxWeaponTilt),
             tiltProcess
             );
+
+        if(!shootReady && tiltProcess >= minTiltProcess)
+        {
+            shootReady = true;
+            AudioManager.instance.Play2dOneShotSound(shootReadyClip, "Objects", 1, 0.8f, 1.2f);
+        }
+
     }
     protected void CheckIfReachedMaxTilt()
     {
