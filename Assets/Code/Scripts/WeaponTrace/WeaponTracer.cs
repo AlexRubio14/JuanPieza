@@ -25,10 +25,10 @@ public class WeaponTracer : MonoBehaviour
     protected virtual void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        collisionNormal = Vector3.down;
+
         if(decalPrefab)
             decal = Instantiate(decalPrefab);
-
-        collisionNormal = Vector3.down;
     }
 
     protected void PredictTrajectory(float _force, Vector2 _forceVector)
@@ -81,4 +81,10 @@ public class WeaponTracer : MonoBehaviour
         lineRenderer.SetPosition(_pointPos.point, _pointPos.pos);
     }
 
+
+    private void OnDisable()
+    {
+        if(decal)
+            decal.SetActive(false);
+    }
 }
