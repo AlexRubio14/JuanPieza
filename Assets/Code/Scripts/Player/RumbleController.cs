@@ -87,10 +87,11 @@ public class RumbleController : MonoBehaviour
             RumblePressets rumble = rumblePressets[i];
             rumble.SetTimeLeft(rumblePressets[i].GetTimeLeft() - Time.fixedDeltaTime);
 
+            rumblePressets[i] = rumble;
+
             if(rumble.GetTimeLeft() <= 0)
                 rumbleToRemove.Add(rumblePressets[i]);
 
-            rumblePressets[i] = rumble;
         }
 
         foreach (RumblePressets item in rumbleToRemove)
