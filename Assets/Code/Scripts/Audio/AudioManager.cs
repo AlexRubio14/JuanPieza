@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -54,7 +55,9 @@ public class AudioManager : MonoBehaviour
         musicAs.playOnAwake = false;
         musicAs.outputAudioMixerGroup = mixer.FindMatchingGroups("Game Theme")[0];
 
-        radioAs = actions2dASObj.AddComponent<AudioSource>();
+        GameObject radioObject = new GameObject("RadioAS");
+        radioObject.transform.SetParent(transform, false);
+        radioAs = radioObject.AddComponent<AudioSource>();
         radioAs.playOnAwake = false;
         radioAs.outputAudioMixerGroup = mixer.FindMatchingGroups("Radio")[0];
 
@@ -203,5 +206,72 @@ public class AudioManager : MonoBehaviour
     public AudioMixer GetMixer()
     {
         return mixer;
+    }
+
+    public void ApplyRadioFilter(AudioSource _as)
+    {
+        if (!_as)
+            return;
+
+        if(_as.TryGetComponent(out AudioLowPassFilter _lowFilter))
+            _lowFilter.enabled = false;
+        if (_as.TryGetComponent(out AudioReverbFilter _reverbFilter))
+            _reverbFilter.enabled = false;
+
+
+        AudioHighPassFilter highFilter = _as.GetComponent<AudioHighPassFilter>();
+        if (!highFilter)
+            highFilter = _as.AddComponent<AudioHighPassFilter>();
+
+        highFilter.cutoffFrequency = 3500f;
+        highFilter.highpassResonanceQ = 1f;
+
+
+        AudioDistortionFilter distortionFilter = _as.GetComponent<AudioDistortionFilter>();
+        if (!distortionFilter)
+            distortionFilter = _as.AddComponent<AudioDistortionFilter>();
+
+        distortionFilter.distortionLevel = 0.6f;
+    }
+
+    public void ApplyUnderwaterFilter(AudioSource _as)
+    {
+        if (!_as)
+            return;
+
+        
+        AudioDistortionFilter distortionFilter = _as.GetComponent<AudioDistortionFilter>();
+        if (!distortionFilter)
+            distortionFilter = _as.AddComponent<AudioDistortionFilter>();
+
+        distortionFilter.distortionLevel = 0.4f;
+
+
+        AudioHighPassFilter highFilter = _as.GetComponent<AudioHighPassFilter>();
+        if (!highFilter)
+            highFilter = _as.AddComponent<AudioHighPassFilter>();
+
+        highFilter.cutoffFrequency = 550f;
+        highFilter.highpassResonanceQ = 1f;
+
+
+        AudioLowPassFilter lowFilter = _as.GetComponent<AudioLowPassFilter>();
+        if (!lowFilter)
+            lowFilter = _as.AddComponent<AudioLowPassFilter>();
+        else
+            lowFilter.enabled = true;
+        
+        lowFilter.cutoffFrequency = 500f;
+        lowFilter.lowpassResonanceQ = 1.5f;
+
+
+        AudioReverbFilter reverbFilter = _as.GetComponent<AudioReverbFilter>();
+        if (!reverbFilter)
+            reverbFilter = _as.AddComponent<AudioReverbFilter>();
+        else
+            reverbFilter.enabled = true;
+
+        reverbFilter.reverbPreset = AudioReverbPreset.Underwater;
+
     }
 }

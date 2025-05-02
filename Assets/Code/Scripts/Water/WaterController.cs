@@ -12,8 +12,13 @@ public class WaterController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Bullet") || collision.collider.CompareTag("Object"))
+        if (collision.collider.CompareTag("Bullet"))
+            Destroy(collision.gameObject);
+
+        if (collision.collider.CompareTag("Object"))
         {
+            if (collision.collider.TryGetComponent(out Radio _radio))
+                _radio.RadioFallAtWater();
             Destroy(collision.gameObject);
         }
 
