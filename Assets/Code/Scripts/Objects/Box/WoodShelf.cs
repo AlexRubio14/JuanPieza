@@ -32,30 +32,20 @@ public class WoodShelf : Box
 
     public override void AddItemInBox(bool _makeSound, int cuantity = 1)
     {
-        if (itemsInBox > 4)
+        if (itemsInBox + cuantity > 4)
             return;
 
-        if(itemsInBox + cuantity > 4)
-            cuantity = 4 - itemsInBox;
-
-
+        decorations[itemsInBox].SetActive(true);
         base.AddItemInBox(_makeSound, cuantity);
-        if (currentDecorationInShelf < decorations.Count)
-        {
-            currentDecorationInShelf = Mathf.Clamp(currentDecorationInShelf + 1, 0, decorations.Count);
-            decorations[currentDecorationInShelf - 1].SetActive(true);
-        }
     }
     public override void RemoveItemInBox()
     {
-        base.RemoveItemInBox();
+        decorations[itemsInBox - 1].SetActive(false);
 
-        currentDecorationInShelf = Mathf.Clamp(currentDecorationInShelf - 1, 0, decorations.Count);
+        base.RemoveItemInBox();
 
         if(message)
             message.TakeHarmer();
-        
-        decorations[currentDecorationInShelf].SetActive(false);
     }
     public override void OnBreakObject()
     {

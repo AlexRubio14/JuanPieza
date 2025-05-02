@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ObjectState : MonoBehaviour
@@ -10,6 +11,7 @@ public class ObjectState : MonoBehaviour
     [SerializeField] private AudioClip brokeClip;
 
     private bool oneHit;
+    private bool timeBroken;
 
     private void Start()
     {
@@ -22,6 +24,8 @@ public class ObjectState : MonoBehaviour
 
         if (freezing)
             return;
+
+        StartCoroutine(SetBrokenStateDelayed(state, 2f));
 
         if (fixedSibling)
             fixedSibling.SetActive(!state);
@@ -36,9 +40,20 @@ public class ObjectState : MonoBehaviour
         }
     }
 
+    private IEnumerator SetBrokenStateDelayed(bool state, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        timeBroken = state;
+    }
+
     public bool GetIsBroken()
     {
         return isBroken;
+    }
+
+    public bool GetTimeBroken()
+    {
+        return timeBroken;
     }
 
     public void SetOneHit(bool state)

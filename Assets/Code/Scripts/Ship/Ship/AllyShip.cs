@@ -31,6 +31,8 @@ public class AllyShip : Ship
     [SerializeField] private float rateOverTimeSum;
     [SerializeField] private float radiusSum;
 
+    [SerializeField] private ObjectSO hammer;
+
     private bool godMode;
 
     public override void Start()
@@ -52,6 +54,8 @@ public class AllyShip : Ship
             MoveShip(startZ, 0);
         if (leaving)
             DancePlayers();
+
+        GenerateHammer();
     }
 
     private void MoveShip(float firstZ, float secondZ)
@@ -186,6 +190,19 @@ public class AllyShip : Ship
     }
     #endregion
 
+    public void GenerateHammer()
+    {
+        Box hammerBox = GetObjectBoxByObject(hammer);
+
+        if (hammerBox != null &&
+            hammerBox.GetComponent<ObjectState>().GetTimeBroken() &&
+            !ItemExist(hammer))
+        {
+            GameObject _hammer = Instantiate(hammer.prefab, new Vector3(3f, 2f, 0f), Quaternion.identity);
+            AddInteractuableObject(_hammer.GetComponent<InteractableObject>());
+        }
+
+    }
     public void Smoke()
     {
         if (!smoke.gameObject.activeSelf)
