@@ -83,8 +83,8 @@ public class DialogueController : MonoBehaviour
         letterIndex = 0;
         dialogueText.maxVisibleCharacters = letterIndex;
         showingText = true;
-        foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
-            item.Item1.SwitchCurrentActionMap("Dialogue");
+        foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)
+            item.playerInput.SwitchCurrentActionMap("Dialogue");
 
         StartCoroutine(UpdateInputImages());
         ReadDialogueType();
@@ -143,8 +143,8 @@ public class DialogueController : MonoBehaviour
         sequenceIndex = -1;
         showingText = false;
         displayingDialogue = false;
-        foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
-            item.Item1.SwitchCurrentActionMap("Gameplay");
+        foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)
+            item.playerInput.SwitchCurrentActionMap("Gameplay");
         dialogueObject.SetActive(false);
     }
 

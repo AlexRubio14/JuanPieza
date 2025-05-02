@@ -8,6 +8,7 @@ public class FishingRod : Tool, ICatapultAmmo
     private bool hookThrowed;
     private bool hookLanded;
     private bool hookGrabbed;
+
     [Space, Header("Fishing Rod"), SerializeField]
     private GameObject idleFishingRod;
     [SerializeField]
@@ -218,5 +219,6 @@ public class FishingRod : Tool, ICatapultAmmo
 
         if (player)
             player.animator.SetTrigger("FishingStop");
+
     }
 }

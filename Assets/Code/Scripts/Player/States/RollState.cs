@@ -85,5 +85,7 @@ public class RollState : PlayerState
         bounceParticles.transform.forward = bounceNormal;
 
         particles.Stop(true);
+        PlayersManager.instance.players[controller.playerInput.playerReference].rumbleController.AddRumble(controller.bounceRumble);
+
     }
 }

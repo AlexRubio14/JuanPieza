@@ -30,6 +30,11 @@ public class Hammer : Tool, ICatapultAmmo
     [SerializeField]
     private float stunnedTime;
 
+    [Space, Header("Rumble"), SerializeField]
+    private RumbleController.RumblePressets hitRumble;
+    [SerializeField]
+    private RumbleController.RumblePressets playerStunRumble;
+
     private PlayerController playerCont;
 
     public override void Use(ObjectHolder _objectHolder)
@@ -44,20 +49,12 @@ public class Hammer : Tool, ICatapultAmmo
         //Playear Anim de Golpear
         playerCont.animator.SetTrigger("HitHammer");
 
+
         //Invoke una funcion 
         //Esta funcion tiene que suceder a la vez del frame donde inpacta 
         Invoke("HitHammer", hitTime);
         Invoke("HammerCD", hitCD);
         
-        //InteractableObject nearObject = _objectHolder.GetNearestInteractableObject();
-
-        //if (!nearObject)
-        //    return;
-
-        //if(nearObject is RepairObject)
-        //    (nearObject as RepairObject).AddPlayer(_objectHolder);
-        //else if (nearObject is RepairHole)
-        //    (nearObject as RepairHole).AddPlayer(_objectHolder);
     }
 
 
@@ -66,10 +63,12 @@ public class Hammer : Tool, ICatapultAmmo
         if (!isBeginUsed)
             return;
 
+
         //Esta funcion ha de hacer
         //SphereCast en frente del player que compruebe: Objetos / Players / Enemigos 
-
         RaycastHit[] hits = Physics.SphereCastAll(hitPosition.position, hitRadius, playerCont.transform.forward, 1, hitLayers);
+
+        bool somethingHitted = false;
 
         foreach (RaycastHit hit in hits)
         {
@@ -84,21 +83,24 @@ public class Hammer : Tool, ICatapultAmmo
 
                 if ((_repair is Weapon))
                     _repair.BreakIce();
+                somethingHitted = true;
             }
             else if(hit.collider.TryGetComponent(out PlayerController _hittedPlayer))
             {
                 if(_hittedPlayer != playerCont)
                 {
                     //Players: Llamar a una funcion del player controler para stunearlo
+                    _hittedPlayer.stateMachine.stunedState.stunedRumble = playerStunRumble;
                     _hittedPlayer.stateMachine.stunedState.maxTimeStunned = stunnedTime;
                     _hittedPlayer.stateMachine.ChangeState(_hittedPlayer.stateMachine.stunedState);
                     AudioManager.instance.Play2dOneShotSound(hitPlayerClip, "Objects", 1, 0.9f, 1.1f);
-
+                    somethingHitted = true;
                 }
             }
             else if (hit.collider.TryGetComponent(out PirateBoardingController _enemy))
             {
                 //Enemigos: Stunear a los enemigos
+                somethingHitted = true;
             }
         }
 
@@ -106,6 +108,9 @@ public class Hammer : Tool, ICatapultAmmo
         Instantiate(hitParticles, hitPosition.position, Quaternion.identity);
         //Hacer sonido
         AudioManager.instance.Play2dOneShotSound(hitClip, "Objects", 0.4f, 0.75f, 1.25f);
+        if(somethingHitted)
+            PlayersManager.instance.players[playerCont.playerInput.playerReference].rumbleController.AddRumble(hitRumble);
+
     }
     private void HammerCD()
     {

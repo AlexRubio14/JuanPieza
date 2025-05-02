@@ -18,9 +18,9 @@ public class ExitQuestBoard : MonoBehaviour
     void OnButtonClick()
     {
         mapCanvas.SetActive(false);
-        foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.players)
+        foreach (PlayersManager.PlayerData player in PlayersManager.instance.players)
         {
-            player.Item1.SwitchCurrentActionMap("Gameplay");
+            player.playerInput.SwitchCurrentActionMap("Gameplay");
         }
 
         AudioManager.instance.Play2dOneShotSound(exitBoardClip, "Objects", 0.8f, 0.9f, 1.1f);

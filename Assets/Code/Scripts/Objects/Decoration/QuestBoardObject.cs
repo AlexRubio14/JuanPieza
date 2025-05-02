@@ -24,9 +24,9 @@ public class QuestBoardObject : InteractableObject
             yield return new WaitForEndOfFrame();
             questCanvas.SetActive(true);
 
-            foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.players)
+            foreach (PlayersManager.PlayerData player in PlayersManager.instance.players)
             {
-                player.Item1.SwitchCurrentActionMap("MapMenu");
+                player.playerInput.SwitchCurrentActionMap("MapMenu");
             }
         }
 
@@ -48,9 +48,9 @@ public class QuestBoardObject : InteractableObject
     }
     public void StopInteracting()
     {
-        foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.players)
+        foreach (PlayersManager.PlayerData player in PlayersManager.instance.players)
         {
-            player.Item1.SwitchCurrentActionMap("Gameplay");
+            player.playerInput.SwitchCurrentActionMap("Gameplay");
         }
     }
 

@@ -16,9 +16,9 @@ public class HubPlayerController : MonoBehaviour
         PlayerController controller = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<PlayerController>();
         controller.gameObject.transform.position = playersSpawnPos[_playerId].transform.position;
         controller.gameObject.name = "Player" + _playerId;
-        controller.playerInput = PlayersManager.instance.players[_playerId].Item1.GetComponent<GameInput>();
+        controller.playerInput = PlayersManager.instance.players[_playerId].playerInput.GetComponent<GameInput>();
 
-        PlayersManager.instance.players[_playerId].Item1.SwitchCurrentActionMap("Gameplay");
+        PlayersManager.instance.players[_playerId].playerInput.SwitchCurrentActionMap("Gameplay");
 
         if (PlayerPrefs.HasKey(HUB_TUTORIAL) && PlayerPrefs.GetInt(HUB_TUTORIAL) == 1)
             return;

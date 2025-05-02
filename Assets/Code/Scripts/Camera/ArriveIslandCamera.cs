@@ -142,16 +142,16 @@ public class ArriveIslandCamera : MonoBehaviour
 
     private void DisablePlayers()
     {
-        foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
-            item.Item1.SwitchCurrentActionMap("Camera");
+        foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)
+            item.playerInput.SwitchCurrentActionMap("Camera");
 
         ShipsManager.instance.playerShip.SetBehaivour(false);
     }
 
     private void ActivePlayers()
     {
-        foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
-            item.Item1.SwitchCurrentActionMap("Gameplay");
+        foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)
+            item.playerInput.SwitchCurrentActionMap("Gameplay");
 
         ShipsManager.instance.playerShip.SetBehaivour(true);
         ShipsManager.instance.playerShip.SetMessage();

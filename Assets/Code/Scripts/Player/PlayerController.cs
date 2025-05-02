@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
     public GameObject rollParticles {  get; private set; }
     [field: SerializeField]
     public GameObject rollBounceParticles {  get; private set; }
+    [field: SerializeField]
+    public RumbleController.RumblePressets bounceRumble {  get; private set; }
 
     [field: Space, Header("Push"), SerializeField]
     public float pushRadius { get; private set; }
@@ -55,7 +57,6 @@ public class PlayerController : MonoBehaviour
     public Vector2 objectPushForce { get; private set; }
     [field: SerializeField]
     public float objectTorqueForce {  get; private set; }
-
     [field: SerializeField] public float pirateKnockbackForce { get; private set; }
     [field: SerializeField] public float pirateUpForce { get; private set; }
     [SerializeField] public LayerMask objectLayer {  get; set; }
@@ -76,7 +77,6 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField]
     public AudioClip respawnClip {  get; private set; }
     
-
 
     [Space, Header("Fishing"), SerializeField]
     private Canvas interactCanvas;
@@ -111,10 +111,12 @@ public class PlayerController : MonoBehaviour
     [field: Space, Header("Dance"), SerializeField]
     public AudioClip danceMusic { get; private set; }
 
+
     [Space, Header("Ice"), SerializeField] 
     private float iceDrag;
     private float realDrag;
     private bool isOnIce;
+
 
     [field: Space, Header("Audio"), SerializeField]
     public AudioClip dieClip;
