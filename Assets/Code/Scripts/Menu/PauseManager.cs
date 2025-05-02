@@ -46,10 +46,10 @@ public class PauseManager : MonoBehaviour
         resumeButton.Select();
         IsPaused = true;
         Time.timeScale = 0f;
-        foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
+        foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)
         {
             if (PlayersManager.instance)
-                item.Item1.SwitchCurrentActionMap("MapMenu");
+                item.playerInput.SwitchCurrentActionMap("MapMenu");
         }
     }
 
@@ -57,11 +57,11 @@ public class PauseManager : MonoBehaviour
     {
         IsPaused = false;
         Time.timeScale = 1f;
-        foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
+        foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)
         {
-            if (item.Item1.inputIsActive)
+            if (item.playerInput.inputIsActive)
             {
-                item.Item1.SwitchCurrentActionMap("Gameplay");
+                item.playerInput.SwitchCurrentActionMap("Gameplay");
             }
         }
     }

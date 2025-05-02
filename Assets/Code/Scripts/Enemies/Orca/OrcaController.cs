@@ -37,6 +37,10 @@ public class OrcaController : MonoBehaviour
     [SerializeField]
     private AudioClip eatClip;
 
+    [Space, SerializeField]
+    private RumbleController.RumblePressets chasePlayerRumble;
+    [SerializeField]
+    private RumbleController.RumblePressets eatPlayerRumble;
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
@@ -102,6 +106,7 @@ public class OrcaController : MonoBehaviour
                 break;
             case OrcaState.EATING:
                 (playerToChase.stateMachine.currentState as DeathState).KillPlayer();
+                PlayersManager.instance.players[playerToChase.playerInput.playerReference].rumbleController.AddRumble(eatPlayerRumble);
                 //Empezar animacion de comer
                 animator.SetTrigger("Eat");
                 AudioManager.instance.Play2dOneShotSound(eatClip, "Orca", 1, 0.8f, 1.2f);
@@ -150,6 +155,7 @@ public class OrcaController : MonoBehaviour
 
             if(distance >= playerBoatRange || timeToEatPlayers <= (player.stateMachine.currentState as DeathState).timeAtWater)
             {
+                PlayersManager.instance.players[player.playerInput.playerReference].rumbleController.AddRumble(chasePlayerRumble);
                 playerToChase = player;
                 ChangeState(OrcaState.GOING);
                 break;
@@ -200,6 +206,12 @@ public class OrcaController : MonoBehaviour
     public void StopEat()
     {
         ChangeState(OrcaState.HIDING);
+    }
+
+    private void OnDisable()
+    {
+        if (swimSource)
+            AudioManager.instance.StopLoopSound(swimSource);
     }
 
     private void OnDrawGizmosSelected()

@@ -4,8 +4,10 @@ public class StunedState : PlayerState
 {
     private float currentTimeStunned;
     public float maxTimeStunned;
+    public RumbleController.RumblePressets stunedRumble;
     public override void EnterState()
     {
+        PlayersManager.instance.players[controller.playerInput.playerReference].rumbleController.AddRumble(stunedRumble);
         currentTimeStunned = 0;
         controller.animator.SetBool("IsStunned", true);
         controller.animator.SetTrigger("Stun");

@@ -65,6 +65,14 @@ public abstract class Weapon : RepairObject
     [SerializeField] protected AudioClip shootReadyClip;
     [SerializeField] protected AudioClip shootStoppedClip;
 
+    [Space, Header("Rumble"), SerializeField]
+    protected RumbleController.RumblePressets shootRumble;
+    [SerializeField]
+    protected RumbleController.RumblePressets shootStoppedRumble;
+    [SerializeField]
+    protected RumbleController.RumblePressets shootReadyRumble;
+
+
     protected bool freeze;
     
     protected Animator animator;
@@ -160,6 +168,7 @@ public abstract class Weapon : RepairObject
             //Resetear rotacion al 0
             tiltObject.localRotation = Quaternion.Euler(minWeaponTilt);
             isTilting = false;
+            PlayersManager.instance.players[mountedPlayerId].rumbleController.AddRumble(shootStoppedRumble);
             return;
         }
 
@@ -292,6 +301,7 @@ public abstract class Weapon : RepairObject
         {
             PlayerController controller = PlayersManager.instance.ingamePlayers[mountedPlayerId];
             controller.stateMachine.ChangeState(controller.stateMachine.idleState);
+            PlayersManager.instance.players[mountedPlayerId].rumbleController.AddRumble(shootRumble);
         }
 
         mountedPlayerId = -1;
@@ -326,6 +336,7 @@ public abstract class Weapon : RepairObject
         {
             shootReady = true;
             AudioManager.instance.Play2dOneShotSound(shootReadyClip, "Objects", 1, 0.8f, 1.2f);
+            PlayersManager.instance.players[mountedPlayerId].rumbleController.AddRumble(shootReadyRumble);
         }
 
     }
@@ -361,6 +372,18 @@ public abstract class Weapon : RepairObject
     public bool GetFreeze()
     {
         return freeze;
+    }
+
+    private void OnDisable()
+    {
+        if(mountedPlayerId != -1)
+        {
+
+            PlayerController player = PlayersManager.instance.ingamePlayers[mountedPlayerId];
+            //Cambia el estado
+            player.stateMachine.ChangeState(player.stateMachine.idleState);
+            player.objectHolder.RemoveItemFromHand();
+        }
     }
 
     private void OnDrawGizmosSelected()

@@ -30,14 +30,14 @@ public class LevelPlayerController : MonoBehaviour
                 PlayerController controller = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<PlayerController>();
                 controller.gameObject.transform.position = playersSpawnPos[i].transform.position;
                 controller.gameObject.name = "Player" + i;
-                controller.playerInput = PlayersManager.instance.players[i].Item1.GetComponent<GameInput>();
+                controller.playerInput = PlayersManager.instance.players[i].playerInput.GetComponent<GameInput>();
                 
                 if (ShipsManager.instance != null)
                     controller.transform.SetParent(ShipsManager.instance.playerShip.gameObject.transform, true);
 
-                PlayersManager.instance.players[i].Item1.actions.FindActionMap("PlayerSelectMenu").Disable();
-                PlayersManager.instance.players[i].Item1.actions.FindActionMap("Gameplay").Enable();
-                PlayersManager.instance.players[i].Item1.SwitchCurrentActionMap("Gameplay");
+                PlayersManager.instance.players[i].playerInput.actions.FindActionMap("PlayerSelectMenu").Disable();
+                PlayersManager.instance.players[i].playerInput.actions.FindActionMap("Gameplay").Enable();
+                PlayersManager.instance.players[i].playerInput.SwitchCurrentActionMap("Gameplay");
 
                 if (cameraCont)
                     cameraCont.AddPlayer(controller.gameObject);

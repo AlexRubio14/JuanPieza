@@ -4,7 +4,7 @@ public class Bonk : RepairObject
 {
     private Animation animationController;
     [SerializeField] private AudioClip bonkClip;
-
+    [SerializeField] private RumbleController.RumblePressets rumble;
     protected override void Awake()
     {
         base.Awake();
@@ -22,6 +22,11 @@ public class Bonk : RepairObject
 
         //Sonido
         AudioManager.instance.Play2dOneShotSound(bonkClip, "Objects", 0.2f, 0.9f, 1.1f);
+
+        //Vibracion
+        foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)
+            item.rumbleController.AddRumble(rumble);    
+
     }
 
     public override bool CanGrab(ObjectHolder _objectHolder)

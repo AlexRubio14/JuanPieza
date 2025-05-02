@@ -61,7 +61,7 @@ public class DeathState : PlayerState
             if (respawnProcess >= 1)
                 stateMachine.ChangeState(stateMachine.idleState);
         }
-        else if (isSwimming)
+        else if (isSwimming && !isDead)
         {
             controller.animator.SetBool("Moving", controller.movementInput != Vector2.zero);
             timeAtWater += Time.deltaTime;
@@ -70,14 +70,13 @@ public class DeathState : PlayerState
             {
                 swimSource = AudioManager.instance.Play2dLoop(controller.swimClip, "Player", 0.6f, 0.95f, 1.05f);
             }
-            else if(controller.movementInput == Vector2.zero && swimSource && swimSource.isPlaying)
-            {
-                AudioManager.instance.StopLoopSound(swimSource);
-                swimSource = null;
-            }
         }
 
-        
+        if ((isDead || isRespawning ) && swimSource && swimSource.isPlaying)
+        {
+            AudioManager.instance.StopLoopSound(swimSource);
+        }
+
 
     }
     public override void FixedUpdateState()
@@ -103,6 +102,8 @@ public class DeathState : PlayerState
     }
     public override void ExitState()
     {
+        AudioManager.instance.StopLoopSound(swimSource);
+
         isDead = false;
         isSwimming = false;
         isRespawning = false;
@@ -121,12 +122,6 @@ public class DeathState : PlayerState
 
         if(respawnParticles)
             respawnParticles.Stop(true);
-
-        if (swimSource)
-        {
-            AudioManager.instance.StopLoopSound(swimSource);
-            swimSource = null;
-        }
     }
 
     public override void RollAction() { /*No puedes rodar*/ }
@@ -149,7 +144,6 @@ public class DeathState : PlayerState
         if (swimSource)
         {
             AudioManager.instance.StopLoopSound(swimSource);
-            swimSource = null;
         }
     }
     public void StartRespawn()

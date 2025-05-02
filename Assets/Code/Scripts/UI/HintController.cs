@@ -30,7 +30,7 @@ public class HintController : MonoBehaviour
     private void Start()
     {
         PlayerController playerCont = GetComponent<PlayerController>();
-        PlayerInput input = PlayersManager.instance.players[playerCont.playerInput.playerReference].Item1; 
+        PlayerInput input = PlayersManager.instance.players[playerCont.playerInput.playerReference].playerInput; 
         InputDevice device = input.devices[0];  // En este caso, tomamos el primer dispositivo de la lista
 
         if (device is Gamepad)

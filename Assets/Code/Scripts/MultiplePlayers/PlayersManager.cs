@@ -1,16 +1,21 @@
-using AYellowpaper.SerializedCollections;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayersManager : MonoBehaviour
 {
     public static PlayersManager instance;
 
+    public struct PlayerData
+    {
+        public PlayerInput playerInput;
+        public SinglePlayerController singlePlayer;
+        public GameInput gameInput;
+        public RumbleController rumbleController;
+    }
+
     [field: SerializeField]
-    public List<(PlayerInput playerInput, SinglePlayerController singlePlayer)> players {  get; private set; }
+    public List<PlayerData> players {  get; private set; }
     public List<PlayerController> ingamePlayers {  get; private set; }
 
     [Space, SerializeField]
@@ -29,7 +34,7 @@ public class PlayersManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        players = new List<(PlayerInput, SinglePlayerController)>();
+        players = new List<PlayerData>();
         ingamePlayers = new List<PlayerController>();
     } 
 
@@ -49,9 +54,9 @@ public class PlayersManager : MonoBehaviour
     }
     private bool IsMaterialUsed(int _material)
     {
-        foreach ((PlayerInput, SinglePlayerController) item in players)
+        foreach (PlayerData item in players)
         {
-            if (item.Item2.currentColor == _material)
+            if (item.singlePlayer.currentColor == _material)
                 return true;
         }
 

@@ -30,6 +30,8 @@ public class FishingManager : MonoBehaviour
     [Space, Header("Hooked Entities"), SerializeField]
     private float timeToHook;
     [SerializeField]
+    private RumbleController.RumblePressets canHookRumble;
+    [SerializeField]
     private float parabolaSpeed;
     [SerializeField]
     private float parabolaHeight;
@@ -230,6 +232,10 @@ public class FishingManager : MonoBehaviour
         interactableCanvas.transform.forward = Camera.main.transform.forward;
         interactableCanvas.transform.localPosition = new Vector3(0.2f, 2, 0.5f);
         interactableCanvas.SetActive(true);
+
+
+        int playerId = fishingData[_dataId].fishingRod.player.playerInput.playerReference;
+        PlayersManager.instance.players[playerId].rumbleController.AddRumble(canHookRumble);
     }
 
     public void FishingRodUsed(FishingRod _fishingRod)

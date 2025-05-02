@@ -11,7 +11,7 @@ public class ClimateManager : MonoBehaviour
     [SerializeField] private List<AudioClip> ambientAudio;
     private QuestData.QuestClimete currentClimate;
 
-    [Header("Storm")]
+    [Space, Header("Storm")]
     [SerializeField] private float sunIntensity;
     [SerializeField] private float ligthningSpawnTime;
     [SerializeField] private float ligthningStrikeTime;
@@ -31,9 +31,14 @@ public class ClimateManager : MonoBehaviour
     private GameObject _lightningOrb;
     private float currentTime = 0;
     private bool preparingStrike = false;
+    [SerializeField]
+    private RumbleController.RumblePressets lightningAmbientRumble;
+    [SerializeField]
+    private RumbleController.RumblePressets lightningHitRumble;
 
-    [Header("Snow")]
+    [Space, Header("Snow")]
     [SerializeField] private GameObject snow;
+
 
 
     private AudioSource ambientSource;
@@ -128,6 +133,9 @@ public class ClimateManager : MonoBehaviour
             preparingStrike = false;
             AudioManager.instance.StopLoopSound(lightningChargeAS);
             lightningChargeAS = null;
+
+            foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)
+                item.rumbleController.AddRumble(lightningAmbientRumble);
         }
     }
 
@@ -143,6 +151,7 @@ public class ClimateManager : MonoBehaviour
         {
             if (hit.collider.TryGetComponent(out PlayerController player))
             {
+                player.stateMachine.stunedState.stunedRumble = lightningHitRumble;
                 player.stateMachine.stunedState.maxTimeStunned = stunnedTime;
                 player.stateMachine.ChangeState(player.stateMachine.stunedState);
             }

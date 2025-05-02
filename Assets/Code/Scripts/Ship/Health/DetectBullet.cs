@@ -5,6 +5,9 @@ public class DetectBullet : MonoBehaviour
     [Header("ShipInformation")]
     protected Ship ship;
 
+    [SerializeField]
+    protected RumbleController.RumblePressets hitRumble;
+
     private void Awake()
     {
         ship = GetComponentInParent<Ship>();
@@ -35,6 +38,13 @@ public class DetectBullet : MonoBehaviour
         ship.SetCurrentHealth(-_bullet.GetDamage());
         if (ship.name == ShipsManager.instance.playerShip.name)
             Camera.main.GetComponent<CameraShaker>().TriggerShake(1);
+
+        if(ship is AllyShip)
+        {
+            foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)
+                item.rumbleController.AddRumble(hitRumble);
+        }
+
         Destroy(collision.gameObject);
     }
 

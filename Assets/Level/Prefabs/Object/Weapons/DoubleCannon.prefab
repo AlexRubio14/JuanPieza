@@ -129,6 +129,15 @@ MonoBehaviour:
   weaponReloadClip: {fileID: 8300000, guid: 95dc95a248d1b8247a7b3e46e9dae157, type: 3}
   shootReadyClip: {fileID: 8300000, guid: 28e5890ed6cfe8f4783c0e31f91cb4c6, type: 3}
   shootStoppedClip: {fileID: 8300000, guid: 1090ecceb3558a64f9fd36442492a851, type: 3}
+  shootRumble:
+    motorForces: 3
+    rumbleDuration: 0.2
+  shootStoppedRumble:
+    motorForces: 1
+    rumbleDuration: 0.05
+  shootReadyRumble:
+    motorForces: 0
+    rumbleDuration: 0.05
   bulletPrefab: {fileID: 1671708259023600102, guid: 2a261842a67d1e44ba76ff80b57942df, type: 3}
   bulletSpawnPosRight: {fileID: 2240617293191348218}
   bulletSpawnPosLeft: {fileID: 7069641486950363503}
@@ -324,7 +333,7 @@ NavMeshObstacle:
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 0
-  m_Center: {x: 0, y: 0.82, z: 0}
+  m_Center: {x: 0, y: 0.84, z: 0}
   m_TimeToStationary: 0.3
 --- !u!1 &3426756992027230203
 GameObject:
