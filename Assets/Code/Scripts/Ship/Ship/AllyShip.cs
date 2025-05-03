@@ -190,7 +190,9 @@ public class AllyShip : Ship
     {
         if (!smoke.gameObject.activeSelf)
         {
-            smoke.gameObject.SetActive(true);
+            smoke.gameObject.SetActive(true); 
+            smoke.Clear();
+            smoke.Play();
         }
         else
         {
@@ -201,8 +203,7 @@ public class AllyShip : Ship
             var shape = smoke.shape;
             shape.radius += radiusSum;
         }
-        smoke.Clear();
-        smoke.Play();
+        
     }
     public List<Transform> GetSpawnPoints()
     {

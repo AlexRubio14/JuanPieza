@@ -28,6 +28,10 @@ public class FishingRod : Tool, ICatapultAmmo
     private Vector3 maxTilt;
     [field: SerializeField]
     public Vector2 throwForce { get; private set; }
+    [Space, SerializeField]
+    private AudioClip grabHookClip;
+    [field: SerializeField]
+    public AudioClip grabWaterHookClip {  get; private set; }
 
     public HookController hook { get; private set; }
 
@@ -199,12 +203,14 @@ public class FishingRod : Tool, ICatapultAmmo
     }
     public void GrabHook()
     {
-
+        if(hookThrowed)
+            AudioManager.instance.Play2dOneShotSound(grabHookClip, "Objects", 0.3f, 0.85f, 1.15f);
+        
         StartCoroutine(FishingManager.instance.HookGrabbed(this));
 
         if (!hook.onWater)
         {
-            if(player)
+            if (player)
                 player.stateMachine.ChangeState(player.stateMachine.idleState);
             isFishing = false;
         }

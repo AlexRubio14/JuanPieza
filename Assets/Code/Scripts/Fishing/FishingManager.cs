@@ -54,6 +54,7 @@ public class FishingManager : MonoBehaviour
 
     [Space, Header("Rescue NPC"), SerializeField]
     private List<RescueNPC> rescueNPCs;
+
     private void Awake()
     {
         if (instance)
@@ -383,6 +384,7 @@ public class FishingManager : MonoBehaviour
                 new Vector3(newData.parabolaEndPos.y, fishingData[_id].rescueNPC.transform.position.y, newData.parabolaEndPos.z) -
                 fishingData[_id].rescueNPC.transform.position
                 ).normalized;
+        AudioManager.instance.Play2dOneShotSound(fishingData[_id].fishingRod.grabWaterHookClip, "Objects", 0.7f, 0.85f, 1.15f);
     }
     private void GrabObject(int _id, FishingRod _fishingRod)
     {
@@ -414,7 +416,10 @@ public class FishingManager : MonoBehaviour
 
         newData.parabolaEndPos = targetPos;
         fishingData[_id] = newData;
+
+        AudioManager.instance.Play2dOneShotSound(fishingData[_id].fishingRod.grabWaterHookClip, "Objects", 0.2f, 0.85f, 1.15f);
     }
+
     #endregion
 
     private void CheckNearPlayers(int _id)
