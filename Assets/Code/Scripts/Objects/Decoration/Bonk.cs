@@ -21,7 +21,7 @@ public class Bonk : RepairObject
         animationController.Play();
 
         //Sonido
-        AudioManager.instance.Play2dOneShotSound(bonkClip, "Objects", 0.2f, 0.9f, 1.1f);
+        AudioManager.instance.Play2dOneShotSound(bonkClip, "Objects", 0.6f, 0.9f, 1.1f);
 
         //Vibracion
         foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)

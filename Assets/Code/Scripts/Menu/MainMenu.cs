@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
@@ -10,8 +9,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button exitButton;
     [SerializeField] private Slider audioSlider;
     [SerializeField] private TransitionController transition;
-    
     private bool _isCreditsOpen = false;
+
+    private string MUSIC_VALUE_KEY = "MUSIC_VALUE";
+    private string SFX_VALUE_KEY = "SFX_VALUE";
     
     private Animator _anim;
     private Button lastButton;
@@ -52,20 +53,22 @@ public class MainMenu : MonoBehaviour
 
     public void NewGame()
     {
+        int musicValue = PlayerPrefs.GetInt(MUSIC_VALUE_KEY);
+        int sfxValue = PlayerPrefs.GetInt(SFX_VALUE_KEY);
         PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetInt(MUSIC_VALUE_KEY, musicValue);
+        PlayerPrefs.SetInt(SFX_VALUE_KEY, sfxValue);
         PlayerPrefs.Save();
 
         foreach (QuestData item in QuestManager.Instance.allQuests)
             item.completed = false;
 
         transition.EndLevelTransition();
-        //SceneManager.LoadScene("Hub");
     }
 
     public void PlayGame()
     {
         transition.EndLevelTransition();
-        //SceneManager.LoadScene("Hub");
     }
     
     public void OpenOptions()
