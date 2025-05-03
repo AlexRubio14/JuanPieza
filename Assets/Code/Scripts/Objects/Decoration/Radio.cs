@@ -12,6 +12,10 @@ public class Radio : Resource, ICatapultAmmo
     {
         base.Awake();
     }
+    private void Start()
+    {
+        AudioManager.instance.ApplyRadioFilter(AudioManager.instance.radioAs);
+    }
 
     public override void Interact(ObjectHolder _objectHolder) { }
 
@@ -45,7 +49,7 @@ public class Radio : Resource, ICatapultAmmo
 
         AudioManager.instance.musicAs.Pause();
         AudioManager.instance.PlayLoopSound(AudioManager.instance.radioAs, musicsList[randomMusic], "Radio", 1f, 1f, 1f);
-        AudioManager.instance.Play2dOneShotSound(radioClip, "Objects", 0.8f, 0.6f, 0.8f);
+        AudioManager.instance.Play2dOneShotSound(radioClip, "Objects", 0.5f, 0.6f, 0.8f);
     }
 
     private void StopPlaying()
@@ -53,7 +57,13 @@ public class Radio : Resource, ICatapultAmmo
         AudioManager.instance.musicAs.UnPause();
         AudioManager.instance.radioAs.clip = null;
         AudioManager.instance.radioAs.Stop();
-        AudioManager.instance.Play2dOneShotSound(radioClip, "Objects", 0.8f, 1.1f, 1.3f);
+        AudioManager.instance.Play2dOneShotSound(radioClip, "Objects", 0.5f, 1.1f, 1.3f);
 
     }
+    
+    public void RadioFallAtWater()
+    {
+        AudioManager.instance.ApplyUnderwaterFilter(AudioManager.instance.radioAs);
+    }
+
 }

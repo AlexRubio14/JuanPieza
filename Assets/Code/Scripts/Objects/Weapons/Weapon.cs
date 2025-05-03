@@ -291,6 +291,7 @@ public abstract class Weapon : RepairObject
         isTilting = false;
         hasAmmo = false;
         canUse = false;
+        isBeginUsed = false;
 
         Shoot();
 
