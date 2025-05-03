@@ -9,6 +9,8 @@ public class WaterController : MonoBehaviour
     [SerializeField]
     private AudioClip fallWaterClip;
 
+    private Radio radioButtonClip;
+    private AudioClip radioBreakClip;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -18,7 +20,11 @@ public class WaterController : MonoBehaviour
         if (collision.collider.CompareTag("Object"))
         {
             if (collision.collider.TryGetComponent(out Radio _radio))
+            {
                 _radio.RadioFallAtWater();
+                radioBreakClip = _radio.breakRadioClip;
+                Invoke("BreakRadio", _radio.timeToBreakRadio);
+            }
             Destroy(collision.gameObject);
         }
 
@@ -35,6 +41,16 @@ public class WaterController : MonoBehaviour
         }
 
         AudioManager.instance.Play2dOneShotSound(fallWaterClip, "Objects");
+    }
+
+    private void BreakRadio()
+    {
+        if (radioBreakClip)
+        {
+            Radio.BreakRadio(radioBreakClip);
+            StartCoroutine(Radio.PlayMainMusic());
+        }
+
     }
 }
 
