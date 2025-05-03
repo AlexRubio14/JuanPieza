@@ -6,8 +6,12 @@ public class DanceState : PlayerState
     public override void EnterState()
     {
         //Empezar musica
-        danceMusicAS = AudioManager.instance.Play2dLoop(controller.danceMusic, "DanceMusic", 1, 1, 1);
-
+        if (!AudioManager.instance.radioAs.isPlaying && !AudioManager.instance.danceAs.isPlaying)
+        {
+            AudioManager.instance.danceAs.clip = controller.danceMusic;
+            AudioManager.instance.danceAs.Play();
+        }
+        
         controller.animator.SetTrigger("Dance");
         controller.animator.SetBool("Dancing", true);
     }
@@ -21,7 +25,9 @@ public class DanceState : PlayerState
     public override void ExitState()
     {
         //Parar la musica
-        AudioManager.instance.StopLoopSound(danceMusicAS);
+        if(AudioManager.instance.danceAs.isPlaying)
+            AudioManager.instance.danceAs.Stop();
+
         controller.animator.SetBool("Dancing", false);
     }
 

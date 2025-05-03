@@ -87,7 +87,7 @@ public class Hammer : Tool, ICatapultAmmo
             }
             else if(hit.collider.TryGetComponent(out PlayerController _hittedPlayer))
             {
-                if(_hittedPlayer != playerCont)
+                if(_hittedPlayer != playerCont && _hittedPlayer.stateMachine.currentState is not DeathState)
                 {
                     //Players: Llamar a una funcion del player controler para stunearlo
                     _hittedPlayer.stateMachine.stunedState.stunedRumble = playerStunRumble;

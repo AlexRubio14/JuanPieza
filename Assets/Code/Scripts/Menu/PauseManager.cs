@@ -85,6 +85,8 @@ public class PauseManager : MonoBehaviour
         {
             Destroy(player.playerInput.gameObject);
         }
+
+        Radio.StopPlaying(null);
         Destroy(PlayersManager.instance.gameObject);
         Destroy(gameObject);
         

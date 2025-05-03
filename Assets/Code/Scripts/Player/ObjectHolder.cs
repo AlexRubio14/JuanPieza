@@ -55,7 +55,7 @@ public class ObjectHolder : MonoBehaviour
             InteractableObject tempObject = item.collider.GetComponent<InteractableObject>();
 
             if (!tempObject || 
-                tempObject.isBeginUsed ||
+                tempObject.isBeginUsed && (tempObject is not Weapon || !(tempObject as Weapon).CanInteract(this))||
                 !tempObject.CanGrab(this) && !tempObject.CanInteract(this) &&
                 (tempObject is not Repair || !(tempObject as Repair).GetObjectState().GetIsBroken()) &&
                 (tempObject is not Weapon || !(tempObject as Weapon).GetFreeze())
@@ -101,7 +101,7 @@ public class ObjectHolder : MonoBehaviour
         
         _interactableObject.rb.isKinematic = true;
 
-        AudioManager.instance.Play2dOneShotSound(pickUpClip, "Objects");
+        AudioManager.instance.Play2dOneShotSound(pickUpClip, "Objects", 0.2f);
 
         if (!_setParent)
             return;
