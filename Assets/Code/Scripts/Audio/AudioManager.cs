@@ -27,6 +27,7 @@ public class AudioManager : MonoBehaviour
     [HideInInspector] public AudioSource seagullAs;
     [HideInInspector] public AudioSource musicAs;
     [HideInInspector] public AudioSource radioAs;
+    [HideInInspector] public AudioSource danceAs;
 
 
     private void Awake()
@@ -55,11 +56,17 @@ public class AudioManager : MonoBehaviour
         musicAs.playOnAwake = false;
         musicAs.outputAudioMixerGroup = mixer.FindMatchingGroups("Game Theme")[0];
 
+
         GameObject radioObject = new GameObject("RadioAS");
         radioObject.transform.SetParent(transform, false);
         radioAs = radioObject.AddComponent<AudioSource>();
         radioAs.playOnAwake = false;
         radioAs.outputAudioMixerGroup = mixer.FindMatchingGroups("Radio")[0];
+
+        danceAs = actions2dASObj.AddComponent<AudioSource>();
+        danceAs.playOnAwake = false;
+        danceAs.loop = true;
+        danceAs.outputAudioMixerGroup = mixer.FindMatchingGroups("DanceMusic")[0];
 
         for (int i = 0; i < total3DAS; i++)
         {
@@ -223,7 +230,7 @@ public class AudioManager : MonoBehaviour
         if (!highFilter)
             highFilter = _as.AddComponent<AudioHighPassFilter>();
 
-        highFilter.cutoffFrequency = 3500f;
+        highFilter.cutoffFrequency = 500f;
         highFilter.highpassResonanceQ = 1f;
 
 
@@ -231,7 +238,7 @@ public class AudioManager : MonoBehaviour
         if (!distortionFilter)
             distortionFilter = _as.AddComponent<AudioDistortionFilter>();
 
-        distortionFilter.distortionLevel = 0.6f;
+        distortionFilter.distortionLevel = 0.1f;
     }
 
     public void ApplyUnderwaterFilter(AudioSource _as)
@@ -244,7 +251,7 @@ public class AudioManager : MonoBehaviour
         if (!distortionFilter)
             distortionFilter = _as.AddComponent<AudioDistortionFilter>();
 
-        distortionFilter.distortionLevel = 0.4f;
+        distortionFilter.distortionLevel = 0.15f;
 
 
         AudioHighPassFilter highFilter = _as.GetComponent<AudioHighPassFilter>();

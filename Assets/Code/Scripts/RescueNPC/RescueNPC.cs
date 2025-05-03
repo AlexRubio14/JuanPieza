@@ -32,6 +32,9 @@ public class RescueNPC : MonoBehaviour
     void Update()
     {
 
+        if (hookToFollow && !hookToFollow.activeInHierarchy)
+            hookToFollow = null;
+
         if (!rescued && hookToFollow)
         {
             //Si la distancia hacia el  anzuelo es menor a X esperar a ser rescatado

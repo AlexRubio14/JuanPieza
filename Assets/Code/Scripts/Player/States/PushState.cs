@@ -28,13 +28,20 @@ public class PushState : PlayerState
                 }
                 else if (hit.collider && hit.collider.CompareTag("Player"))
                 {
+
+
                     pushForce = controller.playerPushForce;
                     PlayerController hittedPlayer = hit.collider.GetComponent<PlayerController>();
+                    if (hittedPlayer.stateMachine.currentState is DeathState or StunedState)
+                        continue;
+
                     hittedPlayer.animator.SetTrigger("Hitted");
                     if (hittedPlayer.stateMachine.currentState is FishingState)
                     {
+                        hittedPlayer.objectHolder.GetHandInteractableObject().Release(hittedPlayer.objectHolder);
                         hittedPlayer.stateMachine.ChangeState(hittedPlayer.stateMachine.idleState);
                     }
+
                 }
 
                 Vector3 pushForward = controller.transform.forward * pushForce.x;

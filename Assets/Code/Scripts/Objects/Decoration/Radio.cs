@@ -56,7 +56,7 @@ public class Radio : Resource, ICatapultAmmo
         AudioManager.instance.Play2dOneShotSound(toggleRadioClip, "Objects", 0.5f, 0.6f, 0.8f);
     }
 
-    private static void StopPlaying(AudioClip _buttonClip)
+    public static void StopPlaying(AudioClip _buttonClip)
     {
         AudioManager.instance.musicAs.UnPause();
         AudioManager.instance.radioAs.clip = null;

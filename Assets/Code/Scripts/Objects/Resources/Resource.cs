@@ -28,7 +28,7 @@ public abstract class Resource : InteractableObject
     private void DropItem(ObjectHolder _objectHolder)
     {
         _objectHolder.RemoveItemFromHand();
-        AudioManager.instance.Play2dOneShotSound(dropItemClip, "Objects");
+        AudioManager.instance.Play2dOneShotSound(dropItemClip, "Objects", 0.6f);
         _objectHolder.playerController.animator.SetBool("Pick", false);
 
     }
