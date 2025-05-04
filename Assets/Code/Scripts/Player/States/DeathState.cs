@@ -72,6 +72,7 @@ public class DeathState : PlayerState
             }
         }
 
+        //Esta comprobacion es para que evitar el bug del sonido de nadar infinito
         if ((isDead || isRespawning ) && swimSource && swimSource.isPlaying)
         {
             AudioManager.instance.StopLoopSound(swimSource);
@@ -93,7 +94,10 @@ public class DeathState : PlayerState
 
             return;
         }
-        controller.Rotate(controller.movementDirection, controller.swimRotateSpeed);
+        float rotationSpeed = controller.swimRotateSpeed;
+        if (isRespawning)
+            rotationSpeed = controller.rotationSpeed;
+        controller.Rotate(controller.movementDirection, rotationSpeed);
 
         Vector3 moveDir = controller.movementInput != Vector2.zero ? transform.forward : Vector3.zero;
 
@@ -102,6 +106,7 @@ public class DeathState : PlayerState
     }
     public override void ExitState()
     {
+        controller.animator.SetBool("Swimming", false);
         AudioManager.instance.StopLoopSound(swimSource);
 
         isDead = false;

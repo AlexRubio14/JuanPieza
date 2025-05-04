@@ -25,6 +25,9 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+
         _anim.SetBool("OpenMainMenu", true);
         _anim.SetBool("OpenOptionsMenu", false);
 

@@ -8,9 +8,7 @@ public class VendingMachine : InteractableObject
     private AudioClip vendingClip;
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
-        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-
-        return !handObject;
+        return false;
     }
 
     public override void Grab(ObjectHolder _objectHolder)

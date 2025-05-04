@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class DrunkState : PlayerState
 {
+    int drunkBeers;
+    int maxBeers = 5;
     float desiredDrunkAngle;
     float drunkAngle;
     float currentDrunkAngle;
@@ -110,7 +112,8 @@ public class DrunkState : PlayerState
     }
     private void EndBeerEffect()
     {
-        if (currentDrunkAngle == controller.baseDrunkAngle)
+        drunkBeers = Mathf.Clamp(drunkBeers - 1, 0, maxBeers);
+        if (drunkBeers <= 0)
         {
             currentTimeDrunk = 0;
             stateMachine.ChangeState(stateMachine.idleState);
@@ -126,11 +129,17 @@ public class DrunkState : PlayerState
     }
     public void DrinkBeer()
     {
-        currentDrunkAngle += controller.drunkAngleIncrement;
-        currentLookAtSpeed += controller.drunkLookAtIncrement;
-        ParticleSystem.EmissionModule emission = controller.drunkParticles.emission;
-        emission.rateOverTime = controller.drunkParticles.emission.rateOverTime.constant + 1;
+        if (drunkBeers < maxBeers)
+        {
+            drunkBeers++;
+            currentDrunkAngle += controller.drunkAngleIncrement;
+            currentLookAtSpeed += controller.drunkLookAtIncrement;
+            ParticleSystem.EmissionModule emission = controller.drunkParticles.emission;
+            emission.rateOverTime = controller.drunkParticles.emission.rateOverTime.constant + 1;
+        }
+        
         currentTimeDrunk = 0;
+        
     }
     
 }
