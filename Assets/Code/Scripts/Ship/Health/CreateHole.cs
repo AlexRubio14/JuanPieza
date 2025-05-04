@@ -6,16 +6,22 @@ public class CreateHole : DetectBullet
     [SerializeField] private GameObject hole;
 
     [SerializeField]
+    private LayerMask floorLayer;
+
+    [SerializeField]
     private LayerMask hitLayer;
     [SerializeField]
     private float holeRadius;
+
     protected override void DetectCollision(Collision collision, Bullet _bullet)
     {
         base.DetectCollision(collision, _bullet);
         if(_bullet.createHole)
         {
-            GenerateHole(collision.contacts[0].point, _bullet);
-            BreakNearbyObjects(collision.contacts[0].point);
+            Vector3 startRayPoint = collision.contacts[0].point + Vector3.up;
+            Physics.Raycast(startRayPoint, Vector3.down, out RaycastHit hit, 1.5f, floorLayer);
+            GenerateHole(hit.point, _bullet);
+            BreakNearbyObjects(hit.point);
         }
     }
 
@@ -37,11 +43,12 @@ public class CreateHole : DetectBullet
         {
             if (hit.collider.TryGetComponent(out EnemyObject _enemyObject))
                 _enemyObject.BreakObject();
-            else if(hit.collider.TryGetComponent(out Repair _objectToRepair))
+            else if(hit.collider.TryGetComponent(out Repair _objectToRepair) && !_objectToRepair.GetObjectState().GetIsBroken())
             {
                 _objectToRepair.GetObjectState().SetIsBroke(true);
                 _objectToRepair.OnBreakObject();
-            }else if (hit.collider.TryGetComponent(out PlayerController player))
+            }
+            else if (hit.collider.TryGetComponent(out PlayerController player))
             {
                 player.PlayerHitted(_position);
             }

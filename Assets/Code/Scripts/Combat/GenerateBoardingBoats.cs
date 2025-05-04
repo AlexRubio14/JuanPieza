@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GenerateBoardingBoats : MonoBehaviour
 {
@@ -14,7 +13,7 @@ public class GenerateBoardingBoats : MonoBehaviour
         {
             raftCount = 3;
             pirates = 1;
-            Invoke("StartBoarding", 8f);
+            Invoke("StartBoarding", 6f);
         }
     }
 
@@ -49,6 +48,7 @@ public class GenerateBoardingBoats : MonoBehaviour
                     pirates = 4;
 
                 currentRaft = RaftManager.Instance.CreateRaftEventsHardCoded(pirates);
+                currentRaft.eventHasFinished = false;
             }
         }
     }

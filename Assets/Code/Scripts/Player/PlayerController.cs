@@ -34,7 +34,12 @@ public class PlayerController : MonoBehaviour
     private bool canRoll;
     [field: SerializeField]
     public Vector2 bounceForce { get; private set; }
-
+    [field: SerializeField]
+    public GameObject rollParticles {  get; private set; }
+    [field: SerializeField]
+    public GameObject rollBounceParticles {  get; private set; }
+    [field: SerializeField]
+    public RumbleController.RumblePressets bounceRumble {  get; private set; }
 
     [field: Space, Header("Push"), SerializeField]
     public float pushRadius { get; private set; }
@@ -52,32 +57,66 @@ public class PlayerController : MonoBehaviour
     public Vector2 objectPushForce { get; private set; }
     [field: SerializeField]
     public float objectTorqueForce {  get; private set; }
-
     [field: SerializeField] public float pirateKnockbackForce { get; private set; }
     [field: SerializeField] public float pirateUpForce { get; private set; }
-
-
-    public Rigidbody rb { get; private set; }
-
-    [SerializeField] public ObjectHolder objectHolder;
+    [SerializeField] public LayerMask objectLayer {  get; set; }
 
 
     [field: Space, Header("Death"), SerializeField]
-    public float timeToDie {  get; private set; }
+    public float timeToDie { get; private set; }
+    [field: SerializeField]
+    public float timeToRespawn { get; private set; }
     [field: SerializeField]
     public float swimSpeed { get; private set; }
+    [field: SerializeField]
+    public float swimRotateSpeed { get; private set; }
+    [field: SerializeField]
+    public GameObject respawnParticles { get; private set; }
+    [field: SerializeField]
+    public AudioClip swimClip {  get; private set; }
+    [field: SerializeField]
+    public AudioClip respawnClip {  get; private set; }
+    
 
-    [Space, Header("Interact"), SerializeField]
+    [Space, Header("Fishing"), SerializeField]
     private Canvas interactCanvas;
-
     public GameObject interactCanvasObject => interactCanvas.transform.gameObject;
 
 
-    [field: Space, Header("Cannon"), SerializeField]
-    public float cannonSpeed { get; private set; }
+    [field: Space, Header("Weapon"), SerializeField]
+    public float weaponSpeed { get; private set; }
     [field:SerializeField]
-    public float cannonRotationSpeed { get; private set; }
-    public float cannonTilt {  get; private set; }
+    public float weaponRotationSpeed { get; private set; }
+    [field:SerializeField]
+    public float weaponRotationOffset { get; private set; }
+    public float weaponRotationAxis { get; private set; }
+
+
+    [field: Space, Header("Drunk"), SerializeField]
+    public float baseDrunkAngle {  get; private set; }
+    [field: SerializeField]
+    public float drunkAngleIncrement { get; private set; }
+    [field: SerializeField]
+    public float baseDrunkLookAtSpeed {  get; private set; }
+    [field: SerializeField]
+    public float drunkLookAtIncrement { get; private set; }
+    [field: SerializeField]
+    public float drunkMinAngleDiff { get; private set; }
+    [field: SerializeField]
+    public float drunkStateDuration {  get; private set; }
+    [field: SerializeField]
+    public ParticleSystem drunkParticles { get; private set; }
+
+
+    [field: Space, Header("Dance"), SerializeField]
+    public AudioClip danceMusic { get; private set; }
+
+
+    [Space, Header("Ice"), SerializeField] 
+    private float iceDrag;
+    private float realDrag;
+    private bool isOnIce;
+
 
     [field: Space, Header("Audio"), SerializeField]
     public AudioClip dieClip;
@@ -86,30 +125,26 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public AudioClip pushGameObjectClip;
     [SerializeField] public List<AudioClip> pushListClips;
 
-    public Animator animator { get; private set; }
-    
-    public HintController hintController { get; private set; }
 
-    [field: SerializeField]
-    //public ProgressBarController progressBar { get; private set; }
+    public Animator animator { get; private set; }
     private CapsuleCollider capsuleCollider;
+    public Rigidbody rb { get; private set; }
+
+    public ObjectHolder objectHolder { get; private set; }
 
     public bool movementBuffActive {  get; set; }
     public float currentKnockBackTime { get; set; }
 
-    [SerializeField] public LayerMask objectLayer;
-
-
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
-        hintController = GetComponent<HintController>();
         capsuleCollider = GetComponent<CapsuleCollider>();
+        animator = GetComponentInChildren<Animator>();
+        objectHolder = GetComponentInChildren<ObjectHolder>();
 
         stateMachine = GetComponent<PlayerStateMachine>();
         stateMachine.InitializeStates(this);
+        realDrag = rb.linearDamping;
     }
 
     private void Start()
@@ -120,12 +155,22 @@ public class PlayerController : MonoBehaviour
         objectHolder = GetComponentInChildren<ObjectHolder>();
         interactCanvas.worldCamera = Camera.main;
         interactCanvasObject.SetActive(false);
+        drunkParticles.Stop(true);
     }
-
     private void OnEnable()
     {
         SuscribeActions();
         PlayersManager.instance.ingamePlayers.Add(this);
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            stateMachine.ChangeState(stateMachine.deathState);
+            stateMachine.deathState.StartRespawn();
+        }
+
     }
     private void SuscribeActions()
     {
@@ -144,7 +189,15 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnStopUseAction += StopUseAction;
 
-        playerInput.OnWeaponTiltAction += CannonTiltAction;
+        playerInput.OnDanceAction += DanceAcion;
+
+        playerInput.OnGrabAction += GrabAction;
+        
+        playerInput.OnReleaseAction += ReleaseAction;
+
+        playerInput.OnPushAction += PushAction;
+
+        playerInput.OnWeaponRotateAction += WeaponRotateAction;
     }
 
     private void OnDisable()
@@ -159,7 +212,16 @@ public class PlayerController : MonoBehaviour
 
         playerInput.OnUseAction -= UseAction;
 
-        playerInput.OnWeaponTiltAction -= CannonTiltAction;
+        playerInput.OnDanceAction -= DanceAcion;
+
+        playerInput.OnGrabAction -= GrabAction;
+
+        playerInput.OnReleaseAction -= ReleaseAction;
+
+        playerInput.OnPushAction -= PushAction;
+
+        playerInput.OnWeaponRotateAction -= WeaponRotateAction;
+
 
         movementInput = Vector2.zero;
         movementDirection = Vector3.zero;
@@ -175,7 +237,7 @@ public class PlayerController : MonoBehaviour
     }
     private void RollAction()
     {
-        if (canRoll)
+        if (canRoll && !objectHolder.GetHasObjectPicked() && OnFloor())
         {
             stateMachine.currentState.RollAction();
             canRoll = false;
@@ -198,15 +260,32 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.currentState.StopUseAction();
     }
-    private void CannonTiltAction(float _axis)
+    private void PushAction()
     {
-        cannonTilt = _axis;
+        stateMachine.currentState.PushAction();
+    }
+    public void PlayerHitted(Vector3 _hitPosition, float forceMultiplier = 1)
+    {
+        stateMachine.currentState.OnHit(_hitPosition, forceMultiplier);
+    }
+    private void DanceAcion()
+    {
+        if (stateMachine.currentState is IdleState)
+            stateMachine.ChangeState(stateMachine.danceState);
+    }
+    private void GrabAction()
+    {
+        stateMachine.currentState.GrabAction();
+    } 
+    private void ReleaseAction()
+    {
+        stateMachine.currentState.ReleaseAction();
+    }
+    private void WeaponRotateAction(float _axis)
+    {
+        weaponRotationAxis = _axis;
     }
 
-    public void PlayerHitted(Vector3 _hitPosition)
-    {
-        stateMachine.currentState.OnHit(_hitPosition);
-    }
     #endregion
 
     #region Actions
@@ -214,6 +293,7 @@ public class PlayerController : MonoBehaviour
     {
         rb.AddForce(_direction * _speed, ForceMode.Force);
     }
+
     public bool CheckSlope()
     {
         float angle = 0;
@@ -254,6 +334,19 @@ public class PlayerController : MonoBehaviour
     {
         canPush = true;
     }
+    public void Grab()
+    {
+        InteractableObject handObject = objectHolder.GetHandInteractableObject();
+        InteractableObject nearObject = objectHolder.GetNearestInteractableObject();
+        if (!handObject && nearObject && nearObject.CanGrab(objectHolder))
+            nearObject.Grab(objectHolder);
+    }
+    public void Release()
+    {
+        InteractableObject handObject = objectHolder.GetHandInteractableObject();
+        if (handObject)
+            handObject.Release(objectHolder);
+    }
     public void Interact()
     {
         InteractableObject handObject = objectHolder.GetHandInteractableObject();
@@ -262,15 +355,13 @@ public class PlayerController : MonoBehaviour
         if (!handObject && (!nearestObject || nearestObject && !nearestObject.CanInteract(objectHolder)))
             return;
 
-        if(handObject)
+        if(handObject && handObject.CanInteract(objectHolder))
         {
             handObject.Interact(objectHolder);
-            hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));
         }else if (nearestObject && nearestObject.CanInteract(objectHolder))
         {
             nearestObject.Interact(objectHolder);
             objectHolder.ChangeNearestInteractableObject(null);
-            hintController.UpdateActionType(nearestObject.ShowNeededInputHint(objectHolder));
         }
         
         animator.SetBool("Pick", objectHolder.GetHandInteractableObject());
@@ -283,10 +374,9 @@ public class PlayerController : MonoBehaviour
         if(currentObject == null)
             currentObject = objectHolder.GetNearestInteractableObject();
 
-        if (currentObject as Repair)
+        if(currentObject && currentObject.CanInteract(objectHolder))
         {
-            if (((Repair)currentObject).IsPlayerReparing(this))
-                currentObject.StopInteract(objectHolder);
+            currentObject.StopInteract(objectHolder);
         }
     }
     public void Use()
@@ -301,38 +391,67 @@ public class PlayerController : MonoBehaviour
         InteractableObject nearestObj = objectHolder.GetNearestInteractableObject();
         if (nearestObj && nearestObj.CanInteract(objectHolder))
         {
-            hintController.UpdateActionType(nearestObj.ShowNeededInputHint(objectHolder));
             nearestObj.GetSelectedVisual().Show();
         }
-        else if (handObject == newHandObject)
-            hintController.UpdateActionType(handObject.ShowNeededInputHint(objectHolder));
-        else if (newHandObject)
-            hintController.UpdateActionType(newHandObject.ShowNeededInputHint(objectHolder));
-        else
-            hintController.UpdateActionType(new HintController.Hint[] { new HintController.Hint(HintController.ActionType.NONE, "") });
     }
     public void StopUse()
     {
         InteractableObject currentObject = objectHolder.GetHandInteractableObject();
 
-        if (!currentObject)
-            currentObject = objectHolder.GetNearestInteractableObject();
-
         if (currentObject)
+        {
             currentObject.StopUse(objectHolder);
+        }
     }
     #endregion
 
+
+    public bool OnFloor()
+    {
+        Vector3 raycastPos = transform.position;
+        raycastPos.y -= capsuleCollider.height / 2 - 0.1f;
+
+        //Tirar Raycast contra el suelo
+        if (Physics.Raycast(raycastPos, Vector3.down, 0.3f, slopeCheckLayer))
+            return true;
+
+        raycastPos.x += capsuleCollider.radius;
+        raycastPos.z += capsuleCollider.radius;
+
+        float multiplyX = 1;
+        float multiplyZ = 1;
+
+        for (int i = 1; i<= 4; i++)
+        {
+            if (Physics.Raycast(raycastPos, Vector3.down, 0.3f, slopeCheckLayer))
+                return true;
+
+            raycastPos.x = transform.position.x + capsuleCollider.radius * multiplyX;
+            multiplyX *= -1;
+
+            if(i % 2 == 0)
+            {
+                multiplyZ *= -1;
+                raycastPos.z = transform.position.z + capsuleCollider.radius * multiplyZ;
+            }
+        }
+
+        return false;
+    }
     public Rigidbody GetRB() { return rb; }
 
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("Colisiona contra " + collision.contacts[0].otherCollider.gameObject.name + " | El estado es " + stateMachine.currentState.ToString());
         stateMachine.currentState.OnCollisionEnter(collision);
-
     }
 
-    private void OnDrawGizmos()
+    private void OnCollisionStay(Collision collision)
+    {
+        stateMachine.currentState.OnCollisionStay(collision);
+    }
+
+    private void OnDrawGizmosSelected()
     {
         //Gizmo del area de empujar
         Gizmos.color = Color.cyan;
@@ -347,12 +466,77 @@ public class PlayerController : MonoBehaviour
         if (capsuleCollider)
         {
             Gizmos.color = Color.green;
-            endPos = transform.position + (Vector3.down * (capsuleCollider.height / 2 + slopeCheckDistance));
+            startPos = transform.position;
+            startPos.y -= capsuleCollider.height / 2 - 0.1f;
+            endPos = startPos + Vector3.down * 0.3f;
             Gizmos.DrawLine(startPos, endPos);
-            startPos = transform.position + transform.forward * capsuleCollider.radius;
-            endPos = startPos + (Vector3.down * (capsuleCollider.height / 2 + slopeCheckDistance));
-            Gizmos.DrawLine(startPos, endPos);
+
+            startPos.x += capsuleCollider.radius;
+            startPos.z += capsuleCollider.radius;
+            endPos.x += capsuleCollider.radius;
+            endPos.z += capsuleCollider.radius;
+
+            float multiplyX = 1;
+            float multiplyZ = 1;
+
+            for (int i = 1; i < 5; i++)
+            {
+
+                startPos.x = transform.position.x + capsuleCollider.radius * multiplyX;
+                endPos.x = startPos.x;
+
+                multiplyX *= -1;
+                if (i % 2 == 0)
+                {
+                    multiplyZ *= -1;
+                    startPos.z = transform.position.z + capsuleCollider.radius * multiplyZ;
+                    endPos.z = startPos.z;
+
+                }
+                Gizmos.DrawLine(startPos, endPos);
+
+            }
         }
+
+        Gizmos.color = Color.red;
+
+
+        Quaternion drunkRotation = Quaternion.Euler(0, baseDrunkAngle, 0);
+        Vector3 drunkDirection = drunkRotation * transform.forward;
+        Vector3 drunkEndPos1 = transform.position + drunkDirection * 3;
+        Gizmos.DrawLine(transform.position, drunkEndPos1);
+
+        drunkRotation = Quaternion.Euler(0, -baseDrunkAngle, 0);
+        drunkDirection = drunkRotation * transform.forward;
+        Vector3 drunkEndPos2 = transform.position + drunkDirection * 3;
+        Gizmos.DrawLine(transform.position, drunkEndPos2);
+
+        Gizmos.DrawLine(drunkEndPos1, drunkEndPos2);
+
+        Gizmos.color = Color.green;
+
+        drunkRotation = Quaternion.Euler(0, drunkMinAngleDiff / 2, 0);
+        drunkDirection = drunkRotation * transform.forward;
+        Vector3 drunkEndPos = transform.position + drunkDirection * 3;
+        Gizmos.DrawLine(transform.position, drunkEndPos);
+
+        drunkRotation = Quaternion.Euler(0, -drunkMinAngleDiff / 2, 0);
+        drunkDirection = drunkRotation * transform.forward;
+        drunkEndPos = transform.position + drunkDirection * 3;
+        Gizmos.DrawLine(transform.position, drunkEndPos);
+    }
+
+    public void SetOnIce(bool value)
+    {
+        if (value == isOnIce)
+            return;
+
+        isOnIce = value;
+        if (isOnIce)
+            rb.linearDamping = iceDrag;
+        else
+            rb.linearDamping = realDrag;
+
     }
 
     public void SetBaseMovementSpeed(float speed)

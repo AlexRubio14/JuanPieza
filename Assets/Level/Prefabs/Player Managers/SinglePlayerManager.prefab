@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3192513368140245161}
   - component: {fileID: 2708333723839152188}
   - component: {fileID: 7037647223120207762}
+  - component: {fileID: 8091707145478889338}
   m_Layer: 0
   m_Name: SinglePlayerManager
   m_TagString: Untagged
@@ -140,7 +141,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7037647223120207762}
         m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
-        m_MethodName: ReadMovement
+        m_MethodName: DanceAction
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -150,13 +151,57 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 878f05c3-9cb2-4a4f-9846-020aa2e501fa
-    m_ActionName: 'CannonGameplay/MoveForward[/Keyboard/s,/Keyboard/w]'
+    m_ActionId: 08adba98-a2a9-47a3-ac86-2786f65dc65c
+    m_ActionName: 'Gameplay/Dance[/Keyboard/t,/DualSenseGamepadHID/buttonNorth]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 35dcb16d-404a-4802-bad9-ebd5298cb697
+    m_ActionName: 'Dialogue/PassDialogue[/DualSenseGamepadHID/buttonSouth,/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 05486066-6182-4e92-845e-994112effe3f
+    m_ActionName: 'MapMenu/Navigate[/DualSenseGamepadHID/leftStick/up,/DualSenseGamepadHID/rightStick/up,/DualSenseGamepadHID/leftStick/down,/DualSenseGamepadHID/rightStick/down,/DualSenseGamepadHID/leftStick/left,/DualSenseGamepadHID/rightStick/left,/DualSenseGamepadHID/leftStick/right,/DualSenseGamepadHID/rightStick/right,/DualSenseGamepadHID/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0258e531-510a-4146-a87b-d3dc6782fdde
+    m_ActionName: 'MapMenu/Submit[/Keyboard/enter,/DualSenseGamepadHID/buttonSouth,/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ef4a0a01-4f41-4f08-8f87-0373b19d659d
+    m_ActionName: 'MapMenu/Cancel[/Keyboard/escape,/DualSenseGamepadHID/buttonEast]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ceb0b3ed-7ac9-42e9-a6bc-8804b759d48e
+    m_ActionName: 'MapMenu/Point[/Mouse/position]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5d2efcf6-1b23-4fe4-9dc1-40740cd3a89c
+    m_ActionName: 'MapMenu/Click[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 113e8f84-ea3e-4a67-9a1f-be83460cb275
+    m_ActionName: 'MapMenu/ScrollWheel[/Mouse/scroll]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c0f55f2e-b221-444b-b28f-c08ef4cd3398
+    m_ActionName: 'MapMenu/MiddleClick[/Mouse/middleButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 232f5ed7-50ef-4160-8474-3deac1a5f2b1
+    m_ActionName: 'MapMenu/RightClick[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 19032ac3-c109-408d-8c58-029b0eb9b498
+    m_ActionName: MapMenu/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c9d9288e-05e2-4cb1-aeef-4d92c34e2f2a
+    m_ActionName: MapMenu/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7037647223120207762}
         m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
-        m_MethodName: InteractAction
+        m_MethodName: GrabAction
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -166,13 +211,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: c87b404b-3c93-445a-8518-4a98770b3dd1
-    m_ActionName: 'CannonGameplay/Interact[/Keyboard/e]'
+    m_ActionId: 3e2d06fd-64cd-457c-b5e1-8922f9dd6d33
+    m_ActionName: Gameplay/Grab & Release
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7037647223120207762}
         m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
-        m_MethodName: UseAction
+        m_MethodName: RotateWeaponAction
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -182,13 +227,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 94cc6104-b448-49e3-9a96-f091566055fd
-    m_ActionName: 'CannonGameplay/Use[/Keyboard/q]'
+    m_ActionId: a9372c67-0d3c-4286-87d3-c22211dca1b2
+    m_ActionName: 'Gameplay/RotateWeapon[/Keyboard/leftArrow,/Keyboard/rightArrow,/DualSenseGamepadHID/rightStick/right,/DualSenseGamepadHID/rightStick/left]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7037647223120207762}
         m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
-        m_MethodName: TiltCannon
+        m_MethodName: PauseAction
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -198,8 +243,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 04d5ebc7-0b8b-4c67-8d5b-164e6b229e1d
-    m_ActionName: 'CannonGameplay/TiltWeapon[/Mouse/rightButton,/Mouse/leftButton]'
+    m_ActionId: 18910dfe-2f73-4f88-b8ee-b11aff9badde
+    m_ActionName: 'Gameplay/Pause&Resume[/Keyboard/escape,/XInputControllerWindows/start]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f6b0754f-2233-4ecc-997f-f521fe601fbe
+    m_ActionName: Camera/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7037647223120207762}
+        m_TargetAssemblyTypeName: GameInput, Assembly-CSharp
+        m_MethodName: PushAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9cf44225-9804-415c-b83f-a5b3e4c52e36
+    m_ActionName: 'Gameplay/Push[/DualSenseGamepadHID/buttonWest,/Keyboard/f]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerSelectMenu
@@ -218,6 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <currentPlayerSelectorObject>k__BackingField: {fileID: 8897048477050318486}
+  currentColor: 0
 --- !u!114 &7037647223120207762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,6 +296,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f9b26ed2b455d408e09861b9037b63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8091707145478889338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3511720882383195403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f45563630289954bb45add66cb7c5c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rumbleForces:
+    _serializedList:
+    - Key: 0
+      Value: 0.05
+    - Key: 1
+      Value: 0.15
+    - Key: 2
+      Value: 0.35
+    - Key: 3
+      Value: 0.5
+    - Key: 4
+      Value: 0.8
+  debugForce: 0
+  debugRumble: 0
 --- !u!1001 &8627141663569908679
 PrefabInstance:
   m_ObjectHideFlags: 0

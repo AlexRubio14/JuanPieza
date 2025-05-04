@@ -94,7 +94,7 @@ public class StartMisionAnimation : MonoBehaviour
     {
         foreach (PlayerController playerController in PlayersManager.instance.ingamePlayers)
         {
-            playerController.animator.SetTrigger("Celebrate");
+            playerController.animator.SetTrigger("HandUp");
         }
         animationActivated = false;
     }
@@ -103,8 +103,8 @@ public class StartMisionAnimation : MonoBehaviour
     {
         board.GetQuestCanvas().SetActive(false);
         int i = 0;
-        foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.players)
-            player.Item1.SwitchCurrentActionMap("Dialogue");
+        foreach (PlayersManager.PlayerData player in PlayersManager.instance.players)
+            player.playerInput.SwitchCurrentActionMap("Dialogue");
 
         foreach (PlayerController playerController in PlayersManager.instance.ingamePlayers)
         {

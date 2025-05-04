@@ -15,8 +15,9 @@ public class ShootCannonAction : EnemyAction
         aimTargetObject = GetRandomObject(ShipsManager.instance.playerShip.GetInventory());
     }
 
-    public override void StateUpdate()
+    public override void StateUpdate(bool _onNavLink)
     {
+        onNavLink = _onNavLink;
         Vector3 targetPos = ((EnemyWeapon)target).shooterPosition.position;
         if (!IsNearToDestiny(targetPos))
             MoveToWeapon(targetPos);

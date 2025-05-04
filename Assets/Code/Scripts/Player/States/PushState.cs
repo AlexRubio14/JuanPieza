@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class PushState : PlayerState
 {
@@ -7,10 +6,7 @@ public class PushState : PlayerState
     public override void EnterState()
     {
         if(!controller.canPush)
-        {
-            stateMachine.ChangeState(stateMachine.idleState);
             return;
-        }
 
         controller.canPush = false;
 
@@ -32,8 +28,20 @@ public class PushState : PlayerState
                 }
                 else if (hit.collider && hit.collider.CompareTag("Player"))
                 {
+
+
                     pushForce = controller.playerPushForce;
-                    hit.collider.GetComponentInChildren<Animator>().SetTrigger("Hitted");
+                    PlayerController hittedPlayer = hit.collider.GetComponent<PlayerController>();
+                    if (hittedPlayer.stateMachine.currentState is DeathState or StunedState)
+                        continue;
+
+                    hittedPlayer.animator.SetTrigger("Hitted");
+                    if (hittedPlayer.stateMachine.currentState is FishingState)
+                    {
+                        hittedPlayer.objectHolder.GetHandInteractableObject().Release(hittedPlayer.objectHolder);
+                        hittedPlayer.stateMachine.ChangeState(hittedPlayer.stateMachine.idleState);
+                    }
+
                 }
 
                 Vector3 pushForward = controller.transform.forward * pushForce.x;
@@ -77,7 +85,7 @@ public class PushState : PlayerState
         pushTimePassed += Time.deltaTime;
         if (pushTimePassed >= controller.rollDuration)
         {
-            stateMachine.ChangeState(stateMachine.idleState);
+            stateMachine.ChangeState(stateMachine.lastState);
         }
     }
     public override void FixedUpdateState()
@@ -92,6 +100,8 @@ public class PushState : PlayerState
     {
         //No puedes rodar
     }
+    public override void GrabAction() { /* No puedes coger nada */ }
+    public override void ReleaseAction() { /* No deberias tener nada en la mano */}
     public override void InteractAction() { /*No puede interactuar aqui*/ }
     public override void StopInteractAction() { /*No hace nada*/ }
     public override void UseAction() { /*No puede usar nada aqui*/ }

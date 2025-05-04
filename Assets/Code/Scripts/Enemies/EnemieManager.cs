@@ -43,7 +43,7 @@ public class EnemieManager : MonoBehaviour
             link.UpdateLink();
     }
 
-    public void GenerateEnemies()
+    public void GenerateEnemies(EnemiesStats stats)
     {
         toDoList = new List<EnemyAction>();
         enemyList = new List<EnemyController>();
@@ -57,7 +57,7 @@ public class EnemieManager : MonoBehaviour
                 newEnemy.enemieManager = this;
                 newEnemy.gameObject.transform.SetParent(transform, true);
                 newEnemy.GetComponent<NavMeshAgent>().enabled = false;
-
+                newEnemy.GetComponent<NavMeshAgent>().speed = stats.Speed;
                 enemyList.Add(newEnemy);
             }
         }
@@ -66,7 +66,6 @@ public class EnemieManager : MonoBehaviour
             EnemyController newEnemy = Instantiate(falseEnemyPrefab, enemySpawnPoint.position, Quaternion.identity).GetComponent<EnemyController>();
             newEnemy.enemieManager = this;
             newEnemy.gameObject.transform.SetParent(transform, true);
-            //newEnemy.GetComponent<EnemyController>().currentAction.currentAction = EnemyAction.ActionType.WAIT;
             enemyList.Add(newEnemy);
         }
     }

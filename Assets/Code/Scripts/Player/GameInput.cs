@@ -1,9 +1,12 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GameInput : MonoBehaviour
 {
+    private PlayerInput playerInput;
+
     public Action<Vector2> OnMoveAction;
     public Action OnInteractAction;
     public Action OnStopInteractAction;
@@ -12,10 +15,17 @@ public class GameInput : MonoBehaviour
     public Action OnPushAction;
     public Action OnRollAction;
     public Action OnThrowAction;
-
-    public Action<float> OnWeaponTiltAction;
+    public Action OnDanceAction;
+    public Action OnGrabAction;
+    public Action OnReleaseAction;
+    
+    public Action<float> OnWeaponRotateAction;
     public int playerReference { get;  set; }
 
+    private void Awake()
+    {
+        playerInput = GetComponent<PlayerInput>();
+    }
 
     public void ReadMovement(InputAction.CallbackContext obj)
     {
@@ -24,50 +34,55 @@ public class GameInput : MonoBehaviour
     }
     public void InteractAction(InputAction.CallbackContext obj)
     {
-        if (obj.started)
-        {
-            if (OnInteractAction != null)
+        if (obj.started && OnInteractAction != null)
                 OnInteractAction();
-        }
-        else if (obj.canceled)
-        {
-            if(OnStopInteractAction != null)
+        else if (obj.canceled && OnStopInteractAction != null)
                 OnStopInteractAction();
-        }
     }
     public void UseAction(InputAction.CallbackContext obj)
     {
-        if (obj.started)
-        {
-            if (OnUseAction != null)
-                OnUseAction();
-        }
-        else if (obj.canceled)
-        {
-            if(OnStopUseAction != null)
+        if (obj.started && OnUseAction != null)
+                OnUseAction(); 
+        else if (obj.canceled && OnStopUseAction != null)
                 OnStopUseAction();
-        }
     }
     public void RollAction(InputAction.CallbackContext obj)
     {
-        if (obj.started)
-        {
-            if (OnRollAction != null)
+        if (obj.started && OnRollAction != null)
                 OnRollAction();
-        }
     }
     public void ThrowAction(InputAction.CallbackContext obj)
     {
-        if (obj.started)
-        {
-            if (OnThrowAction != null)
+        if (obj.started && OnThrowAction != null)
                 OnThrowAction();
-        }
+    }
+    public void DanceAction(InputAction.CallbackContext obj)
+    {
+        if (obj.started && OnDanceAction != null)
+            OnDanceAction();
+    }
+    public void GrabAction(InputAction.CallbackContext obj)
+    {
+        if (obj.started && OnGrabAction != null)
+                OnGrabAction();
+        else if (obj.canceled && OnReleaseAction != null)
+                OnReleaseAction();
+    }
+    public void PushAction(InputAction.CallbackContext obj)
+    {
+        if (obj.started && OnPushAction != null)
+            OnPushAction();
     }
 
-    public void TiltCannon(InputAction.CallbackContext obj)
+    public void RotateWeaponAction(InputAction.CallbackContext obj)
     {
-        if (OnWeaponTiltAction != null)
-            OnWeaponTiltAction(obj.ReadValue<float>());
+        if (OnWeaponRotateAction != null)
+            OnWeaponRotateAction(obj.ReadValue<float>());
+    }
+
+    public void PauseAction(InputAction.CallbackContext obj)
+    {
+        if (obj.started)
+            PauseManager.Instance.TogglePause();
     }
 }

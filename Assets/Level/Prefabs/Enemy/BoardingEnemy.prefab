@@ -161,7 +161,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8600436954467225763}
   m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 0.8
+  m_Radius: 0.3
   m_Speed: 2.7
   m_Acceleration: 8
   avoidancePriority: 50
@@ -173,7 +173,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 5
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 3
 --- !u!1001 &6988200653947838540
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1051,6 +1051,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7f01ff0f885ba024dad205a8fb628ac0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5521385787613101496}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7f01ff0f885ba024dad205a8fb628ac0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4625293265098890518}
     - targetCorrespondingSourceObject: {fileID: 6867522487195653003, guid: 7f01ff0f885ba024dad205a8fb628ac0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1819774515146336755}
@@ -1266,3 +1269,35 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4625293265098890518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7798680574666448157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a04cc4921888ef4fb66b9480afc1f2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floorMask:
+    serializedVersion: 2
+    m_Bits: 256
+  footsteps:
+  - {fileID: 8300000, guid: 54a8f61f8b2ec5141895497c74f9b2d2, type: 3}
+  - {fileID: 8300000, guid: c348b0b575699034c819f3bba2735379, type: 3}
+  - {fileID: 8300000, guid: cbfd0c1765eeb8d4ba6b04529fe6eb3f, type: 3}
+  - {fileID: 8300000, guid: 72d6b567fe64d2b43a597769c8acf40d, type: 3}
+  - {fileID: 8300000, guid: 327dacdac208474428e226d7fbb15579, type: 3}
+  - {fileID: 8300000, guid: 2740ed5fac7a7b14cb6f06d5c221ccdd, type: 3}
+  - {fileID: 8300000, guid: c3a8a93e2c15db840ab626cc0d95924d, type: 3}
+  - {fileID: 8300000, guid: 7922ba980fd427e4b9ae629eceea7d0b, type: 3}
+  iceFootsteps:
+  - {fileID: 8300000, guid: 016e14a6cd3762d4d85b7ea481b0f732, type: 3}
+  - {fileID: 8300000, guid: 77711e4c50bc5614a8ea82a9baf5da3e, type: 3}
+  - {fileID: 8300000, guid: 998c41691a037c143adc1a8925f904e3, type: 3}
+  - {fileID: 8300000, guid: b3048a107dbde064e9721dcb40503bb4, type: 3}
+  - {fileID: 8300000, guid: 5644cb7013d84f243ab147f93f009db1, type: 3}
+  playFootstep: 1
+  footstepVolume: 0.25

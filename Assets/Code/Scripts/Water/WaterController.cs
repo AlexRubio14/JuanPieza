@@ -9,21 +9,24 @@ public class WaterController : MonoBehaviour
     [SerializeField]
     private AudioClip fallWaterClip;
 
+    private Radio radioButtonClip;
+    private AudioClip radioBreakClip;
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Bullet") || collision.collider.CompareTag("Object"))
+        if (collision.collider.CompareTag("Bullet"))
+            Destroy(collision.gameObject);
+
+        if (collision.collider.CompareTag("Object"))
         {
-            if (collision.gameObject.TryGetComponent<InteractableObject>(out InteractableObject interactableObject))
+            if (collision.collider.TryGetComponent(out Radio _radio))
             {
-                if (interactableObject.objectSO.objectType == ObjectSO.ObjectType.WEAPON)
-                    ShipsManager.instance.playerShip.GenerateCannon();
+                _radio.RadioFallAtWater();
+                radioBreakClip = _radio.breakRadioClip;
+                Invoke("BreakRadio", _radio.timeToBreakRadio);
             }
             Destroy(collision.gameObject);
         }
-
-
-        
 
         //Instanciar particulas
         Vector3 splashPosition = new Vector3(collision.transform.position.x, transform.position.y, collision.transform.position.z);
@@ -38,6 +41,16 @@ public class WaterController : MonoBehaviour
         }
 
         AudioManager.instance.Play2dOneShotSound(fallWaterClip, "Objects");
+    }
+
+    private void BreakRadio()
+    {
+        if (radioBreakClip)
+        {
+            Radio.BreakRadio(radioBreakClip);
+            StartCoroutine(Radio.PlayMainMusic());
+        }
+
     }
 }
 

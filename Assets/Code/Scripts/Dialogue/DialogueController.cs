@@ -22,7 +22,7 @@ public class DialogueController : MonoBehaviour
     private bool showingText = false;
     private bool displayingDialogue = false;
     private Dictionary<string, Action> actionList = new Dictionary<string, Action>();
-    public int sequenceIndex = -1;
+    private int sequenceIndex = -1;
 
 
     [Space, SerializeField]
@@ -32,6 +32,8 @@ public class DialogueController : MonoBehaviour
 
     [Space, Header("Audio"), SerializeField]
     private AudioClip letterSpawnSound;
+    [SerializeField]
+    private AudioClip[] wordSpawnSound;
     [SerializeField]
     private AudioClip clickSound;
     private int dialogueSoundIndex;
@@ -81,8 +83,8 @@ public class DialogueController : MonoBehaviour
         letterIndex = 0;
         dialogueText.maxVisibleCharacters = letterIndex;
         showingText = true;
-        foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
-            item.Item1.SwitchCurrentActionMap("Dialogue");
+        foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)
+            item.playerInput.SwitchCurrentActionMap("Dialogue");
 
         StartCoroutine(UpdateInputImages());
         ReadDialogueType();
@@ -141,8 +143,8 @@ public class DialogueController : MonoBehaviour
         sequenceIndex = -1;
         showingText = false;
         displayingDialogue = false;
-        foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
-            item.Item1.SwitchCurrentActionMap("Gameplay");
+        foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)
+            item.playerInput.SwitchCurrentActionMap("Gameplay");
         dialogueObject.SetActive(false);
     }
 
@@ -169,6 +171,12 @@ public class DialogueController : MonoBehaviour
             if (dialogueSoundIndex % 4 == 0)
                 AudioManager.instance.Play2dOneShotSound(letterSpawnSound, "SFX", 0.35f, 2f, 2.5f);
 
+            if (dialogueSoundIndex % 9 == 0)
+            {
+                AudioClip randClip = wordSpawnSound[UnityEngine.Random.Range(0, wordSpawnSound.Length)];
+                AudioManager.instance.Play2dOneShotSound(randClip, "SFX", 1.5f, 0.8f, 1f);
+            }
+
             dialogueSoundIndex++;
         }
     }
@@ -190,7 +198,7 @@ public class DialogueController : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         HintController.DeviceType device = PlayersManager.instance.ingamePlayers.Count > 0 
-            ? PlayersManager.instance.ingamePlayers[0].hintController.deviceType 
+            ? PlayersManager.instance.ingamePlayers[0].GetComponent<HintController>().deviceType 
             : HintController.DeviceType.KEYBOARD;
         foreach (KeyValuePair<Image, Sprite[]> item in actionsSprites)
         {

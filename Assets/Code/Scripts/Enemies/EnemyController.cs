@@ -62,7 +62,7 @@ public class EnemyController : MonoBehaviour
         {
             SetNavLinkSpeed();
             if (currentAction != null)
-                currentAction.StateUpdate();
+                currentAction.StateUpdate(agent.isOnOffMeshLink);
         }
 
         if(!rb.isKinematic && Physics.Raycast(transform.position, Vector3.down, 1.5f, floorLayer))
@@ -107,23 +107,27 @@ public class EnemyController : MonoBehaviour
 
     private void SetNavLinkSpeed()
     {
-        bool isGamePaused = PauseManager.Instance.IsPaused;
-        
         float currentSpeed = !inPetrol ? baseSpeed : petrolSpeed;
         agent.speed = !agent.isOnOffMeshLink ? currentSpeed : linkSpeed;
     }
 
     public void Knockback(Vector2 _force, Vector2 _direction)
     {
-        agent.enabled = false;
-        rb.isKinematic = false;
-        Vector3 pushForward = _direction * _force.x;
-        Vector3 pushUp = Vector3.up * _force.y;
-        transform.position += Vector3.up * 0.5f;
-        rb.AddForce((pushForward + pushUp), ForceMode.Impulse);
+        if(agent)
+            agent.enabled = false;
+
+        if (rb)
+        {
+            rb.isKinematic = false;
+
+            Vector3 pushForward = _direction * _force.x;
+            Vector3 pushUp = Vector3.up * _force.y;
+            transform.position += Vector3.up * 0.5f;
+            rb.AddForce((pushForward + pushUp), ForceMode.Impulse);
+        }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, transform.position - transform.up * 1.5f);

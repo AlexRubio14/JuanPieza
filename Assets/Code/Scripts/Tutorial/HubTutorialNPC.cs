@@ -148,8 +148,8 @@ public class HubTutorialNPC : MonoBehaviour
         IEnumerator WaitToChangeInputMap()
         {
             yield return new WaitForSeconds(1f);
-            foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
-                item.Item1.SwitchCurrentActionMap("MapMenu");
+            foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)
+                item.playerInput.SwitchCurrentActionMap("MapMenu");
         }
         
     }

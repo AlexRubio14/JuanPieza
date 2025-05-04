@@ -3,12 +3,9 @@ using UnityEngine.UI;
 
 public class ObjectsTooltip : MonoBehaviour
 {
-    public enum ObjectType { Weapon, Object }
     public enum ObjectState { None, Interacting, Empty, Loaded, Cooldown, Broken, Repairing }
     
     [Header("Objects Tooltip")]
-    [SerializeField] private ObjectType objectType = ObjectType.Object;
-
     private ObjectState currentState;
     
     [Header("UI")]

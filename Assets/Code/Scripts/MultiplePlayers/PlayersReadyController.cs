@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -71,7 +70,11 @@ public class PlayersReadyController : MonoBehaviour
     #region Test Player Selector
     private void AddPlayerToMenu(PlayerInput _newPlayer)
     {
-        (PlayerInput input, SinglePlayerController singlePlayer) newPlayer = (_newPlayer, _newPlayer.GetComponent<SinglePlayerController>());
+        PlayersManager.PlayerData newPlayer = new PlayersManager.PlayerData();
+        newPlayer.playerInput = _newPlayer;
+        newPlayer.singlePlayer = _newPlayer.GetComponent<SinglePlayerController>();
+        newPlayer.gameInput = _newPlayer.GetComponent<GameInput>();
+        newPlayer.rumbleController = _newPlayer.GetComponent<RumbleController>();
         PlayersManager.instance.players.Add(newPlayer);
         int playerIndex = PlayersManager.instance.players.IndexOf(newPlayer);
         PlacePlayerOnMenu(playerIndex);
@@ -89,8 +92,8 @@ public class PlayersReadyController : MonoBehaviour
         //Ocultar los botones de unirse en el lado que se 
         joinGameButtonsUI[_playerIndex].SetActive(false);
         //mover el player al punto exacto del menu
-        PlayersManager.instance.players[_playerIndex].Item1.transform.position = playerUIPos[_playerIndex].transform.position;
-        PlayersManager.instance.players[_playerIndex].Item1.transform.forward = -playerUIPos[_playerIndex].transform.forward;
+        PlayersManager.instance.players[_playerIndex].playerInput.transform.position = playerUIPos[_playerIndex].transform.position;
+        PlayersManager.instance.players[_playerIndex].playerInput.transform.forward = -playerUIPos[_playerIndex].transform.forward;
 
     }
    
@@ -100,10 +103,10 @@ public class PlayersReadyController : MonoBehaviour
         //Destruimos el ultimo player
         int playerToDestroyID = PlayersManager.instance.players.Count - 1;
 
-        PlayersManager.instance.players[playerToDestroyID].Item1.currentActionMap.FindAction("StartGame").performed -= StartGameEvent;
-        PlayersManager.instance.players[playerToDestroyID].Item1.currentActionMap.FindAction("Exit").performed -= RemovePlayerEvent;
+        PlayersManager.instance.players[playerToDestroyID].playerInput.currentActionMap.FindAction("StartGame").performed -= StartGameEvent;
+        PlayersManager.instance.players[playerToDestroyID].playerInput.currentActionMap.FindAction("Exit").performed -= RemovePlayerEvent;
 
-        Destroy(PlayersManager.instance.players[playerToDestroyID].Item1.gameObject);
+        Destroy(PlayersManager.instance.players[playerToDestroyID].playerInput.gameObject);
         //Lo quitamos de las listas
         PlayersManager.instance.players.RemoveAt(playerToDestroyID);
         //Hacemos aparecer de nuevo la UI
@@ -123,9 +126,9 @@ public class PlayersReadyController : MonoBehaviour
     {
         for (int i = 0; i < PlayersManager.instance.players.Count; i++)
         {
-            PlayersManager.instance.players[i].Item1.currentActionMap.FindAction("StartGame").performed -= StartGameEvent;
-            PlayersManager.instance.players[i].Item1.currentActionMap.FindAction("Exit").performed -= RemovePlayerEvent;
-            PlayersManager.instance.players[i].Item2.currentPlayerSelectorObject.SetActive(false);
+            PlayersManager.instance.players[i].playerInput.currentActionMap.FindAction("StartGame").performed -= StartGameEvent;
+            PlayersManager.instance.players[i].playerInput.currentActionMap.FindAction("Exit").performed -= RemovePlayerEvent;
+            PlayersManager.instance.players[i].singlePlayer.currentPlayerSelectorObject.SetActive(false);
         }
 
         SceneManager.LoadScene(nextScene);
@@ -137,22 +140,25 @@ public class PlayersReadyController : MonoBehaviour
     #region Hub
     private void AddPlayerToHub(PlayerInput _newPlayer)
     {
-        (PlayerInput input, SinglePlayerController singlePlayer) newPlayer = (null, null);
+        PlayersManager.PlayerData newPlayer = new PlayersManager.PlayerData();
         bool playerExists = false;
-        foreach ((PlayerInput, SinglePlayerController) item in PlayersManager.instance.players)
+        foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)
         {
-            if(_newPlayer == item.Item1)
+            if (_newPlayer == item.playerInput)
             {
                 newPlayer = item;
                 playerExists = true;
                 break;
             }
         }
-        
+
 
         if (!playerExists)
         {
-            newPlayer = (_newPlayer, _newPlayer.GetComponent<SinglePlayerController>());
+            newPlayer.playerInput = _newPlayer;
+            newPlayer.singlePlayer = _newPlayer.GetComponent<SinglePlayerController>();
+            newPlayer.gameInput = _newPlayer.GetComponent<GameInput>();
+            newPlayer.rumbleController = _newPlayer.GetComponent<RumbleController>();
             PlayersManager.instance.players.Add(newPlayer);
             newPlayer.singlePlayer.currentColor = -1;
             int colorIndex = PlayersManager.instance.GetNextMaterial(-1);

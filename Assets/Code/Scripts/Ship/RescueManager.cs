@@ -43,8 +43,7 @@ public class RescueManager : MonoBehaviour
         npcsCount--;
         if(npcsCount == 0)
         {
-            Camera.main.GetComponent<ArriveIslandCamera>().enabled = true;
-            Camera.main.GetComponent<ArriveIslandCamera>().SetIsRepositing();
+            ShipsManager.instance.GenerateEnemyShip();
         }
     }
 

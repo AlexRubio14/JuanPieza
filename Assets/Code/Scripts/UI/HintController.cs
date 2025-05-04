@@ -1,60 +1,36 @@
-using AYellowpaper.SerializedCollections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
+
 
 public class HintController : MonoBehaviour
 {
-    [SerializeField]
-    private HintActionData.Language language;
-
-    [SerializeField]
-    private HintActionData[] hintActions;
     public enum DeviceType { KEYBOARD = 0, GAMEPAD = 1}
     public enum ActionType { 
-        CANT_USE,
+        GRAB,
         USE, 
         HOLD_USE,
-        CANT_INTERACT,
         INTERACT, 
-        HOLD_INTERACT,
-        NONE
+        HOLD_INTERACT
     }
     
     [field: SerializeField]
     public DeviceType deviceType {  get; private set; }
 
-    [Space]
-    [SerializeField, SerializedDictionary("Action", "Device Sprites")] 
-    private SerializedDictionary<ActionType, List<Sprite>> ActionSprites;
-    [Space, SerializeField] private Canvas canvas;
-    [SerializeField] private Image hintRightImage;
-    [SerializeField] private Image hintLeftImage;
-    private TextMeshProUGUI hintRightText;
-    private TextMeshProUGUI hintLeftText;
+    private InteractableObject lastInteractObject;
 
-    [SerializeField] private float hintOffset;
+    private ObjectHolder objectHolder;
 
-    public bool showingHints;
+    private Hint playerHint;
 
-    public struct Hint
+    private void Awake()
     {
-        public Hint(ActionType _type, string _id)
-        {
-            hintType = _type;
-            hintId = _id;
-        }
-        public ActionType hintType;
-        public string hintId;
+        playerHint = GetComponent<Hint>();
+        objectHolder = GetComponentInChildren<ObjectHolder>();
     }
-
     private void Start()
     {
-        canvas.worldCamera = Camera.main;
         PlayerController playerCont = GetComponent<PlayerController>();
-        PlayerInput input = PlayersManager.instance.players[playerCont.playerInput.playerReference].Item1; 
+        PlayerInput input = PlayersManager.instance.players[playerCont.playerInput.playerReference].playerInput; 
         InputDevice device = input.devices[0];  // En este caso, tomamos el primer dispositivo de la lista
 
         if (device is Gamepad)
@@ -64,124 +40,97 @@ public class HintController : MonoBehaviour
         else
             Debug.Log($"Input no reconocido, el dispositivo es: {device.displayName}");
 
-
-        hintRightText = hintRightImage.GetComponentInChildren<TextMeshProUGUI>();
-        hintLeftText = hintLeftImage.GetComponentInChildren<TextMeshProUGUI>();
-
     }
 
     private void Update()
     {
-        if (hintRightImage.gameObject.activeInHierarchy)
-        {
-            Vector3 hintPos = transform.position + new Vector3(hintOffset, 0, 0);
-            hintRightImage.transform.position = hintPos;
-            hintRightImage.transform.forward = Camera.main.transform.forward;
-        }
+        InteractableObject handObject = objectHolder.GetHandInteractableObject();
+        InteractableObject nearObject = objectHolder.GetNearestInteractableObject();
 
-        if (hintLeftImage.gameObject.activeInHierarchy)
-        {
-            Vector3 hintPos = transform.position + new Vector3(-hintOffset, 0, 0);
-            hintLeftImage.transform.position = hintPos;
-            hintLeftImage.transform.forward = Camera.main.transform.forward;
-        }
-
+        CheckObjectToGrab(handObject, nearObject);
+        CheckObjectToUse(handObject);
+        CheckObjetToInteract(handObject, nearObject);
     }
 
-    private HintActionData GetDataById(string _stringId)
+    private void CheckObjectToGrab(InteractableObject _handObject, InteractableObject _nearestObject)
     {
-        foreach (HintActionData item in hintActions)
+        if (!_handObject && !_nearestObject)
         {
-            if(item.HintId == _stringId)
-                return item;
+            playerHint.DisableHint(ActionType.GRAB);
+            return;
         }
 
-        return null;
-    }
-
-    private void UpdateRightAction(Hint _action)
-    {
-        switch (_action.hintType)
-        {
-            case ActionType.CANT_INTERACT:
-            case ActionType.NONE:
-                hintRightImage.gameObject.SetActive(false);
-                break;
-            case ActionType.INTERACT:
-            case ActionType.HOLD_INTERACT:
-                hintRightImage.gameObject.SetActive(true);
-
-                Sprite currentSprite = ActionSprites[_action.hintType][(int)deviceType];
-                hintRightImage.sprite = currentSprite;
-                hintRightText.text = GetDataById(_action.hintId).hintTexts[language];
-
-                break;
-            default:
-                break;
-        }
+        if (_handObject)
+            playerHint.EnableHint(ActionType.GRAB, deviceType);
+        else if (_nearestObject && _nearestObject.CanGrab(objectHolder))
+            _nearestObject.hint.EnableHint(ActionType.GRAB, deviceType);
 
 
     }
-    private void UpdateLeftAction(Hint _action)
+    private void CheckObjectToUse(InteractableObject _handObject)
     {
-        switch (_action.hintType)
+        if (!_handObject || !_handObject.canUse)
         {
-            case ActionType.CANT_USE:
-            case ActionType.NONE:
-                hintLeftImage.gameObject.SetActive(false);
-                break;
-            case ActionType.USE:
-            case ActionType.HOLD_USE:
-                hintLeftImage.gameObject.SetActive(true);
-
-                Sprite currentSprite = ActionSprites[_action.hintType][(int)deviceType];
-                hintLeftImage.sprite = currentSprite;
-                hintLeftText.text = GetDataById(_action.hintId).hintTexts[language];
-                break;
-            default:
-                break;
+            playerHint.DisableHint(ActionType.USE);
+            playerHint.DisableHint(ActionType.HOLD_USE);
+            return;
         }
-
-    }
-
-    public void UpdateActionType(Hint[] _actions)
-    {
-
-        foreach (Hint item in _actions)
+        
+        if(_handObject is Weapon)
         {
-            switch (item.hintType)
+            _handObject.hint.EnableHint(_handObject.hint.useType, deviceType);
+            return;
+        }
+        //Mostrar el input hint en la cabeza del player
+        playerHint.EnableHint(_handObject.hint.useType, deviceType);
+    }
+    private void CheckObjetToInteract(InteractableObject _handObject, InteractableObject _nearestObject)
+    {
+        /*
+         * Esta comprobacion se hace por si dos players estan mirando a un objeto y uno puede hacer una accion que el otro no.
+         * Asi aunque el que puede no la mire el objeto el hint no se quede de forma permanente
+         */
+
+        if(lastInteractObject != _nearestObject && lastInteractObject)
+        {
+            if (!lastInteractObject.hint.SomePlayerCanInteract(lastInteractObject))
             {
-                case ActionType.CANT_USE:
-                case ActionType.USE:
-                case ActionType.HOLD_USE:
-                    UpdateLeftAction(item);
-                    break;
-                case ActionType.CANT_INTERACT:
-                case ActionType.INTERACT:
-                case ActionType.HOLD_INTERACT:
-                    UpdateRightAction(item);
-                    break;
-                case ActionType.NONE:
-                    UpdateRightAction(item);
-                    UpdateLeftAction(item);
-                    showingHints = false;
-                    break;
-                default:
-                    break;
+                lastInteractObject.hint.DisableHint(lastInteractObject.hint.interactType);
             }
         }
 
-        showingHints = hintRightImage.gameObject.activeInHierarchy || hintLeftImage.gameObject.activeInHierarchy;
+        lastInteractObject = _nearestObject;
 
-    }
+        if (!_nearestObject && _handObject is not Weapon)
+            return;
 
-    public void SetHintLeftText(string text)
-    {
-        hintLeftText.text = text;
-    }
+        if (_nearestObject && !_nearestObject.CanInteract(objectHolder))
+        {
+            if (_nearestObject.hint is RepairItemHint && ((_nearestObject as Repair).GetObjectState().GetIsBroken() || _nearestObject is Weapon && (_nearestObject as Weapon).GetFreeze()))
+            {
+                Repair repairItem = _nearestObject as Repair;
+                RepairItemHint repairItemHint = _nearestObject.hint as RepairItemHint;
 
-    public void SetHintLeftImage(Image image)
-    {
-        hintLeftImage = image;
-    }
+                if (repairItem.CanRepair(objectHolder) && repairItem.GetObjectState().GetIsBroken())
+                {
+                    //Mostrar progress bar
+                    repairItemHint.progressBar.gameObject.SetActive(true);
+                }
+                else
+                    repairItemHint.ShowRepairSprite();
+            }
+            return;
+        }
+
+        //En caso de tener un arma en la mano y que se pueda usar mostraremos el input
+        if (_handObject && _handObject is Weapon && _handObject.CanInteract(objectHolder))
+        {
+            _handObject.hint.EnableHint(_handObject.hint.interactType, deviceType);
+            return;
+        }
+
+        //Mostrar el hint de interactuar en el objeto mas cercano
+        if(_nearestObject)
+            _nearestObject.hint.EnableHint(_nearestObject.hint.interactType, deviceType);
+    }   
 }

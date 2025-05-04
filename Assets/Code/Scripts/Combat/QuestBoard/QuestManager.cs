@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance { get; private set; }
@@ -20,6 +21,18 @@ public class QuestManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+            UnLockLevels();
+    }
+
+    private void UnLockLevels()
+    {
+        foreach (QuestData quests in allQuests)
+            quests.SetCompleted(true);
     }
 
     public void UpdateAvailableQuests()

@@ -1,17 +1,13 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthController : MonoBehaviour
 {
     [SerializeField] private Image healthBarImage;
-    [SerializeField] private Image easeHealthBarImage;
-    [SerializeField, Range(0.05f, 0.5f)] private float lerpSpeed = 0.05f;
     [SerializeField, Range(0.01f, 10.0f)] private float disvanishSpeed = 7.0f;
 
     private bool enemyHealthBar;
-    private float targetHealth = 100;
     private bool isVanishing;
     private float vanishTimer;
 
@@ -25,22 +21,7 @@ public class HealthController : MonoBehaviour
         if (healthBarImage != null)
         {
             healthBarImage.fillAmount = health;
-        }
-
-        if (easeHealthBarImage != null)
-        {
-            targetHealth = health;
-            
-            if (enemyHealthBar)
-                StartVanish();
-        }
-    }
-
-    public void SetEaseHealthbar(float health)
-    {
-        if (easeHealthBarImage != null)
-        {
-            easeHealthBarImage.fillAmount = health;
+            StartVanish();
         }
     }
 
@@ -48,8 +29,6 @@ public class HealthController : MonoBehaviour
     {
         if (enemyHealthBar)
         {
-            SetEaseHealthbar(Mathf.Lerp(easeHealthBarImage.fillAmount, targetHealth, lerpSpeed));
-            
             if (isVanishing)
                 VanishHealthBars();
         }

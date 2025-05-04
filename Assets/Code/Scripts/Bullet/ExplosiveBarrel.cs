@@ -20,7 +20,8 @@ public class ExplosiveBarrel : Bullet
             if (hit.collider && gameObject != hit.collider.gameObject)
             {
                 Vector3 hitDirection = hit.collider.transform.position - transform.position;
-                hit.collider.GetComponent<EnemyController>().Knockback(explosionForce, hitDirection.normalized);
+                if(hit.collider.TryGetComponent(out EnemyController _enemy))
+                    _enemy.Knockback(explosionForce, hitDirection.normalized);
             }
         }
     }

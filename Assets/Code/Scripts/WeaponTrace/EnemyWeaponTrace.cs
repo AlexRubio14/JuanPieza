@@ -16,7 +16,7 @@ public class EnemyWeaponTrace : WeaponTracer
     private void FixedUpdate()
     {
         if(weapon.isLoaded)
-            PredictTrajectory(weapon.bulletForce);
+            PredictTrajectory(weapon.bulletForce, Vector2.zero);
 
         lineRenderer.enabled = weapon.isLoaded;
         decal.SetActive(weapon.isLoaded);
@@ -24,9 +24,9 @@ public class EnemyWeaponTrace : WeaponTracer
             decal.transform.forward = -collisionNormal;
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         if (displayTrace)
-            PredictTrajectory(weapon.bulletForce);
+            PredictTrajectory(weapon.bulletForce, Vector2.zero);
     }
 }

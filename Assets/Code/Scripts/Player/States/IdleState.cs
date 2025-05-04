@@ -16,7 +16,7 @@ public class IdleState : PlayerState
     }
     public override void FixedUpdateState()
     {
-        
+
     }
     public override void ExitState()
     {
@@ -25,6 +25,14 @@ public class IdleState : PlayerState
     public override void RollAction()
     {
         stateMachine.ChangeState(stateMachine.rollState);
+    }
+    public override void GrabAction() 
+    {
+        controller.Grab();    
+    }
+    public override void ReleaseAction()
+    {
+        controller.Release();
     }
     public override void InteractAction()
     {
@@ -39,14 +47,16 @@ public class IdleState : PlayerState
     {
         if (controller.objectHolder.GetHandInteractableObject())
             controller.Use();
-        else
-            stateMachine.ChangeState(stateMachine.pushState);
     }
     public override void StopUseAction() 
     {
         controller.StopUse();
     }
-
+    public override void PushAction()
+    {
+        if (!controller.objectHolder.GetHandInteractableObject())
+            stateMachine.ChangeState(stateMachine.pushState);
+    }
 
     public override void OnCollisionEnter(Collision collision)
     {

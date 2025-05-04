@@ -5,52 +5,54 @@ using UnityEngine.InputSystem;
 public class QuestBoardObject : InteractableObject
 {
     [SerializeField] private GameObject questCanvas;
+    [SerializeField]
+    private AudioClip openBoardClip;
+    public override void Grab(ObjectHolder _objectHolder)
+    {
+        throw new System.NotImplementedException();
+    }
+    public override void Release(ObjectHolder _objectHolder)
+    {
+        throw new System.NotImplementedException();
+    }
+    public override void Use(ObjectHolder _objectHolder) { }
     public override void Interact(ObjectHolder _objectHolder)
     {
-
         StartCoroutine(WaitEndOfFrame());
         IEnumerator WaitEndOfFrame()
         {
             yield return new WaitForEndOfFrame();
             questCanvas.SetActive(true);
 
-            foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.players)
+            foreach (PlayersManager.PlayerData player in PlayersManager.instance.players)
             {
-                player.Item1.SwitchCurrentActionMap("MapMenu");
+                player.playerInput.SwitchCurrentActionMap("MapMenu");
             }
         }
+
+        AudioManager.instance.Play2dOneShotSound(openBoardClip, "Objects", 0.75f, 0.9f, 1.1f);
     }
 
-    public void StopInteracting()
+    public override bool CanGrab(ObjectHolder _objectHolder)
     {
-        foreach ((PlayerInput, SinglePlayerController) player in PlayersManager.instance.players)
-        {
-            player.Item1.SwitchCurrentActionMap("Gameplay");
-        }
+        return false;
     }
-
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    public override bool CanInteract(ObjectHolder _objectHolder)
     {
-        if(_objectHolder.GetHandInteractableObject() != null)
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.NONE, "")
-            };
-
-        return new HintController.Hint[]
-        {
-            new HintController.Hint(HintController.ActionType.INTERACT, "open_map"),
-            new HintController.Hint(HintController.ActionType.CANT_USE, "")
-        };
-    }
-
-    public override void Use(ObjectHolder _objectHolder)
-    {
-        
+        return !_objectHolder.GetHandInteractableObject();
     }
 
     public GameObject GetQuestCanvas()
     {
         return questCanvas;
     }
+    public void StopInteracting()
+    {
+        foreach (PlayersManager.PlayerData player in PlayersManager.instance.players)
+        {
+            player.playerInput.SwitchCurrentActionMap("Gameplay");
+        }
+    }
+
+
 }

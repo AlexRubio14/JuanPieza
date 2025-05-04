@@ -29,14 +29,21 @@ public class ShipsManager : MonoBehaviour
     private void Start()
     {
         GenerateAllyShip();
-        enemiesHordes = new List<ShipData>(NodeManager.instance.questData.battleInformation.enemiesHordes);
+        enemiesHordes = new List<ShipData>(NodeManager.instance.questData.enemiesHordes);
         transitionController.InitLevelTransition();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H) && enemiesHordes.Count != 0)
+            for (int i = enemiesShips.Count - 1; i >= 0; i--)
+                enemiesShips[i].SetCurrentHealth(-300);
     }
 
     public void GenerateEnemies()
     {
         if (NodeManager.instance.questData.questObjective != QuestData.QuestObjective.BATTLE || 
-            NodeManager.instance.questData.battleInformation.enemiesHordes[0].spawnShipCondition != ShipData.SpawnShipCondition.INIT)
+            NodeManager.instance.questData.enemiesHordes[0].spawnShipCondition != ShipData.SpawnShipCondition.INIT)
             return;
 
         GenerateEnemyShip();
@@ -63,7 +70,7 @@ public class ShipsManager : MonoBehaviour
             }
         }
     }
-    private void GenerateEnemyShip()
+    public void GenerateEnemyShip()
     {
         foreach (var enemy in enemiesHordes[0].enemyShips)
         {
@@ -71,10 +78,10 @@ public class ShipsManager : MonoBehaviour
             GameObject enemyShip = Instantiate(enemy._ship, enemy.initShipPosition, rotation);
 
             enemyShip.GetComponent<EnemieManager>().SetTotalEnemies(enemy.enemiesCuantity);
-            enemyShip.GetComponent<EnemieManager>().SetStats(enemy.stats);
+            enemyShip.GetComponent<EnemieManager>().SetStats(NodeManager.instance.questData.stats);
 
             enemiesShips.Add(enemyShip.GetComponent<Ship>());
-            enemyShip.GetComponent<EnemieManager>().GenerateEnemies();
+            enemyShip.GetComponent<EnemieManager>().GenerateEnemies(NodeManager.instance.questData.stats);
             GenerateCannons(enemy, enemyShip);
             ShipEnemy controller = enemyShip.GetComponent<ShipEnemy>();
 
@@ -127,7 +134,7 @@ public class ShipsManager : MonoBehaviour
         {
             if(ship)
                 enemiesHordes.Remove(enemiesHordes[0]);
-            if (enemiesHordes.Count == 0 && PirateBoardingManager.Instance.piratesBoarding.Count <= 0)
+            if (enemiesHordes.Count == 0 && PirateBoardingManager.Instance.piratesBoarding.Count <= 0 && NodeManager.instance.questData.questObjective != QuestData.QuestObjective.BOARDING)
             {
                 Camera.main.GetComponent<ArriveIslandCamera>().enabled = true;
                 Camera.main.GetComponent<ArriveIslandCamera>().SetIsRepositing();

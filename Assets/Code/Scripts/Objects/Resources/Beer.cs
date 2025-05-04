@@ -1,40 +1,36 @@
 using UnityEngine;
 
-public class Beer : Resource
+public class Beer : Resource, ICatapultAmmo
 {
 
-    public override void Interact(ObjectHolder _objectHolder)
+    [Space, SerializeField]
+    private AudioClip drinkClip;
+    public override void Release(ObjectHolder _objectHolder)
     {
-        base.Interact(_objectHolder);
-        _objectHolder.hintController.UpdateActionType(ShowNeededInputHint(_objectHolder));
-    }
-    public override void Use(ObjectHolder _objectHolder)
-    {
-        //playear animacion player
+        if ((this as ICatapultAmmo).LoadItemInCatapult(_objectHolder, this))
+            return;
 
+        base.Release(_objectHolder);
+    }
+    public override void Interact(ObjectHolder _objectHolder) { }
+    public override void Use(ObjectHolder _objectHolder) 
+    {
         _objectHolder.RemoveItemFromHand();
-        _objectHolder.GetComponentInParent<PlayerController>().animator.SetBool("Pick", false);
+        _objectHolder.playerController.animator.SetTrigger("Consume"); //Animacion de beber
+        if (_objectHolder.playerController.stateMachine.currentState != _objectHolder.playerController.stateMachine.drunkState)
+            _objectHolder.playerController.stateMachine.ChangeState(_objectHolder.playerController.stateMachine.drunkState);
+        else
+            _objectHolder.playerController.stateMachine.drunkState.DrinkBeer();
+
+        _objectHolder.playerController.animator.SetBool("Pick", false);
+
+        AudioManager.instance.Play2dOneShotSound(drinkClip, "Objects", 0.8f);
+
         Destroy(gameObject);
     }
 
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    public override bool CanInteract(ObjectHolder _objectHolder)
     {
-        if (!_objectHolder.GetHasObjectPicked())
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "grab"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-        else if (_objectHolder.GetHandInteractableObject() == this)
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "drop"),
-                new HintController.Hint(HintController.ActionType.USE, "drink")
-            };
-
-        return new HintController.Hint[]
-        {
-            new HintController.Hint(HintController.ActionType.NONE, "")
-        };
+        return _objectHolder.GetHandInteractableObject() == this;
     }
 }

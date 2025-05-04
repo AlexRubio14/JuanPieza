@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,14 +23,17 @@ public class AllyShip : Ship
     private bool arriving;
     private bool leaving;
 
-    private float recoverHealth;
-
     [SerializeField] private GameObject behaivour;
     [SerializeField] private ShowMessageRepair[] message;
 
-    [Header("GenerateCannon")]
-    [SerializeField] private GameObject cannon;
-    [SerializeField] private WoodShelf fishingShelf;
+    [Header("Smoke")]
+    [SerializeField] private ParticleSystem smoke;
+    [SerializeField] private float rateOverTimeSum;
+    [SerializeField] private float radiusSum;
+
+    [SerializeField] private ObjectSO hammer;
+
+    private bool godMode;
 
     public override void Start()
     {
@@ -45,10 +47,15 @@ public class AllyShip : Ship
     {
         base.Update();
 
+        if (Input.GetKeyDown(KeyCode.G))
+            godMode = !godMode;
+
         if (arriving)
             MoveShip(startZ, 0);
         if (leaving)
-            MoveShip(0, startZ * -1);
+            DancePlayers();
+
+        GenerateHammer();
     }
 
     private void MoveShip(float firstZ, float secondZ)
@@ -58,33 +65,39 @@ public class AllyShip : Ship
         currentSpeed = Mathf.Lerp(speed, minSpeed, t);
         transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
         if (t >= 1)
-            arriving = false;
-        if (t >= 0.3 && leaving)
+            arriving = false;     
+    }
+
+    private void DancePlayers()
+    {
+        leaving = false;
+        foreach (PlayerController item in PlayersManager.instance.ingamePlayers)
         {
-            ShipsManager.instance.gameObject.GetComponent<TransitionController>().EndLevelTransition();
-            leaving = false;
-        }        
+            item.animator.SetTrigger("Dance");
+            item.animator.SetBool("Dancing", true);
+        }
+
+        Invoke("WinCondition", 3);
+    }
+
+    private void WinCondition()
+    {
+        ShipsManager.instance.gameObject.GetComponent<TransitionController>().EndLevelTransition();
+
+        foreach (PlayerController item in PlayersManager.instance.ingamePlayers)
+        {
+            item.animator.SetBool("Dancing", false);
+        }
     }
 
     public override void SetCurrentHealth(float amount)
     {
+        if (godMode)
+            return;
+
         base.SetCurrentHealth(amount);
 
-        ShipsManager.instance.playerHealthController.SetHealthBar(GetCurrentHealth() / GetMaxHealth());
-        
-        if(amount < 0)
-            recoverHealth += -1 * amount;
-        else
-            recoverHealth -= amount;
-        
-
-    }
-
-    public void SetRecoverHealth(float amount)
-    {
-        recoverHealth -= amount;
-        
-        ShipsManager.instance.playerHealthController.SetEaseHealthbar((recoverHealth + GetCurrentHealth()) / GetMaxHealth());
+        ShipsManager.instance.playerHealthController.SetHealthBar(GetCurrentHealth() / GetMaxHealth());    
     }
 
     public override void DestroyShip()
@@ -171,20 +184,44 @@ public class AllyShip : Ship
             return true;
         return false;
     }
-
-    public void GenerateCannon()
-    {
-        if (fishingShelf == null && !ShipsManager.instance.playerShip.GetTotalWeaponsInShip())
-        {
-            Instantiate(cannon, new Vector3(0,5,0), Quaternion.identity).transform.SetParent(this.gameObject.transform);
-        }
-    }
     public List<InteractableObject> GetInventory()
     {
         return objects;
     }
     #endregion
 
+    public void GenerateHammer()
+    {
+        Box hammerBox = GetObjectBoxByObject(hammer);
+
+        if (hammerBox != null &&
+            hammerBox.GetComponent<ObjectState>().GetTimeBroken() &&
+            !ItemExist(hammer))
+        {
+            GameObject _hammer = Instantiate(hammer.prefab, new Vector3(3f, 2f, 0f), Quaternion.identity);
+            AddInteractuableObject(_hammer.GetComponent<InteractableObject>());
+        }
+
+    }
+    public void Smoke()
+    {
+        if (!smoke.gameObject.activeSelf)
+        {
+            smoke.gameObject.SetActive(true); 
+            smoke.Clear();
+            smoke.Play();
+        }
+        else
+        {
+            var emission = smoke.emission;
+            float currentRate = emission.rateOverTime.constant;
+            emission.rateOverTime = currentRate + rateOverTimeSum;
+
+            var shape = smoke.shape;
+            shape.radius += radiusSum;
+        }
+        
+    }
     public List<Transform> GetSpawnPoints()
     {
         return playersSpawnPos;

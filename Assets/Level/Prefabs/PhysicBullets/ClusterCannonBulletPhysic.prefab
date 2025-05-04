@@ -30,7 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3419537705390074741}
   m_Father: {fileID: 0}
@@ -101,6 +101,7 @@ MonoBehaviour:
   createHole: 1
   explodedClusterCannonball: {fileID: 1671708259023600102, guid: dd4497616a7b4af40807a20394e6cd3e, type: 3}
   clusterAmmo: 5
+  spawnOffset: 1
 --- !u!1001 &2953827068324416670
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -111,15 +112,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 5ac937c6cfffa684b8afd112239698c2, type: 3}
       propertyPath: m_LocalScale.x
-      value: 52
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5ac937c6cfffa684b8afd112239698c2, type: 3}
       propertyPath: m_LocalScale.y
-      value: 52
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5ac937c6cfffa684b8afd112239698c2, type: 3}
       propertyPath: m_LocalScale.z
-      value: 52
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5ac937c6cfffa684b8afd112239698c2, type: 3}
       propertyPath: m_LocalPosition.x

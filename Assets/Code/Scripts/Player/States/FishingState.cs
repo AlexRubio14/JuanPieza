@@ -12,16 +12,21 @@ public class FishingState : PlayerState
     }
     public override void FixedUpdateState()
     {
+        if(fishingRod.chargingHook)
+            controller.Rotate(controller.movementDirection, controller.rotationSpeed / 5);
     }
-    public override void ExitState()
-    {
-    }
+    public override void ExitState() { }
 
     public override void RollAction()
     {
         //No puedes rodar
     }
 
+    public override void GrabAction() { /* Esta agarrando algo no puedes coger nada mas */ }
+    public override void ReleaseAction()
+    {
+        controller.Release();
+    }
     public override void InteractAction() { /*No puedes interactuar*/ }
     public override void StopInteractAction() { /*No hace nada*/ }
     public override void UseAction() 
@@ -34,7 +39,7 @@ public class FishingState : PlayerState
         controller.StopUse();    
     }
 
-    public override void OnHit(Vector3 _hitPosition)
+    public override void OnHit(Vector3 _hitPosition, float forceMultiplier = 1)
     {
         UseAction();
         base.OnHit(_hitPosition);

@@ -9,10 +9,11 @@ public abstract class InteractableObject : MonoBehaviour
     public ObjectSO objectToInteract {  get; protected set; }
     [SerializeField] 
     protected SelectedVisual selectedVisual;
-    [SerializeField] 
-    protected ObjectsTooltip tooltip;
-    public bool isBeingUsed { get; protected set; }
-
+    public bool isBeginUsed { get; protected set; }
+    [field: SerializeField]
+    protected bool canGrab;
+    [field: SerializeField]
+    public bool canUse {  get; protected set; }
     [SerializeField]
     public Rigidbody rb;
     [field: SerializeField]
@@ -20,65 +21,55 @@ public abstract class InteractableObject : MonoBehaviour
     protected Collider objectCollider;
 
     public bool hasToBeInTheShip = true;
-    
+
+    public ItemHint hint {  get; protected set; }
     
     protected virtual void Awake()
     {
-        if (TryGetComponent(out ObjectsTooltip _tooltip))
-            tooltip = _tooltip;
+        //tooltip = GetComponent<ObjectsTooltip>();
         
         rb = GetComponent<Rigidbody>();
-        isBeingUsed = false;
-    }
-    protected virtual void Start()
-    {
-        StartCoroutine(AddObjectToShip());
+        isBeginUsed = false;
+        hint = GetComponent<ItemHint>();
     }
 
+
+    public abstract void Grab(ObjectHolder _objectHolder);
+    public abstract void Release(ObjectHolder _objectHolder);
     public abstract void Interact(ObjectHolder _objectHolder);
     public virtual void StopInteract(ObjectHolder _objectHolder) { }
 
     public abstract void Use(ObjectHolder _objectHolder);
-    public virtual void StopUse(ObjectHolder objectHolder) { }
+    public virtual void StopUse(ObjectHolder _objectHolder) { }
     public SelectedVisual GetSelectedVisual()
     {
         return selectedVisual;
     }
-
-    public ObjectsTooltip GetTooltip()
-    {
-        return tooltip;
-    }
     public void SetIsBeingUsed(bool _value)
     {
-        isBeingUsed = _value;
+        isBeginUsed = _value;
     }
 
-    public virtual bool CanInteract(ObjectHolder _objectHolder)
+    public virtual bool CanGrab(ObjectHolder _objectHolder)
     {
-        InteractableObject handObject = _objectHolder.GetHandInteractableObject();
-        
-        return 
-            handObject && objectToInteract == handObject.objectSO || 
-            !handObject && !objectToInteract;
+        return !_objectHolder.GetHandInteractableObject() && canGrab;
     }
-
+    public abstract bool CanInteract(ObjectHolder _objectHolder);
     protected virtual void OnEnable()
     {
         StartCoroutine(AddObjectToShip());
     }
-    protected virtual void OnDestroy()
-    {
-        if (ShipsManager.instance && hasToBeInTheShip && ShipsManager.instance.playerShip)
-            ShipsManager.instance.playerShip.RemoveInteractuableObject(this);
-    }
-    public abstract HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder);
-    
     protected IEnumerator AddObjectToShip()
     {
         yield return new WaitForEndOfFrame();
         if (ShipsManager.instance && hasToBeInTheShip && ShipsManager.instance.playerShip)
             ShipsManager.instance.playerShip.AddInteractuableObject(this);
+    }
+
+    protected virtual void OnDestroy()
+    {
+        if (ShipsManager.instance && hasToBeInTheShip && ShipsManager.instance.playerShip)
+            ShipsManager.instance.playerShip.RemoveInteractuableObject(this);
     }
 
 }

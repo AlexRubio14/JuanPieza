@@ -6,9 +6,17 @@ public class ColorChanger : InteractableObject
     private GameObject changeColorParticles;
     [SerializeField] private AudioClip changeColorClip;
 
+    public override void Grab(ObjectHolder _objectHolder)
+    {
+        throw new System.NotImplementedException();
+    }
+    public override void Release(ObjectHolder _objectHolder)
+    {
+        throw new System.NotImplementedException();
+    }
     public override void Interact(ObjectHolder _objectHolder)
     {
-        int playerId = _objectHolder.GetComponentInParent<PlayerController>().playerInput.playerReference;
+        int playerId = _objectHolder.playerController.playerInput.playerReference;
 
         int colorId = PlayersManager.instance.GetNextMaterial(PlayersManager.instance.players[playerId].singlePlayer.currentColor);
         PlayersManager.instance.players[playerId].singlePlayer.ChangePlayerColor(colorId);
@@ -22,19 +30,13 @@ public class ColorChanger : InteractableObject
     }
     public override void Use(ObjectHolder _objectHolder) { }
 
-    public override HintController.Hint[] ShowNeededInputHint(ObjectHolder _objectHolder)
+    public override bool CanGrab(ObjectHolder _objectHolder)
     {
-        if (CanInteract(_objectHolder))
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.INTERACT, "change_color"),
-                new HintController.Hint(HintController.ActionType.CANT_USE, "")
-            };
-        else
-            return new HintController.Hint[]
-            {
-                new HintController.Hint(HintController.ActionType.NONE, "")
-            };
+        return false;
     }
-
+    public override bool CanInteract(ObjectHolder _objectHolder)
+    {
+        return !_objectHolder.GetHandInteractableObject();
+    }
+   
 }

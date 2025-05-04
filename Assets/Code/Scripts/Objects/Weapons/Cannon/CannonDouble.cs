@@ -22,7 +22,6 @@ public class CannonDouble : Weapon
         newBulletLeft.GetComponent<Rigidbody>().AddForce(bulletSpawnPosLeft.forward * bulletForce, ForceMode.Impulse);
         newBulletLeft.GetComponent<Bullet>().SetDamage(weaponDamage);
 
-        hasAmmo = false;
         Instantiate(shootParticles, bulletSpawnPosRight.position, Quaternion.identity);
         Instantiate(shootParticles, bulletSpawnPosLeft.position, Quaternion.identity);
         AudioManager.instance.Play2dOneShotSound(weaponShootClip, "Objects", 1, 0.85f, 1.15f);

@@ -5,6 +5,8 @@ public class MoveState : PlayerState
     public override void EnterState()
     {
         controller.animator.SetBool("Moving", true);
+        controller.rb.constraints = RigidbodyConstraints.FreezeRotation;
+        controller.rb.useGravity = true;
     }
 
     public override void UpdateState()
@@ -14,29 +16,8 @@ public class MoveState : PlayerState
     }
     public override void FixedUpdateState()
     {
-        controller.rb.constraints = RigidbodyConstraints.FreezeRotation;
-
-
         controller.Rotate(controller.movementDirection, controller.rotationSpeed);
-        
-        controller.rb.useGravity = true;
-
-        Vector3 moveDir;
-        if (controller.CheckSlope())
-        {
-            moveDir = controller.GetSlopeMoveDir(controller.movementDirection);
-            if (moveDir.y == 0)
-            {
-                //Esto soluciona el problema de cuando te mueves en horizontal por encima de una rampa la gravedad te empuja hacia abajo
-                controller.rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY; 
-                moveDir /= 2; //Lo divido entre 2 para que el movimiento en horizontal en medio de la rampa no vaya tan rapido
-            }
-        }
-        else
-            moveDir = controller.movementDirection;
-
-        controller.Movement(moveDir, controller.baseMovementSpeed);
-        
+        controller.Movement(controller.movementDirection, controller.baseMovementSpeed);
     }
     public override void ExitState()
     {
@@ -47,6 +28,14 @@ public class MoveState : PlayerState
     public override void RollAction()
     {
         stateMachine.ChangeState(stateMachine.rollState);
+    }
+    public override void GrabAction() 
+    {
+        controller.Grab();
+    }
+    public override void ReleaseAction()
+    {
+        controller.Release();
     }
     public override void InteractAction()
     {
@@ -60,12 +49,15 @@ public class MoveState : PlayerState
     {
         if (controller.objectHolder.GetHandInteractableObject())
             controller.Use();
-        else
-            stateMachine.ChangeState(stateMachine.pushState);
     }
     public override void StopUseAction() 
     { 
         controller.StopUse();
+    }
+    public override void PushAction()
+    {
+        if (!controller.objectHolder.GetHandInteractableObject())
+            stateMachine.ChangeState(stateMachine.pushState);
     }
 
     public override void OnCollisionEnter(Collision collision)
