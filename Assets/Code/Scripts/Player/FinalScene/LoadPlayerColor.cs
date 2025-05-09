@@ -8,7 +8,10 @@ public class LoadPlayerColor : MonoBehaviour
     void Start()
     {
         if (PlayersManager.instance.players.Count <= playerId)
+        {
+            gameObject.SetActive(false);
             return;
+        }
 
         SkinnedMeshRenderer[] renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
 

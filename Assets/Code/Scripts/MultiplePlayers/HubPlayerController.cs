@@ -19,15 +19,18 @@ public class HubPlayerController : MonoBehaviour
         controller.gameObject.name = "Player" + _playerId;
         controller.playerInput = PlayersManager.instance.players[_playerId].playerInput.GetComponent<GameInput>();
 
-        StartCoroutine(WaitToChangeInputMap());
-        IEnumerator WaitToChangeInputMap()
-        {
-            yield return new WaitForEndOfFrame();
-            PlayersManager.instance.players[_playerId].playerInput.SwitchCurrentActionMap("Gameplay");
-        }
+        
 
         if (PlayerPrefs.HasKey(HUB_TUTORIAL) && PlayerPrefs.GetInt(HUB_TUTORIAL) == 1)
+        {
+            StartCoroutine(WaitToChangeInputMap());
+            IEnumerator WaitToChangeInputMap()
+            {
+                yield return new WaitForEndOfFrame();
+                PlayersManager.instance.players[_playerId].playerInput.SwitchCurrentActionMap("Gameplay");
+            }
             return;
+        }
 
 
         FindAnyObjectByType<HubTutorialNPC>().PlayStarterDialogue();
