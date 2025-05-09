@@ -147,7 +147,7 @@ public class HubTutorialNPC : MonoBehaviour
         StartCoroutine(WaitToChangeInputMap());
         IEnumerator WaitToChangeInputMap()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             foreach (PlayersManager.PlayerData item in PlayersManager.instance.players)
                 item.playerInput.SwitchCurrentActionMap("MapMenu");
         }

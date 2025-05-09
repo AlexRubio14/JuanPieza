@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +19,12 @@ public class HubPlayerController : MonoBehaviour
         controller.gameObject.name = "Player" + _playerId;
         controller.playerInput = PlayersManager.instance.players[_playerId].playerInput.GetComponent<GameInput>();
 
-        PlayersManager.instance.players[_playerId].playerInput.SwitchCurrentActionMap("Gameplay");
+        StartCoroutine(WaitToChangeInputMap());
+        IEnumerator WaitToChangeInputMap()
+        {
+            yield return new WaitForEndOfFrame();
+            PlayersManager.instance.players[_playerId].playerInput.SwitchCurrentActionMap("Gameplay");
+        }
 
         if (PlayerPrefs.HasKey(HUB_TUTORIAL) && PlayerPrefs.GetInt(HUB_TUTORIAL) == 1)
             return;
