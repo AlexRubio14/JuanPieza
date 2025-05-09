@@ -49,7 +49,11 @@ public class TransitionController : MonoBehaviour
                 if(NodeManager.instance)
                     NodeManager.instance.CompleteQuest();
 
-                SceneManager.LoadScene("HUB");
+                if(!QuestManager.Instance.AllQuestFinished())
+                    SceneManager.LoadScene("HUB");
+                else
+                    SceneManager.LoadScene("FinalScene");
+
             }
 
         }

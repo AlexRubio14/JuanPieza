@@ -1,3 +1,4 @@
+using NUnit.Framework.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -64,5 +65,18 @@ public class QuestManager : MonoBehaviour
     {
         NodeManager.instance.SetData(currentQuest);
         misionAnimation.StartAnimation();
+    }
+
+
+    public bool AllQuestFinished()
+    {
+
+        foreach (QuestData quest in allQuests)
+        {
+            if (!quest.completed)
+                return false;
+        }
+
+        return true;
     }
 }
