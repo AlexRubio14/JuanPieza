@@ -224,5 +224,8 @@ public class ClimateManager : MonoBehaviour
     {
         if(ambientSource)
             ambientSource.Stop();
+
+        if (lightningChargeAS)
+            AudioManager.instance.StopLoopSound(lightningChargeAS);
     }
 }

@@ -134,7 +134,8 @@ public abstract class Weapon : RepairObject
 
         PlayerController player = _objectHolder.playerController;
         //Cambia el estado
-        player.stateMachine.ChangeState(player.stateMachine.idleState);
+        if(player.stateMachine.currentState is not DeathState)
+            player.stateMachine.ChangeState(player.stateMachine.idleState);
         _objectHolder.RemoveItemFromHand();
 
         isBeginUsed = false;
@@ -301,7 +302,8 @@ public abstract class Weapon : RepairObject
         if(mountedPlayerId != -1)
         {
             PlayerController controller = PlayersManager.instance.ingamePlayers[mountedPlayerId];
-            controller.stateMachine.ChangeState(controller.stateMachine.idleState);
+            if(controller.stateMachine.currentState is not DeathState)
+                controller.stateMachine.ChangeState(controller.stateMachine.idleState);
             PlayersManager.instance.players[mountedPlayerId].rumbleController.AddRumble(shootRumble);
         }
 
@@ -358,7 +360,7 @@ public abstract class Weapon : RepairObject
         }
 
         PlayerController currentPlayer = PlayersManager.instance.ingamePlayers[mountedPlayerId];
-        if (isTilting)
+        if (isTilting && currentPlayer.stateMachine.currentState is not DeathState)
             currentPlayer.stateMachine.ChangeState(currentPlayer.stateMachine.idleState);
 
         isTilting = false;
@@ -382,7 +384,8 @@ public abstract class Weapon : RepairObject
 
             PlayerController player = PlayersManager.instance.ingamePlayers[mountedPlayerId];
             //Cambia el estado
-            player.stateMachine.ChangeState(player.stateMachine.idleState);
+            if(player.stateMachine.currentState is not DeathState)
+                player.stateMachine.ChangeState(player.stateMachine.idleState);
             player.objectHolder.RemoveItemFromHand();
         }
     }
