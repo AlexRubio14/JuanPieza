@@ -110,13 +110,12 @@ public class CannonState : PlayerState
     }
     private void RotateCannon()
     {
-        if (controller.weaponRotationAxis == 0)
+        if (controller.weaponRotationDir == Vector3.zero)
             return;
 
-        currentAngle += controller.weaponRotationAxis * (controller.weaponRotationSpeed * Time.fixedDeltaTime);
-        currentAngle %= 360;
-        currentWeapon.transform.rotation = Quaternion.Euler(0, currentAngle, 0);
-        
+        Vector3 finalRotation = Vector3.Slerp(currentWeapon.transform.forward, controller.weaponRotationDir, controller.weaponRotationSpeed * Time.fixedDeltaTime);
+        currentWeapon.transform.forward = finalRotation;
+
     }
     public void SetWeapon(Weapon _weapon)
     {

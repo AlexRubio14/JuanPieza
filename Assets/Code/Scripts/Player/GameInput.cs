@@ -19,7 +19,7 @@ public class GameInput : MonoBehaviour
     public Action OnGrabAction;
     public Action OnReleaseAction;
     
-    public Action<float> OnWeaponRotateAction;
+    public Action<Vector2> OnWeaponRotateAction;
     public int playerReference { get;  set; }
 
     private void Awake()
@@ -77,7 +77,7 @@ public class GameInput : MonoBehaviour
     public void RotateWeaponAction(InputAction.CallbackContext obj)
     {
         if (OnWeaponRotateAction != null)
-            OnWeaponRotateAction(obj.ReadValue<float>());
+            OnWeaponRotateAction(obj.ReadValue<Vector2>());
     }
 
     public void PauseAction(InputAction.CallbackContext obj)

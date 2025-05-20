@@ -18,7 +18,7 @@
                     "name": "RotateWeapon",
                     "type": "Value",
                     "id": "a9372c67-0d3c-4286-87d3-c22211dca1b2",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -157,7 +157,7 @@
                 {
                     "name": "Keyboard",
                     "id": "1b410619-3a4a-4ebf-8435-f40baad427bf",
-                    "path": "1DAxis",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -166,8 +166,30 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Negative",
+                    "name": "Up",
                     "id": "5f586417-15bd-46e5-9042-120955917e85",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "6876441c-c986-4a18-9713-f7091688a924",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Left",
+                    "id": "abf57414-48bc-41bd-9bb8-67f7b4426cc4",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
@@ -177,8 +199,8 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Positive",
-                    "id": "6876441c-c986-4a18-9713-f7091688a924",
+                    "name": "Right",
+                    "id": "6badf7d6-93d8-4a7f-9de5-fe0933607cdc",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
@@ -188,37 +210,15 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Gamepad",
-                    "id": "4fd3021a-99fd-4f50-b7c6-56ed22691337",
-                    "path": "1DAxis",
+                    "name": "",
+                    "id": "07bd4838-d3b7-4dcd-83ce-bdeeeddf2586",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "RotateWeapon",
-                    "isComposite": true,
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "positive",
-                    "id": "8505dde8-c614-4c3f-99c1-cb8892915f97",
-                    "path": "<Gamepad>/rightStick/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RotateWeapon",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "negative",
-                    "id": "2ba68bb5-19d0-4a34-8c3d-4dc7c22e1d65",
-                    "path": "<Gamepad>/rightStick/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RotateWeapon",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",

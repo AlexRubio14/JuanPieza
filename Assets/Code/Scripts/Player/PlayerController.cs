@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
     public float weaponRotationSpeed { get; private set; }
     [field:SerializeField]
     public float weaponRotationOffset { get; private set; }
-    public float weaponRotationAxis { get; private set; }
+    public Vector3 weaponRotationDir { get; private set; }
 
 
     [field: Space, Header("Drunk"), SerializeField]
@@ -281,9 +281,10 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.currentState.ReleaseAction();
     }
-    private void WeaponRotateAction(float _axis)
+    private void WeaponRotateAction(Vector2 _direction)
     {
-        weaponRotationAxis = _axis;
+        Debug.Log(_direction);
+        weaponRotationDir = new Vector3(_direction.x, 0, _direction.y);
     }
 
     #endregion
