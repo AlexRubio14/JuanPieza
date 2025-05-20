@@ -76,11 +76,6 @@ public class PlayerController : MonoBehaviour
     public AudioClip swimClip {  get; private set; }
     [field: SerializeField]
     public AudioClip respawnClip {  get; private set; }
-    
-
-    [Space, Header("Fishing"), SerializeField]
-    private Canvas interactCanvas;
-    public GameObject interactCanvasObject => interactCanvas.transform.gameObject;
 
 
     [field: Space, Header("Weapon"), SerializeField]
@@ -89,7 +84,7 @@ public class PlayerController : MonoBehaviour
     public float weaponRotationSpeed { get; private set; }
     [field:SerializeField]
     public float weaponRotationOffset { get; private set; }
-    public float weaponRotationAxis { get; private set; }
+    public Vector3 weaponRotationDir { get; private set; }
 
 
     [field: Space, Header("Drunk"), SerializeField]
@@ -153,8 +148,6 @@ public class PlayerController : MonoBehaviour
         canRoll = true;
         canPush = true;
         objectHolder = GetComponentInChildren<ObjectHolder>();
-        interactCanvas.worldCamera = Camera.main;
-        interactCanvasObject.SetActive(false);
         drunkParticles.Stop(true);
     }
     private void OnEnable()
@@ -281,9 +274,10 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.currentState.ReleaseAction();
     }
-    private void WeaponRotateAction(float _axis)
+    private void WeaponRotateAction(Vector2 _direction)
     {
-        weaponRotationAxis = _axis;
+        Vector2 normalizedDir = _direction.normalized;
+        weaponRotationDir = new Vector3(normalizedDir.x, 0, normalizedDir.y);
     }
 
     #endregion

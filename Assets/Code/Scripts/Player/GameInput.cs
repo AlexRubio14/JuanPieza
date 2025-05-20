@@ -5,8 +5,6 @@ using UnityEngine.InputSystem;
 
 public class GameInput : MonoBehaviour
 {
-    private PlayerInput playerInput;
-
     public Action<Vector2> OnMoveAction;
     public Action OnInteractAction;
     public Action OnStopInteractAction;
@@ -19,13 +17,8 @@ public class GameInput : MonoBehaviour
     public Action OnGrabAction;
     public Action OnReleaseAction;
     
-    public Action<float> OnWeaponRotateAction;
+    public Action<Vector2> OnWeaponRotateAction;
     public int playerReference { get;  set; }
-
-    private void Awake()
-    {
-        playerInput = GetComponent<PlayerInput>();
-    }
 
     public void ReadMovement(InputAction.CallbackContext obj)
     {
@@ -77,7 +70,7 @@ public class GameInput : MonoBehaviour
     public void RotateWeaponAction(InputAction.CallbackContext obj)
     {
         if (OnWeaponRotateAction != null)
-            OnWeaponRotateAction(obj.ReadValue<float>());
+            OnWeaponRotateAction(obj.ReadValue<Vector2>());
     }
 
     public void PauseAction(InputAction.CallbackContext obj)

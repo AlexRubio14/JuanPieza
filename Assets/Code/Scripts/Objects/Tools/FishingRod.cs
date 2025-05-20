@@ -104,7 +104,7 @@ public class FishingRod : Tool, ICatapultAmmo
             _objectHolder.playerController.stateMachine.ChangeState(_objectHolder.playerController.stateMachine.idleState);
         _objectHolder.playerController.animator.SetBool("FishingCharge", false);
         _objectHolder.playerController.animator.ResetTrigger("FishingStop");
-        _objectHolder.playerController.interactCanvasObject.SetActive(false);
+        hook.hookCanvas.gameObject.SetActive(false);
         base.Release(_objectHolder);
     }
     public override void Use(ObjectHolder _objectHolder)
