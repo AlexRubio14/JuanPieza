@@ -169,7 +169,7 @@ public class FishingManager : MonoBehaviour
         //Si lo deja a pasar volvera al estado de Waiting Object y generaremos las variables de nuevo
         if (Time.time - fishingData[_id].starterTime >= timeToHook)
         {
-            fishingData[_id].fishingRod.player.interactCanvasObject.SetActive(false);
+            fishingData[_id].fishingRod.hook.hookCanvas.gameObject.SetActive(false);
             GenerateWaitObjectValues(_id);
         }
     }
@@ -229,7 +229,7 @@ public class FishingManager : MonoBehaviour
 
         fishingData[_dataId] = newData;
         //Encender el cartel con una exclamacion
-        GameObject interactableCanvas = fishingData[_dataId].fishingRod.player.interactCanvasObject;
+        GameObject interactableCanvas = fishingData[_dataId].fishingRod.hook.hookCanvas.gameObject;
         interactableCanvas.transform.forward = Camera.main.transform.forward;
         interactableCanvas.transform.localPosition = new Vector3(0.2f, 2, 0.5f);
         interactableCanvas.SetActive(true);
@@ -303,7 +303,7 @@ public class FishingManager : MonoBehaviour
     {
         _fishingRod.player.stateMachine.ChangeState(_fishingRod.player.stateMachine.idleState);
         _fishingRod.isFishing = false;
-        _fishingRod.player.interactCanvasObject.SetActive(false);
+        _fishingRod.hook.hookCanvas.gameObject.SetActive(false);
     }
 
     public void AddFishingRod(FishingRod _fishingRod)

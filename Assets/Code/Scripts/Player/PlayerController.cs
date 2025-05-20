@@ -76,11 +76,6 @@ public class PlayerController : MonoBehaviour
     public AudioClip swimClip {  get; private set; }
     [field: SerializeField]
     public AudioClip respawnClip {  get; private set; }
-    
-
-    [Space, Header("Fishing"), SerializeField]
-    private Canvas interactCanvas;
-    public GameObject interactCanvasObject => interactCanvas.transform.gameObject;
 
 
     [field: Space, Header("Weapon"), SerializeField]
@@ -153,8 +148,6 @@ public class PlayerController : MonoBehaviour
         canRoll = true;
         canPush = true;
         objectHolder = GetComponentInChildren<ObjectHolder>();
-        interactCanvas.worldCamera = Camera.main;
-        interactCanvasObject.SetActive(false);
         drunkParticles.Stop(true);
     }
     private void OnEnable()
