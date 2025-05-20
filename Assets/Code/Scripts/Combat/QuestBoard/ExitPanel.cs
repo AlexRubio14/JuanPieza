@@ -26,5 +26,6 @@ public class ExitPanel : MonoBehaviour
     {
         informationCanvas.SetActive(false);
         questBoard.GetQuestIcons()[0].GetComponent<Button>().Select();
+        questBoard.GetComponentInChildren<BackButtonController>().SetBackButton();
     }
 }

@@ -10,12 +10,14 @@ public class BackButtonController : MonoBehaviour
         backButton = GetComponent<Button>();
     }
 
+    public void SetBackButton()
+    {
+        if (MenuBackController.instance)
+            MenuBackController.instance.backButton = backButton;
+    }
     private void OnEnable()
     {
-        MenuBackController.instance.backButton = backButton;
-
-        //Debug.Log("BackButtonEnable");
-        //Debug.Break();
+        SetBackButton();
     }
 
 }

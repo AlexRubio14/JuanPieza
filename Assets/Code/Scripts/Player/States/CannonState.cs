@@ -4,8 +4,6 @@ public class CannonState : PlayerState
 {
     private Weapon currentWeapon;
     private Vector3 weaponOffset;
-
-    private float currentAngle;
     public override void EnterState()
     {
         currentWeapon.rb.constraints = RigidbodyConstraints.FreezeRotation;
@@ -14,7 +12,6 @@ public class CannonState : PlayerState
         
         controller.animator.SetBool("OnCannon", true);
         controller.animator.SetBool("Pick", true);
-        currentAngle = currentWeapon.transform.rotation.eulerAngles.y;
     }
     public override void UpdateState()
     {
@@ -95,7 +92,6 @@ public class CannonState : PlayerState
             Vector3 playerPos = new Vector3(controller.transform.position.x, currentWeapon.transform.position.y, controller.transform.position.z);
 
             currentWeapon.transform.position = playerPos + newPlayerForward * 2;
-            //controller.transform.position = weaponPos - newPlayerForward * 2;
         }
 
         weaponOffset = newPos;
