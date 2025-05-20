@@ -276,8 +276,7 @@ public class PlayerController : MonoBehaviour
     }
     private void WeaponRotateAction(Vector2 _direction)
     {
-        Vector2 normalizedDir = _direction.normalized;
-        weaponRotationDir = new Vector3(normalizedDir.x, 0, normalizedDir.y);
+        weaponRotationDir = new Vector3(_direction.x, 0, _direction.y);
     }
 
     #endregion
