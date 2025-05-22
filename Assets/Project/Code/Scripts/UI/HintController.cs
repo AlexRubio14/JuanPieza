@@ -54,15 +54,10 @@ public class HintController : MonoBehaviour
 
     private void CheckObjectToGrab(InteractableObject _handObject, InteractableObject _nearestObject)
     {
-        if (!_handObject && !_nearestObject)
-        {
-            playerHint.DisableHint(ActionType.GRAB);
+        if (!_nearestObject || _handObject)
             return;
-        }
 
-        if (_handObject)
-            playerHint.EnableHint(ActionType.GRAB, deviceType);
-        else if (_nearestObject && _nearestObject.CanGrab(objectHolder))
+        if (_nearestObject.CanGrab(objectHolder))
             _nearestObject.hint.EnableHint(ActionType.GRAB, deviceType);
 
 

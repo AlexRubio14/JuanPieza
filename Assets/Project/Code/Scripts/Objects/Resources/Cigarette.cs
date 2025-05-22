@@ -27,7 +27,7 @@ public class Cigarette : Resource, ICatapultAmmo
 
     public override bool CanInteract(ObjectHolder _objectHolder)
     {
-        return _objectHolder.GetHasObjectPicked() == this;
+        return false;
     }
 
 }
