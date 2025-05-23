@@ -196,7 +196,7 @@ public class AllyShip : Ship
 
         if (hammerBox != null &&
             hammerBox.GetComponent<ObjectState>().GetTimeBroken() &&
-            !ItemExist(hammer))
+            !ItemExist(hammer) && !destroyed)
         {
             GameObject _hammer = Instantiate(hammer.prefab, new Vector3(3f, 2f, 0f), Quaternion.identity);
             AddInteractuableObject(_hammer.GetComponent<InteractableObject>());
