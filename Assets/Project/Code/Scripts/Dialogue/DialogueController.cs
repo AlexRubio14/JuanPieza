@@ -112,7 +112,7 @@ public class DialogueController : MonoBehaviour
                 ReadDialogueType();
                 break;
             case DialogueData.DialogueType.DIALOGUE:
-                DisplayNextDialogue(currentDialogue.dialogue);
+                DisplayNextDialogue(currentDialogue.dialogues[LanguageManager.instance.language]);
                 AudioManager.instance.Play2dOneShotSound(clickSound, "Button", 1.5f, 0.95f, 1.05f);
                 break;
             case DialogueData.DialogueType.ACTION:
@@ -161,7 +161,7 @@ public class DialogueController : MonoBehaviour
         if (displayingDialogue)
         {
 
-            if (letterIndex >= dialogue.GetDialogue(sequenceIndex).dialogue.Length)
+            if (letterIndex >= dialogue.GetDialogue(sequenceIndex).dialogues[LanguageManager.instance.language].Length)
             {
                 displayingDialogue = false;
             }
@@ -183,7 +183,7 @@ public class DialogueController : MonoBehaviour
     private void DisplayAllLetters()
     {
         displayingDialogue = false;
-        dialogueText.maxVisibleCharacters = dialogue.GetDialogue(sequenceIndex).dialogue.Length;
+        dialogueText.maxVisibleCharacters = dialogue.GetDialogue(sequenceIndex).dialogues[LanguageManager.instance.language].Length;
     }
 
     public void AddAction(string _actionId, Action _action)
