@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -64.1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 75.4}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &633303252595515924
@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 8353999257168262764}
   - component: {fileID: 4478116758856701977}
   - component: {fileID: 6626575830583724511}
+  - component: {fileID: 5705788414888596723}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -141,7 +142,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Pulsa        para empujar
+  m_text: "Premeu per emp\xE8nyer"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d3a5ab0a3b292ed42bb10ba32a2c8405, type: 2}
   m_sharedMaterial: {fileID: 4338508380401010729, guid: d3a5ab0a3b292ed42bb10ba32a2c8405, type: 2}
@@ -212,6 +213,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5705788414888596723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2632207938158238059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ba7c6875ea0eb540b4c9d7f89b656e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  languageTexts:
+    _serializedList:
+    - Key: 0
+      Value: PULSA PARA EMPUJAR
+    - Key: 1
+      Value: PRESS TO PUSH
+    - Key: 2
+      Value: PREMEU PER EMPENYER
 --- !u!1 &4056076587735362043
 GameObject:
   m_ObjectHideFlags: 0
