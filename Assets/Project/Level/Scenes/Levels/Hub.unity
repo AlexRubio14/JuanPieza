@@ -1248,6 +1248,63 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1436745560247446243, guid: 7ea8878567059644c93be5b288bac6f1, type: 3}
   m_PrefabInstance: {fileID: 1482310110}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &262607530
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 923038365310194226, guid: e7446c8abf6a7c342955adb234673eba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.45905474
+      objectReference: {fileID: 0}
+    - target: {fileID: 923038365310194226, guid: e7446c8abf6a7c342955adb234673eba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.4411805
+      objectReference: {fileID: 0}
+    - target: {fileID: 923038365310194226, guid: e7446c8abf6a7c342955adb234673eba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.8163047
+      objectReference: {fileID: 0}
+    - target: {fileID: 923038365310194226, guid: e7446c8abf6a7c342955adb234673eba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 923038365310194226, guid: e7446c8abf6a7c342955adb234673eba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 923038365310194226, guid: e7446c8abf6a7c342955adb234673eba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 923038365310194226, guid: e7446c8abf6a7c342955adb234673eba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 923038365310194226, guid: e7446c8abf6a7c342955adb234673eba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 923038365310194226, guid: e7446c8abf6a7c342955adb234673eba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 923038365310194226, guid: e7446c8abf6a7c342955adb234673eba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066543845016907398, guid: e7446c8abf6a7c342955adb234673eba, type: 3}
+      propertyPath: m_Name
+      value: LanguageManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e7446c8abf6a7c342955adb234673eba, type: 3}
 --- !u!1001 &263596428
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6051,6 +6108,7 @@ GameObject:
   - component: {fileID: 1114385129}
   - component: {fileID: 1114385131}
   - component: {fileID: 1114385130}
+  - component: {fileID: 1114385132}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -6075,7 +6133,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -300}
-  m_SizeDelta: {x: 3000, y: 100}
+  m_SizeDelta: {x: 1200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1114385130
 MonoBehaviour:
@@ -6097,7 +6155,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Pulsa cualquier \nboton para unirte"
+  m_text: Pulsa cualquier boton para unirte
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d3a5ab0a3b292ed42bb10ba32a2c8405, type: 2}
   m_sharedMaterial: {fileID: 4338508380401010729, guid: d3a5ab0a3b292ed42bb10ba32a2c8405, type: 2}
@@ -6176,6 +6234,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114385128}
   m_CullTransparentMesh: 1
+--- !u!114 &1114385132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114385128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ba7c6875ea0eb540b4c9d7f89b656e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  languageTexts:
+    _serializedList:
+    - Key: 0
+      Value: Pulsa cualquier boton para unirte
+    - Key: 1
+      Value: Press any button to Join
+    - Key: 2
+      Value: "Premeu qualsevol bot\xF3 per unir-vos  "
 --- !u!1 &1120035192
 GameObject:
   m_ObjectHideFlags: 0
@@ -6629,6 +6707,7 @@ GameObject:
   - component: {fileID: 1194072501}
   - component: {fileID: 1194072503}
   - component: {fileID: 1194072502}
+  - component: {fileID: 1194072504}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -6653,7 +6732,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -100}
-  m_SizeDelta: {x: 3000, y: 100}
+  m_SizeDelta: {x: 1200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1194072502
 MonoBehaviour:
@@ -6675,7 +6754,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Pulsa cualquier \nboton para unirte"
+  m_text: Pulsa cualquier boton para unirte
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d3a5ab0a3b292ed42bb10ba32a2c8405, type: 2}
   m_sharedMaterial: {fileID: 4338508380401010729, guid: d3a5ab0a3b292ed42bb10ba32a2c8405, type: 2}
@@ -6754,6 +6833,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1194072500}
   m_CullTransparentMesh: 1
+--- !u!114 &1194072504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194072500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ba7c6875ea0eb540b4c9d7f89b656e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  languageTexts:
+    _serializedList:
+    - Key: 0
+      Value: Pulsa cualquier boton para unirte
+    - Key: 1
+      Value: Press any button to Join
+    - Key: 2
+      Value: "Premeu qualsevol bot\xF3 per unir-vos  "
 --- !u!1001 &1201194678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12678,3 +12777,4 @@ SceneRoots:
   - {fileID: 1530990687}
   - {fileID: 526178266}
   - {fileID: 602723010}
+  - {fileID: 262607530}

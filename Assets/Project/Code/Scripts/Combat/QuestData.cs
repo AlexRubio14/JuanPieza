@@ -1,3 +1,4 @@
+using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class QuestData : ScriptableObject
     public enum QuestObjective { BATTLE, TRANSPORT, RESCUE, BOARDING };
     public enum QuestClimete { CLEAR, SNOW, STORM };
     
-    public string title;
+    public SerializedDictionary<LanguageManager.Language, string> titles;
     public QuestObjective questObjective;
     public PlayerShip ship;
     public int rescueCuantity;

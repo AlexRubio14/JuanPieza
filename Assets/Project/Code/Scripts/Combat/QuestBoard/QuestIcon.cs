@@ -16,7 +16,7 @@ public class QuestIcon : MonoBehaviour
     public void ActivateInformationCanvas()
     {
         informationCanvas.SetActive(true);
-        informationCanvas.GetComponent<QuestInformationCanvas>().UpdateText(quest.title);
+        informationCanvas.GetComponent<QuestInformationCanvas>().UpdateText(quest.titles[LanguageManager.instance.language]);
         QuestManager.Instance.currentQuest = quest;
     }
 

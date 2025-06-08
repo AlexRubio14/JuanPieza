@@ -1,3 +1,4 @@
+using AYellowpaper.SerializedCollections;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,16 +11,9 @@ public class DialogueData : ScriptableObject
     [Serializable]
 	public struct Dialogue
 	{
-		public Dialogue(DialogueType _type, string _dialogue, string _action)
-		{
-			type = _type;
-			dialogue = _dialogue;
-            actionId = _action;
-		}
 		public DialogueType type;
-		[TextArea]
-		public string dialogue;
-		public string actionId;
+        public SerializedDictionary<LanguageManager.Language, string> dialogues;
+        public string actionId;
 	}
 
 	[field: SerializeField]
